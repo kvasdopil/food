@@ -60,7 +60,7 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
 
 - Schema is defined in `supabase/migrations/*create_recipes_table.sql` and includes:
   - `slug`, `name`, `description`, `ingredients`, `instructions`, `image_url`, `tags`, timestamps
-  - Slugs auto-generate from recipe names (duplicates receive `-2`, `-3`, … suffixes)
+  - Slugs auto-generate from recipe names (duplicates receive `-2`, `-3`, … suffixes) and the homepage immediately redirects to `/recipes/[slug]`.
   - Row Level Security with read-only anonymous policy
 - Example content is seeded from `supabase/seed.sql` during `supabase db reset`.
 - Regenerate TypeScript types whenever the schema changes:

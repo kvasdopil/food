@@ -3,7 +3,7 @@
 ## Product Scope
 
 - Mobile-first responsive web app optimised for small screens, with graceful scaling to larger viewports.
-- Landing route `/` loads a single random recipe from Supabase on each visit (Server Component fetch).
+- Landing route `/` immediately redirects to a random recipe slug so shared URLs are always `/recipes/[slug]`.
 - Each recipe has:
   - `name`
   - `description`
