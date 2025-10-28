@@ -10,7 +10,7 @@ export function FavoriteButton() {
       type="button"
       aria-pressed={liked}
       onClick={() => setLiked((prev) => !prev)}
-      className={`inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/80 text-slate-900 shadow-sm ring-1 ring-white/60 transition hover:bg-white ${
+      className={`inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white/80 text-slate-900 shadow-sm ring-1 ring-white/60 transition hover:bg-white ${
         liked ? "text-rose-500" : "hover:text-rose-500 dark:hover:text-rose-400"
       } dark:bg-slate-900/80 dark:text-slate-100 dark:ring-slate-700`}
       aria-label={liked ? "Remove from favourites" : "Save to favourites"}
@@ -30,4 +30,3 @@ export function FavoriteButton() {
     </button>
   );
 }
-

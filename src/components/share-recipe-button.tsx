@@ -96,12 +96,12 @@ export function ShareRecipeButton({
       );
 
     return (
-      <button
-        type="button"
-        onClick={handleShare}
-        className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/80 text-slate-900 shadow-sm ring-1 ring-white/60 transition hover:bg-white hover:text-emerald-600 dark:bg-slate-900/80 dark:text-slate-100 dark:ring-slate-700 dark:hover:text-emerald-300"
-        aria-label="Share recipe"
-      >
+    <button
+      type="button"
+      onClick={handleShare}
+      className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white/80 text-slate-900 shadow-sm ring-1 ring-white/60 transition hover:bg-white hover:text-emerald-600 dark:bg-slate-900/80 dark:text-slate-100 dark:ring-slate-700 dark:hover:text-emerald-300"
+      aria-label="Share recipe"
+    >
         {icon}
       </button>
     );
@@ -111,7 +111,7 @@ export function ShareRecipeButton({
     <button
       type="button"
       onClick={handleShare}
-      className="inline-flex items-center justify-center rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-700 transition-colors hover:bg-emerald-500/20 dark:border-emerald-400/40 dark:bg-emerald-400/10 dark:text-emerald-200 dark:hover:bg-emerald-400/20"
+      className="inline-flex cursor-pointer items-center justify-center rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-700 transition-colors hover:bg-emerald-500/20 dark:border-emerald-400/40 dark:bg-emerald-400/10 dark:text-emerald-200 dark:hover:bg-emerald-400/20"
     >
       {status === "copied"
         ? "Link copied!"

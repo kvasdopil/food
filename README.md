@@ -56,6 +56,31 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
 4. In the Vercel dashboard, add the `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`
    environment variables under **Settings → Environment Variables**, then redeploy.
 
+
+## Project Status
+
+- Home route `/` server-redirects to a random recipe slug (`/recipes/[slug]`).
+- Dynamic route `src/app/recipes/[slug]/page.tsx` renders the full recipe view (image, tags, ingredients, instructions).
+- Supabase provides recipe data via RPC (`get_random_recipe`) and table queries; types generated in `src/types/supabase.ts`.
+- Client helpers:
+  - `KeyboardNav` handles arrow-key navigation with random fallback when history is empty.
+  - `RecipeSideNav` renders prev/next buttons using `/api/random-recipe`.
+- API route `/api/random-recipe` returns a random slug, optionally excluding the current recipe.
+
+## Page Structure
+
+- `src/app/page.tsx`: server component redirecting to a random slug.
+- `src/app/recipes/[slug]/page.tsx`: server component building the recipe layout and metadata.
+- `src/components/*`: client-side interactivity (share, favorite, nav, keyboard shortcuts).
+- `src/app/api/random-recipe/route.ts`: edge handler selecting a random recipe slug.
+
+## Data Flow
+
+1. `/` → `getRandomSlug()` (Supabase RPC) → redirect to `/recipes/[slug]`.
+2. `/recipes/[slug]` → `fetchRecipeBySlug` (Supabase query) → render sections.
+3. Client navigation → `/api/random-recipe` (exclude current slug) → `router.push('/recipes/[slug]')` or `router.back()`.
+4. Supabase trigger `generate_recipe_slug` ensures unique slugs and suffixes.
+
 ## Supabase Configuration
 
 - Schema is defined in `supabase/migrations/*create_recipes_table.sql` and includes:

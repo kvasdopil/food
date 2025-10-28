@@ -1,12 +1,11 @@
 'use client';
 
 import { useCallback, useState } from "react";
-import type { IconType } from "react-icons";
+import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 
 type RecipeSideNavProps = {
   direction: "previous" | "next";
-  icon: IconType;
   currentSlug: string;
 };
 
@@ -29,11 +28,12 @@ async function fetchRandomSlug(exclude?: string) {
   return body.slug;
 }
 
-export function RecipeSideNav({ direction, icon: Icon, currentSlug }: RecipeSideNavProps) {
+export function RecipeSideNav({ direction, currentSlug }: RecipeSideNavProps) {
   const router = useRouter();
   const [isBusy, setIsBusy] = useState(false);
   const isPrevious = direction === "previous";
   const label = isPrevious ? "Previous Recipe" : "Next Recipe";
+  const Icon = isPrevious ? FiArrowLeft : FiArrowRight;
 
   const navigateToRandom = useCallback(async () => {
     setIsBusy(true);
@@ -70,7 +70,7 @@ export function RecipeSideNav({ direction, icon: Icon, currentSlug }: RecipeSide
         type="button"
         onClick={handleClick}
         disabled={isBusy}
-        className="sticky top-1/2 inline-flex -translate-y-1/2 items-center gap-2 text-sm font-semibold text-slate-600 transition hover:text-emerald-600 disabled:opacity-60"
+        className="sticky top-1/2 inline-flex -translate-y-1/2 cursor-pointer items-center gap-2 text-sm font-semibold text-slate-600 transition hover:text-emerald-600 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {isPrevious ? (
           <>
@@ -87,4 +87,3 @@ export function RecipeSideNav({ direction, icon: Icon, currentSlug }: RecipeSide
     </div>
   );
 }
-

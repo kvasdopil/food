@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 
 import { FavoriteButton } from "@/components/favorite-button";
 import { KeyboardNav } from "@/components/keyboard-nav";
@@ -13,9 +12,9 @@ import type { Tables } from "@/types/supabase";
 type Recipe = Tables<"recipes">;
 
 type RecipePageProps = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
 
 const chipPalette = [
@@ -48,7 +47,8 @@ async function fetchRecipeBySlug(slug: string) {
 export async function generateMetadata({
   params,
 }: RecipePageProps): Promise<Metadata> {
-  const recipe = await fetchRecipeBySlug(params.slug);
+  const { slug } = await params;
+  const recipe = await fetchRecipeBySlug(slug);
 
   if (!recipe) {
     return {
@@ -68,7 +68,8 @@ export async function generateMetadata({
 }
 
 export default async function RecipePage({ params }: RecipePageProps) {
-  const recipe = await fetchRecipeBySlug(params.slug);
+  const { slug } = await params;
+  const recipe = await fetchRecipeBySlug(slug);
 
   if (!recipe) {
     notFound();
@@ -89,7 +90,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
     <main className="relative min-h-screen bg-slate-50 text-slate-900">
       <KeyboardNav currentSlug={recipe.slug} />
       <div className="mx-auto flex w-full max-w-5xl flex-col px-0 sm:px-6 xl:flex-row xl:items-stretch xl:gap-6">
-        <RecipeSideNav direction="previous" icon={FiArrowLeft} currentSlug={recipe.slug} />
+        <RecipeSideNav direction="previous" currentSlug={recipe.slug} />
         <article className="flex w-full flex-col bg-white pb-12 text-base leading-relaxed text-slate-600 sm:shadow-2xl sm:shadow-slate-200/70">
           <figure className="relative aspect-[4/3] w-full overflow-hidden md:aspect-[16/9] lg:h-[520px]">
             {recipe.image_url ? (
@@ -175,9 +176,8 @@ export default async function RecipePage({ params }: RecipePageProps) {
             </ol>
           </section>
         </article>
-        <RecipeSideNav direction="next" icon={FiArrowRight} currentSlug={recipe.slug} />
+        <RecipeSideNav direction="next" currentSlug={recipe.slug} />
       </div>
     </main>
   );
 }
-
