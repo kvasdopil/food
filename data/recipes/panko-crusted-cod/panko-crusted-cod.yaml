@@ -1,0 +1,85 @@
+title: Panko-Crusted Cod
+summary: >-
+  Flaky cod baked with crispy breadcrumbs and lemon zest, served with garlic
+  mashed potatoes and steamed peas.
+servings: 2
+prepTimeMinutes: 20
+cookTimeMinutes: 25
+ingredients:
+  - name: Cod fillets
+    amount: 1 lb
+    notes: about 2-3 fillets, 1-inch thick
+  - name: Panko breadcrumbs
+    amount: 1 cup
+  - name: Lemon
+    amount: 1 large
+    notes: for zest and juice
+  - name: Olive oil
+    amount: 2 tablespoons
+  - name: Salt
+    amount: 1 teaspoon
+    notes: divided
+  - name: Black pepper
+    amount: 1/2 teaspoon
+    notes: divided
+  - name: Russet potatoes
+    amount: 1.5 lbs
+    notes: peeled and quartered
+  - name: Garlic
+    amount: 2 cloves
+    notes: minced
+  - name: Milk
+    amount: 1/4 cup
+    notes: whole milk or half-and-half
+  - name: Butter
+    amount: 2 tablespoons
+  - name: Frozen peas
+    amount: 1 cup
+instructions:
+  - step: 1
+    action: >-
+      Preheat oven to 400°F (200°C). Place quartered potatoes in a medium pot,
+      cover with cold water by 1 inch, and add 1/2 teaspoon salt. Bring to a
+      boil, then reduce heat and simmer until very tender, about 15-20 minutes.
+  - step: 2
+    action: >-
+      While potatoes cook, pat cod fillets dry with paper towels. Season both
+      sides with 1/2 teaspoon salt and 1/4 teaspoon black pepper. In a shallow
+      dish, combine panko breadcrumbs, the zest of 1 lemon, and 1/4 teaspoon
+      black pepper. Drizzle cod fillets with 1 tablespoon olive oil, then dredge
+      each fillet in the panko mixture, pressing gently to ensure a golden
+      crunchy coating adheres.
+  - step: 3
+    action: >-
+      Place coated cod fillets on a lightly oiled baking sheet. Bake for 12-15
+      minutes, or until the cod is opaque and flakes easily with a fork, and the
+      panko is golden brown. While cod bakes, drain cooked potatoes. Return to
+      the hot pot. Add minced garlic, remaining 1 tablespoon olive oil, butter,
+      and milk. Mash until silky smooth, seasoning with additional salt and
+      pepper to taste.
+  - step: 4
+    action: >-
+      In a small saucepan, bring a small amount of water to a boil. Add frozen
+      peas and steam for 3-4 minutes, or until tender-crisp. Drain well. Serve
+      the panko-crusted cod immediately with the silky garlic mashed potatoes
+      and steamed peas, garnished with fresh lemon wedges if desired.
+tags:
+  - american
+  - seafood
+  - glutenfree
+imagePrompt:
+  base: >-
+    Vibrant close-up of Panko-Crusted Cod, plated to showcase vivid textures and
+    color. Incorporate visual cues from this description: Flaky cod baked with
+    crispy breadcrumbs and lemon zest, served with garlic mashed potatoes and
+    steamed peas.. Scene: american-inspired table with soft natural daylight,
+    eye-level perspective, and shallow depth of field. Capture fresh garnish,
+    gentle steam, and a sense of homemade comfort. No people or branded props.
+  enhanced: >-
+    An intimate close-up of golden Panko-Crusted Cod, its crispy breading and
+    visible lemon zest glistening. Plated atop a swirl of silky garlic mashed
+    potatoes, vibrant green peas scattered artfully. Soft, diffused natural
+    light illuminates gentle steam rising. Garnish with fresh parsley and a
+    lemon wedge. Eye-level perspective, shallow depth of field, evoking
+    comforting homemade perfection on an American-inspired table.
+

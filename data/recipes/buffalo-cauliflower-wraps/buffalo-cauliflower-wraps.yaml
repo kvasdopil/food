@@ -1,0 +1,105 @@
+title: Buffalo Cauliflower Wraps
+summary: >-
+  Crispy cauliflower tossed in tangy buffalo sauce with crunchy slaw in soft
+  tortillas, served with carrot and celery sticks.
+servings: 4
+prepTimeMinutes: 20
+cookTimeMinutes: 25
+ingredients:
+  - name: Cauliflower
+    amount: 1 medium head (about 600-700g)
+    notes: cut into bite-sized florets
+  - name: All-purpose flour
+    amount: 1/2 cup (60g)
+  - name: Cornstarch
+    amount: 2 tablespoons (15g)
+  - name: Garlic powder
+    amount: 1 teaspoon
+  - name: Onion powder
+    amount: 1 teaspoon
+  - name: Smoked paprika
+    amount: 1/2 teaspoon
+  - name: Salt
+    amount: 1/2 teaspoon, plus more for seasoning
+  - name: Black pepper
+    amount: 1/4 teaspoon, plus more for seasoning
+  - name: Water
+    amount: 1/2 cup (120ml)
+  - name: Buffalo wing sauce
+    amount: 1/2 cup (120ml)
+    notes: e.g., Frank's RedHot
+  - name: Flour tortillas
+    amount: 8 medium (8-inch)
+  - name: Green cabbage
+    amount: 3 cups
+    notes: finely shredded
+  - name: Carrot
+    amount: 1 medium
+    notes: shredded
+  - name: Vegan mayonnaise
+    amount: 1/4 cup (60g)
+  - name: Apple cider vinegar
+    amount: 1 tablespoon
+  - name: Maple syrup
+    amount: 1 teaspoon
+    notes: or granulated sugar
+  - name: Celery sticks
+    amount: for serving
+  - name: Carrot sticks
+    amount: for serving
+instructions:
+  - step: 1
+    action: >-
+      Preheat your oven to 400°F (200°C). Line a large baking sheet with
+      parchment paper. In a large bowl, whisk together the all-purpose flour,
+      cornstarch, garlic powder, onion powder, smoked paprika, 1/2 teaspoon
+      salt, and 1/4 teaspoon black pepper. Gradually whisk in the 1/2 cup water
+      until a smooth, thick batter forms. Add the cauliflower florets to the
+      batter and toss until each piece is evenly coated.
+  - step: 2
+    action: >-
+      Spread the coated cauliflower in a single layer on the prepared baking
+      sheet. Bake for 20-25 minutes, flipping the florets halfway through, until
+      they are golden brown and crispy.
+  - step: 3
+    action: >-
+      While the cauliflower bakes, prepare the slaw. In a medium bowl, combine
+      the shredded cabbage and shredded carrot. In a small separate bowl, whisk
+      together the vegan mayonnaise, apple cider vinegar, maple syrup, a pinch
+      of salt, and a pinch of black pepper. Pour the dressing over the cabbage
+      and carrot mixture and toss well to combine.
+  - step: 4
+    action: >-
+      Once the cauliflower is crispy, remove it from the oven. Transfer the hot
+      cauliflower back into the large bowl (or a clean one). Pour the buffalo
+      wing sauce over the cauliflower and toss gently until all florets are
+      thoroughly coated.
+  - step: 5
+    action: >-
+      Warm the flour tortillas according to package directions (typically 15-30
+      seconds in the microwave, or briefly in a dry pan). Fill each warm
+      tortilla with a generous portion of the buffalo cauliflower and a spoonful
+      of the crunchy slaw.
+  - step: 6
+    action: >-
+      Fold the tortillas into wraps and serve immediately with extra carrot and
+      celery sticks on the side.
+tags:
+  - american
+  - vegan
+  - spicy
+imagePrompt:
+  base: >-
+    Hyper-realistic close-up of Buffalo Cauliflower Wraps plated elegantly on a
+    white plate. Pure white studio background, natural window lighting, shallow
+    depth of field. Showcase vibrant colors, gentle steam, and fresh garnish
+    that highlights texture.
+  enhanced: >-
+    Hyper-realistic, slightly elevated close-up of two Buffalo Cauliflower
+    Wraps, one artfully open to reveal the golden, crispy cauliflower and
+    vibrant slaw. Plated on a pristine matte white ceramic plate, accompanied by
+    crisp carrot and celery sticks. Soft, diffused natural light from a window
+    highlights gentle steam and the glossy buffalo sauce. Garnished with fresh
+    chopped chives and a lime wedge, emphasizing texture with shallow depth of
+    field.
+

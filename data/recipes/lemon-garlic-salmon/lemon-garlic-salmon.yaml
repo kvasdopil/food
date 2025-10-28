@@ -1,0 +1,85 @@
+title: Lemon Garlic Salmon
+summary: >-
+  Oven-baked salmon fillets with lemon butter and fresh parsley, served
+  alongside roasted baby potatoes and green beans.
+servings: 4
+prepTimeMinutes: 15
+cookTimeMinutes: 35
+ingredients:
+  - name: Salmon fillets
+    amount: 4 (approx. 6 oz / 170g each)
+  - name: Baby potatoes
+    amount: 1.5 lbs (about 680g)
+    notes: halved
+  - name: Green beans
+    amount: 1 lb (about 450g)
+    notes: trimmed
+  - name: Lemon
+    amount: 1 large
+    notes: half sliced, half juiced
+  - name: Garlic
+    amount: 4 cloves
+    notes: minced
+  - name: Unsalted butter
+    amount: 4 tablespoons (56g)
+    notes: melted
+  - name: Fresh parsley
+    amount: 1/4 cup
+    notes: chopped
+  - name: Olive oil
+    amount: 2 tablespoons
+  - name: Salt
+    amount: 1 teaspoon
+  - name: Black pepper
+    amount: 1/2 teaspoon
+instructions:
+  - step: 1
+    action: >-
+      Preheat your oven to 400°F (200°C). On a large baking sheet, toss the
+      halved baby potatoes with 1 tablespoon of olive oil, 1/2 teaspoon of salt,
+      and 1/4 teaspoon of black pepper. Roast for 15 minutes.
+  - step: 2
+    action: >-
+      While the potatoes roast, prepare the lemon-garlic butter. In a small
+      bowl, combine the melted butter, minced garlic, the juice from half a
+      lemon, and half of the chopped fresh parsley. Season with a pinch of salt
+      and pepper.
+  - step: 3
+    action: >-
+      After 15 minutes, remove the baking sheet from the oven. Push the roasted
+      potatoes to one side of the sheet. Add the trimmed green beans to the
+      empty side, tossing them with the remaining 1 tablespoon of olive oil, 1/4
+      teaspoon of salt, and 1/8 teaspoon of black pepper.
+  - step: 4
+    action: >-
+      Place the salmon fillets, skin-side down if applicable, on the baking
+      sheet among the vegetables. Spoon the lemon-garlic butter mixture evenly
+      over each salmon fillet. Top each fillet with a thin lemon slice.
+  - step: 5
+    action: >-
+      Return the baking sheet to the oven and bake for another 12-18 minutes, or
+      until the salmon is cooked through and flakes easily with a fork, and the
+      vegetables are tender-crisp. Cooking time will vary based on salmon
+      thickness.
+  - step: 6
+    action: >-
+      Garnish the entire dish with the remaining fresh parsley before serving
+      immediately.
+tags:
+  - american
+  - seafood
+  - glutenfree
+imagePrompt:
+  base: >-
+    Hyper-realistic close-up of Lemon Garlic Salmon plated elegantly on a white
+    plate. Pure white studio background, natural window lighting, shallow depth
+    of field. Showcase vibrant colors, gentle steam, and fresh garnish that
+    highlights texture.
+  enhanced: >-
+    Hyper-realistic, alluring close-up of a perfectly flaky Lemon Garlic Salmon
+    fillet, glistening with lemon butter, artfully plated with golden-roasted
+    baby potatoes and vibrant green beans on a pristine white dish. Soft,
+    natural window light accentuates delicate steam. Garnished with fresh
+    chopped parsley and a bright lemon wedge for inviting texture. Shallow depth
+    of field.
+

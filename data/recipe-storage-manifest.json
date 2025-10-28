@@ -1,0 +1,56 @@
+[
+  {
+    "slug": "buffalo-cauliflower-wraps",
+    "bucket": "recipe-images",
+    "path": "buffalo-cauliflower-wraps.jpg",
+    "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/buffalo-cauliflower-wraps.jpg"
+  },
+  {
+    "slug": "classic-beef-tacos",
+    "bucket": "recipe-images",
+    "path": "classic-beef-tacos.jpg",
+    "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/classic-beef-tacos.jpg"
+  },
+  {
+    "slug": "coconut-curry-ramen",
+    "bucket": "recipe-images",
+    "path": "coconut-curry-ramen.jpg",
+    "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/coconut-curry-ramen.jpg"
+  },
+  {
+    "slug": "gochujang-glazed-chicken-thighs",
+    "bucket": "recipe-images",
+    "path": "gochujang-glazed-chicken-thighs.jpg",
+    "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/gochujang-glazed-chicken-thighs.jpg"
+  },
+  {
+    "slug": "greek-stuffed-peppers",
+    "bucket": "recipe-images",
+    "path": "greek-stuffed-peppers.jpg",
+    "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/greek-stuffed-peppers.jpg"
+  },
+  {
+    "slug": "lemon-garlic-salmon",
+    "bucket": "recipe-images",
+    "path": "lemon-garlic-salmon.jpg",
+    "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/lemon-garlic-salmon.jpg"
+  },
+  {
+    "slug": "panko-crusted-cod",
+    "bucket": "recipe-images",
+    "path": "panko-crusted-cod.jpg",
+    "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/panko-crusted-cod.jpg"
+  },
+  {
+    "slug": "teriyaki-chicken-bowls",
+    "bucket": "recipe-images",
+    "path": "teriyaki-chicken-bowls.jpg",
+    "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/teriyaki-chicken-bowls.jpg"
+  },
+  {
+    "slug": "weeknight-beef-chili",
+    "bucket": "recipe-images",
+    "path": "weeknight-beef-chili.jpg",
+    "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/weeknight-beef-chili.jpg"
+  }
+]

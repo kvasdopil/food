@@ -44,6 +44,29 @@ async function fetchRecipeBySlug(slug: string) {
   return data satisfies Recipe | null;
 }
 
+function resolveImageUrl(imageRef: string | null) {
+  if (!imageRef) {
+    return null;
+  }
+
+  if (/^https?:\/\//i.test(imageRef)) {
+    return imageRef;
+  }
+
+  if (!supabase) {
+    return null;
+  }
+
+  const [bucket, ...pathParts] = imageRef.split("/");
+  if (!bucket || pathParts.length === 0) {
+    return null;
+  }
+
+  const objectPath = pathParts.join("/");
+  const { data } = supabase.storage.from(bucket).getPublicUrl(objectPath);
+  return data.publicUrl ?? null;
+}
+
 export async function generateMetadata({
   params,
 }: RecipePageProps): Promise<Metadata> {
@@ -62,7 +85,10 @@ export async function generateMetadata({
     openGraph: {
       title: recipe.name,
       description: recipe.description ?? undefined,
-      images: recipe.image_url ? [{ url: recipe.image_url }] : undefined,
+      images: (() => {
+        const imageUrl = resolveImageUrl(recipe.image_url);
+        return imageUrl ? [{ url: imageUrl }] : undefined;
+      })(),
     },
   };
 }
@@ -86,6 +112,8 @@ export default async function RecipePage({ params }: RecipePageProps) {
     .filter(Boolean)
     .map((step) => step.replace(/^\d+\.\s*/, ""));
 
+  const imageUrl = resolveImageUrl(recipe.image_url);
+
   return (
     <main className="relative min-h-screen bg-slate-50 text-slate-900">
       <KeyboardNav currentSlug={recipe.slug} />
@@ -93,9 +121,9 @@ export default async function RecipePage({ params }: RecipePageProps) {
         <RecipeSideNav direction="previous" currentSlug={recipe.slug} />
         <article className="flex w-full flex-col bg-white pb-12 text-base leading-relaxed text-slate-600 sm:shadow-2xl sm:shadow-slate-200/70">
           <figure className="relative aspect-[4/3] w-full overflow-hidden md:aspect-[16/9] lg:h-[520px]">
-            {recipe.image_url ? (
+            {imageUrl ? (
               <Image
-                src={recipe.image_url}
+                src={imageUrl}
                 alt={recipe.name}
                 fill
                 priority

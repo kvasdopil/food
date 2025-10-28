@@ -1,0 +1,17 @@
+{
+  "requestedMeal": "Buffalo Cauliflower Wraps",
+  "generatedAt": "2025-10-28T13:47:01.027Z",
+  "description": "Crispy cauliflower tossed in tangy buffalo sauce with crunchy slaw in soft tortillas, served with carrot and celery sticks.",
+  "recipeFile": "buffalo-cauliflower-wraps.yaml",
+  "imageFile": "buffalo-cauliflower-wraps.jpg",
+  "tagsProvided": [
+    "american",
+    "vegan",
+    "spicy"
+  ],
+  "imagePrompt": {
+    "base": "Hyper-realistic close-up of Buffalo Cauliflower Wraps plated elegantly on a white plate. Pure white studio background, natural window lighting, shallow depth of field. Showcase vibrant colors, gentle steam, and fresh garnish that highlights texture.",
+    "enhanced": "Hyper-realistic, slightly elevated close-up of two Buffalo Cauliflower Wraps, one artfully open to reveal the golden, crispy cauliflower and vibrant slaw. Plated on a pristine matte white ceramic plate, accompanied by crisp carrot and celery sticks. Soft, diffused natural light from a window highlights gentle steam and the glossy buffalo sauce. Garnished with fresh chopped chives and a lime wedge, emphasizing texture with shallow depth of field.",
+    "mimeType": "image/png"
+  }
+}
