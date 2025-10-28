@@ -15,6 +15,8 @@
 
    - `NEXT_PUBLIC_SUPABASE_URL`: Project URL from the Supabase dashboard
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: anon public key from Supabase
+   - `SUPABASE_SERVICE_ROLE_KEY`: service role token (used by the CLI scripts for storage + seeding)
+   - *(optional)* `RECIPE_STORAGE_BUCKET`: overrides the default `recipe-images` bucket name
 
 2. Install dependencies and run the dev server:
 
@@ -73,6 +75,29 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
 - `src/app/recipes/[slug]/page.tsx`: server component building the recipe layout and metadata.
 - `src/components/*`: client-side interactivity (share, favorite, nav, keyboard shortcuts).
 - `src/app/api/random-recipe/route.ts`: edge handler selecting a random recipe slug.
+
+## Recipe Asset Workflow
+
+- Generate structured recipes + hero prompts and images via:
+
+  ```bash
+  yarn ts-node scripts/recipe-generator.ts "Meal Name" --description "..." --tags "tag1,tag2"
+  ```
+
+- Upload generated JPGs to Supabase Storage:
+
+  ```bash
+  yarn ts-node scripts/upload-recipes-to-storage.ts
+  ```
+
+- Rebuild the SQL seed and upsert directly to the remote DB:
+
+  ```bash
+  yarn ts-node scripts/build-recipe-seed.ts
+  yarn ts-node scripts/seed-recipes.ts
+  ```
+
+- Recipe metadata lives in `data/recipes/<slug>/` (YAML + manifest). Storage uploads land in the `recipe-images` bucket by default.
 
 ## Data Flow
 
