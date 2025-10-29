@@ -6,85 +6,86 @@ servings: 4
 prepTimeMinutes: 20
 cookTimeMinutes: 35
 ingredients:
-  - name: Boneless, skinless chicken thighs
+  - name: boneless, skinless chicken thighs
     amount: 680 g
     notes: Cut into 2.5 cm pieces
-  - name: Soy sauce
+  - name: soy sauce
     amount: 120 ml
-  - name: Mirin
+  - name: mirin
     amount: 60 ml
-  - name: Brown sugar
-    amount: 2 tablespoons
-  - name: Garlic
+  - name: brown sugar
+    amount: 2 tbsp
+  - name: garlic
     amount: 2 cloves
     notes: Minced
-  - name: Fresh ginger
-    amount: 1 tablespoon
+  - name: fresh ginger
+    amount: 1 tbsp
     notes: Grated
-  - name: Cornstarch
-    amount: 1 tablespoon
-  - name: Water
-    amount: 2 tablespoons
+  - name: cornstarch
+    amount: 1 tbsp
+  - name: water
+    amount: 2 tbsp
     notes: For cornstarch slurry
-  - name: Broccoli
+  - name: broccoli
     amount: 1 head
     notes: Cut into florets
-  - name: Carrots
+  - name: carrots
     amount: 2 medium
     notes: Peeled and sliced
-  - name: White rice
+  - name: white rice
     amount: 360 g uncooked
-  - name: Water
+  - name: water
     amount: 960 ml
     notes: For cooking rice
-  - name: Vegetable oil
-    amount: 1 tablespoon
-  - name: Green onions
+  - name: vegetable oil
+    amount: 1 tbsp
+  - name: green onions
     amount: '2'
     notes: Sliced, for garnish
-  - name: Sesame seeds
-    amount: 1 teaspoon
+  - name: sesame seeds
+    amount: 1 tsp
     notes: For garnish
 instructions:
   - step: 1
     action: >-
-      Cook the rice: Rinse white rice thoroughly. Combine rice and 960 ml of
-      water in a medium saucepan. Bring to a boil, then reduce heat to low,
+      Cook the rice: Rinse *white rice* thoroughly. Combine rice and 960 ml of
+      *water* in a medium saucepan. Bring to a boil, then reduce heat to low,
       cover, and simmer for 15-18 minutes, or until all water is absorbed.
       Remove from heat and let stand, covered, for 5 minutes before fluffing
       with a fork.
   - step: 2
     action: >-
-      Prepare teriyaki sauce: In a medium bowl, whisk together soy sauce, mirin,
-      brown sugar, minced garlic, and grated ginger. Set aside 2 tablespoons of
-      this mixture in a separate small bowl for later.
+      Prepare teriyaki sauce: In a medium bowl, whisk together *soy sauce*,
+      *mirin*, *brown sugar*, minced *garlic*, and grated *ginger*. Set aside 2
+      tbsp of this mixture in a separate small bowl for later.
   - step: 3
     action: >-
-      Cook chicken: Heat vegetable oil in a large skillet or wok over
+      Cook chicken: Heat *vegetable oil* in a large skillet or wok over
       medium-high heat. Add the chicken pieces and cook for 5-7 minutes,
       stirring occasionally, until browned on all sides and cooked through.
       Remove chicken from the skillet and set aside.
   - step: 4
     action: >-
-      Steam vegetables: While the chicken cooks, steam the broccoli florets and
-      sliced carrots in a steamer basket over boiling water for 5-7 minutes, or
-      until perfectly tender-crisp. Alternatively, microwave with a splash of
-      water until desired tenderness.
+      Steam vegetables: While the chicken cooks, steam the *broccoli* florets
+      and sliced *carrots* in a steamer basket over boiling *water* for 5-7
+      minutes, or until perfectly tender-crisp. Alternatively, microwave with a
+      splash of water until desired tenderness.
   - step: 5
     action: >-
-      Create the glossy glaze: Pour the main teriyaki sauce mixture (from Step
+      Create the glossy glaze: Pour the main teriyaki *sauce* mixture (from Step
       2) into the skillet. Bring to a simmer over medium heat. In the small bowl
-      with the reserved teriyaki mixture, whisk in the cornstarch until smooth.
-      Pour this cornstarch slurry into the simmering sauce, whisking constantly.
-      Cook for 1-2 minutes, until the sauce thickens into a warm glossy glaze.
+      with the reserved teriyaki mixture, whisk in the *cornstarch* until
+      smooth. Pour this cornstarch slurry into the simmering sauce, whisking
+      constantly. Cook for 1-2 minutes, until the sauce thickens into a warm
+      glossy glaze.
   - step: 6
     action: >-
       Combine and serve: Return the cooked chicken to the skillet with the
       thickened teriyaki glaze and toss to coat thoroughly. To assemble the
-      bowls, divide the cooked rice among serving bowls. Top with the warm,
-      glazed teriyaki chicken and the perfectly steamed broccoli and carrots.
-      Garnish with sliced green onions and sesame seeds. Serve immediately,
-      optionally alongside a quick instant miso soup.
+      bowls, divide the cooked *rice* among serving bowls. Top with the warm,
+      glazed teriyaki chicken and the perfectly steamed *broccoli* and
+      *carrots*. Garnish with sliced *green onions* and *sesame seeds*. Serve
+      immediately, optionally alongside a quick instant miso soup.
 tags:
   - japanese
   - chicken

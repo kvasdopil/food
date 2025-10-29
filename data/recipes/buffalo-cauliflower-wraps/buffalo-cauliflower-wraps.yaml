@@ -6,84 +6,87 @@ servings: 4
 prepTimeMinutes: 20
 cookTimeMinutes: 25
 ingredients:
-  - name: Cauliflower
-    amount: 1 medium head (about 600-700g)
-    notes: cut into bite-sized florets
-  - name: All-purpose flour
+  - name: cauliflower
+    amount: 1 medium head
+    notes: cut into bite-sized florets; about 600-700 g
+  - name: all-purpose flour
     amount: 60 g
-  - name: Cornstarch
+  - name: cornstarch
     amount: 15 g
-  - name: Garlic powder
-    amount: 1 teaspoon
-  - name: Onion powder
-    amount: 1 teaspoon
-  - name: Smoked paprika
-    amount: 1/2 teaspoon
-  - name: Salt
-    amount: 1/2 teaspoon, plus more for seasoning
-  - name: Black pepper
-    amount: 1/4 teaspoon, plus more for seasoning
-  - name: Water
+  - name: garlic powder
+    amount: 1 tsp
+  - name: onion powder
+    amount: 1 tsp
+  - name: smoked paprika
+    amount: 1/2 tsp
+  - name: salt
+    amount: 1/2 tsp
+    notes: plus more for seasoning
+  - name: black pepper
+    amount: 1/4 tsp
+    notes: plus more for seasoning
+  - name: water
     amount: 120 ml
-  - name: Buffalo wing sauce
+  - name: buffalo wing sauce
     amount: 120 ml
     notes: e.g., Frank's RedHot
-  - name: Flour tortillas
-    amount: 8 medium (20 cm)
-  - name: Green cabbage
+  - name: flour tortillas
+    amount: 8 medium
+    notes: 20 cm
+  - name: green cabbage
     amount: 250 g
     notes: finely shredded
-  - name: Carrot
+  - name: carrot
     amount: 1 medium
     notes: shredded
-  - name: Vegan mayonnaise
+  - name: vegan mayonnaise
     amount: 60 g
-  - name: Apple cider vinegar
+  - name: apple cider vinegar
     amount: 15 ml
-  - name: Maple syrup
+  - name: maple syrup
     amount: 5 ml
     notes: or granulated sugar
-  - name: Celery sticks
+  - name: celery sticks
     amount: for serving
-  - name: Carrot sticks
+  - name: carrot sticks
     amount: for serving
 instructions:
   - step: 1
     action: >-
       Preheat your oven to 200°C. Line a large baking sheet with parchment
-      paper. In a large bowl, whisk together the all-purpose flour, cornstarch,
-      garlic powder, onion powder, smoked paprika, 1/2 teaspoon salt, and 1/4
-      teaspoon black pepper. Gradually whisk in the water until a smooth, thick
-      batter forms. Add the cauliflower florets to the batter and toss until
-      each piece is evenly coated.
+      paper. In a large bowl, whisk together the *all-purpose flour*,
+      *cornstarch*, *garlic powder*, *onion powder*, *smoked paprika*, 1/2 tsp
+      *salt*, and 1/4 tsp *black pepper*. Gradually whisk in the *water* until a
+      smooth, thick batter forms. Add the *cauliflower* florets to the batter
+      and toss until each piece is evenly coated.
   - step: 2
     action: >-
-      Spread the coated cauliflower in a single layer on the prepared baking
+      Spread the coated *cauliflower* in a single layer on the prepared baking
       sheet. Bake for 20-25 minutes, flipping the florets halfway through, until
       they are golden brown and crispy.
   - step: 3
     action: >-
-      While the cauliflower bakes, prepare the slaw. In a medium bowl, combine
-      the shredded cabbage and shredded carrot. In a small separate bowl, whisk
-      together the vegan mayonnaise, apple cider vinegar, maple syrup, a pinch
-      of salt, and a pinch of black pepper. Pour the dressing over the cabbage
-      and carrot mixture and toss well to combine.
+      While the *cauliflower* bakes, prepare the slaw. In a medium bowl, combine
+      the shredded *cabbage* and shredded *carrot*. In a small separate bowl,
+      whisk together the *vegan mayonnaise*, *apple cider vinegar*, *maple
+      syrup*, a pinch of *salt*, and a pinch of *black pepper*. Pour the
+      dressing over the cabbage and carrot mixture and toss well to combine.
   - step: 4
     action: >-
-      Once the cauliflower is crispy, remove it from the oven. Transfer the hot
-      cauliflower back into the large bowl (or a clean one). Pour the buffalo
-      wing sauce over the cauliflower and toss gently until all florets are
-      thoroughly coated.
+      Once the *cauliflower* is crispy, remove it from the oven. Transfer the
+      hot cauliflower back into the large bowl (or a clean one). Pour the
+      *buffalo wing sauce* over the cauliflower and toss gently until all
+      florets are thoroughly coated.
   - step: 5
     action: >-
-      Warm the flour tortillas according to package directions (typically 15-30
-      seconds in the microwave, or briefly in a dry pan). Fill each warm
-      tortilla with a generous portion of the buffalo cauliflower and a spoonful
-      of the crunchy slaw.
+      Warm the *flour* tortillas according to package directions (typically
+      15-30 seconds in the microwave, or briefly in a dry pan). Fill each warm
+      tortilla with a generous portion of the buffalo *cauliflower* and a
+      spoonful of the crunchy slaw.
   - step: 6
     action: >-
-      Fold the tortillas into wraps and serve immediately with extra carrot and
-      celery sticks on the side.
+      Fold the *tortillas* into wraps and serve immediately with extra *carrot*
+      and *celery sticks* on the side.
 tags:
   - american
   - vegan

@@ -6,95 +6,96 @@ servings: 4
 prepTimeMinutes: 15
 cookTimeMinutes: 30
 ingredients:
-  - name: Vegetable oil
-    amount: 2 tablespoons
-  - name: Onion
-    amount: 1 medium (approx. 150g)
-    notes: finely chopped
-  - name: Garlic
+  - name: vegetable oil
+    amount: 2 tbsp
+  - name: onion
+    amount: 1 medium
+    notes: finely chopped; approx. 150 g
+  - name: garlic
     amount: 3 cloves
     notes: minced
-  - name: Fresh ginger
+  - name: fresh ginger
     amount: 2 cm piece
     notes: grated
-  - name: Ground cumin
-    amount: 1 teaspoon
-  - name: Ground coriander
-    amount: 1 teaspoon
-  - name: Turmeric powder
-    amount: 0.5 teaspoon
-  - name: Chilli powder
-    amount: 0.5 teaspoon
+  - name: ground cumin
+    amount: 1 tsp
+  - name: ground coriander
+    amount: 1 tsp
+  - name: turmeric powder
+    amount: 0.5 tsp
+  - name: chilli powder
+    amount: 0.5 tsp
     notes: adjust to taste
-  - name: Canned crushed tomatoes
-    amount: 400 grams
-  - name: Canned chickpeas
-    amount: 2 x 400 gram cans
+  - name: canned crushed tomatoes
+    amount: 400 g
+  - name: canned chickpeas
+    amount: 2 x 400 g cans
     notes: drained and rinsed
-  - name: Full-fat coconut milk
-    amount: 200 millilitres
-  - name: Garam masala
-    amount: 1 teaspoon
-  - name: Salt
+  - name: full-fat coconut milk
+    amount: 200 ml
+  - name: garam masala
+    amount: 1 tsp
+  - name: salt
     amount: to taste
-  - name: Sugar
-    amount: 0.5 teaspoon
+  - name: sugar
+    amount: 0.5 tsp
     notes: optional, to balance acidity
-  - name: Fresh coriander
-    amount: 2 tablespoons
+  - name: fresh coriander
+    amount: 2 tbsp
     notes: chopped, for garnish
-  - name: Basmati rice
-    amount: 200 grams
+  - name: basmati rice
+    amount: 200 g
     notes: for serving
-  - name: Cucumber
-    amount: 1 small (approx. 150g)
-    notes: diced, for salad
-  - name: Lemon juice
-    amount: 1 tablespoon
+  - name: cucumber
+    amount: 1 small
+    notes: diced, for salad; approx. 150 g
+  - name: lemon juice
+    amount: 1 tbsp
     notes: for cucumber salad
 instructions:
   - step: 1
     action: >-
-      Rinse the basmati rice thoroughly under cold water until the water runs
-      clear. Place the rice in a small saucepan with 400 millilitres of water.
-      Bring to a boil, then reduce heat to low, cover, and simmer for 12-15
-      minutes, or until all water is absorbed. Remove from heat and let stand,
-      covered, for 5 minutes.
+      Rinse the *basmati rice* thoroughly under cold water until the water runs
+      clear. Place the rice in a small saucepan with 400 ml of water. Bring to a
+      boil, then reduce heat to low, cover, and simmer for 12-15 minutes, or
+      until all water is absorbed. Remove from heat and let stand, covered, for
+      5 minutes.
   - step: 2
     action: >-
-      While the rice cooks, heat the vegetable oil in a large saucepan or pot
-      over medium heat. Add the chopped onion and cook for 5-7 minutes, stirring
-      occasionally, until softened and translucent.
+      While the *rice* cooks, heat the *vegetable oil* in a large saucepan or
+      pot over medium heat. Add the chopped *onion* and cook for 5-7 minutes,
+      stirring occasionally, until softened and translucent.
   - step: 3
     action: >-
-      Add the minced garlic and grated ginger to the pot. Cook for another 1
-      minute until fragrant. Stir in the ground cumin, ground coriander,
-      turmeric powder, and chilli powder. Cook for 30 seconds, stirring
+      Add the minced *garlic* and grated *ginger* to the pot. Cook for another 1
+      minute until fragrant. Stir in the *ground cumin*, *ground coriander*,
+      *turmeric powder*, and *chilli powder*. Cook for 30 seconds, stirring
       constantly, until the spices are aromatic.
   - step: 4
     action: >-
-      Pour in the crushed tomatoes and bring the mixture to a gentle simmer. Add
-      the drained and rinsed chickpeas. Stir well, then reduce the heat to low,
-      cover, and let simmer for 10 minutes, allowing the flavors to meld.
+      Pour in the *crushed tomatoes* and bring the mixture to a gentle simmer.
+      Add the drained and rinsed *chickpeas*. Stir well, then reduce the heat to
+      low, cover, and let simmer for 10 minutes, allowing the flavors to meld.
   - step: 5
     action: >-
-      Stir in the coconut milk and garam masala. If using, add the sugar to
-      balance the acidity of the tomatoes. Season with salt to taste. Continue
-      to simmer gently, uncovered, for another 5 minutes, until the sauce has
-      thickened slightly and is heated through.
+      Stir in the *coconut milk* and *garam masala*. If using, add the *sugar*
+      to balance the acidity of the *tomatoes*. Season with *salt* to taste.
+      Continue to simmer gently, uncovered, for another 5 minutes, until the
+      sauce has thickened slightly and is heated through.
   - step: 6
     action: >-
-      While the curry simmers, prepare the cucumber salad: In a small bowl,
-      combine the diced cucumber with the lemon juice and a pinch of salt. Toss
-      gently.
+      While the curry simmers, prepare the *cucumber* salad: In a small bowl,
+      combine the diced cucumber with the *lemon juice* and a pinch of *salt*.
+      Toss gently.
   - step: 7
     action: >-
-      Fluff the cooked basmati rice with a fork. Taste the Chickpea Tikka Masala
-      and adjust seasoning if necessary.
+      Fluff the cooked *basmati rice* with a fork. Taste the *chickpea* Tikka
+      *masala* and adjust seasoning if necessary.
   - step: 8
     action: >-
-      Serve the Chickpea Tikka Masala hot with the steamed basmati rice and the
-      refreshing cucumber salad. Garnish with fresh chopped coriander.
+      Serve the *chickpea* Tikka *masala* hot with the steamed *basmati rice*
+      and the refreshing *cucumber* salad. Garnish with fresh chopped
+      *coriander*.
 tags:
   - indian
   - vegan
@@ -116,4 +117,3 @@ imagePrompt:
     counterpoint. Bathed in soft, golden natural daylight, highlighting gentle
     steam and a delicate fresh cilantro garnish. Shallow depth of field evokes
     homemade comfort.
-

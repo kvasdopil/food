@@ -6,64 +6,64 @@ servings: 2
 prepTimeMinutes: 20
 cookTimeMinutes: 25
 ingredients:
-  - name: Cod fillets
+  - name: cod fillets
     amount: 450 g
     notes: about 2-3 fillets, 2.5 cm thick
-  - name: Panko breadcrumbs
+  - name: panko breadcrumbs
     amount: 80 g
-  - name: Lemon
+  - name: lemon
     amount: 1 large
     notes: for zest and juice
-  - name: Olive oil
-    amount: 2 tablespoons
-  - name: Salt
-    amount: 1 teaspoon
+  - name: olive oil
+    amount: 2 tbsp
+  - name: salt
+    amount: 1 tsp
     notes: divided
-  - name: Black pepper
-    amount: 1/2 teaspoon
+  - name: black pepper
+    amount: 1/2 tsp
     notes: divided
-  - name: Russet potatoes
+  - name: russet potatoes
     amount: 680 g
     notes: peeled and quartered
-  - name: Garlic
+  - name: garlic
     amount: 2 cloves
     notes: minced
-  - name: Milk
+  - name: milk
     amount: 60 ml
     notes: whole milk or half-and-half
-  - name: Butter
-    amount: 2 tablespoons
-  - name: Frozen peas
+  - name: butter
+    amount: 2 tbsp
+  - name: frozen peas
     amount: 150 g
 instructions:
   - step: 1
     action: >-
-      Preheat the oven to 200°C. Place quartered potatoes in a medium pot,
-      cover with cold water by about 2.5 cm, and add 1/2 teaspoon salt. Bring
-      to a boil, then reduce heat and simmer until very tender, about 15-20
-      minutes.
+      Preheat the oven to 200°C. Place quartered *potatoes* in a medium pot,
+      cover with cold water by about 2.5 cm, and add 1/2 tsp *salt*. Bring to a
+      boil, then reduce heat and simmer until very tender, about 15-20 minutes.
   - step: 2
     action: >-
-      While potatoes cook, pat cod fillets dry with paper towels. Season both
-      sides with 1/2 teaspoon salt and 1/4 teaspoon black pepper. In a shallow
-      dish, combine panko breadcrumbs, the zest of 1 lemon, and 1/4 teaspoon
-      black pepper. Drizzle cod fillets with 1 tablespoon olive oil, then dredge
+      While *potatoes* cook, pat *cod fillets* dry with paper towels. Season
+      both sides with 1/2 tsp *salt* and 1/4 tsp *black pepper*. In a shallow
+      dish, combine *panko breadcrumbs*, the zest of 1 *lemon*, and 1/4 tsp
+      black pepper. Drizzle cod fillets with 1 tbsp *olive oil*, then dredge
       each fillet in the panko mixture, pressing gently to ensure a golden
       crunchy coating adheres.
   - step: 3
     action: >-
-      Place coated cod fillets on a lightly oiled baking sheet. Bake for 12-15
+      Place coated *cod fillets* on a lightly oiled baking sheet. Bake for 12-15
       minutes, or until the cod is opaque and flakes easily with a fork, and the
-      panko is golden brown. While cod bakes, drain cooked potatoes. Return to
-      the hot pot. Add minced garlic, remaining 1 tablespoon olive oil, butter,
-      and milk. Mash until silky smooth, seasoning with additional salt and
-      pepper to taste.
+      panko is golden brown. While cod bakes, drain cooked *potatoes*. Return to
+      the hot pot. Add minced *garlic*, remaining 1 tbsp *olive oil*, *butter*,
+      and *milk*. Mash until silky smooth, seasoning with additional *salt* and
+      *pepper* to taste.
   - step: 4
     action: >-
-      In a small saucepan, bring a small amount of water to a boil. Add frozen
-      peas and steam for 3-4 minutes, or until tender-crisp. Drain well. Serve
-      the panko-crusted cod immediately with the silky garlic mashed potatoes
-      and steamed peas, garnished with fresh lemon wedges if desired.
+      In a small saucepan, bring a small amount of water to a boil. Add *frozen
+      peas* and steam for 3-4 minutes, or until tender-crisp. Drain well. Serve
+      the panko-crusted cod immediately with the silky *garlic* mashed
+      *potatoes* and steamed peas, garnished with fresh *lemon* wedges if
+      desired.
 tags:
   - american
   - seafood

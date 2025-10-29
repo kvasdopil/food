@@ -7,34 +7,34 @@ servings: 2
 prepTimeMinutes: 20
 cookTimeMinutes: 12
 ingredients:
-  - name: Pizza dough
-    amount: 250-300 grams
+  - name: pizza dough
+    amount: 250-300 g
     notes: Store-bought fresh pizza dough
-  - name: Canned crushed tomatoes
-    amount: 200 grams
+  - name: canned crushed tomatoes
+    amount: 200 g
     notes: Look for San Marzano if possible, or good quality crushed tomatoes
-  - name: Fresh mozzarella
-    amount: 125 grams
+  - name: fresh mozzarella
+    amount: 125 g
     notes: Drained and sliced into thin rounds
-  - name: Fresh basil leaves
-    amount: 15 grams
+  - name: fresh basil leaves
+    amount: 15 g
     notes: About 10-12 large leaves
-  - name: Extra virgin olive oil
-    amount: 30 millilitres
+  - name: extra virgin olive oil
+    amount: 30 ml
     notes: Plus extra for drizzling
-  - name: Garlic
+  - name: garlic
     amount: 1 clove
     notes: Minced, for the sauce
-  - name: Salt
-    amount: 5 grams
+  - name: salt
+    amount: 5 g
     notes: To taste, for sauce and pizza
-  - name: Black pepper
-    amount: 2 grams
+  - name: black pepper
+    amount: 2 g
     notes: Freshly ground, to taste
-  - name: Arugula
-    amount: 50 grams
+  - name: arugula
+    amount: 50 g
     notes: For the side salad
-  - name: Lemon
+  - name: lemon
     amount: 1 whole
     notes: For the salad dressing
 instructions:
@@ -45,19 +45,19 @@ instructions:
       baking tray will work.
   - step: 2
     action: >-
-      Prepare the tomato sauce: In a small bowl, combine the crushed tomatoes,
-      minced garlic, 15 millilitres of olive oil, and a pinch of salt. Stir well
+      Prepare the tomato sauce: In a small bowl, combine the *crushed tomatoes*,
+      minced *garlic*, 15 ml of *olive oil*, and a pinch of *salt*. Stir well
       and set aside.
   - step: 3
     action: >-
-      Gently stretch the pizza dough on a lightly floured surface or a piece of
-      parchment paper to your desired thickness, aiming for a round shape about
-      25-30 cm in diameter.
+      Gently stretch the *pizza dough* on a lightly floured surface or a piece
+      of parchment paper to your desired thickness, aiming for a round shape
+      about 25-30 cm in diameter.
   - step: 4
     action: >-
-      Carefully transfer the dough to the hot pizza stone or baking tray. Spread
-      the tomato sauce evenly over the dough, leaving a small border for the
-      crust. Distribute the sliced mozzarella over the sauce.
+      Carefully transfer the *dough* to the hot pizza stone or baking tray.
+      Spread the tomato sauce evenly over the dough, leaving a small border for
+      the crust. Distribute the sliced *mozzarella* over the sauce.
   - step: 5
     action: >-
       Bake for 8-12 minutes, or until the crust is golden brown and blistered,
@@ -65,16 +65,16 @@ instructions:
       your oven.
   - step: 6
     action: >-
-      While the pizza bakes, prepare the arugula salad: In a medium bowl,
+      While the pizza bakes, prepare the *arugula* salad: In a medium bowl,
       combine the arugula. In a separate small bowl, whisk together the juice of
-      half a lemon, the remaining 15 millilitres of olive oil, a pinch of salt,
-      and a dash of black pepper to create a simple vinaigrette.
+      half a *lemon*, the remaining 15 ml of *olive oil*, a pinch of *salt*, and
+      a dash of *black pepper* to create a simple vinaigrette.
   - step: 7
     action: >-
-      Once the pizza is out of the oven, immediately scatter the fresh basil
-      leaves over the hot cheese. Drizzle with a little extra virgin olive oil
-      if desired. Slice and serve hot with the dressed arugula salad on the
-      side.
+      Once the pizza is out of the oven, immediately scatter the *fresh basil
+      leaves* over the hot cheese. Drizzle with a little *extra virgin olive
+      oil* if desired. Slice and serve hot with the dressed *arugula* salad on
+      the side.
 tags:
   - italian
   - vegetarian

@@ -6,93 +6,95 @@ servings: 4
 prepTimeMinutes: 15
 cookTimeMinutes: 30
 ingredients:
-  - name: Olive oil
+  - name: olive oil
     amount: 1 tbsp
     notes: for chili
-  - name: Lean ground beef
+  - name: lean ground beef
     amount: 500 g
-  - name: Onion
+  - name: onion
     amount: 1 large
     notes: diced
-  - name: Garlic
+  - name: garlic
     amount: 3 cloves
     notes: minced
-  - name: Chili powder
+  - name: chili powder
     amount: 2 tbsp
-  - name: Ground cumin
+  - name: ground cumin
     amount: 1 tbsp
-  - name: Smoked paprika
+  - name: smoked paprika
     amount: 1 tsp
-  - name: Cayenne pepper
+  - name: cayenne pepper
     amount: 1/2 tsp
     notes: optional, for extra heat
-  - name: Salt
+  - name: salt
     amount: 1 tsp
     notes: for chili
-  - name: Black pepper
+  - name: black pepper
     amount: 1/2 tsp
     notes: for chili
-  - name: Diced tomatoes
+  - name: diced tomatoes
     amount: 400 g
     notes: undrained
-  - name: Kidney beans
+  - name: kidney beans
     amount: 400 g
     notes: rinsed and drained
-  - name: Black beans
+  - name: black beans
     amount: 400 g
     notes: rinsed and drained
-  - name: Beef broth
+  - name: beef broth
     amount: 250 ml
-  - name: Sweet potatoes
-    amount: 2 medium (about 500 g)
-  - name: Olive oil
+  - name: sweet potatoes
+    amount: 2 medium
+    notes: about 500 g
+  - name: olive oil
     amount: 1 tbsp
     notes: for sweet potato fries
-  - name: Salt
+  - name: salt
     amount: 1/2 tsp
     notes: for sweet potato fries
-  - name: Shredded cheddar cheese
+  - name: shredded cheddar cheese
     amount: as desired
     notes: optional garnish
-  - name: Sour cream
+  - name: sour cream
     amount: as desired
     notes: optional garnish
-  - name: Fresh cilantro
+  - name: fresh cilantro
     amount: as desired
     notes: chopped, optional garnish
 instructions:
   - step: 1
-    action: >-
-      Preheat oven to 200°C. Line a large baking sheet with parchment paper.
+    action: Preheat oven to 200°C. Line a large baking sheet with parchment paper.
   - step: 2
     action: >-
-      Peel sweet potatoes and cut them into fries about 1 cm thick. In a bowl,
-      toss the sweet potato fries with 1 tbsp olive oil and 1/2 tsp salt. Spread
-      them in a single layer on the prepared baking sheet and bake for 25-30
-      minutes, flipping halfway through, until tender and lightly browned.
+      Peel *sweet potatoes* and cut them into fries about 1 cm thick. In a bowl,
+      toss the sweet potato fries with 1 tbsp *olive oil* and 1/2 tsp *salt*.
+      Spread them in a single layer on the prepared baking sheet and bake for
+      25-30 minutes, flipping halfway through, until tender and lightly browned.
   - step: 3
     action: >-
-      While the sweet potatoes bake, heat 1 tbsp olive oil in a large pot or
-      Dutch oven over medium-high heat. Add the ground beef and cook, breaking
+      While the *sweet potatoes* bake, heat 1 tbsp *olive oil* in a large pot or
+      Dutch oven over medium-high heat. Add the *ground beef* and cook, breaking
       it up with a spoon, until it is fully browned, about 5-7 minutes. Drain
       any excess fat.
   - step: 4
     action: >-
-      Add the diced onion to the pot with the beef and cook until softened,
-      about 3-5 minutes. Stir in the minced garlic, chili powder, ground cumin,
-      smoked paprika, cayenne pepper (if using), 1 tsp salt, and 1/2 tsp black
-      pepper. Cook for 1 minute more, stirring constantly, until fragrant.
+      Add the diced *onion* to the pot with the *beef* and cook until softened,
+      about 3-5 minutes. Stir in the minced *garlic*, *chili powder*, *ground
+      cumin*, *smoked paprika*, *cayenne pepper* (if using), 1 tsp *salt*, and
+      1/2 tsp *black pepper*. Cook for 1 minute more, stirring constantly, until
+      fragrant.
   - step: 5
     action: >-
-      Stir in the undrained diced tomatoes, rinsed and drained kidney beans,
-      rinsed and drained black beans, and beef broth. Bring the mixture to a
+      Stir in the undrained *diced tomatoes*, rinsed and drained *kidney beans*,
+      rinsed and drained *black beans*, and *beef* broth. Bring the mixture to a
       simmer, then reduce the heat to low, cover, and let it simmer for 15-20
       minutes, stirring occasionally, to allow the flavors to meld.
   - step: 6
     action: >-
       Taste the chili and adjust seasonings if necessary. Serve the hot chili
-      alongside the crispy baked sweet potato fries. Garnish with shredded
-      cheddar cheese, a dollop of sour cream, and fresh cilantro, if desired.
+      alongside the crispy baked sweet potato fries. Garnish with *shredded
+      cheddar cheese*, a dollop of *sour cream*, and *fresh cilantro*, if
+      desired.
 tags:
   - american
   - beef

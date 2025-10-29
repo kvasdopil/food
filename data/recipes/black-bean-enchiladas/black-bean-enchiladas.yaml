@@ -6,79 +6,82 @@ servings: 4
 prepTimeMinutes: 20
 cookTimeMinutes: 25
 ingredients:
-  - name: Vegetable oil
+  - name: vegetable oil
     amount: 15 ml
-  - name: Small onion
-    amount: 1 (approximately 100g), finely chopped
-  - name: Garlic cloves
-    amount: 2, minced
-  - name: Ground cumin
+  - name: small onion
+    amount: '1'
+    notes: approximately 100 g; finely chopped
+  - name: garlic cloves
+    amount: '2'
+    notes: minced
+  - name: ground cumin
     amount: 5 ml
-  - name: Chili powder
+  - name: chili powder
     amount: 5 ml
-  - name: Smoked paprika
+  - name: smoked paprika
     amount: 2.5 ml
-  - name: Canned black beans
-    amount: 2 x 400g cans
+  - name: canned black beans
+    amount: 2 x 400 g cans
     notes: drained and rinsed
-  - name: Corn tortillas
+  - name: corn tortillas
     amount: '12'
-  - name: Shredded cheddar cheese
-    amount: 200g
+  - name: shredded cheddar cheese
+    amount: 200 g
     notes: plus extra for topping
-  - name: Canned red enchilada sauce
-    amount: 400g
-  - name: Salt
+  - name: canned red enchilada sauce
+    amount: 400 g
+  - name: salt
     amount: to taste
-  - name: Black pepper
+  - name: black pepper
     amount: to taste
-  - name: Fresh cilantro
-    amount: 30g
+  - name: fresh cilantro
+    amount: 30 g
     notes: chopped, for garnish and rice
-  - name: Lime
+  - name: lime
     amount: '1'
     notes: cut into wedges, for garnish and rice
-  - name: Quick-cook white rice
-    amount: 200g
+  - name: quick-cook white rice
+    amount: 200 g
     notes: for side dish
 instructions:
   - step: 1
     action: Preheat your oven to 190°C. Lightly grease a 23x33 cm baking dish.
   - step: 2
     action: >-
-      In a large pan or skillet, heat the vegetable oil over medium heat. Add
-      the chopped onion and sauté for 5-7 minutes until softened. Add the minced
-      garlic, ground cumin, chili powder, and smoked paprika, cooking for
-      another minute until fragrant.
+      In a large pan or skillet, heat the *vegetable oil* over medium heat. Add
+      the chopped *onion* and sauté for 5-7 minutes until softened. Add the
+      minced garlic, *ground cumin*, *chili powder*, and *smoked paprika*,
+      cooking for another minute until fragrant.
   - step: 3
     action: >-
-      Stir in the drained and rinsed black beans. Cook for 5-7 minutes, using a
-      fork or potato masher to mash about half of the beans. This creates a
-      creamy, substantial filling. Season with salt and black pepper to taste.
+      Stir in the drained and rinsed *black beans*. Cook for 5-7 minutes, using
+      a fork or potato masher to mash about half of the beans. This creates a
+      creamy, substantial filling. Season with *salt* and *black pepper* to
+      taste.
   - step: 4
     action: >-
-      Warm the corn tortillas slightly to make them pliable. You can do this in
-      a microwave for 15-20 seconds or quickly in a dry pan. Spoon approximately
-      60g of the black bean mixture and a sprinkle of shredded cheese into the
-      center of each tortilla. Roll tightly and place seam-down in the prepared
-      baking dish.
+      Warm the *corn tortillas* slightly to make them pliable. You can do this
+      in a microwave for 15-20 seconds or quickly in a dry pan. Spoon
+      approximately 60 g of the *black bean* mixture and a sprinkle of shredded
+      *cheese* into the center of each tortilla. Roll tightly and place
+      seam-down in the prepared baking dish.
   - step: 5
     action: >-
-      Pour the enchilada sauce evenly over the rolled tortillas. Top with the
-      remaining shredded cheese.
+      Pour the *enchilada sauce* evenly over the rolled *tortillas*. Top with
+      the remaining shredded *cheese*.
   - step: 6
     action: >-
-      Bake for 20-25 minutes, or until the cheese is melted and bubbly and the
+      Bake for 20-25 minutes, or until the *cheese* is melted and bubbly and the
       enchiladas are heated through.
   - step: 7
     action: >-
-      While the enchiladas bake, cook the quick-cook white rice according to
-      package directions. Once cooked, stir in half of the chopped fresh
-      cilantro and a squeeze of lime juice from one of the lime wedges.
+      While the enchiladas bake, cook the *quick-cook white rice* according to
+      package directions. Once cooked, stir in half of the chopped *fresh
+      cilantro* and a squeeze of *lime* juice from one of the lime wedges.
   - step: 8
     action: >-
-      Serve the black bean enchiladas hot, garnished with the remaining fresh
-      cilantro and lime wedges, alongside the cilantro-lime rice.
+      Serve the *black bean* enchiladas hot, garnished with the remaining *fresh
+      cilantro* and *lime* wedges, alongside the cilantro-lime *rice*.
 tags:
   - mexican
   - vegetarian
@@ -100,4 +103,3 @@ imagePrompt:
     daylight, captured from a slightly elevated eye-level perspective with
     shallow depth of field. Gentle steam rises, evoking ultimate homemade
     comfort on a rustic, Mexican-inspired surface.
-

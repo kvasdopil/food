@@ -6,85 +6,87 @@ servings: 4
 prepTimeMinutes: 25
 cookTimeMinutes: 15
 ingredients:
-  - name: Quinoa
+  - name: quinoa
     amount: 200 g
-  - name: Vegetable stock
+  - name: vegetable stock
     amount: 400 ml
-  - name: Fresh parsley
+  - name: fresh parsley
     amount: 15 g
     notes: finely chopped
-  - name: Fresh mint
+  - name: fresh mint
     amount: 5 g
     notes: finely chopped
-  - name: Olive oil
+  - name: olive oil
     amount: 30 ml
     notes: divided
-  - name: Salt
+  - name: salt
     amount: 5 g
     notes: divided
-  - name: Tahini
+  - name: tahini
     amount: 60 ml
-  - name: Lemon juice
+  - name: lemon juice
     amount: 45 ml
     notes: freshly squeezed, divided
-  - name: Garlic
+  - name: garlic
     amount: 1 clove
     notes: minced
-  - name: Cold water
+  - name: cold water
     amount: 60-90 ml
     notes: for dressing, adjust for consistency
-  - name: Black pepper
+  - name: black pepper
     amount: 1.5 g
     notes: freshly ground, divided
-  - name: Cherry tomatoes
+  - name: cherry tomatoes
     amount: 250 g
     notes: halved
-  - name: Cucumber
+  - name: cucumber
     amount: 350 g
-    notes: 150g diced for bowl, 200g thinly sliced for salad
-  - name: Kalamata olives
+    notes: 150 g diced for bowl, 200 g thinly sliced for salad
+  - name: kalamata olives
     amount: 80 g
     notes: pitted and halved
-  - name: Red onion
+  - name: red onion
     amount: 50 g
     notes: thinly sliced
-  - name: Canned chickpeas
+  - name: canned chickpeas
     amount: 400 g can
     notes: rinsed and drained
-  - name: Fresh dill
+  - name: fresh dill
     amount: 5 g
     notes: finely chopped
 instructions:
   - step: 1
     action: >-
-      Rinse quinoa thoroughly under cold water. In a medium saucepan, combine
-      the rinsed quinoa, vegetable stock, 5 ml olive oil, and 2 g salt. Bring to
-      a boil, then reduce heat to low, cover, and simmer for 15 minutes, or
-      until all liquid is absorbed. Remove from heat and let stand, covered, for
-      5 minutes. Fluff with a fork and stir in chopped parsley and mint.
+      Rinse *quinoa* thoroughly under *cold water*. In a medium saucepan,
+      combine the rinsed quinoa, *vegetable stock*, 5 ml *olive* oil, and 2 g
+      *salt*. Bring to a boil, then reduce heat to low, cover, and simmer for 15
+      minutes, or until all liquid is absorbed. Remove from heat and let stand,
+      covered, for 5 minutes. Fluff with a fork and stir in chopped *parsley*
+      and *mint*.
   - step: 2
     action: >-
-      While quinoa cooks, prepare the Lemon Tahini Dressing: Whisk together
-      tahini, 30 ml lemon juice, minced garlic, 15 ml olive oil, 2 g salt, and 1
-      g black pepper in a small bowl. Gradually add cold water, starting with 60
-      ml, whisking until smooth and desired consistency is reached (add up to 30
-      ml more water if needed).
+      While *quinoa* cooks, prepare the Lemon *tahini* Dressing: Whisk together
+      tahini, 30 ml *lemon juice*, minced *garlic*, 15 ml *olive* oil, 2 g
+      *salt*, and 1 g *black pepper* in a small bowl. Gradually add *cold
+      water*, starting with 60 ml, whisking until smooth and desired consistency
+      is reached (add up to 30 ml more water if needed).
   - step: 3
     action: >-
       Prepare the main bowl components: In a large bowl, combine the halved
-      cherry tomatoes, 150g diced cucumber, halved Kalamata olives, thinly
-      sliced red onion, and rinsed chickpeas.
+      *cherry tomatoes*, 150 g diced *cucumber*, halved *kalamata olives*,
+      thinly sliced *red onion*, and rinsed *chickpeas*.
   - step: 4
     action: >-
-      Prepare the Lemon-Herb Cucumber Salad: In a separate medium bowl, combine
-      the 200g thinly sliced cucumber, 15 ml lemon juice, chopped dill, 10 ml
-      olive oil, 1 g salt, and 0.5 g black pepper. Toss gently to combine.
+      Prepare the Lemon-Herb *cucumber* Salad: In a separate medium bowl,
+      combine the 200 g thinly sliced cucumber, 15 ml *lemon juice*, chopped
+      *dill*, 10 ml *olive* oil, 1 g *salt*, and 0.5 g *black pepper*. Toss
+      gently to combine.
   - step: 5
     action: >-
-      Assemble the bowls: Divide the herb quinoa among serving bowls. Top each
+      Assemble the bowls: Divide the herb *quinoa* among serving bowls. Top each
       with a generous portion of the mixed bowl components. Drizzle generously
-      with the lemon tahini dressing. Serve immediately with the lemon-herb
-      cucumber salad on the side.
+      with the *lemon* *tahini* dressing. Serve immediately with the lemon-herb
+      *cucumber* salad on the side.
 tags:
   - mediterranean
   - vegan
@@ -106,4 +108,3 @@ imagePrompt:
     warm, soft natural light, whisps of steam rise gently. Garnish with fresh
     mint, parsley, and a lemon wedge. Eye-level perspective, shallow depth of
     field.
-

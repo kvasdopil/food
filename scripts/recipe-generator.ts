@@ -160,7 +160,9 @@ async function generateRecipe(options: CliOptions, apiKey: string): Promise<Reci
     `Core description provided by the product team: ${options.description}`,
     'The dish must be achievable in 60 minutes or less using widely available, budget-friendly ingredients.',
     'Include a short summary sentence that captures the flavor and vibe of the meal.',
-    'Use metric measurements (grams, millilitres, Celsius) plus teaspoon/tablespoon where helpful. Never use Fahrenheit, pounds, ounces, cups, or inches.',
+    'Use metric measurements with abbreviated units (g, ml, °C) plus tsp/tbsp where helpful. Never use Fahrenheit, pounds, ounces, cups, or inches.',
+    'Describe tiny amounts (a drizzle of olive oil, a pinch of salt) naturally instead of inventing precise measurements.',
+    'In the instructions, wrap the first occurrence of each ingredient name per step in asterisks like *ingredient*, and reference ingredients using lowercase wording rather than Title Case.',
     'Return the recipe structured JSON matching the provided schema.',
     'If you mention a side or garnish, keep it quick to prepare.',
   ];

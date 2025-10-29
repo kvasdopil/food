@@ -84,6 +84,12 @@
     "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/panko-crusted-cod.jpg"
   },
   {
+    "slug": "roasted-red-pepper-pasta",
+    "bucket": "recipe-images",
+    "path": "roasted-red-pepper-pasta.jpg",
+    "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/roasted-red-pepper-pasta.jpg"
+  },
+  {
     "slug": "spinach-ricotta-stuffed-shells",
     "bucket": "recipe-images",
     "path": "spinach-ricotta-stuffed-shells.jpg",

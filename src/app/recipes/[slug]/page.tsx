@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { Fragment, type ReactNode } from "react";
 
 import { FavoriteButton } from "@/components/favorite-button";
 import { KeyboardNav } from "@/components/keyboard-nav";
@@ -70,6 +71,33 @@ export async function generateMetadata({
       })(),
     },
   };
+}
+
+function renderInstructionWithHighlights(step: string) {
+  const nodes: ReactNode[] = [];
+  const regex = /\*([^*]+)\*/g;
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = regex.exec(step)) !== null) {
+    if (match.index > lastIndex) {
+      nodes.push(
+        <Fragment key={`text-${lastIndex}`}>{step.slice(lastIndex, match.index)}</Fragment>,
+      );
+    }
+    nodes.push(
+      <span key={`highlight-${match.index}`} className="font-semibold text-emerald-600">
+        {match[1]}
+      </span>,
+    );
+    lastIndex = regex.lastIndex;
+  }
+
+  if (lastIndex < step.length) {
+    nodes.push(<Fragment key={`text-${lastIndex}`}>{step.slice(lastIndex)}</Fragment>);
+  }
+
+  return nodes;
 }
 
 export default async function RecipePage({ params }: RecipePageProps) {
@@ -170,18 +198,18 @@ export default async function RecipePage({ params }: RecipePageProps) {
                 Instructions
               </h2>
               <ol className="space-y-3">
-                {instructionSteps.map((step, index) => (
-                  <li
-                    key={`${index}-${step}`}
-                    className="flex items-start gap-3 text-base text-slate-700"
-                  >
-                    <span className="mt-0.5 w-5 flex-shrink-0 text-right text-base font-semibold text-amber-500">
-                      {index + 1}
-                    </span>
-                    <span className="flex-1">{step}</span>
-                  </li>
-                ))}
-              </ol>
+              {instructionSteps.map((step, index) => (
+                <li
+                  key={`${index}-${step}`}
+                  className="flex items-start gap-3 text-base text-slate-700"
+                >
+                  <span className="mt-0.5 w-5 flex-shrink-0 text-right text-base font-semibold text-amber-500">
+                    {index + 1}
+                  </span>
+                  <span className="flex-1">{renderInstructionWithHighlights(step)}</span>
+                </li>
+              ))}
+            </ol>
             </section>
           </article>
           <RecipeSideNav direction="next" currentSlug={recipe.slug} />

@@ -6,70 +6,70 @@ servings: 4
 prepTimeMinutes: 15
 cookTimeMinutes: 35
 ingredients:
-  - name: Large Portobello Mushrooms
+  - name: large portobello mushrooms
     amount: '4'
     notes: Stems removed, gills gently scraped out
-  - name: Baby Potatoes
-    amount: 500 grams
+  - name: baby potatoes
+    amount: 500 g
     notes: Washed and halved
-  - name: Cherry Tomatoes
-    amount: 200 grams
+  - name: cherry tomatoes
+    amount: 200 g
     notes: Halved
-  - name: Fresh Mozzarella
-    amount: 125 grams
+  - name: fresh mozzarella
+    amount: 125 g
     notes: Ball or bocconcini, sliced or torn
-  - name: Olive Oil
-    amount: 60 millilitres
+  - name: olive oil
+    amount: 60 ml
     notes: Divided
-  - name: Balsamic Glaze
-    amount: 60 millilitres
+  - name: balsamic glaze
+    amount: 60 ml
     notes: Store-bought or homemade
-  - name: Garlic
+  - name: garlic
     amount: 2 cloves
     notes: Minced
-  - name: Dried Oregano
-    amount: 1 teaspoon
-  - name: Fresh Basil
+  - name: dried oregano
+    amount: 1 tsp
+  - name: fresh basil
     amount: A few leaves
     notes: For garnish, optional
-  - name: Salt
+  - name: salt
     amount: To taste
-  - name: Black Pepper
+  - name: black pepper
     amount: To taste
 instructions:
   - step: 1
     action: >-
-      Preheat your oven to 200°C. In a large bowl, toss the halved baby potatoes
-      with 30 millilitres of olive oil, minced garlic, dried oregano, salt, and
-      black pepper until evenly coated. Spread the seasoned potatoes in a single
-      layer on a large baking tray.
+      Preheat your oven to 200°C. In a large bowl, toss the halved *baby
+      potatoes* with 30 ml of *olive oil*, minced *garlic*, *dried oregano*,
+      *salt*, and *black pepper* until evenly coated. Spread the seasoned
+      potatoes in a single layer on a large baking tray.
   - step: 2
     action: >-
-      Roast the potatoes in the preheated oven for 15 minutes to give them a
+      Roast the *potatoes* in the preheated oven for 15 minutes to give them a
       head start.
   - step: 3
     action: >-
-      While the potatoes are roasting, prepare the portobello mushrooms. Brush
-      the mushroom caps with the remaining 30 millilitres of olive oil and
-      season lightly with salt and pepper. Slice the cherry tomatoes and fresh
-      mozzarella.
+      While the *potatoes* are roasting, prepare the *portobello mushrooms*.
+      Brush the mushroom caps with the remaining 30 ml of *olive oil* and season
+      lightly with *salt* and *pepper*. Slice the *cherry tomatoes* and *fresh
+      mozzarella*.
   - step: 4
     action: >-
       After 15 minutes, carefully remove the baking tray from the oven. Arrange
-      the prepared portobello mushroom caps, gill-side up, on the same tray
-      alongside the potatoes (or use a second tray if needed). Fill each
-      mushroom cap generously with the sliced mozzarella and halved cherry
-      tomatoes.
+      the prepared *portobello mushroom* caps, gill-side up, on the same tray
+      alongside the *potatoes* (or use a second tray if needed). Fill each
+      mushroom cap generously with the sliced *mozzarella* and halved *cherry
+      tomatoes*.
   - step: 5
     action: >-
       Return the tray(s) to the oven and continue to roast for another 15-20
-      minutes, or until the mushrooms are tender, the cheese is melted and
-      bubbly, and the potatoes are golden brown and cooked through.
+      minutes, or until the *mushrooms* are tender, the cheese is melted and
+      bubbly, and the *potatoes* are golden brown and cooked through.
   - step: 6
     action: >-
       Remove from the oven. Drizzle the Caprese stuffed portobellos with
-      balsamic glaze. Garnish with fresh basil leaves if desired. Serve
-      immediately with the herb-roasted baby potatoes.
+      *balsamic glaze*. Garnish with *fresh basil* leaves if desired. Serve
+      immediately with the herb-roasted *baby potatoes*.
 tags:
   - italian
   - vegetarian
@@ -91,4 +91,3 @@ imagePrompt:
     highlighting delicate steam and emerald basil garnish. Eye-level, shallow
     depth of field, on a rustic Italian-inspired surface, evoking homemade
     comfort.
-

@@ -6,81 +6,83 @@ servings: 4
 prepTimeMinutes: 15
 cookTimeMinutes: 30
 ingredients:
-  - name: Red lentils
-    amount: 200 grams
+  - name: red lentils
+    amount: 200 g
     notes: rinsed
-  - name: Pasta
-    amount: 350 grams
+  - name: pasta
+    amount: 350 g
     notes: e.g., spaghetti, penne
-  - name: Canned chopped tomatoes
-    amount: 400 grams
-  - name: Vegetable stock
-    amount: 300 millilitres
-  - name: Onion
+  - name: canned chopped tomatoes
+    amount: 400 g
+  - name: vegetable stock
+    amount: 300 ml
+  - name: onion
     amount: 1 medium
     notes: finely chopped
-  - name: Carrot
+  - name: carrot
     amount: 1 medium
     notes: finely chopped
-  - name: Celery stalk
+  - name: celery stalk
     amount: '1'
     notes: finely chopped
-  - name: Garlic cloves
+  - name: garlic cloves
     amount: '3'
     notes: minced, for bolognese
-  - name: Olive oil
-    amount: 2 tablespoons
-  - name: Dried oregano
-    amount: 1 teaspoon
-  - name: Dried basil
-    amount: 1 teaspoon
-  - name: Salt
+  - name: olive oil
+    amount: 2 tbsp
+  - name: dried oregano
+    amount: 1 tsp
+  - name: dried basil
+    amount: 1 tsp
+  - name: salt
     amount: To taste
-  - name: Black pepper
+  - name: black pepper
     amount: To taste
-  - name: Fresh spinach
-    amount: 200 grams
-  - name: Garlic cloves
+  - name: fresh spinach
+    amount: 200 g
+  - name: garlic cloves
     amount: '2'
     notes: thinly sliced, for spinach
 instructions:
   - step: 1
     action: >-
-      Prepare your vegetables: finely chop the onion, carrot, and celery. Mince
-      the 3 garlic cloves for the bolognese sauce.
+      Prepare your vegetables: finely chop the *onion*, *carrot*, and celery.
+      Mince the 3 *garlic cloves* for the bolognese sauce.
   - step: 2
     action: >-
-      Heat 1 tablespoon of olive oil in a large pot or deep pan over medium
-      heat. Add the chopped onion, carrot, and celery. Sauté for 5-7 minutes
-      until softened.
+      Heat 1 tbsp of *olive oil* in a large pot or deep pan over medium heat.
+      Add the chopped *onion*, *carrot*, and celery. Sauté for 5-7 minutes until
+      softened.
   - step: 3
     action: >-
-      Add the minced garlic, dried oregano, and dried basil to the pot. Cook for
-      another 1 minute until fragrant, stirring constantly.
+      Add the minced garlic, *dried oregano*, and *dried basil* to the pot. Cook
+      for another 1 minute until fragrant, stirring constantly.
   - step: 4
     action: >-
-      Stir in the rinsed red lentils, canned chopped tomatoes, and vegetable
-      stock. Bring the mixture to a gentle simmer. Reduce the heat to low, cover
-      the pot, and let it simmer for 15-20 minutes, or until the lentils are
-      tender and the sauce has thickened. Stir occasionally to prevent sticking.
-      Season generously with salt and black pepper to taste.
+      Stir in the rinsed *red lentils*, *canned chopped tomatoes*, and
+      *vegetable stock*. Bring the mixture to a gentle simmer. Reduce the heat
+      to low, cover the pot, and let it simmer for 15-20 minutes, or until the
+      lentils are tender and the sauce has thickened. Stir occasionally to
+      prevent sticking. Season generously with *salt* and *black pepper* to
+      taste.
   - step: 5
     action: >-
       While the bolognese simmers, bring a large pot of well-salted water to a
-      rolling boil. Add the pasta and cook according to package directions until
-      al dente. Drain the pasta, reserving about 60 millilitres of the pasta
+      rolling boil. Add the *pasta* and cook according to package directions
+      until al dente. Drain the pasta, reserving about 60 ml of the pasta
       cooking water.
   - step: 6
     action: >-
-      In a separate frying pan, heat the remaining 1 tablespoon of olive oil
-      over medium heat. Add the 2 thinly sliced garlic cloves and cook for 30
-      seconds until fragrant. Add the fresh spinach and sauté for 2-3 minutes
-      until completely wilted. Season with a pinch of salt.
+      In a separate frying pan, heat the remaining 1 tbsp of *olive oil* over
+      medium heat. Add the 2 thinly sliced *garlic cloves* and cook for 30
+      seconds until fragrant. Add the *fresh spinach* and sauté for 2-3 minutes
+      until completely wilted. Season with a pinch of *salt*.
   - step: 7
     action: >-
-      Serve the hearty lentil bolognese over the cooked pasta. If the sauce is
-      too thick, stir in a splash of the reserved pasta water to reach your
-      desired consistency. Serve with the garlicky sautéed spinach on the side.
+      Serve the hearty *lentil* bolognese over the cooked *pasta*. If the sauce
+      is too thick, stir in a splash of the reserved pasta water to reach your
+      desired consistency. Serve with the garlicky sautéed *spinach* on the
+      side.
 tags:
   - italian
   - vegan
@@ -99,4 +101,3 @@ imagePrompt:
     natural light, an inviting eye-level close-up with shallow depth of field
     captures tantalizing steam and rustic Italian comfort, highlighting the
     dish's hearty textures and inviting aroma.
-

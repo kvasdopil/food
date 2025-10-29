@@ -6,55 +6,56 @@ servings: 4
 prepTimeMinutes: 15
 cookTimeMinutes: 35
 ingredients:
-  - name: Salmon fillets
-    amount: 4 fillets (about 170 g each)
-  - name: Baby potatoes
+  - name: salmon fillets
+    amount: 4 fillets
+    notes: about 170 g each
+  - name: baby potatoes
     amount: 680 g
     notes: halved
-  - name: Green beans
+  - name: green beans
     amount: 450 g
     notes: trimmed
-  - name: Lemon
+  - name: lemon
     amount: 1 large
     notes: half sliced, half juiced
-  - name: Garlic
+  - name: garlic
     amount: 4 cloves
     notes: minced
-  - name: Unsalted butter
-    amount: 4 tablespoons (56g)
-    notes: melted
-  - name: Fresh parsley
+  - name: unsalted butter
+    amount: 4 tbsp
+    notes: melted; 56 g
+  - name: fresh parsley
     amount: 15 g
     notes: chopped
-  - name: Olive oil
-    amount: 2 tablespoons
-  - name: Salt
-    amount: 1 teaspoon
-  - name: Black pepper
-    amount: 1/2 teaspoon
+  - name: olive oil
+    amount: 2 tbsp
+  - name: salt
+    amount: 1 tsp
+  - name: black pepper
+    amount: 1/2 tsp
 instructions:
   - step: 1
     action: >-
-      Preheat your oven to 200°C. On a large baking sheet, toss the halved baby
-      potatoes with 1 tablespoon of olive oil, 1/2 teaspoon of salt, and 1/4
-      teaspoon of black pepper. Roast for 15 minutes.
+      Preheat your oven to 200°C. On a large baking sheet, toss the halved *baby
+      potatoes* with 1 tbsp of *olive oil*, 1/2 tsp of *salt*, and 1/4 tsp of
+      *black pepper*. Roast for 15 minutes.
   - step: 2
     action: >-
-      While the potatoes roast, prepare the lemon-garlic butter. In a small
-      bowl, combine the melted butter, minced garlic, the juice from half a
-      lemon, and half of the chopped fresh parsley. Season with a pinch of salt
-      and pepper.
+      While the *potatoes* roast, prepare the *lemon*-*garlic* *butter*. In a
+      small bowl, combine the melted butter, minced garlic, the juice from half
+      a lemon, and half of the chopped *fresh parsley*. Season with a pinch of
+      *salt* and *pepper*.
   - step: 3
     action: >-
       After 15 minutes, remove the baking sheet from the oven. Push the roasted
-      potatoes to one side of the sheet. Add the trimmed green beans to the
-      empty side, tossing them with the remaining 1 tablespoon of olive oil, 1/4
-      teaspoon of salt, and 1/8 teaspoon of black pepper.
+      *potatoes* to one side of the sheet. Add the trimmed *green beans* to the
+      empty side, tossing them with the remaining 1 tbsp of *olive oil*, 1/4 tsp
+      of *salt*, and 1/8 tsp of *black pepper*.
   - step: 4
     action: >-
-      Place the salmon fillets, skin-side down if applicable, on the baking
-      sheet among the vegetables. Spoon the lemon-garlic butter mixture evenly
-      over each salmon fillet. Top each fillet with a thin lemon slice.
+      Place the *salmon fillets*, skin-side down if applicable, on the baking
+      sheet among the vegetables. Spoon the *lemon*-*garlic* *butter* mixture
+      evenly over each salmon fillet. Top each fillet with a thin lemon slice.
   - step: 5
     action: >-
       Return the baking sheet to the oven and bake for another 12-18 minutes, or
@@ -63,7 +64,7 @@ instructions:
       thickness.
   - step: 6
     action: >-
-      Garnish the entire dish with the remaining fresh parsley before serving
+      Garnish the entire dish with the remaining *fresh parsley* before serving
       immediately.
 tags:
   - american

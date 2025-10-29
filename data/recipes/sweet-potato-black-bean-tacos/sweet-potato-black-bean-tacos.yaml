@@ -6,84 +6,85 @@ servings: 4
 prepTimeMinutes: 25
 cookTimeMinutes: 25
 ingredients:
-  - name: Sweet Potatoes
-    amount: 600 grams
+  - name: sweet potatoes
+    amount: 600 g
     notes: peeled and diced into 1.5 cm cubes
-  - name: Black Beans
-    amount: 400 gram can
+  - name: black beans
+    amount: 400 g can
     notes: rinsed and drained
-  - name: Corn
-    amount: 340 gram can or 340 grams frozen
+  - name: corn
+    amount: 340 g can or 340 g frozen
     notes: drained if canned, thawed if frozen
-  - name: Red Onion
+  - name: red onion
     amount: 1 small
     notes: finely diced
-  - name: Fresh Cilantro
-    amount: 30 grams
+  - name: fresh cilantro
+    amount: 30 g
     notes: chopped, plus extra for garnish
-  - name: Limes
+  - name: limes
     amount: 2-3
     notes: 1 juiced and zested for crema, 1-2 juiced for corn salad and serving
-  - name: Olive Oil
-    amount: 30 millilitres
+  - name: olive oil
+    amount: 30 ml
     notes: plus extra for charring corn
-  - name: Chili Powder
-    amount: 10 millilitres (2 tsp)
-    notes: divided
-  - name: Ground Cumin
-    amount: 10 millilitres (2 tsp)
-    notes: divided
-  - name: Smoked Paprika
-    amount: 5 millilitres (1 tsp)
-  - name: Salt
-    amount: 5 millilitres (1 tsp)
-    notes: plus more to taste
-  - name: Black Pepper
-    amount: 2.5 millilitres (0.5 tsp)
-  - name: Sour Cream
-    amount: 120 millilitres
+  - name: chili powder
+    amount: 10 ml
+    notes: divided; 2 tsp
+  - name: ground cumin
+    amount: 10 ml
+    notes: divided; 2 tsp
+  - name: smoked paprika
+    amount: 5 ml
+    notes: 1 tsp
+  - name: salt
+    amount: 5 ml
+    notes: plus more to taste; 1 tsp
+  - name: black pepper
+    amount: 2.5 ml
+    notes: 0.5 tsp
+  - name: sour cream
+    amount: 120 ml
     notes: or a vegan alternative for a plant-based option
-  - name: Corn Tortillas
+  - name: corn tortillas
     amount: '12'
     notes: small, for gluten-free option
 instructions:
   - step: 1
     action: >-
-      Preheat your oven to 200°C. In a large bowl, toss the diced sweet potatoes
-      with 15 millilitres of olive oil, 5 millilitres of chili powder, 5
-      millilitres of ground cumin, the smoked paprika, 2.5 millilitres of salt,
-      and all of the black pepper. Spread them in a single layer on a baking
-      tray.
+      Preheat your oven to 200°C. In a large bowl, toss the diced *sweet
+      potatoes* with 15 ml of *olive oil*, 5 ml of *chili powder*, 5 ml of
+      *ground cumin*, the *smoked paprika*, 2.5 ml of *salt*, and all of the
+      *black pepper*. Spread them in a single layer on a baking tray.
   - step: 2
     action: >-
-      Roast the sweet potatoes for 20-25 minutes, or until tender and lightly
+      Roast the *sweet potatoes* for 20-25 minutes, or until tender and lightly
       caramelized, flipping halfway through. During the last 5 minutes of
-      roasting, add the rinsed black beans to the tray with the sweet potatoes
+      roasting, add the rinsed *black beans* to the tray with the sweet potatoes
       to warm through.
   - step: 3
     action: >-
-      While the sweet potatoes roast, prepare the charred street-corn salad.
-      Heat a frying pan over medium-high heat with a drizzle of olive oil. Add
+      While the *sweet potatoes* roast, prepare the charred street-*corn* salad.
+      Heat a frying pan over medium-high heat with a drizzle of *olive oil*. Add
       the corn and cook for 5-7 minutes, stirring occasionally, until some
-      kernels are lightly charred. Transfer to a bowl and mix with the diced red
-      onion, 20 grams of chopped cilantro, the juice of one lime, the remaining
-      5 millilitres of chili powder, and 5 millilitres of ground cumin. Season
-      with salt to taste.
+      kernels are lightly charred. Transfer to a bowl and mix with the diced
+      *red onion*, 20 g of chopped *cilantro*, the juice of one *lime*, the
+      remaining 5 ml of *chili powder*, and 5 ml of *ground cumin*. Season with
+      *salt* to taste.
   - step: 4
     action: >-
-      For the lime crema, combine the sour cream (or vegan alternative) in a
-      small bowl with the zest and juice of one lime and 2.5 millilitres of
-      salt. Mix well until smooth.
+      For the *lime* crema, combine the *sour cream* (or vegan alternative) in a
+      small bowl with the zest and juice of one lime and 2.5 ml of *salt*. Mix
+      well until smooth.
   - step: 5
     action: >-
-      Warm the corn tortillas according to package directions, either in a dry
+      Warm the *corn tortillas* according to package directions, either in a dry
       pan, microwave, or wrapped in foil in the oven for a few minutes.
   - step: 6
     action: >-
-      Assemble the tacos by spooning the roasted sweet potato and black bean
-      mixture into the warm tortillas. Top with a generous dollop of lime crema,
-      a spoonful of the charred street-corn salad, and a sprinkle of fresh
-      cilantro. Serve immediately with extra lime wedges.
+      Assemble the tacos by spooning the roasted sweet potato and *black bean*
+      mixture into the warm *tortillas*. Top with a generous dollop of *lime*
+      crema, a spoonful of the charred street-*corn* salad, and a sprinkle of
+      *fresh cilantro*. Serve immediately with extra lime wedges.
 tags:
   - mexican
   - vegan
@@ -105,4 +106,3 @@ imagePrompt:
     light, a shallow depth of field emphasizes fresh cilantro leaves, a zesty
     lime wedge, and delicate wisps of steam, evoking irresistible homemade
     comfort.
-

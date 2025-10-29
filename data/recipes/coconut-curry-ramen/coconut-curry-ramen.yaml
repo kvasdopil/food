@@ -6,91 +6,91 @@ servings: 4
 prepTimeMinutes: 20
 cookTimeMinutes: 35
 ingredients:
-  - name: Extra-firm tofu
+  - name: extra-firm tofu
     amount: 400 g
     notes: Pressed and cubed
-  - name: Ramen noodles
+  - name: ramen noodles
     amount: 400 g
     notes: Dried ramen without seasoning
-  - name: Full-fat coconut milk
+  - name: full-fat coconut milk
     amount: 400 ml
-  - name: Vegetable broth
+  - name: vegetable broth
     amount: 1 litre
-  - name: Red curry paste
+  - name: red curry paste
     amount: 40-60 g
     notes: Adjust to taste
-  - name: Baby bok choy
+  - name: baby bok choy
     amount: 4-6 heads
     notes: Halved lengthwise
-  - name: Garlic
+  - name: garlic
     amount: 3 cloves
     notes: Minced
-  - name: Fresh ginger
+  - name: fresh ginger
     amount: 15 g
     notes: Grated
-  - name: Yellow onion
+  - name: yellow onion
     amount: 1/2 medium
     notes: Finely diced
-  - name: Soy sauce
+  - name: soy sauce
     amount: 30 ml
     notes: Use tamari for gluten-free
-  - name: Lime juice
+  - name: lime juice
     amount: 15 ml
     notes: From about 1/2 lime
-  - name: Vegetable oil
+  - name: vegetable oil
     amount: 30 ml
     notes: For tofu and sautéing
-  - name: Cucumber
-    amount: 1 large (250 g)
-    notes: Thinly sliced, for salad
-  - name: Rice vinegar
+  - name: cucumber
+    amount: 1 large
+    notes: Thinly sliced, for salad; 250 g
+  - name: rice vinegar
     amount: 30 ml
     notes: For salad
-  - name: Toasted sesame oil
+  - name: toasted sesame oil
     amount: 15 ml
     notes: For salad
-  - name: Sesame seeds
+  - name: sesame seeds
     amount: 5 g
     notes: For salad/garnish
-  - name: Fresh cilantro or green onions
+  - name: fresh cilantro or green onions
     amount: Optional
     notes: For garnish
 instructions:
   - step: 1
     action: >-
-      Press excess water from the tofu block. Cut into roughly 2 cm cubes. Heat
-      half of the vegetable oil in a large pot or Dutch oven over medium-high
-      heat. Add tofu cubes and cook, stirring occasionally, until golden brown
-      and crispy on all sides, about 10-15 minutes. Remove tofu from the pot and
-      set aside.
+      Press excess water from the *tofu* block. Cut into roughly 2 cm cubes.
+      Heat half of the vegetable *oil* in a large pot or Dutch oven over
+      medium-high heat. Add tofu cubes and cook, stirring occasionally, until
+      golden brown and crispy on all sides, about 10-15 minutes. Remove tofu
+      from the pot and set aside.
   - step: 2
     action: >-
-      In the same pot, add the remaining oil if needed. Add diced onion and cook
-      until softened, about 3-4 minutes. Stir in minced garlic and grated
-      ginger, cooking for another minute until fragrant. Add red curry paste and
-      cook, stirring constantly, for 1-2 minutes to toast the spices.
+      In the same pot, add the remaining *oil* if needed. Add diced *onion* and
+      cook until softened, about 3-4 minutes. Stir in minced *garlic* and grated
+      *ginger*, cooking for another minute until fragrant. Add *red curry paste*
+      and cook, stirring constantly, for 1-2 minutes to toast the spices.
   - step: 3
     action: >-
-      Pour in the vegetable broth and coconut milk. Bring to a gentle simmer,
-      then reduce heat to low and let it simmer for 10-15 minutes to allow
-      flavors to meld. Stir in soy sauce and lime juice. Taste and adjust
-      seasonings as needed.
+      Pour in the *vegetable broth* and *coconut milk*. Bring to a gentle
+      simmer, then reduce heat to low and let it simmer for 10-15 minutes to
+      allow flavors to meld. Stir in *soy sauce* and *lime juice*. Taste and
+      adjust seasonings as needed.
   - step: 4
     action: >-
-      While the broth simmers, cook the ramen noodles according to package
+      While the *broth* simmers, cook the *ramen noodles* according to package
       directions in a separate pot of boiling water. Drain well. Add the halved
-      baby bok choy to the simmering curry broth during the last 2-3 minutes of
-      cooking, just until wilted and tender-crisp.
+      *baby bok choy* to the simmering curry broth during the last 2-3 minutes
+      of cooking, just until wilted and tender-crisp.
   - step: 5
     action: >-
-      In a small bowl, combine sliced cucumber, rice vinegar, toasted sesame
-      oil, and sesame seeds. Toss gently to combine.
+      In a small bowl, combine sliced *cucumber*, *rice vinegar*, *toasted
+      sesame oil*, and *sesame seeds*. Toss gently to combine.
   - step: 6
     action: >-
-      Divide the cooked ramen noodles among serving bowls. Ladle the hot coconut
-      curry broth and bok choy over the noodles. Top each bowl with the crispy
-      tofu cubes. Garnish with fresh cilantro or green onions, if desired. Serve
-      immediately with the sesame cucumber salad on the side.
+      Divide the cooked *ramen noodles* among serving bowls. Ladle the hot
+      coconut curry *broth* and *bok choy* over the noodles. Top each bowl with
+      the crispy *tofu* cubes. Garnish with *fresh cilantro or green onions*, if
+      desired. Serve immediately with the sesame *cucumber* salad on the side.
 tags:
   - fusion
   - vegan

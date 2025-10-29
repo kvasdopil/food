@@ -6,82 +6,84 @@ servings: 4
 prepTimeMinutes: 15
 cookTimeMinutes: 25
 ingredients:
-  - name: Arborio rice
-    amount: 300g
-  - name: Cremini or button mushrooms
-    amount: 250g
+  - name: arborio rice
+    amount: 300 g
+  - name: cremini or button mushrooms
+    amount: 250 g
     notes: sliced
-  - name: Vegetable broth
+  - name: vegetable broth
     amount: 1 litre
     notes: warm
-  - name: Yellow onion
+  - name: yellow onion
     amount: 1 medium
     notes: finely chopped
-  - name: Garlic
+  - name: garlic
     amount: 2 cloves
     notes: minced
-  - name: Parmesan cheese
-    amount: 80g
+  - name: parmesan cheese
+    amount: 80 g
     notes: freshly grated
-  - name: Olive oil
-    amount: 2 tablespoons
-  - name: Unsalted butter
-    amount: 30g
-  - name: Dry white wine
-    amount: 120ml
+  - name: olive oil
+    amount: 2 tbsp
+  - name: unsalted butter
+    amount: 30 g
+  - name: dry white wine
+    amount: 120 ml
     notes: such as Pinot Grigio (optional)
-  - name: Asparagus
-    amount: 300g
+  - name: asparagus
+    amount: 300 g
     notes: trimmed
-  - name: Fresh parsley
-    amount: 2 tablespoons
+  - name: fresh parsley
+    amount: 2 tbsp
     notes: chopped, for garnish
-  - name: Lemon
+  - name: lemon
     amount: 1/2
     notes: for serving with asparagus
-  - name: Salt
+  - name: salt
     amount: To taste
-  - name: Black pepper
+  - name: black pepper
     amount: To taste
 instructions:
   - step: 1
     action: >-
-      Preheat oven to 200°C. Toss the trimmed asparagus spears with 1 tablespoon
-      of olive oil, a pinch of salt, and pepper on a baking tray. Roast for
-      10-12 minutes until tender-crisp. Set aside.
+      Preheat oven to 200°C. Toss the trimmed *asparagus* spears with 1 tbsp of
+      *olive oil*, a pinch of *salt*, and *black pepper* on a baking tray. Roast
+      for 10-12 minutes until tender-crisp. Set aside.
   - step: 2
     action: >-
-      In a large, heavy-bottomed pot or Dutch oven, melt 15g of butter with the
-      remaining 1 tablespoon of olive oil over medium heat. Add the chopped
-      onion and cook until softened and translucent, about 5 minutes. Add the
-      minced garlic and cook for another minute until fragrant.
+      In a large, heavy-bottomed pot or Dutch oven, melt 15 g of *unsalted
+      butter* with the remaining 1 tbsp of *olive oil* over medium heat. Add the
+      chopped *yellow onion* and cook until softened and translucent, about 5
+      minutes. Add the minced *garlic* and cook for another minute until
+      fragrant.
   - step: 3
     action: >-
-      Add the Arborio rice to the pot and stir constantly for 2 minutes until
+      Add the *arborio rice* to the pot and stir constantly for 2 minutes until
       the edges of the grains are translucent but the center is still opaque. If
-      using, pour in the white wine and stir until it has been completely
+      using, pour in the *dry white wine* and stir until it has been completely
       absorbed by the rice.
   - step: 4
     action: >-
-      Begin adding the warm vegetable broth, one ladleful (about 120ml) at a
+      Begin adding the warm *vegetable broth*, one ladleful (about 120 ml) at a
       time, stirring frequently. Wait until each addition of broth is almost
       completely absorbed before adding the next. After about 10 minutes of
-      adding broth, stir in the sliced mushrooms.
+      adding broth, stir in the sliced *cremini or button mushrooms*.
   - step: 5
     action: >-
-      Continue adding broth and stirring for another 10-15 minutes, or until the
-      rice is creamy and al dente (cooked through but still firm to the bite).
-      You may not need all of the broth. Remove the pot from the heat.
+      Continue adding *vegetable broth* and stirring for another 10-15 minutes,
+      or until the *arborio rice* is creamy and al dente (cooked through but
+      still firm to the bite). You may not need all of the broth. Remove the pot
+      from the heat.
   - step: 6
     action: >-
-      Stir in the remaining 15g of butter and the grated Parmesan cheese until
-      melted and fully incorporated. Season with salt and black pepper to taste.
-      Let the risotto rest for 2 minutes, covered.
+      Stir in the remaining 15 g of *unsalted butter* and the grated *parmesan
+      cheese* until melted and fully incorporated. season with *salt* and *black
+      pepper* to taste. Let the risotto rest for 2 minutes, covered.
   - step: 7
     action: >-
-      Serve the creamy mushroom risotto immediately, garnished with fresh
-      chopped parsley and accompanied by the roasted asparagus spears. A squeeze
-      of fresh lemon over the asparagus is highly recommended.
+      Serve the creamy *mushroom* risotto immediately, garnished with chopped
+      *fresh parsley* and accompanied by the roasted *asparagus* spears. A
+      squeeze of *lemon* over the asparagus is highly recommended.
 tags:
   - italian
   - vegetarian
@@ -102,4 +104,3 @@ imagePrompt:
     soft, diffused natural light, a wisp of steam dances above. Garnish with
     fresh, finely chopped parsley and a dusting of grated parmesan. Eye-level
     perspective with a shallow depth of field, evoking ultimate comfort.
-
