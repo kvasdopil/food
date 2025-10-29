@@ -1,7 +1,7 @@
 title: Caprese Stuffed Portobellos
 summary: >-
-  Roasted mushroom caps filled with mozzarella, cherry tomatoes, and balsamic
-  glaze, accompanied by herb-roasted baby potatoes.
+  Roasted mushroom caps filled with mozzarella, cherry tomatoes, and balsamic glaze, accompanied by herb-roasted baby
+  potatoes.
 servings: 4
 prepTimeMinutes: 15
 cookTimeMinutes: 35
@@ -10,19 +10,19 @@ ingredients:
     amount: '4'
     notes: Stems removed, gills gently scraped out
   - name: baby potatoes
-    amount: 500 g
+    amount: 500g
     notes: Washed and halved
   - name: cherry tomatoes
-    amount: 200 g
+    amount: 200g
     notes: Halved
   - name: fresh mozzarella
-    amount: 125 g
+    amount: 125g
     notes: Ball or bocconcini, sliced or torn
   - name: olive oil
-    amount: 60 ml
+    amount: 60ml
     notes: Divided
   - name: balsamic glaze
-    amount: 60 ml
+    amount: 60ml
     notes: Store-bought or homemade
   - name: garlic
     amount: 2 cloves
@@ -39,55 +39,42 @@ ingredients:
 instructions:
   - step: 1
     action: >-
-      Preheat your oven to 200°C. In a large bowl, toss the halved *baby
-      potatoes* with 30 ml of *olive oil*, minced *garlic*, *dried oregano*,
-      *salt*, and *black pepper* until evenly coated. Spread the seasoned
-      potatoes in a single layer on a large baking tray.
+      Preheat your oven to 200°C. In a large bowl, toss the halved *baby potatoes* with 30 ml of *olive oil*, minced
+      *garlic*, *dried oregano*, *salt*, and *black pepper* until evenly coated. Spread the seasoned potatoes in a
+      single layer on a large baking tray.
   - step: 2
-    action: >-
-      Roast the *potatoes* in the preheated oven for 15 minutes to give them a
-      head start.
+    action: Roast the *potatoes* in the preheated oven for 15 minutes to give them a head start.
   - step: 3
     action: >-
-      While the *potatoes* are roasting, prepare the *portobello mushrooms*.
-      Brush the mushroom caps with the remaining 30 ml of *olive oil* and season
-      lightly with *salt* and *pepper*. Slice the *cherry tomatoes* and *fresh
+      While the *potatoes* are roasting, prepare the *portobello mushrooms*. Brush the mushroom caps with the remaining
+      30 ml of *olive oil* and season lightly with *salt* and *pepper*. Slice the *cherry tomatoes* and *fresh
       mozzarella*.
   - step: 4
     action: >-
-      After 15 minutes, carefully remove the baking tray from the oven. Arrange
-      the prepared *portobello mushroom* caps, gill-side up, on the same tray
-      alongside the *potatoes* (or use a second tray if needed). Fill each
-      mushroom cap generously with the sliced *mozzarella* and halved *cherry
-      tomatoes*.
+      After 15 minutes, carefully remove the baking tray from the oven. Arrange the prepared *portobello mushroom* caps,
+      gill-side up, on the same tray alongside the *potatoes* (or use a second tray if needed). Fill each mushroom cap
+      generously with the sliced *mozzarella* and halved *cherry tomatoes*.
   - step: 5
     action: >-
-      Return the tray(s) to the oven and continue to roast for another 15-20
-      minutes, or until the *mushrooms* are tender, the cheese is melted and
-      bubbly, and the *potatoes* are golden brown and cooked through.
+      Return the tray(s) to the oven and continue to roast for another 15-20 minutes, or until the *mushrooms* are
+      tender, the cheese is melted and bubbly, and the *potatoes* are golden brown and cooked through.
   - step: 6
     action: >-
-      Remove from the oven. Drizzle the Caprese stuffed portobellos with
-      *balsamic glaze*. Garnish with *fresh basil* leaves if desired. Serve
-      immediately with the herb-roasted *baby potatoes*.
+      Remove from the oven. Drizzle the Caprese stuffed portobellos with *balsamic glaze*. Garnish with *fresh basil*
+      leaves if desired. Serve immediately with the herb-roasted *baby potatoes*.
 tags:
   - italian
   - vegetarian
   - glutenfree
 imagePrompt:
   base: >-
-    Vibrant close-up of Caprese Stuffed Portobellos, plated to showcase vivid
-    textures and color. Incorporate visual cues from this description: Roasted
-    mushroom caps filled with mozzarella, cherry tomatoes, and balsamic glaze,
-    accompanied by herb-roasted baby potatoes.. Scene: italian-inspired table
-    with soft natural daylight, eye-level perspective, and shallow depth of
-    field. Capture fresh garnish, gentle steam, and a sense of homemade comfort.
-    No people or branded props.
+    Vibrant close-up of Caprese Stuffed Portobellos, plated to showcase vivid textures and color. Incorporate visual
+    cues from this description: Roasted mushroom caps filled with mozzarella, cherry tomatoes, and balsamic glaze,
+    accompanied by herb-roasted baby potatoes.. Scene: italian-inspired table with soft natural daylight, eye-level
+    perspective, and shallow depth of field. Capture fresh garnish, gentle steam, and a sense of homemade comfort. No
+    people or branded props.
   enhanced: >-
-    Intimate close-up: a golden-roasted Caprese Stuffed Portobello, its melted
-    mozzarella gently oozing, vibrant cherry tomatoes glistening, and rich
-    balsamic glaze artfully drizzled. Perfectly seasoned, herb-roasted baby
-    potatoes are scattered around. Bathed in soft, warm natural light,
-    highlighting delicate steam and emerald basil garnish. Eye-level, shallow
-    depth of field, on a rustic Italian-inspired surface, evoking homemade
-    comfort.
+    Intimate close-up: a golden-roasted Caprese Stuffed Portobello, its melted mozzarella gently oozing, vibrant cherry
+    tomatoes glistening, and rich balsamic glaze artfully drizzled. Perfectly seasoned, herb-roasted baby potatoes are
+    scattered around. Bathed in soft, warm natural light, highlighting delicate steam and emerald basil garnish.
+    Eye-level, shallow depth of field, on a rustic Italian-inspired surface, evoking homemade comfort.

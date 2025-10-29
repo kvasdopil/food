@@ -1,49 +1,49 @@
 title: Sweet Potato & Black Bean Tacos
 summary: >-
-  Roasted sweet potato cubes and black beans piled into warm tortillas with lime
-  crema, paired with charred street-corn salad.
+  Roasted sweet potato cubes and black beans piled into warm tortillas with lime crema, paired with charred street-corn
+  salad.
 servings: 4
 prepTimeMinutes: 25
 cookTimeMinutes: 25
 ingredients:
   - name: sweet potatoes
-    amount: 600 g
+    amount: 600g
     notes: peeled and diced into 1.5 cm cubes
   - name: black beans
-    amount: 400 g can
-    notes: rinsed and drained
+    amount: 400g
+    notes: canned; rinsed and drained
   - name: corn
-    amount: 340 g can or 340 g frozen
-    notes: drained if canned, thawed if frozen
+    amount: 340g
+    notes: canned or frozen; drained if canned, thawed if frozen
   - name: red onion
     amount: 1 small
     notes: finely diced
   - name: fresh cilantro
-    amount: 30 g
+    amount: 30g
     notes: chopped, plus extra for garnish
   - name: limes
     amount: 2-3
     notes: 1 juiced and zested for crema, 1-2 juiced for corn salad and serving
   - name: olive oil
-    amount: 30 ml
+    amount: 30ml
     notes: plus extra for charring corn
   - name: chili powder
-    amount: 10 ml
+    amount: 10ml
     notes: divided; 2 tsp
   - name: ground cumin
-    amount: 10 ml
+    amount: 10ml
     notes: divided; 2 tsp
   - name: smoked paprika
-    amount: 5 ml
+    amount: 5ml
     notes: 1 tsp
   - name: salt
-    amount: 5 ml
+    amount: 5ml
     notes: plus more to taste; 1 tsp
   - name: black pepper
-    amount: 2.5 ml
+    amount: 2.5ml
     notes: 0.5 tsp
   - name: sour cream
-    amount: 120 ml
+    amount: 120ml
     notes: or a vegan alternative for a plant-based option
   - name: corn tortillas
     amount: '12'
@@ -51,58 +51,46 @@ ingredients:
 instructions:
   - step: 1
     action: >-
-      Preheat your oven to 200°C. In a large bowl, toss the diced *sweet
-      potatoes* with 15 ml of *olive oil*, 5 ml of *chili powder*, 5 ml of
-      *ground cumin*, the *smoked paprika*, 2.5 ml of *salt*, and all of the
-      *black pepper*. Spread them in a single layer on a baking tray.
+      Preheat your oven to 200°C. In a large bowl, toss the diced *sweet potatoes* with 15 ml of *olive oil*, 5 ml of
+      *chili powder*, 5 ml of *ground cumin*, the *smoked paprika*, 2.5 ml of *salt*, and all of the *black pepper*.
+      Spread them in a single layer on a baking tray.
   - step: 2
     action: >-
-      Roast the *sweet potatoes* for 20-25 minutes, or until tender and lightly
-      caramelized, flipping halfway through. During the last 5 minutes of
-      roasting, add the rinsed *black beans* to the tray with the sweet potatoes
-      to warm through.
+      Roast the *sweet potatoes* for 20-25 minutes, or until tender and lightly caramelized, flipping halfway through.
+      During the last 5 minutes of roasting, add the rinsed *black beans* to the tray with the sweet potatoes to warm
+      through.
   - step: 3
     action: >-
-      While the *sweet potatoes* roast, prepare the charred street-*corn* salad.
-      Heat a frying pan over medium-high heat with a drizzle of *olive oil*. Add
-      the corn and cook for 5-7 minutes, stirring occasionally, until some
-      kernels are lightly charred. Transfer to a bowl and mix with the diced
-      *red onion*, 20 g of chopped *cilantro*, the juice of one *lime*, the
-      remaining 5 ml of *chili powder*, and 5 ml of *ground cumin*. Season with
-      *salt* to taste.
+      While the *sweet potatoes* roast, prepare the charred street-*corn* salad. Heat a frying pan over medium-high heat
+      with a drizzle of *olive oil*. Add the corn and cook for 5-7 minutes, stirring occasionally, until some kernels
+      are lightly charred. Transfer to a bowl and mix with the diced *red onion*, 20 g of chopped *cilantro*, the juice
+      of one *lime*, the remaining 5 ml of *chili powder*, and 5 ml of *ground cumin*. Season with *salt* to taste.
   - step: 4
     action: >-
-      For the *lime* crema, combine the *sour cream* (or vegan alternative) in a
-      small bowl with the zest and juice of one lime and 2.5 ml of *salt*. Mix
-      well until smooth.
+      For the *lime* crema, combine the *sour cream* (or vegan alternative) in a small bowl with the zest and juice of
+      one lime and 2.5 ml of *salt*. Mix well until smooth.
   - step: 5
     action: >-
-      Warm the *corn tortillas* according to package directions, either in a dry
-      pan, microwave, or wrapped in foil in the oven for a few minutes.
+      Warm the *corn tortillas* according to package directions, either in a dry pan, microwave, or wrapped in foil in
+      the oven for a few minutes.
   - step: 6
     action: >-
-      Assemble the tacos by spooning the roasted sweet potato and *black bean*
-      mixture into the warm *tortillas*. Top with a generous dollop of *lime*
-      crema, a spoonful of the charred street-*corn* salad, and a sprinkle of
-      *fresh cilantro*. Serve immediately with extra lime wedges.
+      Assemble the tacos by spooning the roasted sweet potato and *black bean* mixture into the warm *tortillas*. Top
+      with a generous dollop of *lime* crema, a spoonful of the charred street-*corn* salad, and a sprinkle of *fresh
+      cilantro*. Serve immediately with extra lime wedges.
 tags:
   - mexican
   - vegan
   - glutenfree
 imagePrompt:
   base: >-
-    Vibrant close-up of Sweet Potato & Black Bean Tacos, plated to showcase
-    vivid textures and color. Incorporate visual cues from this description:
-    Roasted sweet potato cubes and black beans piled into warm tortillas with
-    lime crema, paired with charred street-corn salad.. Scene: mexican-inspired
-    table with soft natural daylight, eye-level perspective, and shallow depth
-    of field. Capture fresh garnish, gentle steam, and a sense of homemade
-    comfort. No people or branded props.
+    Vibrant close-up of Sweet Potato & Black Bean Tacos, plated to showcase vivid textures and color. Incorporate visual
+    cues from this description: Roasted sweet potato cubes and black beans piled into warm tortillas with lime crema,
+    paired with charred street-corn salad.. Scene: mexican-inspired table with soft natural daylight, eye-level
+    perspective, and shallow depth of field. Capture fresh garnish, gentle steam, and a sense of homemade comfort. No
+    people or branded props.
   enhanced: >-
-    A captivating close-up of two Sweet Potato & Black Bean Tacos, generously
-    piled with golden-edged sweet potatoes and glistening black beans, nestled
-    in warm tortillas with a luscious swirl of lime crema. Alongside, a vibrant
-    dollop of smoky charred street-corn salad. Bathed in soft, luminous natural
-    light, a shallow depth of field emphasizes fresh cilantro leaves, a zesty
-    lime wedge, and delicate wisps of steam, evoking irresistible homemade
-    comfort.
+    A captivating close-up of two Sweet Potato & Black Bean Tacos, generously piled with golden-edged sweet potatoes and
+    glistening black beans, nestled in warm tortillas with a luscious swirl of lime crema. Alongside, a vibrant dollop
+    of smoky charred street-corn salad. Bathed in soft, luminous natural light, a shallow depth of field emphasizes
+    fresh cilantro leaves, a zesty lime wedge, and delicate wisps of steam, evoking irresistible homemade comfort.

@@ -27,6 +27,12 @@ const chipPalette = [
   "bg-violet-100 text-violet-700",
 ];
 
+type ParsedIngredient = {
+  name: string;
+  amount?: string;
+  notes?: string;
+};
+
 async function fetchRecipeBySlug(slug: string) {
   if (!supabase) {
     return null;
@@ -100,6 +106,25 @@ function renderInstructionWithHighlights(step: string) {
   return nodes;
 }
 
+function parseIngredients(raw: string) {
+  try {
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed)) {
+      return parsed
+        .map((item) => ({
+          name: String(item.name ?? "").trim(),
+          amount: item.amount ? String(item.amount).trim() : undefined,
+          notes: item.notes ? String(item.notes).trim() : undefined,
+        }))
+        .filter((item) => item.name.length > 0) as ParsedIngredient[];
+    }
+  } catch {
+    // fall back to string parsing
+  }
+
+  return null;
+}
+
 export default async function RecipePage({ params }: RecipePageProps) {
   const { slug } = await params;
   const recipe = await fetchRecipeBySlug(slug);
@@ -108,10 +133,13 @@ export default async function RecipePage({ params }: RecipePageProps) {
     notFound();
   }
 
-  const ingredientLines = recipe.ingredients
-    .split("\n")
-    .map((line) => line.trim())
-    .filter(Boolean);
+  const parsedIngredients = parseIngredients(recipe.ingredients);
+  const ingredientLines = parsedIngredients
+    ? []
+    : recipe.ingredients
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean);
 
   const instructionSteps = recipe.instructions
     .split("\n")
@@ -181,15 +209,40 @@ export default async function RecipePage({ params }: RecipePageProps) {
               <h2 className="text-xl font-semibold text-slate-900">
                 Ingredients
               </h2>
-              <ul className="grid gap-3 md:grid-cols-2 md:gap-4">
-                {ingredientLines.map((item) => (
+              <ul className="grid gap-4 md:grid-cols-2">
+                {parsedIngredients?.map((item) => (
                   <li
-                    key={item}
-                    className="relative pl-6 text-base text-slate-700 before:absolute before:left-0 before:top-2.5 before:h-2 before:w-2 before:rounded-full before:bg-amber-500"
+                    key={`${item.name}-${item.amount ?? ""}`}
+                    className="relative flex flex-col gap-1 rounded-lg pl-3 before:absolute before:left-3 before:top-[.6em] before:h-2 before:w-2 before:rounded-full before:bg-amber-500"
                   >
-                    {item}
+                    <div className="pl-6">
+                      <div className="flex items-baseline gap-1">
+                        {(item.amount && item.amount !== 'to taste') ? (
+                          <span className="text-gray-500">
+                            {item.amount}
+                          </span>
+                        ) : null}
+                        <span className="">
+                          {item.name}
+                        </span>
+                      </div>
+                      {item.notes ? (
+                        <span className="block text-sm text-slate-500">
+                          {item.notes}
+                        </span>
+                      ) : null}
+                    </div>
                   </li>
                 ))}
+                {!parsedIngredients &&
+                  ingredientLines.map((item) => (
+                    <li
+                      key={item}
+                      className="relative pl-6 text-base text-slate-700 before:absolute before:left-0 before:top-2.5 before:h-2 before:w-2 before:rounded-full before:bg-amber-500"
+                    >
+                      {item}
+                    </li>
+                  ))}
               </ul>
             </section>
 
@@ -198,18 +251,18 @@ export default async function RecipePage({ params }: RecipePageProps) {
                 Instructions
               </h2>
               <ol className="space-y-3">
-              {instructionSteps.map((step, index) => (
-                <li
-                  key={`${index}-${step}`}
-                  className="flex items-start gap-3 text-base text-slate-700"
-                >
-                  <span className="mt-0.5 w-5 flex-shrink-0 text-right text-base font-semibold text-amber-500">
-                    {index + 1}
-                  </span>
-                  <span className="flex-1">{renderInstructionWithHighlights(step)}</span>
-                </li>
-              ))}
-            </ol>
+                {instructionSteps.map((step, index) => (
+                  <li
+                    key={`${index}-${step}`}
+                    className="flex items-start gap-3 text-base text-slate-700"
+                  >
+                    <span className="mt-0.5 w-5 flex-shrink-0 text-right text-base font-semibold text-amber-500">
+                      {index + 1}
+                    </span>
+                    <span className="flex-1">{renderInstructionWithHighlights(step)}</span>
+                  </li>
+                ))}
+              </ol>
             </section>
           </article>
           <RecipeSideNav direction="next" currentSlug={recipe.slug} />

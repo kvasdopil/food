@@ -1,23 +1,21 @@
 title: Coconut Curry Ramen
-summary: >-
-  Fragrant coconut broth with ramen noodles, baby bok choy, and crispy tofu
-  cubes, with a side of sesame cucumber salad.
+summary: Fragrant coconut broth with ramen noodles, baby bok choy, and crispy tofu cubes, with a side of sesame cucumber salad.
 servings: 4
 prepTimeMinutes: 20
 cookTimeMinutes: 35
 ingredients:
   - name: extra-firm tofu
-    amount: 400 g
+    amount: 400g
     notes: Pressed and cubed
   - name: ramen noodles
-    amount: 400 g
+    amount: 400g
     notes: Dried ramen without seasoning
   - name: full-fat coconut milk
-    amount: 400 ml
+    amount: 400ml
   - name: vegetable broth
-    amount: 1 litre
+    amount: 1 L
   - name: red curry paste
-    amount: 40-60 g
+    amount: 40-60g
     notes: Adjust to taste
   - name: baby bok choy
     amount: 4-6 heads
@@ -26,31 +24,31 @@ ingredients:
     amount: 3 cloves
     notes: Minced
   - name: fresh ginger
-    amount: 15 g
+    amount: 15g
     notes: Grated
   - name: yellow onion
     amount: 1/2 medium
     notes: Finely diced
   - name: soy sauce
-    amount: 30 ml
+    amount: 30ml
     notes: Use tamari for gluten-free
   - name: lime juice
-    amount: 15 ml
+    amount: 15ml
     notes: From about 1/2 lime
   - name: vegetable oil
-    amount: 30 ml
+    amount: 30ml
     notes: For tofu and sautéing
   - name: cucumber
     amount: 1 large
-    notes: Thinly sliced, for salad; 250 g
+    notes: Thinly sliced, for salad; 250g
   - name: rice vinegar
-    amount: 30 ml
+    amount: 30ml
     notes: For salad
   - name: toasted sesame oil
-    amount: 15 ml
+    amount: 15ml
     notes: For salad
   - name: sesame seeds
-    amount: 5 g
+    amount: 5g
     notes: For salad/garnish
   - name: fresh cilantro or green onions
     amount: Optional
@@ -58,53 +56,43 @@ ingredients:
 instructions:
   - step: 1
     action: >-
-      Press excess water from the *tofu* block. Cut into roughly 2 cm cubes.
-      Heat half of the vegetable *oil* in a large pot or Dutch oven over
-      medium-high heat. Add tofu cubes and cook, stirring occasionally, until
-      golden brown and crispy on all sides, about 10-15 minutes. Remove tofu
-      from the pot and set aside.
+      Press excess water from the *tofu* block. Cut into roughly 2 cm cubes. Heat half of the vegetable *oil* in a large
+      pot or Dutch oven over medium-high heat. Add tofu cubes and cook, stirring occasionally, until golden brown and
+      crispy on all sides, about 10-15 minutes. Remove tofu from the pot and set aside.
   - step: 2
     action: >-
-      In the same pot, add the remaining *oil* if needed. Add diced *onion* and
-      cook until softened, about 3-4 minutes. Stir in minced *garlic* and grated
-      *ginger*, cooking for another minute until fragrant. Add *red curry paste*
-      and cook, stirring constantly, for 1-2 minutes to toast the spices.
+      In the same pot, add the remaining *oil* if needed. Add diced *onion* and cook until softened, about 3-4 minutes.
+      Stir in minced *garlic* and grated *ginger*, cooking for another minute until fragrant. Add *red curry paste* and
+      cook, stirring constantly, for 1-2 minutes to toast the spices.
   - step: 3
     action: >-
-      Pour in the *vegetable broth* and *coconut milk*. Bring to a gentle
-      simmer, then reduce heat to low and let it simmer for 10-15 minutes to
-      allow flavors to meld. Stir in *soy sauce* and *lime juice*. Taste and
-      adjust seasonings as needed.
+      Pour in the *vegetable broth* and *coconut milk*. Bring to a gentle simmer, then reduce heat to low and let it
+      simmer for 10-15 minutes to allow flavors to meld. Stir in *soy sauce* and *lime juice*. Taste and adjust
+      seasonings as needed.
   - step: 4
     action: >-
-      While the *broth* simmers, cook the *ramen noodles* according to package
-      directions in a separate pot of boiling water. Drain well. Add the halved
-      *baby bok choy* to the simmering curry broth during the last 2-3 minutes
-      of cooking, just until wilted and tender-crisp.
+      While the *broth* simmers, cook the *ramen noodles* according to package directions in a separate pot of boiling
+      water. Drain well. Add the halved *baby bok choy* to the simmering curry broth during the last 2-3 minutes of
+      cooking, just until wilted and tender-crisp.
   - step: 5
     action: >-
-      In a small bowl, combine sliced *cucumber*, *rice vinegar*, *toasted
-      sesame oil*, and *sesame seeds*. Toss gently to combine.
+      In a small bowl, combine sliced *cucumber*, *rice vinegar*, *toasted sesame oil*, and *sesame seeds*. Toss gently
+      to combine.
   - step: 6
     action: >-
-      Divide the cooked *ramen noodles* among serving bowls. Ladle the hot
-      coconut curry *broth* and *bok choy* over the noodles. Top each bowl with
-      the crispy *tofu* cubes. Garnish with *fresh cilantro or green onions*, if
-      desired. Serve immediately with the sesame *cucumber* salad on the side.
+      Divide the cooked *ramen noodles* among serving bowls. Ladle the hot coconut curry *broth* and *bok choy* over the
+      noodles. Top each bowl with the crispy *tofu* cubes. Garnish with *fresh cilantro or green onions*, if desired.
+      Serve immediately with the sesame *cucumber* salad on the side.
 tags:
   - fusion
   - vegan
 imagePrompt:
   base: >-
-    Hyper-realistic close-up of Coconut Curry Ramen plated elegantly on a white
-    plate. Pure white studio background, natural window lighting, shallow depth
-    of field. Showcase vibrant colors, gentle steam, and fresh garnish that
+    Hyper-realistic close-up of Coconut Curry Ramen plated elegantly on a white plate. Pure white studio background,
+    natural window lighting, shallow depth of field. Showcase vibrant colors, gentle steam, and fresh garnish that
     highlights texture.
   enhanced: >-
-    Hyper-realistic, slightly elevated close-up of Coconut Curry Ramen in a
-    deep, artisanal ceramic bowl. Luscious golden broth cradles tender ramen
-    noodles, vibrant baby bok choy, and perfectly crispy tofu cubes. Soft,
-    diffused natural light illuminates gentle steam. Garnished with fresh
-    cilantro, a lime wedge, and a sprinkle of chili threads, showcasing
-    exquisite texture against a pure white background with shallow depth of
-    field.
+    Hyper-realistic, slightly elevated close-up of Coconut Curry Ramen in a deep, artisanal ceramic bowl. Luscious
+    golden broth cradles tender ramen noodles, vibrant baby bok choy, and perfectly crispy tofu cubes. Soft, diffused
+    natural light illuminates gentle steam. Garnished with fresh cilantro, a lime wedge, and a sprinkle of chili
+    threads, showcasing exquisite texture against a pure white background with shallow depth of field.

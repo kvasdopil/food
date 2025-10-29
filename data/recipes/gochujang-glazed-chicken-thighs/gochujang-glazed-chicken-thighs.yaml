@@ -1,15 +1,13 @@
 title: Gochujang Glazed Chicken Thighs
-summary: >-
-  Sweet-heat gochujang glaze on roasted chicken thighs with sesame seeds, paired
-  with kimchi fried rice.
+summary: Sweet-heat gochujang glaze on roasted chicken thighs with sesame seeds, paired with kimchi fried rice.
 servings: 4
 prepTimeMinutes: 15
 cookTimeMinutes: 30
 ingredients:
   - name: boneless, skinless chicken thighs
-    amount: 680 g
+    amount: 680g
   - name: gochujang
-    amount: 60 g
+    amount: 60g
     notes: Korean chili paste
   - name: soy sauce
     amount: 2 tbsp
@@ -28,9 +26,9 @@ ingredients:
     amount: 1 tbsp
     notes: for garnish
   - name: cooked day-old rice
-    amount: 600 g
+    amount: 600g
   - name: kimchi, chopped
-    amount: 200 g
+    amount: 200g
   - name: kimchi juice
     amount: 2 tbsp
   - name: large egg
@@ -44,52 +42,42 @@ ingredients:
 instructions:
   - step: 1
     action: >-
-      Preheat the oven to 200°C. In a medium bowl, whisk together *gochujang*,
-      *soy sauce*, *honey*, *rice* vinegar, *minced garlic*, grated *ginger*,
-      and 1 tsp sesame *oil* to create the glaze.
+      Preheat the oven to 200°C. In a medium bowl, whisk together *gochujang*, *soy sauce*, *honey*, *rice vinegar*,
+      *minced garlic*, *grated fresh ginger*, and 1 tsp *sesame oil* to create the glaze.
   - step: 2
     action: >-
-      Pat *chicken thighs* dry. Place them on a foil-lined baking sheet. Brush
-      about half of the *gochujang* glaze generously over both sides of the
-      chicken. Bake for 15 minutes.
+      Pat *boneless, skinless chicken thighs* dry. Place them on a foil-lined baking sheet. Brush about half of the *gochujang* glaze
+      generously over both sides of the chicken. Bake for 15 minutes.
   - step: 3
     action: >-
-      While the chicken bakes, prepare the kimchi fried rice. Heat 1 tbsp
-      *vegetable oil* in a large skillet or wok over medium-high heat. Add the
-      *chopped* kimchi and sauté for 2-3 minutes. Add the *day-old rice* and
-      *kimchi juice*, stirring to combine and break up any clumps. Cook for 5-7
-      minutes, stirring occasionally, until the rice is heated through and
-      slightly crispy. Push rice to one side, crack the *egg* into the empty
-      side, scramble, then mix into the rice. Stir in a dash of *sesame oil*.
+      While the chicken bakes, prepare the kimchi fried rice. Heat 1 tbsp *vegetable oil* in a large skillet or wok over
+      medium-high heat. Add the *kimchi, chopped* and sauté for 2-3 minutes. Add the *cooked day-old rice* and *kimchi
+      juice*, stirring to combine and break up any clumps. Cook for 5-7 minutes, stirring occasionally, until the rice is
+      heated through and slightly crispy. Push rice to one side, crack the *large egg* into the empty side, scramble,
+      then mix into the rice. Stir in a dash of *sesame oil*.
   - step: 4
     action: >-
-      After 15 minutes, remove chicken from the oven. Brush the remaining glaze
-      over the chicken. Return to the oven and bake for another 10-15 minutes,
-      or until the chicken is cooked through (internal temperature reaches 74°C)
-      and the glaze is sticky and lacquered.
+      After 15 minutes, remove chicken from the oven. Brush the remaining glaze over the chicken. Return to the oven and
+      bake for another 10-15 minutes, or until the chicken is cooked through (internal temperature reaches 74°C) and the
+      glaze is sticky and lacquered.
   - step: 5
     action: >-
-      Remove chicken from oven. Let rest for a few minutes. Serve the
-      *gochujang* Glazed *chicken thighs* over the glossy *kimchi* fried *rice*,
-      garnished with *toasted sesame seeds* and *sliced* green onions.
+      Remove chicken from oven. Let rest for a few minutes. Serve the gochujang-glazed *boneless, skinless chicken
+      thighs* over the glossy *kimchi, chopped* fried *cooked day-old rice*, garnished with *toasted sesame seeds* and
+      *green onions, sliced*.
 tags:
   - korean
   - chicken
   - spicy
 imagePrompt:
   base: >-
-    Vibrant close-up of Gochujang Glazed Chicken Thighs, plated to showcase
-    vivid textures and color. Incorporate visual cues from this description:
-    Sweet-heat gochujang glaze on roasted chicken thighs with sesame seeds,
-    paired with kimchi fried rice.. Scene: korean-inspired table with soft
-    natural daylight, eye-level perspective, and shallow depth of field. Capture
-    fresh garnish, gentle steam, and a sense of homemade comfort. No people or
-    branded props.
+    Vibrant close-up of Gochujang Glazed Chicken Thighs, plated to showcase vivid textures and color. Incorporate visual
+    cues from this description: Sweet-heat gochujang glaze on roasted chicken thighs with sesame seeds, paired with
+    kimchi fried rice.. Scene: korean-inspired table with soft natural daylight, eye-level perspective, and shallow
+    depth of field. Capture fresh garnish, gentle steam, and a sense of homemade comfort. No people or branded props.
   enhanced: >-
-    A captivating close-up: two perfectly charred Gochujang Glazed Chicken
-    Thighs, glistening with sweet-heat glaze and toasted sesame seeds, artfully
-    nestled beside a vibrant mound of kimchi fried rice. Garnished with fresh
-    green onions and extra sesame. Bathed in warm, inviting natural daylight
-    from an eye-level perspective with an extremely shallow depth of field.
-    Subtle wisps of steam rise, evoking irresistible warmth and homemade comfort
-    on a Korean-inspired setting.
+    A captivating close-up: two perfectly charred Gochujang Glazed Chicken Thighs, glistening with sweet-heat glaze and
+    toasted sesame seeds, artfully nestled beside a vibrant mound of kimchi fried rice. Garnished with fresh green
+    onions and extra sesame. Bathed in warm, inviting natural daylight from an eye-level perspective with an extremely
+    shallow depth of field. Subtle wisps of steam rise, evoking irresistible warmth and homemade comfort on a
+    Korean-inspired setting.

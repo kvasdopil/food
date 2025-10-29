@@ -1,91 +1,82 @@
 title: Mediterranean Quinoa Bowl
-summary: >-
-  Herb quinoa with cucumber, tomato, olives, and lemon tahini dressing alongside
-  lemon-herb cucumber salad.
+summary: Herb quinoa with cucumber, tomato, olives, and lemon tahini dressing alongside lemon-herb cucumber salad.
 servings: 4
 prepTimeMinutes: 25
 cookTimeMinutes: 15
 ingredients:
   - name: quinoa
-    amount: 200 g
+    amount: 200g
   - name: vegetable stock
-    amount: 400 ml
+    amount: 400ml
   - name: fresh parsley
-    amount: 15 g
+    amount: 15g
     notes: finely chopped
   - name: fresh mint
-    amount: 5 g
+    amount: 5g
     notes: finely chopped
   - name: olive oil
-    amount: 30 ml
+    amount: 30ml
     notes: divided
   - name: salt
-    amount: 5 g
+    amount: 5g
     notes: divided
   - name: tahini
-    amount: 60 ml
+    amount: 60ml
   - name: lemon juice
-    amount: 45 ml
+    amount: 45ml
     notes: freshly squeezed, divided
   - name: garlic
     amount: 1 clove
     notes: minced
   - name: cold water
-    amount: 60-90 ml
+    amount: 60-90ml
     notes: for dressing, adjust for consistency
   - name: black pepper
-    amount: 1.5 g
+    amount: 1.5g
     notes: freshly ground, divided
   - name: cherry tomatoes
-    amount: 250 g
+    amount: 250g
     notes: halved
   - name: cucumber
-    amount: 350 g
-    notes: 150 g diced for bowl, 200 g thinly sliced for salad
+    amount: 350g
+    notes: 150g diced for bowl, 200g thinly sliced for salad
   - name: kalamata olives
-    amount: 80 g
+    amount: 80g
     notes: pitted and halved
   - name: red onion
-    amount: 50 g
+    amount: 50g
     notes: thinly sliced
   - name: canned chickpeas
-    amount: 400 g can
+    amount: 400g
     notes: rinsed and drained
   - name: fresh dill
-    amount: 5 g
+    amount: 5g
     notes: finely chopped
 instructions:
   - step: 1
     action: >-
-      Rinse *quinoa* thoroughly under *cold water*. In a medium saucepan,
-      combine the rinsed quinoa, *vegetable stock*, 5 ml *olive* oil, and 2 g
-      *salt*. Bring to a boil, then reduce heat to low, cover, and simmer for 15
-      minutes, or until all liquid is absorbed. Remove from heat and let stand,
-      covered, for 5 minutes. Fluff with a fork and stir in chopped *parsley*
-      and *mint*.
+      Rinse *quinoa* thoroughly under *cold water*. In a medium saucepan, combine the rinsed quinoa, *vegetable stock*,
+      5 ml *olive oil*, and 2 g *salt*. Bring to a boil, then reduce heat to low, cover, and simmer for 15 minutes, or
+      until all liquid is absorbed. Remove from heat and let stand, covered, for 5 minutes. Fluff with a fork and stir
+      in chopped *parsley* and *mint*.
   - step: 2
     action: >-
-      While *quinoa* cooks, prepare the Lemon *tahini* Dressing: Whisk together
-      tahini, 30 ml *lemon juice*, minced *garlic*, 15 ml *olive* oil, 2 g
-      *salt*, and 1 g *black pepper* in a small bowl. Gradually add *cold
-      water*, starting with 60 ml, whisking until smooth and desired consistency
-      is reached (add up to 30 ml more water if needed).
+      While *quinoa* cooks, prepare the Lemon *tahini* Dressing: Whisk together tahini, 30 ml *lemon juice*, minced
+      *garlic*, 15 ml *olive oil*, 2 g *salt*, and 1 g *black pepper* in a small bowl. Gradually add *cold water*,
+      starting with 60 ml, whisking until smooth and desired consistency is reached (add up to 30 ml more water if
+      needed).
   - step: 3
     action: >-
-      Prepare the main bowl components: In a large bowl, combine the halved
-      *cherry tomatoes*, 150 g diced *cucumber*, halved *kalamata olives*,
-      thinly sliced *red onion*, and rinsed *chickpeas*.
+      Prepare the main bowl components: In a large bowl, combine the halved *cherry tomatoes*, 150 g diced *cucumber*,
+      halved *kalamata olives*, thinly sliced *red onion*, and rinsed *canned chickpeas*.
   - step: 4
     action: >-
-      Prepare the Lemon-Herb *cucumber* Salad: In a separate medium bowl,
-      combine the 200 g thinly sliced cucumber, 15 ml *lemon juice*, chopped
-      *dill*, 10 ml *olive* oil, 1 g *salt*, and 0.5 g *black pepper*. Toss
-      gently to combine.
+      Prepare the Lemon-Herb *cucumber* Salad: In a separate medium bowl, combine the 200 g thinly sliced cucumber, 15
+      ml *lemon juice*, chopped *dill*, 10 ml *olive oil*, 1 g *salt*, and 0.5 g *black pepper*. Toss gently to combine.
   - step: 5
     action: >-
-      Assemble the bowls: Divide the herb *quinoa* among serving bowls. Top each
-      with a generous portion of the mixed bowl components. Drizzle generously
-      with the *lemon* *tahini* dressing. Serve immediately with the lemon-herb
+      Assemble the bowls: Divide the herb *quinoa* among serving bowls. Top each with a generous portion of the mixed
+      bowl components. Drizzle generously with the *lemon* *tahini* dressing. Serve immediately with the lemon-herb
       *cucumber* salad on the side.
 tags:
   - mediterranean
@@ -93,18 +84,12 @@ tags:
   - glutenfree
 imagePrompt:
   base: >-
-    Vibrant close-up of Mediterranean Quinoa Bowl, plated to showcase vivid
-    textures and color. Incorporate visual cues from this description: Herb
-    quinoa with cucumber, tomato, olives, and lemon tahini dressing alongside
-    lemon-herb cucumber salad.. Scene: mediterranean-inspired table with soft
-    natural daylight, eye-level perspective, and shallow depth of field. Capture
-    fresh garnish, gentle steam, and a sense of homemade comfort. No people or
-    branded props.
+    Vibrant close-up of Mediterranean Quinoa Bowl, plated to showcase vivid textures and color. Incorporate visual cues
+    from this description: Herb quinoa with cucumber, tomato, olives, and lemon tahini dressing alongside lemon-herb
+    cucumber salad.. Scene: mediterranean-inspired table with soft natural daylight, eye-level perspective, and shallow
+    depth of field. Capture fresh garnish, gentle steam, and a sense of homemade comfort. No people or branded props.
   enhanced: >-
-    A captivating close-up of a Mediterranean Quinoa Bowl. Fluffy herb quinoa
-    forms a base, generously topped with glistening cherry tomatoes, crisp
-    cucumber, briny olives, and chickpeas. A rich lemon tahini dressing cascades
-    over, with a vibrant lemon-herb cucumber salad nestled beside. Bathed in
-    warm, soft natural light, whisps of steam rise gently. Garnish with fresh
-    mint, parsley, and a lemon wedge. Eye-level perspective, shallow depth of
-    field.
+    A captivating close-up of a Mediterranean Quinoa Bowl. Fluffy herb quinoa forms a base, generously topped with
+    glistening cherry tomatoes, crisp cucumber, briny olives, and chickpeas. A rich lemon tahini dressing cascades over,
+    with a vibrant lemon-herb cucumber salad nestled beside. Bathed in warm, soft natural light, whisps of steam rise
+    gently. Garnish with fresh mint, parsley, and a lemon wedge. Eye-level perspective, shallow depth of field.

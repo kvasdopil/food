@@ -160,7 +160,8 @@ async function generateRecipe(options: CliOptions, apiKey: string): Promise<Reci
     `Core description provided by the product team: ${options.description}`,
     'The dish must be achievable in 60 minutes or less using widely available, budget-friendly ingredients.',
     'Include a short summary sentence that captures the flavor and vibe of the meal.',
-    'Use metric measurements with abbreviated units (g, ml, °C) plus tsp/tbsp where helpful. Never use Fahrenheit, pounds, ounces, cups, or inches.',
+    'Use metric measurements with abbreviated units (g, ml, °C) plus tsp/tbsp where helpful. You may use "1 medium", "2 large", etc., for whole produce where that feels natural. Never use Fahrenheit, pounds, ounces, cups, or inches.',
+    'Keep instruction references aligned with the ingredient list, with the exception of common pantry staples (salt, pepper, oil, water, basic seasonings) which can be mentioned as needed.',
     'Describe tiny amounts (a drizzle of olive oil, a pinch of salt) naturally instead of inventing precise measurements.',
     'In the instructions, wrap the first occurrence of each ingredient name per step in asterisks like *ingredient*, and reference ingredients using lowercase wording rather than Title Case.',
     'Return the recipe structured JSON matching the provided schema.',
@@ -342,6 +343,44 @@ function parseArgs(argv: string[]): CliOptions {
   return options as CliOptions;
 }
 
+async function loadEnvKey() {
+  if (process.env.GEMINI_API_KEY) {
+    return process.env.GEMINI_API_KEY;
+  }
+  if (process.env.GOOGLE_API_KEY) {
+    return process.env.GOOGLE_API_KEY;
+  }
+
+  const envLocalPath = path.resolve('.env.local');
+
+  try {
+    const content = await fs.readFile(envLocalPath, 'utf-8');
+    const lines = content.split(/\r?\n/);
+
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith('#')) continue;
+
+      const [key, ...rest] = trimmed.split('=');
+      const value = rest.join('=').trim();
+      if (!value) continue;
+
+      if (key === 'GEMINI_API_KEY') {
+        process.env.GEMINI_API_KEY = value;
+        return value;
+      }
+      if (key === 'GOOGLE_API_KEY') {
+        process.env.GOOGLE_API_KEY = value;
+        return value;
+      }
+    }
+  } catch {
+    // ignore missing file
+  }
+
+  return undefined;
+}
+
 function printUsage() {
   const usageMessage = `
 Usage: ts-node scripts/recipe-generator.ts "Meal Name" [options]
@@ -420,10 +459,10 @@ function toYaml(
 async function main() {
   try {
     const options = parseArgs(process.argv.slice(2));
-    const apiKey = process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY;
+    const apiKey = await loadEnvKey();
 
     if (!apiKey) {
-      throw new Error('Set GEMINI_API_KEY (or GOOGLE_API_KEY) in your environment before running this script.');
+      throw new Error('Provide GEMINI_API_KEY (or GOOGLE_API_KEY) via env or .env.local before running this script.');
     }
 
     const recipe = await generateRecipe(options, apiKey);

@@ -1,105 +1,91 @@
 title: Black Bean Enchiladas
 summary: >-
-  Corn tortillas filled with spiced black beans and cheese, baked under smoky
-  enchilada sauce and plated with cilantro-lime rice.
+  Corn tortillas filled with spiced black beans and cheese, baked under smoky enchilada sauce and plated with
+  cilantro-lime rice.
 servings: 4
 prepTimeMinutes: 20
 cookTimeMinutes: 25
 ingredients:
   - name: vegetable oil
-    amount: 15 ml
+    amount: 15ml
   - name: small onion
     amount: '1'
-    notes: approximately 100 g; finely chopped
+    notes: approximately 100g; finely chopped
   - name: garlic cloves
     amount: '2'
     notes: minced
   - name: ground cumin
-    amount: 5 ml
+    amount: 5ml
   - name: chili powder
-    amount: 5 ml
+    amount: 5ml
   - name: smoked paprika
-    amount: 2.5 ml
+    amount: 2.5ml
   - name: canned black beans
-    amount: 2 x 400 g cans
+    amount: 2 x 400g cans
     notes: drained and rinsed
   - name: corn tortillas
     amount: '12'
   - name: shredded cheddar cheese
-    amount: 200 g
+    amount: 200g
     notes: plus extra for topping
   - name: canned red enchilada sauce
-    amount: 400 g
+    amount: 400g
   - name: salt
     amount: to taste
   - name: black pepper
     amount: to taste
   - name: fresh cilantro
-    amount: 30 g
+    amount: 30g
     notes: chopped, for garnish and rice
   - name: lime
     amount: '1'
     notes: cut into wedges, for garnish and rice
   - name: quick-cook white rice
-    amount: 200 g
+    amount: 200g
     notes: for side dish
 instructions:
   - step: 1
     action: Preheat your oven to 190°C. Lightly grease a 23x33 cm baking dish.
   - step: 2
     action: >-
-      In a large pan or skillet, heat the *vegetable oil* over medium heat. Add
-      the chopped *onion* and sauté for 5-7 minutes until softened. Add the
-      minced garlic, *ground cumin*, *chili powder*, and *smoked paprika*,
-      cooking for another minute until fragrant.
+      In a large pan or skillet, heat the *vegetable oil* over medium heat. Add the chopped *onion* and sauté for 5-7
+      minutes until softened. Add the minced *garlic cloves*, *ground cumin*, *chili powder*, and *smoked paprika*, cooking for
+      another minute until fragrant.
   - step: 3
     action: >-
-      Stir in the drained and rinsed *black beans*. Cook for 5-7 minutes, using
-      a fork or potato masher to mash about half of the beans. This creates a
-      creamy, substantial filling. Season with *salt* and *black pepper* to
-      taste.
+      Stir in the drained and rinsed *black beans*. Cook for 5-7 minutes, using a fork or potato masher to mash about
+      half of the beans. This creates a creamy, substantial filling. Season with *salt* and *black pepper* to taste.
   - step: 4
     action: >-
-      Warm the *corn tortillas* slightly to make them pliable. You can do this
-      in a microwave for 15-20 seconds or quickly in a dry pan. Spoon
-      approximately 60 g of the *black bean* mixture and a sprinkle of shredded
-      *cheese* into the center of each tortilla. Roll tightly and place
-      seam-down in the prepared baking dish.
+      Warm the *corn tortillas* slightly to make them pliable. You can do this in a microwave for 15-20 seconds or
+      quickly in a dry pan. Spoon approximately 60 g of the *black bean* mixture and a sprinkle of shredded *cheese*
+      into the center of each tortilla. Roll tightly and place seam-down in the prepared baking dish.
   - step: 5
-    action: >-
-      Pour the *enchilada sauce* evenly over the rolled *tortillas*. Top with
-      the remaining shredded *cheese*.
+    action: Pour the *enchilada sauce* evenly over the rolled *tortillas*. Top with the remaining shredded *cheese*.
   - step: 6
-    action: >-
-      Bake for 20-25 minutes, or until the *cheese* is melted and bubbly and the
-      enchiladas are heated through.
+    action: Bake for 20-25 minutes, or until the *cheese* is melted and bubbly and the enchiladas are heated through.
   - step: 7
     action: >-
-      While the enchiladas bake, cook the *quick-cook white rice* according to
-      package directions. Once cooked, stir in half of the chopped *fresh
-      cilantro* and a squeeze of *lime* juice from one of the lime wedges.
+      While the enchiladas bake, cook the *quick-cook white rice* according to package directions. Once cooked, stir in
+      half of the chopped *fresh cilantro* and a squeeze of *lime* juice from one of the lime wedges.
   - step: 8
     action: >-
-      Serve the *black bean* enchiladas hot, garnished with the remaining *fresh
-      cilantro* and *lime* wedges, alongside the cilantro-lime *rice*.
+      Serve the *black bean* enchiladas hot, garnished with the remaining *fresh cilantro* and *lime* wedges, alongside
+      the cilantro-lime *rice*.
 tags:
   - mexican
   - vegetarian
   - glutenfree
 imagePrompt:
   base: >-
-    Vibrant close-up of Black Bean Enchiladas, plated to showcase vivid textures
-    and color. Incorporate visual cues from this description: Corn tortillas
-    filled with spiced black beans and cheese, baked under smoky enchilada sauce
-    and plated with cilantro-lime rice.. Scene: mexican-inspired table with soft
-    natural daylight, eye-level perspective, and shallow depth of field. Capture
-    fresh garnish, gentle steam, and a sense of homemade comfort. No people or
+    Vibrant close-up of Black Bean Enchiladas, plated to showcase vivid textures and color. Incorporate visual cues from
+    this description: Corn tortillas filled with spiced black beans and cheese, baked under smoky enchilada sauce and
+    plated with cilantro-lime rice.. Scene: mexican-inspired table with soft natural daylight, eye-level perspective,
+    and shallow depth of field. Capture fresh garnish, gentle steam, and a sense of homemade comfort. No people or
     branded props.
   enhanced: >-
-    Irresistible close-up: perfectly baked enchiladas, generously coated in a
-    rich, smoky sauce, with bubbling cheese and spiced black bean filling
-    peeking. Nestled beside fluffy cilantro-lime rice, adorned with vibrant
-    fresh cilantro and a glistening lime wedge. Bathed in soft, warm natural
-    daylight, captured from a slightly elevated eye-level perspective with
-    shallow depth of field. Gentle steam rises, evoking ultimate homemade
-    comfort on a rustic, Mexican-inspired surface.
+    Irresistible close-up: perfectly baked enchiladas, generously coated in a rich, smoky sauce, with bubbling cheese
+    and spiced black bean filling peeking. Nestled beside fluffy cilantro-lime rice, adorned with vibrant fresh cilantro
+    and a glistening lime wedge. Bathed in soft, warm natural daylight, captured from a slightly elevated eye-level
+    perspective with shallow depth of field. Gentle steam rises, evoking ultimate homemade comfort on a rustic,
+    Mexican-inspired surface.

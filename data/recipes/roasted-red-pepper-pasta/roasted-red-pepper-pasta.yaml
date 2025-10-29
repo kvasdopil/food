@@ -1,100 +1,90 @@
 title: Roasted Red Pepper Pasta
 summary: >-
-  Silky roasted red pepper sauce tossed with al dente pasta, fresh herbs, and
-  toasted pine nuts, served with balsamic-dressed rocket.
+  Silky roasted red pepper sauce tossed with al dente pasta, fresh herbs, and toasted pine nuts, served with
+  balsamic-dressed rocket.
 servings: 4
 prepTimeMinutes: 20
 cookTimeMinutes: 25
 ingredients:
   - name: pasta
-    amount: 400 g
+    amount: 400g
     notes: e.g., spaghetti, fettuccine
   - name: jarred roasted red peppers
-    amount: 450 g
+    amount: 450g
     notes: drained weight
   - name: onion
-    amount: 1 medium
-    notes: finely chopped
+    amount: 150g
+    notes: finely chopped (about 1 medium)
   - name: garlic
     amount: 3 cloves
     notes: minced
   - name: olive oil
-    amount: 30 ml
+    amount: 30ml
   - name: vegetable stock
-    amount: 100 ml
+    amount: 100ml
     notes: or reserved pasta water
   - name: reserved pasta water
-    amount: 200 ml
+    amount: 200ml
     notes: starchy cooking water saved from the pasta
   - name: fresh basil
-    amount: 30 g
+    amount: 30g
     notes: roughly chopped, plus extra for garnish
   - name: pine nuts
-    amount: 30 g
+    amount: 30g
   - name: parmesan cheese
-    amount: 50 g
+    amount: 50g
     notes: freshly grated, optional
   - name: salt
     amount: to taste
   - name: black pepper
     amount: to taste
   - name: rocket
-    amount: 100 g
+    amount: 100g
     notes: for serving
   - name: balsamic vinegar
-    amount: 15 ml
+    amount: 15ml
     notes: for serving
 instructions:
   - step: 1
     action: >-
-      Heat a small dry pan over medium heat. Add the *pine nuts* and toast for
-      2-3 minutes, stirring frequently, until golden brown and fragrant. Remove
-      from the pan and set aside.
+      Heat a small dry pan over medium heat. Add the *pine nuts* and toast for 2-3 minutes, stirring frequently, until
+      golden brown and fragrant. Remove from the pan and set aside.
   - step: 2
     action: >-
-      Bring a large pot of salted water to a rolling boil. Add the *pasta* and
-      cook according to package directions until al dente. Before draining,
-      reserve the *reserved pasta water*. Drain the pasta and set aside.
+      Bring a large pot of salted water to a rolling boil. Add the *pasta* and cook according to package directions
+      until al dente. Before draining, reserve the *reserved pasta water*. Drain the pasta and set aside.
   - step: 3
     action: >-
-      While the *pasta* cooks, heat the *olive oil* in a large saucepan or deep
-      frying pan over medium heat. Add the chopped *onion* and cook for 5-7
-      minutes until softened and translucent. Add the minced *garlic* and cook
-      for another minute until fragrant. Add the drained *jarred roasted red
-      peppers* to the pan and cook for 2-3 minutes, stirring occasionally.
+      While the *pasta* cooks, heat the *olive oil* in a large saucepan or deep frying pan over medium heat. Add the
+      *onion* and cook for 5-7 minutes until softened and translucent. Add the *garlic* and cook for another minute until
+      fragrant. Add the drained *jarred roasted red peppers* to the pan and cook for 2-3 minutes,
+      stirring occasionally.
   - step: 4
     action: >-
-      Carefully transfer the roasted *pepper* mixture from the pan to a blender.
-      Add the *vegetable stock*, or a splash of *reserved pasta water* for a
-      lighter sauce. Blend until completely smooth and creamy. Season the sauce
-      with *salt* and *black pepper* to taste.
+      Carefully transfer the cooked *jarred roasted red peppers* mixture from the pan to a blender. Add the *vegetable
+      stock*, or a splash of *reserved pasta water* for a lighter sauce. Blend until completely smooth and creamy.
+      Season the sauce with *salt* and *black pepper* to taste.
   - step: 5
     action: >-
-      Return the sauce to the saucepan over low heat. Add the cooked *pasta* and
-      toss to coat evenly. If the sauce is too thick, add a little more
-      *reserved pasta water* until it reaches your desired consistency. Stir in
-      the chopped *fresh basil* and the grated *parmesan cheese*.
+      Return the sauce to the saucepan over low heat. Add the cooked *pasta* and toss to coat evenly. If the sauce is
+      too thick, add a little more *reserved pasta water* until it reaches your desired consistency. Stir in the chopped
+      *fresh basil* and the *parmesan cheese*.
   - step: 6
     action: >-
-      Divide the *pasta* among serving plates. Garnish with the toasted *pine
-      nuts* and *fresh basil*. In a small bowl, toss the *rocket* with a drizzle
-      of *olive oil* and *balsamic vinegar*, then serve alongside the pasta.
+      Divide the *pasta* among serving plates. Garnish with the toasted *pine nuts* and *fresh basil*. In a small bowl,
+      toss the *rocket* with a drizzle of *olive oil* and *balsamic vinegar*, then serve alongside the pasta.
 tags:
   - italian
   - vegetarian
 imagePrompt:
   base: >-
-    Vibrant close-up of Roasted Red Pepper Pasta, plated to showcase vivid
-    textures and color. Incorporate visual cues from this description: Silky
-    roasted red pepper sauce tossed with al dente pasta, fresh herbs, and
-    toasted pine nuts, served with balsamic-dressed rocket.. Scene:
-    italian-inspired table with soft natural daylight, eye-level perspective,
-    and shallow depth of field. Capture fresh garnish, gentle steam, and a sense
-    of homemade comfort. No people or branded props.
+    Vibrant close-up of Roasted Red Pepper Pasta, plated to showcase vivid textures and color. Incorporate visual cues
+    from this description: Silky roasted red pepper sauce tossed with al dente pasta, fresh herbs, and toasted pine
+    nuts, served with balsamic-dressed rocket.. Scene: italian-inspired table with soft natural daylight, eye-level
+    perspective, and shallow depth of field. Capture fresh garnish, gentle steam, and a sense of homemade comfort. No
+    people or branded props.
   enhanced: >-
-    An intimate, low-angle close-up: a luscious, velvety roasted red pepper
-    pasta, artfully swirled, glistening with sauce. Tender al dente strands are
-    generously tossed with vibrant fresh basil and golden, toasted pine nuts. A
-    side of balsamic-dressed rocket adds a fresh, peppery contrast. Bathed in
-    soft, natural daylight on an Italian-inspired surface with shallow depth of
-    field. Capture gentle steam and homemade warmth.
+    An intimate, low-angle close-up: a luscious, velvety roasted red pepper pasta, artfully swirled, glistening with
+    sauce. Tender al dente strands are generously tossed with vibrant fresh basil and golden, toasted pine nuts. A side
+    of balsamic-dressed rocket adds a fresh, peppery contrast. Bathed in soft, natural daylight on an Italian-inspired
+    surface with shallow depth of field. Capture gentle steam and homemade warmth.
