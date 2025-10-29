@@ -84,15 +84,33 @@ function parseIngredients(raw: string) {
   return null;
 }
 
+function SwipeNavigationHandler({
+  currentSlug,
+  onNavigateNext,
+  onNavigatePrevious,
+}: {
+  currentSlug: string;
+  onNavigateNext: (slug: string) => Promise<void>;
+  onNavigatePrevious: () => Promise<void>;
+}) {
+  useSwipeNavigation({
+    currentSlug,
+    onNavigateNext,
+    onNavigatePrevious,
+  });
+
+  return null;
+}
+
 export function RecipePageClient({ recipe }: RecipePageClientProps) {
   const router = useRouter();
   const parsedIngredients = parseIngredients(recipe.ingredients);
   const ingredientLines = parsedIngredients
     ? []
     : recipe.ingredients
-        .split("\n")
-        .map((line) => line.trim())
-        .filter(Boolean);
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean);
 
   const instructionSteps = recipe.instructions
     .split("\n")
@@ -116,14 +134,13 @@ export function RecipePageClient({ recipe }: RecipePageClientProps) {
     router.push(`/recipes/${slug}`);
   };
 
-  useSwipeNavigation({
-    currentSlug: recipe.slug,
-    onNavigateNext: handleNavigateNext,
-    onNavigatePrevious: handleNavigatePrevious,
-  });
-
   return (
     <RecipePreloadProvider currentSlug={recipe.slug}>
+      <SwipeNavigationHandler
+        currentSlug={recipe.slug}
+        onNavigateNext={handleNavigateNext}
+        onNavigatePrevious={handleNavigatePrevious}
+      />
       <main className="relative min-h-screen bg-slate-50 text-slate-900">
         <KeyboardNav currentSlug={recipe.slug} />
         <div className="mx-auto flex w-full max-w-5xl flex-col px-0 sm:px-6 xl:flex-row xl:items-stretch xl:gap-6">
@@ -180,16 +197,16 @@ export function RecipePageClient({ recipe }: RecipePageClientProps) {
                 {parsedIngredients?.map((item) => (
                   <li
                     key={`${item.name}-${item.amount ?? ""}`}
-                    className="relative flex flex-col gap-1 rounded-lg border border-slate-200/60 px-4 py-3 before:absolute before:top-4 before:left-3 before:h-2 before:w-2 before:rounded-full before:bg-emerald-500"
+                    className="relative flex flex-col gap-1 rounded-lg  pl-2 before:absolute before:top-2.5 before:h-2 before:w-2 before:rounded-full before:bg-emerald-500"
                   >
                     <div className="pl-6">
                       <div className="flex items-baseline gap-2">
                         {item.amount ? (
-                          <span className="text-xs font-semibold tracking-wide text-slate-900 uppercase">
+                          <span className="text-slate-500">
                             {item.amount}
                           </span>
                         ) : null}
-                        <span className="text-base font-medium text-slate-800">{item.name}</span>
+                        <span className="text-slate-800">{item.name}</span>
                       </div>
                       {item.notes ? (
                         <span className="block text-sm text-slate-500">{item.notes}</span>
