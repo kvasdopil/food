@@ -7,17 +7,17 @@ prepTimeMinutes: 20
 cookTimeMinutes: 35
 ingredients:
   - name: Extra-firm tofu
-    amount: 1 block (14-16 oz / 400-450g)
+    amount: 400 g
     notes: Pressed and cubed
   - name: Ramen noodles
-    amount: 4 servings
-    notes: e.g., 4 individual packs without seasoning, or 14 oz / 400g dried ramen
+    amount: 400 g
+    notes: Dried ramen without seasoning
   - name: Full-fat coconut milk
-    amount: 1 can (13.5 oz / 400ml)
+    amount: 400 ml
   - name: Vegetable broth
-    amount: 4 cups (1 liter)
+    amount: 1 litre
   - name: Red curry paste
-    amount: 2-3 tablespoons
+    amount: 40-60 g
     notes: Adjust to taste
   - name: Baby bok choy
     amount: 4-6 heads
@@ -26,31 +26,31 @@ ingredients:
     amount: 3 cloves
     notes: Minced
   - name: Fresh ginger
-    amount: 1 inch piece
+    amount: 15 g
     notes: Grated
   - name: Yellow onion
     amount: 1/2 medium
     notes: Finely diced
   - name: Soy sauce
-    amount: 2 tablespoons
+    amount: 30 ml
     notes: Use tamari for gluten-free
   - name: Lime juice
-    amount: 1 tablespoon
+    amount: 15 ml
     notes: From about 1/2 lime
   - name: Vegetable oil
-    amount: 2 tablespoons
-    notes: For tofu
+    amount: 30 ml
+    notes: For tofu and sautéing
   - name: Cucumber
-    amount: 1 large
+    amount: 1 large (250 g)
     notes: Thinly sliced, for salad
   - name: Rice vinegar
-    amount: 2 tablespoons
+    amount: 30 ml
     notes: For salad
   - name: Toasted sesame oil
-    amount: 1 tablespoon
+    amount: 15 ml
     notes: For salad
   - name: Sesame seeds
-    amount: 1 teaspoon
+    amount: 5 g
     notes: For salad/garnish
   - name: Fresh cilantro or green onions
     amount: Optional
@@ -58,14 +58,14 @@ ingredients:
 instructions:
   - step: 1
     action: >-
-      Press excess water from the tofu block. Cut into 1-inch cubes. Heat 2
-      tablespoons vegetable oil in a large pot or Dutch oven over medium-high
+      Press excess water from the tofu block. Cut into roughly 2 cm cubes. Heat
+      half of the vegetable oil in a large pot or Dutch oven over medium-high
       heat. Add tofu cubes and cook, stirring occasionally, until golden brown
       and crispy on all sides, about 10-15 minutes. Remove tofu from the pot and
       set aside.
   - step: 2
     action: >-
-      In the same pot, if needed, add a touch more oil. Add diced onion and cook
+      In the same pot, add the remaining oil if needed. Add diced onion and cook
       until softened, about 3-4 minutes. Stir in minced garlic and grated
       ginger, cooking for another minute until fragrant. Add red curry paste and
       cook, stirring constantly, for 1-2 minutes to toast the spices.
@@ -108,4 +108,3 @@ imagePrompt:
     cilantro, a lime wedge, and a sprinkle of chili threads, showcasing
     exquisite texture against a pure white background with shallow depth of
     field.
-

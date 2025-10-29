@@ -7,24 +7,24 @@ prepTimeMinutes: 15
 cookTimeMinutes: 20
 ingredients:
   - name: Lean ground beef
-    amount: 1 lb (450g)
+    amount: 450 g
   - name: Taco seasoning mix
-    amount: 1 packet (1 oz / 28g)
+    amount: 28 g
     notes: >-
       Or homemade blend of chili powder, cumin, paprika, garlic powder, onion
       powder, salt, and pepper
   - name: Water
-    amount: 2/3 cup (160ml)
+    amount: 160 ml
   - name: Crispy corn taco shells
     amount: 12 shells
   - name: Iceberg or romaine lettuce
-    amount: 1 head
+    amount: 1 small head
     notes: Shredded
   - name: Cheddar cheese
-    amount: 1.5 cups (170g)
+    amount: 170 g
     notes: Shredded
   - name: Vegetable oil
-    amount: 1 tablespoon
+    amount: 15 ml
     notes: Optional, for browning beef if not lean enough
   - name: Yellow onion
     amount: 1/2 medium
@@ -48,8 +48,8 @@ instructions:
       cheddar cheese, if not already pre-shredded. Set aside.
   - step: 4
     action: >-
-      Preheat your oven to 325°F (160°C) or follow package directions to warm
-      the taco shells. Place the taco shells on a baking sheet and bake for 5-7
+      Preheat your oven to 160°C or follow package directions to warm the taco
+      shells. Place the taco shells on a baking sheet and bake for 5-7
       minutes, or until lightly crispy and warm. Alternatively, microwave them
       for 30-45 seconds until warm.
   - step: 5
@@ -61,4 +61,3 @@ tags:
   - mexican
   - beef
   - glutenfree
-

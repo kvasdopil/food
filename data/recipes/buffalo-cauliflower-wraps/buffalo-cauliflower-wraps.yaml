@@ -10,9 +10,9 @@ ingredients:
     amount: 1 medium head (about 600-700g)
     notes: cut into bite-sized florets
   - name: All-purpose flour
-    amount: 1/2 cup (60g)
+    amount: 60 g
   - name: Cornstarch
-    amount: 2 tablespoons (15g)
+    amount: 15 g
   - name: Garlic powder
     amount: 1 teaspoon
   - name: Onion powder
@@ -24,24 +24,24 @@ ingredients:
   - name: Black pepper
     amount: 1/4 teaspoon, plus more for seasoning
   - name: Water
-    amount: 1/2 cup (120ml)
+    amount: 120 ml
   - name: Buffalo wing sauce
-    amount: 1/2 cup (120ml)
+    amount: 120 ml
     notes: e.g., Frank's RedHot
   - name: Flour tortillas
-    amount: 8 medium (8-inch)
+    amount: 8 medium (20 cm)
   - name: Green cabbage
-    amount: 3 cups
+    amount: 250 g
     notes: finely shredded
   - name: Carrot
     amount: 1 medium
     notes: shredded
   - name: Vegan mayonnaise
-    amount: 1/4 cup (60g)
+    amount: 60 g
   - name: Apple cider vinegar
-    amount: 1 tablespoon
+    amount: 15 ml
   - name: Maple syrup
-    amount: 1 teaspoon
+    amount: 5 ml
     notes: or granulated sugar
   - name: Celery sticks
     amount: for serving
@@ -50,12 +50,12 @@ ingredients:
 instructions:
   - step: 1
     action: >-
-      Preheat your oven to 400°F (200°C). Line a large baking sheet with
-      parchment paper. In a large bowl, whisk together the all-purpose flour,
-      cornstarch, garlic powder, onion powder, smoked paprika, 1/2 teaspoon
-      salt, and 1/4 teaspoon black pepper. Gradually whisk in the 1/2 cup water
-      until a smooth, thick batter forms. Add the cauliflower florets to the
-      batter and toss until each piece is evenly coated.
+      Preheat your oven to 200°C. Line a large baking sheet with parchment
+      paper. In a large bowl, whisk together the all-purpose flour, cornstarch,
+      garlic powder, onion powder, smoked paprika, 1/2 teaspoon salt, and 1/4
+      teaspoon black pepper. Gradually whisk in the water until a smooth, thick
+      batter forms. Add the cauliflower florets to the batter and toss until
+      each piece is evenly coated.
   - step: 2
     action: >-
       Spread the coated cauliflower in a single layer on the prepared baking
@@ -102,4 +102,3 @@ imagePrompt:
     highlights gentle steam and the glossy buffalo sauce. Garnished with fresh
     chopped chives and a lime wedge, emphasizing texture with shallow depth of
     field.
-

@@ -10,9 +10,9 @@ ingredients:
     amount: 4 large
     notes: any color, halved lengthwise, seeds and membranes removed
   - name: Uncooked long-grain white rice
-    amount: 1 cup
+    amount: 200 g
   - name: Vegetable broth
-    amount: 2 cups
+    amount: 500 ml
     notes: divided
   - name: Olive oil
     amount: 2 tablespoons
@@ -25,18 +25,18 @@ ingredients:
   - name: Tomato paste
     amount: 2 tablespoons
   - name: Canned diced tomatoes
-    amount: 1 (14.5 oz) can
+    amount: 400 g
     notes: drained
   - name: Dried oregano
     amount: 1 teaspoon
   - name: Feta cheese
-    amount: 1/2 cup (about 60g)
+    amount: 60 g
     notes: crumbled
   - name: Kalamata olives
-    amount: 1/4 cup
+    amount: 40 g
     notes: pitted and chopped
   - name: Fresh parsley
-    amount: 1/4 cup
+    amount: 15 g
     notes: chopped
   - name: Salt
     amount: to taste
@@ -54,12 +54,12 @@ ingredients:
 instructions:
   - step: 1
     action: >-
-      Preheat your oven to 375°F (190°C). Lightly grease a 9x13 inch baking
-      dish. Prepare the bell peppers by halving them lengthwise and removing the
-      seeds and membranes.
+      Preheat your oven to 190°C. Lightly grease a 23x33 cm baking dish.
+      Prepare the bell peppers by halving them lengthwise and removing the seeds
+      and membranes.
   - step: 2
     action: >-
-      In a medium saucepan, combine the uncooked rice with 1.5 cups of vegetable
+      In a medium saucepan, combine the uncooked rice with 375 ml of vegetable
       broth. Bring to a boil, then reduce heat to low, cover, and simmer for 10
       minutes. The rice will be partially cooked.
   - step: 3
@@ -77,7 +77,7 @@ instructions:
   - step: 5
     action: >-
       Arrange the pepper halves in the prepared baking dish. Spoon the rice
-      mixture evenly into each pepper half. Pour the remaining 1/2 cup of
+      mixture evenly into each pepper half. Pour the remaining 125 ml of
       vegetable broth into the bottom of the baking dish. Cover the dish tightly
       with foil.
   - step: 6
@@ -108,4 +108,3 @@ imagePrompt:
     freshness. Soft, diffused natural window light illuminates, creating gentle
     highlights and inviting shadows. Extremely shallow depth of field focuses
     sharply on the glistening filling and subtle rising steam.
-

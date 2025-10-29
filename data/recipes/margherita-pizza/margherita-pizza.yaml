@@ -1,0 +1,98 @@
+title: Margherita Pizza
+summary: >-
+  Blistered crust layered with ripe tomatoes, creamy mozzarella, and garden
+  basil for a comforting pizzeria-style pie; serve with a peppery arugula salad
+  dressed in lemon vinaigrette.
+servings: 2
+prepTimeMinutes: 20
+cookTimeMinutes: 12
+ingredients:
+  - name: Pizza dough
+    amount: 250-300 grams
+    notes: Store-bought fresh pizza dough
+  - name: Canned crushed tomatoes
+    amount: 200 grams
+    notes: Look for San Marzano if possible, or good quality crushed tomatoes
+  - name: Fresh mozzarella
+    amount: 125 grams
+    notes: Drained and sliced into thin rounds
+  - name: Fresh basil leaves
+    amount: 15 grams
+    notes: About 10-12 large leaves
+  - name: Extra virgin olive oil
+    amount: 30 millilitres
+    notes: Plus extra for drizzling
+  - name: Garlic
+    amount: 1 clove
+    notes: Minced, for the sauce
+  - name: Salt
+    amount: 5 grams
+    notes: To taste, for sauce and pizza
+  - name: Black pepper
+    amount: 2 grams
+    notes: Freshly ground, to taste
+  - name: Arugula
+    amount: 50 grams
+    notes: For the side salad
+  - name: Lemon
+    amount: 1 whole
+    notes: For the salad dressing
+instructions:
+  - step: 1
+    action: >-
+      Preheat your oven to its highest setting, ideally around 250°C, with a
+      pizza stone or baking steel inside if you have one. If not, a regular
+      baking tray will work.
+  - step: 2
+    action: >-
+      Prepare the tomato sauce: In a small bowl, combine the crushed tomatoes,
+      minced garlic, 15 millilitres of olive oil, and a pinch of salt. Stir well
+      and set aside.
+  - step: 3
+    action: >-
+      Gently stretch the pizza dough on a lightly floured surface or a piece of
+      parchment paper to your desired thickness, aiming for a round shape about
+      25-30 cm in diameter.
+  - step: 4
+    action: >-
+      Carefully transfer the dough to the hot pizza stone or baking tray. Spread
+      the tomato sauce evenly over the dough, leaving a small border for the
+      crust. Distribute the sliced mozzarella over the sauce.
+  - step: 5
+    action: >-
+      Bake for 8-12 minutes, or until the crust is golden brown and blistered,
+      and the cheese is melted and bubbly. Cooking time may vary depending on
+      your oven.
+  - step: 6
+    action: >-
+      While the pizza bakes, prepare the arugula salad: In a medium bowl,
+      combine the arugula. In a separate small bowl, whisk together the juice of
+      half a lemon, the remaining 15 millilitres of olive oil, a pinch of salt,
+      and a dash of black pepper to create a simple vinaigrette.
+  - step: 7
+    action: >-
+      Once the pizza is out of the oven, immediately scatter the fresh basil
+      leaves over the hot cheese. Drizzle with a little extra virgin olive oil
+      if desired. Slice and serve hot with the dressed arugula salad on the
+      side.
+tags:
+  - italian
+  - vegetarian
+imagePrompt:
+  base: >-
+    Vibrant close-up of Margherita Pizza, plated to showcase vivid textures and
+    color. Incorporate visual cues from this description: Blistered crust
+    layered with ripe tomatoes, creamy mozzarella, and garden basil for a
+    comforting pizzeria-style pie; serve with a peppery arugula salad dressed in
+    lemon vinaigrette.. Scene: italian-inspired table with soft natural
+    daylight, eye-level perspective, and shallow depth of field. Capture fresh
+    garnish, gentle steam, and a sense of homemade comfort. No people or branded
+    props.
+  enhanced: >-
+    A captivating close-up of a rustic Margherita pizza, its blistered, golden
+    crust framing vibrant, bubbling tomatoes and melt-in-your-mouth mozzarella.
+    Fresh emerald basil leaves are scattered generously, kissed with a
+    glistening drizzle of olive oil. A vibrant mound of peppery arugula, lightly
+    dressed, sits invitingly alongside. Illuminated by soft, warm natural
+    daylight, captured at an intimate eye-level with a shallow depth of field,
+    highlighting gentle steam and homemade comfort.

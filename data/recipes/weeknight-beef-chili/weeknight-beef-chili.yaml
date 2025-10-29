@@ -10,7 +10,7 @@ ingredients:
     amount: 1 tbsp
     notes: for chili
   - name: Lean ground beef
-    amount: 500g (1 lb)
+    amount: 500 g
   - name: Onion
     amount: 1 large
     notes: diced
@@ -33,18 +33,18 @@ ingredients:
     amount: 1/2 tsp
     notes: for chili
   - name: Diced tomatoes
-    amount: 1 (400g/14.5 oz) can
+    amount: 400 g
     notes: undrained
   - name: Kidney beans
-    amount: 1 (400g/15 oz) can
+    amount: 400 g
     notes: rinsed and drained
   - name: Black beans
-    amount: 1 (400g/15 oz) can
+    amount: 400 g
     notes: rinsed and drained
   - name: Beef broth
-    amount: 250ml (1 cup)
+    amount: 250 ml
   - name: Sweet potatoes
-    amount: 2 medium (about 500g/1 lb)
+    amount: 2 medium (about 500 g)
   - name: Olive oil
     amount: 1 tbsp
     notes: for sweet potato fries
@@ -63,11 +63,10 @@ ingredients:
 instructions:
   - step: 1
     action: >-
-      Preheat oven to 200°C (400°F). Line a large baking sheet with parchment
-      paper.
+      Preheat oven to 200°C. Line a large baking sheet with parchment paper.
   - step: 2
     action: >-
-      Peel sweet potatoes and cut them into 1/4-inch thick fries. In a bowl,
+      Peel sweet potatoes and cut them into fries about 1 cm thick. In a bowl,
       toss the sweet potato fries with 1 tbsp olive oil and 1/2 tsp salt. Spread
       them in a single layer on the prepared baking sheet and bake for 25-30
       minutes, flipping halfway through, until tender and lightly browned.
@@ -111,4 +110,3 @@ imagePrompt:
     beans, and tomatoes, crowned with a sprinkle of fresh cilantro and a few
     golden, crispy sweet potato fries. Soft, warm natural window light
     accentuates gentle steam and rich textures. Shallow depth of field.
-

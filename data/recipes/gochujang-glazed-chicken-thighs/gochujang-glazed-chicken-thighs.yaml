@@ -7,9 +7,9 @@ prepTimeMinutes: 15
 cookTimeMinutes: 30
 ingredients:
   - name: Boneless, skinless chicken thighs
-    amount: 1.5 lbs (approx. 680g)
+    amount: 680 g
   - name: Gochujang (Korean chili paste)
-    amount: 1/4 cup
+    amount: 60 g
   - name: Soy sauce
     amount: 2 tablespoons
   - name: Honey
@@ -25,9 +25,9 @@ ingredients:
   - name: Toasted sesame seeds
     amount: 1 tablespoon, for garnish
   - name: Cooked day-old rice
-    amount: 3 cups
+    amount: 600 g
   - name: Kimchi, chopped
-    amount: 1 cup
+    amount: 200 g
   - name: Kimchi juice
     amount: 2 tablespoons
   - name: Large egg
@@ -39,7 +39,7 @@ ingredients:
 instructions:
   - step: 1
     action: >-
-      Preheat oven to 400°F (200°C). In a medium bowl, whisk together gochujang,
+      Preheat the oven to 200°C. In a medium bowl, whisk together gochujang,
       soy sauce, honey, rice vinegar, minced garlic, grated ginger, and 1
       teaspoon sesame oil to create the glaze.
   - step: 2
@@ -61,7 +61,7 @@ instructions:
       After 15 minutes, remove chicken from the oven. Brush the remaining glaze
       over the chicken. Return to the oven and bake for another 10-15 minutes,
       or until the chicken is cooked through (internal temperature reaches
-      165°F/74°C) and the glaze is sticky and lacquered.
+      74°C) and the glaze is sticky and lacquered.
   - step: 5
     action: >-
       Remove chicken from oven. Let rest for a few minutes. Serve the Gochujang
@@ -88,4 +88,3 @@ imagePrompt:
     from an eye-level perspective with an extremely shallow depth of field.
     Subtle wisps of steam rise, evoking irresistible warmth and homemade comfort
     on a Korean-inspired setting.
-

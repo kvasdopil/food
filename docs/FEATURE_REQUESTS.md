@@ -1,0 +1,3 @@
+- add a button 'another variation of same meal', like vegeterian
+- list liked meals
+- filter by tags

@@ -1,0 +1,125 @@
+title: Veggie Pad Thai
+summary: >-
+  Rice noodles tossed with tamarind sauce, tofu, and crisp vegetables, plated
+  alongside a fresh cucumber-lime ribbon salad.
+servings: 4
+prepTimeMinutes: 25
+cookTimeMinutes: 25
+ingredients:
+  - name: Rice Stick Noodles
+    amount: 200g
+    notes: medium width
+  - name: Extra-Firm Tofu
+    amount: 250g
+    notes: pressed and cut into 1.5 cm cubes
+  - name: Carrot
+    amount: 1 large
+    notes: julienned
+  - name: Red Bell Pepper
+    amount: 1 medium
+    notes: thinly sliced
+  - name: Broccoli Florets
+    amount: 150g
+    notes: small
+  - name: Bean Sprouts
+    amount: 100g
+    notes: fresh
+  - name: Spring Onions
+    amount: '3'
+    notes: sliced into 2.5 cm pieces
+  - name: Garlic
+    amount: 2 cloves
+    notes: minced
+  - name: Vegetable Oil
+    amount: 2 tablespoons
+  - name: Tamarind Paste
+    amount: 2 tablespoons
+    notes: unsweetened
+  - name: Soy Sauce
+    amount: 3 tablespoons
+  - name: Maple Syrup
+    amount: 2 tablespoons
+  - name: Rice Vinegar
+    amount: 1 tablespoon
+  - name: Crushed Roasted Peanuts
+    amount: 50g
+    notes: for garnish
+  - name: Fresh Lime
+    amount: '1'
+    notes: cut into wedges, for garnish
+  - name: Fresh Coriander
+    amount: 15g
+    notes: chopped, for garnish
+  - name: Cucumber
+    amount: 1 medium
+    notes: for ribbon salad
+  - name: Lime Juice
+    amount: 1 tablespoon
+    notes: for ribbon salad
+  - name: Salt
+    amount: 1/4 teaspoon
+    notes: for ribbon salad
+instructions:
+  - step: 1
+    action: >-
+      Prepare Tofu and Noodles: Press extra-firm tofu for at least 15 minutes to
+      remove excess water, then cut into 1.5 cm cubes. Soak rice stick noodles
+      in warm water for 15-20 minutes until pliable but still firm (al dente);
+      drain and set aside.
+  - step: 2
+    action: >-
+      Make Pad Thai Sauce: In a small bowl, whisk together tamarind paste, soy
+      sauce, maple syrup, and rice vinegar. Set aside.
+  - step: 3
+    action: >-
+      Sauté Tofu and Aromatics: Heat 1 tablespoon of vegetable oil in a large
+      wok or frying pan over medium-high heat. Add cubed tofu and cook, stirring
+      occasionally, until golden brown and slightly crispy on all sides, about
+      5-7 minutes. Remove tofu from the pan and set aside. Add the remaining 1
+      tablespoon of oil to the pan. Add minced garlic and sauté for 30 seconds
+      until fragrant.
+  - step: 4
+    action: >-
+      Stir-fry Vegetables: Add julienned carrot, thinly sliced red bell pepper,
+      and small broccoli florets to the pan. Stir-fry for 3-4 minutes until
+      vegetables are tender-crisp.
+  - step: 5
+    action: >-
+      Combine and Finish Pad Thai: Add the soaked and drained rice noodles to
+      the pan with the vegetables. Pour the prepared Pad Thai sauce over the
+      noodles and vegetables. Toss everything together vigorously for 2-3
+      minutes until the noodles are well coated and heated through. Add the
+      cooked tofu, bean sprouts, and sliced spring onions. Toss for another
+      minute until bean sprouts are slightly wilted and all ingredients are
+      combined.
+  - step: 6
+    action: >-
+      Prepare Cucumber-Lime Ribbon Salad: While the Pad Thai is finishing, use a
+      vegetable peeler to create long ribbons from the cucumber. In a small
+      bowl, gently toss the cucumber ribbons with lime juice and a pinch of
+      salt.
+  - step: 7
+    action: >-
+      Serve: Divide the Veggie Pad Thai among serving plates. Garnish generously
+      with crushed roasted peanuts, fresh coriander, and lime wedges. Serve
+      immediately with the refreshing cucumber-lime ribbon salad on the side.
+tags:
+  - thai
+  - vegan
+imagePrompt:
+  base: >-
+    Vibrant close-up of Veggie Pad Thai, plated to showcase vivid textures and
+    color. Incorporate visual cues from this description: Rice noodles tossed
+    with tamarind sauce, tofu, and crisp vegetables, plated alongside a fresh
+    cucumber-lime ribbon salad.. Scene: thai-inspired table with soft natural
+    daylight, eye-level perspective, and shallow depth of field. Capture fresh
+    garnish, gentle steam, and a sense of homemade comfort. No people or branded
+    props.
+  enhanced: >-
+    An intimate, slightly elevated close-up of Veggie Pad Thai, artfully mounded
+    with glistening rice noodles, perfectly golden tofu, and a vibrant medley of
+    crisp vegetables. A fresh cucumber-lime ribbon salad elegantly cascades
+    alongside. Bathed in a warm, diffused natural glow, highlighting delicate
+    steam and fresh cilantro, crushed peanuts, and a lime wedge. Shallow depth
+    of field evokes inviting homemade comfort.
+

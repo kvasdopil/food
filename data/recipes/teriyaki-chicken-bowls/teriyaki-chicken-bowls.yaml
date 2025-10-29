@@ -7,12 +7,12 @@ prepTimeMinutes: 20
 cookTimeMinutes: 35
 ingredients:
   - name: Boneless, skinless chicken thighs
-    amount: 1.5 lbs (approx. 680g)
-    notes: Cut into 1-inch pieces
+    amount: 680 g
+    notes: Cut into 2.5 cm pieces
   - name: Soy sauce
-    amount: 1/2 cup (120ml)
+    amount: 120 ml
   - name: Mirin
-    amount: 1/4 cup (60ml)
+    amount: 60 ml
   - name: Brown sugar
     amount: 2 tablespoons
   - name: Garlic
@@ -33,9 +33,9 @@ ingredients:
     amount: 2 medium
     notes: Peeled and sliced
   - name: White rice
-    amount: 2 cups uncooked
+    amount: 360 g uncooked
   - name: Water
-    amount: 4 cups
+    amount: 960 ml
     notes: For cooking rice
   - name: Vegetable oil
     amount: 1 tablespoon
@@ -48,7 +48,7 @@ ingredients:
 instructions:
   - step: 1
     action: >-
-      Cook the rice: Rinse white rice thoroughly. Combine rice and 4 cups of
+      Cook the rice: Rinse white rice thoroughly. Combine rice and 960 ml of
       water in a medium saucepan. Bring to a boil, then reduce heat to low,
       cover, and simmer for 15-18 minutes, or until all water is absorbed.
       Remove from heat and let stand, covered, for 5 minutes before fluffing
@@ -104,4 +104,3 @@ imagePrompt:
     sesame seeds. A small bowl of aromatic miso soup sits beside it. Bathed in
     soft, warm natural daylight, highlighting gentle steam and shallow depth of
     field for an inviting, homemade feel.
-

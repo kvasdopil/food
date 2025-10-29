@@ -7,12 +7,12 @@ prepTimeMinutes: 15
 cookTimeMinutes: 35
 ingredients:
   - name: Salmon fillets
-    amount: 4 (approx. 6 oz / 170g each)
+    amount: 4 fillets (about 170 g each)
   - name: Baby potatoes
-    amount: 1.5 lbs (about 680g)
+    amount: 680 g
     notes: halved
   - name: Green beans
-    amount: 1 lb (about 450g)
+    amount: 450 g
     notes: trimmed
   - name: Lemon
     amount: 1 large
@@ -24,7 +24,7 @@ ingredients:
     amount: 4 tablespoons (56g)
     notes: melted
   - name: Fresh parsley
-    amount: 1/4 cup
+    amount: 15 g
     notes: chopped
   - name: Olive oil
     amount: 2 tablespoons
@@ -35,9 +35,9 @@ ingredients:
 instructions:
   - step: 1
     action: >-
-      Preheat your oven to 400°F (200°C). On a large baking sheet, toss the
-      halved baby potatoes with 1 tablespoon of olive oil, 1/2 teaspoon of salt,
-      and 1/4 teaspoon of black pepper. Roast for 15 minutes.
+      Preheat your oven to 200°C. On a large baking sheet, toss the halved baby
+      potatoes with 1 tablespoon of olive oil, 1/2 teaspoon of salt, and 1/4
+      teaspoon of black pepper. Roast for 15 minutes.
   - step: 2
     action: >-
       While the potatoes roast, prepare the lemon-garlic butter. In a small
@@ -82,4 +82,3 @@ imagePrompt:
     natural window light accentuates delicate steam. Garnished with fresh
     chopped parsley and a bright lemon wedge for inviting texture. Shallow depth
     of field.
-

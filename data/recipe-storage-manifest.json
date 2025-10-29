@@ -1,9 +1,27 @@
 [
   {
+    "slug": "black-bean-enchiladas",
+    "bucket": "recipe-images",
+    "path": "black-bean-enchiladas.jpg",
+    "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/black-bean-enchiladas.jpg"
+  },
+  {
     "slug": "buffalo-cauliflower-wraps",
     "bucket": "recipe-images",
     "path": "buffalo-cauliflower-wraps.jpg",
     "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/buffalo-cauliflower-wraps.jpg"
+  },
+  {
+    "slug": "caprese-stuffed-portobellos",
+    "bucket": "recipe-images",
+    "path": "caprese-stuffed-portobellos.jpg",
+    "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/caprese-stuffed-portobellos.jpg"
+  },
+  {
+    "slug": "chickpea-tikka-masala",
+    "bucket": "recipe-images",
+    "path": "chickpea-tikka-masala.jpg",
+    "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/chickpea-tikka-masala.jpg"
   },
   {
     "slug": "classic-beef-tacos",
@@ -16,6 +34,12 @@
     "bucket": "recipe-images",
     "path": "coconut-curry-ramen.jpg",
     "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/coconut-curry-ramen.jpg"
+  },
+  {
+    "slug": "creamy-mushroom-risotto",
+    "bucket": "recipe-images",
+    "path": "creamy-mushroom-risotto.jpg",
+    "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/creamy-mushroom-risotto.jpg"
   },
   {
     "slug": "gochujang-glazed-chicken-thighs",
@@ -36,16 +60,52 @@
     "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/lemon-garlic-salmon.jpg"
   },
   {
+    "slug": "lentil-bolognese",
+    "bucket": "recipe-images",
+    "path": "lentil-bolognese.jpg",
+    "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/lentil-bolognese.jpg"
+  },
+  {
+    "slug": "margherita-pizza",
+    "bucket": "recipe-images",
+    "path": "margherita-pizza.jpg",
+    "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/margherita-pizza.jpg"
+  },
+  {
+    "slug": "mediterranean-quinoa-bowl",
+    "bucket": "recipe-images",
+    "path": "mediterranean-quinoa-bowl.jpg",
+    "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/mediterranean-quinoa-bowl.jpg"
+  },
+  {
     "slug": "panko-crusted-cod",
     "bucket": "recipe-images",
     "path": "panko-crusted-cod.jpg",
     "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/panko-crusted-cod.jpg"
   },
   {
+    "slug": "spinach-ricotta-stuffed-shells",
+    "bucket": "recipe-images",
+    "path": "spinach-ricotta-stuffed-shells.jpg",
+    "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/spinach-ricotta-stuffed-shells.jpg"
+  },
+  {
+    "slug": "sweet-potato-black-bean-tacos",
+    "bucket": "recipe-images",
+    "path": "sweet-potato-black-bean-tacos.jpg",
+    "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/sweet-potato-black-bean-tacos.jpg"
+  },
+  {
     "slug": "teriyaki-chicken-bowls",
     "bucket": "recipe-images",
     "path": "teriyaki-chicken-bowls.jpg",
     "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/teriyaki-chicken-bowls.jpg"
+  },
+  {
+    "slug": "veggie-pad-thai",
+    "bucket": "recipe-images",
+    "path": "veggie-pad-thai.jpg",
+    "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/veggie-pad-thai.jpg"
   },
   {
     "slug": "weeknight-beef-chili",

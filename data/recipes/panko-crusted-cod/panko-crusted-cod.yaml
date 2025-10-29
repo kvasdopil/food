@@ -7,10 +7,10 @@ prepTimeMinutes: 20
 cookTimeMinutes: 25
 ingredients:
   - name: Cod fillets
-    amount: 1 lb
-    notes: about 2-3 fillets, 1-inch thick
+    amount: 450 g
+    notes: about 2-3 fillets, 2.5 cm thick
   - name: Panko breadcrumbs
-    amount: 1 cup
+    amount: 80 g
   - name: Lemon
     amount: 1 large
     notes: for zest and juice
@@ -23,24 +23,25 @@ ingredients:
     amount: 1/2 teaspoon
     notes: divided
   - name: Russet potatoes
-    amount: 1.5 lbs
+    amount: 680 g
     notes: peeled and quartered
   - name: Garlic
     amount: 2 cloves
     notes: minced
   - name: Milk
-    amount: 1/4 cup
+    amount: 60 ml
     notes: whole milk or half-and-half
   - name: Butter
     amount: 2 tablespoons
   - name: Frozen peas
-    amount: 1 cup
+    amount: 150 g
 instructions:
   - step: 1
     action: >-
-      Preheat oven to 400°F (200°C). Place quartered potatoes in a medium pot,
-      cover with cold water by 1 inch, and add 1/2 teaspoon salt. Bring to a
-      boil, then reduce heat and simmer until very tender, about 15-20 minutes.
+      Preheat the oven to 200°C. Place quartered potatoes in a medium pot,
+      cover with cold water by about 2.5 cm, and add 1/2 teaspoon salt. Bring
+      to a boil, then reduce heat and simmer until very tender, about 15-20
+      minutes.
   - step: 2
     action: >-
       While potatoes cook, pat cod fillets dry with paper towels. Season both
@@ -82,4 +83,3 @@ imagePrompt:
     light illuminates gentle steam rising. Garnish with fresh parsley and a
     lemon wedge. Eye-level perspective, shallow depth of field, evoking
     comforting homemade perfection on an American-inspired table.
-

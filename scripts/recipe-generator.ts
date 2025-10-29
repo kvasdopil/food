@@ -160,7 +160,7 @@ async function generateRecipe(options: CliOptions, apiKey: string): Promise<Reci
     `Core description provided by the product team: ${options.description}`,
     'The dish must be achievable in 60 minutes or less using widely available, budget-friendly ingredients.',
     'Include a short summary sentence that captures the flavor and vibe of the meal.',
-    'Use metric or U.S. customary measurements where appropriate and keep ingredient names specific.',
+    'Use metric measurements (grams, millilitres, Celsius) plus teaspoon/tablespoon where helpful. Never use Fahrenheit, pounds, ounces, cups, or inches.',
     'Return the recipe structured JSON matching the provided schema.',
     'If you mention a side or garnish, keep it quick to prepare.',
   ];

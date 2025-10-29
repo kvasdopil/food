@@ -1,0 +1,17 @@
+{
+  "requestedMeal": "Caprese Stuffed Portobellos",
+  "generatedAt": "2025-10-29T10:41:42.184Z",
+  "description": "Roasted mushroom caps filled with mozzarella, cherry tomatoes, and balsamic glaze, accompanied by herb-roasted baby potatoes.",
+  "recipeFile": "caprese-stuffed-portobellos.yaml",
+  "imageFile": "caprese-stuffed-portobellos.jpg",
+  "tagsProvided": [
+    "italian",
+    "vegetarian",
+    "glutenfree"
+  ],
+  "imagePrompt": {
+    "base": "Vibrant close-up of Caprese Stuffed Portobellos, plated to showcase vivid textures and color. Incorporate visual cues from this description: Roasted mushroom caps filled with mozzarella, cherry tomatoes, and balsamic glaze, accompanied by herb-roasted baby potatoes.. Scene: italian-inspired table with soft natural daylight, eye-level perspective, and shallow depth of field. Capture fresh garnish, gentle steam, and a sense of homemade comfort. No people or branded props.",
+    "enhanced": "Intimate close-up: a golden-roasted Caprese Stuffed Portobello, its melted mozzarella gently oozing, vibrant cherry tomatoes glistening, and rich balsamic glaze artfully drizzled. Perfectly seasoned, herb-roasted baby potatoes are scattered around. Bathed in soft, warm natural light, highlighting delicate steam and emerald basil garnish. Eye-level, shallow depth of field, on a rustic Italian-inspired surface, evoking homemade comfort.",
+    "mimeType": "image/jpeg"
+  }
+}

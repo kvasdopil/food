@@ -1,0 +1,105 @@
+title: Creamy Mushroom Risotto
+summary: >-
+  Arborio rice simmered with garlic, mushrooms, and parmesan until silky, paired
+  with roasted asparagus spears for crunch.
+servings: 4
+prepTimeMinutes: 15
+cookTimeMinutes: 25
+ingredients:
+  - name: Arborio rice
+    amount: 300g
+  - name: Cremini or button mushrooms
+    amount: 250g
+    notes: sliced
+  - name: Vegetable broth
+    amount: 1 litre
+    notes: warm
+  - name: Yellow onion
+    amount: 1 medium
+    notes: finely chopped
+  - name: Garlic
+    amount: 2 cloves
+    notes: minced
+  - name: Parmesan cheese
+    amount: 80g
+    notes: freshly grated
+  - name: Olive oil
+    amount: 2 tablespoons
+  - name: Unsalted butter
+    amount: 30g
+  - name: Dry white wine
+    amount: 120ml
+    notes: such as Pinot Grigio (optional)
+  - name: Asparagus
+    amount: 300g
+    notes: trimmed
+  - name: Fresh parsley
+    amount: 2 tablespoons
+    notes: chopped, for garnish
+  - name: Lemon
+    amount: 1/2
+    notes: for serving with asparagus
+  - name: Salt
+    amount: To taste
+  - name: Black pepper
+    amount: To taste
+instructions:
+  - step: 1
+    action: >-
+      Preheat oven to 200°C. Toss the trimmed asparagus spears with 1 tablespoon
+      of olive oil, a pinch of salt, and pepper on a baking tray. Roast for
+      10-12 minutes until tender-crisp. Set aside.
+  - step: 2
+    action: >-
+      In a large, heavy-bottomed pot or Dutch oven, melt 15g of butter with the
+      remaining 1 tablespoon of olive oil over medium heat. Add the chopped
+      onion and cook until softened and translucent, about 5 minutes. Add the
+      minced garlic and cook for another minute until fragrant.
+  - step: 3
+    action: >-
+      Add the Arborio rice to the pot and stir constantly for 2 minutes until
+      the edges of the grains are translucent but the center is still opaque. If
+      using, pour in the white wine and stir until it has been completely
+      absorbed by the rice.
+  - step: 4
+    action: >-
+      Begin adding the warm vegetable broth, one ladleful (about 120ml) at a
+      time, stirring frequently. Wait until each addition of broth is almost
+      completely absorbed before adding the next. After about 10 minutes of
+      adding broth, stir in the sliced mushrooms.
+  - step: 5
+    action: >-
+      Continue adding broth and stirring for another 10-15 minutes, or until the
+      rice is creamy and al dente (cooked through but still firm to the bite).
+      You may not need all of the broth. Remove the pot from the heat.
+  - step: 6
+    action: >-
+      Stir in the remaining 15g of butter and the grated Parmesan cheese until
+      melted and fully incorporated. Season with salt and black pepper to taste.
+      Let the risotto rest for 2 minutes, covered.
+  - step: 7
+    action: >-
+      Serve the creamy mushroom risotto immediately, garnished with fresh
+      chopped parsley and accompanied by the roasted asparagus spears. A squeeze
+      of fresh lemon over the asparagus is highly recommended.
+tags:
+  - italian
+  - vegetarian
+  - glutenfree
+imagePrompt:
+  base: >-
+    Vibrant close-up of Creamy Mushroom Risotto, plated to showcase vivid
+    textures and color. Incorporate visual cues from this description: Arborio
+    rice simmered with garlic, mushrooms, and parmesan until silky, paired with
+    roasted asparagus spears for crunch.. Scene: italian-inspired table with
+    soft natural daylight, eye-level perspective, and shallow depth of field.
+    Capture fresh garnish, gentle steam, and a sense of homemade comfort. No
+    people or branded props.
+  enhanced: >-
+    A luscious, creamy mushroom risotto, artfully mounded to reveal its velvety
+    texture and golden parmesan flecks. Perfectly roasted, vibrant green
+    asparagus spears rest beside it, offering a crisp counterpoint. Bathed in
+    soft, diffused natural light, a wisp of steam dances above. Garnish with
+    fresh, finely chopped parsley and a dusting of grated parmesan. Eye-level
+    perspective with a shallow depth of field, evoking ultimate comfort.
+
