@@ -39,8 +39,8 @@ ingredients:
     amount: 30ml
     notes: For tofu and sautéing
   - name: cucumber
-    amount: 1 large
-    notes: Thinly sliced, for salad; 250g
+    amount: 250g
+    notes: 1 large, thinly sliced, for salad
   - name: rice vinegar
     amount: 30ml
     notes: For salad
@@ -56,12 +56,12 @@ ingredients:
 instructions:
   - step: 1
     action: >-
-      Press excess water from the *tofu* block. Cut into roughly 2 cm cubes. Heat half of the vegetable *oil* in a large
+      Press excess water from the *tofu* block. Cut into roughly 2 cm cubes. Heat half of the *vegetable oil* in a large
       pot or Dutch oven over medium-high heat. Add tofu cubes and cook, stirring occasionally, until golden brown and
       crispy on all sides, about 10-15 minutes. Remove tofu from the pot and set aside.
   - step: 2
     action: >-
-      In the same pot, add the remaining *oil* if needed. Add diced *onion* and cook until softened, about 3-4 minutes.
+      In the same pot, add the remaining *vegetable oil* if needed. Add diced *onion* and cook until softened, about 3-4 minutes.
       Stir in minced *garlic* and grated *ginger*, cooking for another minute until fragrant. Add *red curry paste* and
       cook, stirring constantly, for 1-2 minutes to toast the spices.
   - step: 3

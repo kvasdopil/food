@@ -68,7 +68,9 @@ async function callGemini(model: string, body: Record<string, unknown>, apiKey: 
 
   if (!response.ok) {
     const errorText = await response.text();
-    throw new Error(`Gemini API request failed (${response.status} ${response.statusText}): ${errorText}`);
+    throw new Error(
+      `Gemini API request failed (${response.status} ${response.statusText}): ${errorText}`,
+    );
   }
 
   return (await response.json()) as GenerateContentResponse;
@@ -76,7 +78,9 @@ async function callGemini(model: string, body: Record<string, unknown>, apiKey: 
 
 function ensureText(response: GenerateContentResponse, errorContext: string) {
   if (response.promptFeedback?.blockReason) {
-    throw new Error(`${errorContext} was blocked by Gemini: ${response.promptFeedback.blockReason}`);
+    throw new Error(
+      `${errorContext} was blocked by Gemini: ${response.promptFeedback.blockReason}`,
+    );
   }
 
   const text = response.candidates
@@ -103,7 +107,9 @@ async function main() {
 
   const apiKey = await loadEnvKey();
   if (!apiKey) {
-    throw new Error("Provide GEMINI_API_KEY (or GOOGLE_API_KEY) via env or .env.local before running this script.");
+    throw new Error(
+      "Provide GEMINI_API_KEY (or GOOGLE_API_KEY) via env or .env.local before running this script.",
+    );
   }
 
   const absolutePath = path.resolve(inputPath);
@@ -112,7 +118,7 @@ async function main() {
   const evaluationInstructions = [
     "Evaluate the provided recipe YAML against these production rules:",
     '- Use metric measurements with abbreviated units (g, ml, °C) plus tsp/tbsp where helpful. You may use descriptions such as "1 medium" or "2 large" for whole produce, but never revert to Fahrenheit, pounds, ounces, or cups.',
-    ' - Describe tiny amounts (a drizzle, a pinch) naturally so the instructions do not invent precise measurements for them.',
+    " - Describe tiny amounts (a drizzle, a pinch) naturally so the instructions do not invent precise measurements for them.",
     " - Mention each ingredient in lowercase within instructions and wrap the first occurrence per step in *asterisks* (e.g., *olive oil*).",
     " - Ingredient amounts should not contain parenthetical notes; move contextual details into a `notes` field.",
     " - Instructions should be concise and practical. They should reference the ingredient list, except for common pantry staples (salt, pepper, oil, water, basic seasonings) which may be mentioned without explicit listing.",

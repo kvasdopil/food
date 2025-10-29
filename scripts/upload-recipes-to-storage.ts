@@ -4,8 +4,7 @@ import path from "node:path";
 import { createClient } from "@supabase/supabase-js";
 
 const DEFAULT_BUCKET = process.env.RECIPE_STORAGE_BUCKET ?? "recipe-images";
-const SUPABASE_URL =
-  process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL;
+const SUPABASE_URL = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
@@ -47,20 +46,14 @@ async function ensureBucket(bucket: string) {
   }
 }
 
-async function uploadImage(
-  bucket: string,
-  localFile: string,
-  remotePath: string,
-) {
+async function uploadImage(bucket: string, localFile: string, remotePath: string) {
   const fileBuffer = await fs.readFile(localFile);
   const { error } = await supabase.storage.from(bucket).upload(remotePath, fileBuffer, {
     upsert: true,
     contentType: "image/jpeg",
   });
   if (error) {
-    throw new Error(
-      `Upload failed for ${localFile} -> ${bucket}/${remotePath}: ${error.message}`,
-    );
+    throw new Error(`Upload failed for ${localFile} -> ${bucket}/${remotePath}: ${error.message}`);
   }
 
   const { data } = supabase.storage.from(bucket).getPublicUrl(remotePath, {
@@ -105,11 +98,7 @@ async function main() {
 
   if (manifest.length) {
     const manifestPath = path.resolve("data/recipe-storage-manifest.json");
-    await fs.writeFile(
-      manifestPath,
-      `${JSON.stringify(manifest, null, 2)}\n`,
-      "utf-8",
-    );
+    await fs.writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, "utf-8");
     console.log(`\nSaved manifest: ${manifestPath}`);
   } else {
     console.log("No recipes uploaded.");

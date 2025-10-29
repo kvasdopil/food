@@ -15,7 +15,7 @@ ingredients:
     amount: 1000 ml
     notes: warm
   - name: yellow onion
-    amount: 1 medium
+    amount: 150g
     notes: finely chopped
   - name: garlic
     amount: 2 cloves
@@ -65,7 +65,7 @@ instructions:
       broth, stir in the sliced *cremini or button mushrooms*.
   - step: 5
     action: >-
-      Continue adding *vegetable broth* and stirring for another 10-15 minutes, or until the *arborio rice* is creamy
+      Continue adding vegetable broth and stirring for another 10-15 minutes, or until the arborio rice is creamy
       and al dente (cooked through but still firm to the bite). You may not need all of the broth. Remove the pot from
       the heat.
   - step: 6

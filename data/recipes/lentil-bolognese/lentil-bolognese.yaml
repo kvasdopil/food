@@ -15,16 +15,16 @@ ingredients:
   - name: vegetable stock
     amount: 300ml
   - name: onion
-    amount: 1 medium
+    amount: 150g
     notes: finely chopped
   - name: carrot
-    amount: 1 medium
+    amount: 120g
     notes: finely chopped
   - name: celery stalk
-    amount: '1'
+    amount: "1"
     notes: finely chopped
   - name: garlic cloves
-    amount: '3'
+    amount: "3"
     notes: minced, for bolognese
   - name: olive oil
     amount: 2 tbsp
@@ -39,7 +39,7 @@ ingredients:
   - name: fresh spinach
     amount: 200g
   - name: garlic cloves
-    amount: '2'
+    amount: "2"
     notes: thinly sliced, for spinach
 instructions:
   - step: 1

@@ -16,4 +16,3 @@ export async function fetchRandomSlug(exclude?: string) {
 
   return body.slug;
 }
-

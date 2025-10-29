@@ -16,7 +16,7 @@
    - `NEXT_PUBLIC_SUPABASE_URL`: Project URL from the Supabase dashboard
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: anon public key from Supabase
    - `SUPABASE_SERVICE_ROLE_KEY`: service role token (used by the CLI scripts for storage + seeding)
-   - *(optional)* `RECIPE_STORAGE_BUCKET`: overrides the default `recipe-images` bucket name
+   - _(optional)_ `RECIPE_STORAGE_BUCKET`: overrides the default `recipe-images` bucket name
 
 2. Install dependencies and run the dev server:
 
@@ -58,21 +58,21 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
 4. In the Vercel dashboard, add the `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`
    environment variables under **Settings → Environment Variables**, then redeploy.
 
-
 ## Project Status
 
 - Home route `/` server-redirects to a random recipe slug (`/recipes/[slug]`).
-- Dynamic route `src/app/recipes/[slug]/page.tsx` renders the full recipe view (image, tags, ingredients, instructions).
+- Dynamic route `src/app/recipes/[slug]/page.tsx` fetches recipe data server-side and renders the page through the `RecipePageClient` component (image, tags, ingredients, instructions).
 - Supabase provides recipe data via RPC (`get_random_recipe`) and table queries; types generated in `src/types/supabase.ts`.
 - Client helpers:
   - `KeyboardNav` handles arrow-key navigation with random fallback when history is empty.
   - `RecipeSideNav` renders prev/next buttons using `/api/random-recipe`.
-- API route `/api/random-recipe` returns a random slug, optionally excluding the current recipe.
+  - `useSwipeNavigation` enables left/right swipes on touch devices to jump between recipes.
 
 ## Page Structure
 
 - `src/app/page.tsx`: server component redirecting to a random slug.
 - `src/app/recipes/[slug]/page.tsx`: server component building the recipe layout and metadata.
+- `src/components/recipe-page-client.tsx`: client component that handles rendering, ingredient highlighting, swipe navigation, and prefetch behaviour.
 - `src/components/*`: client-side interactivity (share, favorite, nav, keyboard shortcuts).
 - `src/app/api/random-recipe/route.ts`: edge handler selecting a random recipe slug.
 
@@ -90,14 +90,14 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
   yarn ts-node scripts/upload-recipes-to-storage.ts
   ```
 
-- Rebuild the SQL seed and upsert directly to the remote DB:
+- Rebuild the SQL seed and upsert directly to the remote DB (ingredients are stored as JSON arrays in Supabase):
 
   ```bash
   yarn ts-node scripts/build-recipe-seed.ts
   yarn ts-node scripts/seed-recipes.ts
   ```
 
-- Recipe metadata lives in `data/recipes/<slug>/` (YAML + manifest). Storage uploads land in the `recipe-images` bucket by default.
+- Recipe metadata lives in `data/recipes/<slug>/` (YAML + manifest). Storage uploads land in the `recipe-images` bucket by default. Ingredient entries should use `{ name, amount, notes }` with metric abbreviations (`g`, `ml`, `tsp`, etc.).
 
 ## Data Flow
 

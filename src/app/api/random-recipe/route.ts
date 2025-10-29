@@ -37,10 +37,6 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ slug });
   } catch (error) {
     console.error("Random recipe API failure:", error);
-    return NextResponse.json(
-      { error: "Random recipe not available" },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "Random recipe not available" }, { status: 500 });
   }
 }
-

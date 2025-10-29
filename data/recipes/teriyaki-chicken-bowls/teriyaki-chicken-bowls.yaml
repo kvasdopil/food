@@ -38,7 +38,7 @@ ingredients:
   - name: vegetable oil
     amount: 1 tbsp
   - name: green onions
-    amount: '2'
+    amount: "2"
     notes: Sliced, for garnish
   - name: sesame seeds
     amount: 1 tsp
@@ -55,9 +55,9 @@ instructions:
       grated *ginger*. Set aside 2 tbsp of this mixture in a separate small bowl for later.
   - step: 3
     action: >-
-      Cook chicken: Heat *vegetable oil* in a large skillet or wok over medium-high heat. Add the chicken pieces and
-      cook for 5-7 minutes, stirring occasionally, until browned on all sides and cooked through. Remove chicken from
-      the skillet and set aside.
+      Cook chicken: Heat *vegetable oil* in a large skillet or wok over medium-high heat. Add the *boneless, skinless
+      chicken thighs* and cook for 5-7 minutes, stirring occasionally, until browned on all sides and cooked through.
+      Remove chicken from the skillet and set aside.
   - step: 4
     action: >-
       Steam vegetables: While the chicken cooks, steam the *broccoli* florets and sliced *carrots* in a steamer basket
@@ -74,7 +74,7 @@ instructions:
       Combine and serve: Return the cooked chicken to the skillet with the thickened teriyaki glaze and toss to coat
       thoroughly. To assemble the bowls, divide the cooked *rice* among serving bowls. Top with the warm, glazed
       teriyaki chicken and the perfectly steamed *broccoli* and *carrots*. Garnish with sliced *green onions* and
-      *sesame seeds*. Serve immediately, optionally alongside a quick instant miso soup.
+      *sesame seeds*. Serve immediately.
 tags:
   - japanese
   - chicken

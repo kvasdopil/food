@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect } from "react";
@@ -19,9 +19,7 @@ export function KeyboardNav({ currentSlug }: KeyboardNavProps) {
       const target = event.target as HTMLElement | null;
       const isTyping =
         target &&
-        (target.tagName === "INPUT" ||
-          target.tagName === "TEXTAREA" ||
-          target.isContentEditable);
+        (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable);
 
       if (isTyping) {
         return;

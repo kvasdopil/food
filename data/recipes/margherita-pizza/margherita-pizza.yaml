@@ -20,7 +20,6 @@ ingredients:
     notes: About 10-12 large leaves
   - name: extra virgin olive oil
     amount: 30ml
-    notes: Plus extra for drizzling
   - name: garlic
     amount: 1 clove
     notes: Minced, for the sauce
@@ -54,7 +53,7 @@ instructions:
       desired thickness, aiming for a round shape about 25-30 cm in diameter.
   - step: 4
     action: >-
-      Carefully transfer the *pizza dough* to the hot pizza stone or baking tray. Spread the tomato sauce evenly over
+      Carefully transfer the pizza dough to the hot pizza stone or baking tray. Spread the tomato sauce evenly over
       the dough, leaving a small border for the crust. Distribute the sliced *mozzarella* over the sauce.
   - step: 5
     action: >-
@@ -63,12 +62,12 @@ instructions:
   - step: 6
     action: >-
       While the pizza bakes, prepare the *arugula* salad: In a medium bowl, combine the arugula. In a separate small
-      bowl, whisk together the juice of half a *lemon*, the remaining 15 ml of *olive oil*, a pinch of *salt*, and a
-      dash of *black pepper* to create a simple vinaigrette.
+      bowl, whisk together the juice of half a *lemon*, the remaining 15 ml of olive oil, a pinch of salt, and a dash of
+      black pepper to create a simple vinaigrette.
   - step: 7
     action: >-
-      Once the pizza is out of the oven, immediately scatter the *fresh basil leaves* over the hot cheese. Drizzle with
-      a little *extra virgin olive oil* if desired. Slice and serve hot with the dressed arugula salad on the side.
+      Once the pizza is out of the oven, immediately scatter the *fresh basil leaves* over the hot cheese. Slice and
+      serve hot with the dressed arugula salad on the side.
 tags:
   - italian
   - vegetarian

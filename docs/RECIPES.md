@@ -3,6 +3,7 @@
 Curated list of 100 weeknight-friendly dinners that use accessible pantry staples and cook in under an hour. Recipes are grouped by primary protein.
 
 ## Vegetarian (25)
+
 1. **Margherita Pizza**  
    Blistered crust layered with ripe tomatoes, creamy mozzarella, and garden basil for a comforting pizzeria-style pie; serve with a peppery arugula salad dressed in lemon vinaigrette.  
    #italian #vegetarian
@@ -80,6 +81,7 @@ Curated list of 100 weeknight-friendly dinners that use accessible pantry staple
     #thai #vegan #spicy
 
 ## Fish & Seafood (25)
+
 1. **Lemon Garlic Salmon**  
    Oven-baked salmon fillets with lemon butter and fresh parsley, served alongside roasted baby potatoes and green beans.  
    #american #seafood #glutenfree
@@ -157,6 +159,7 @@ Curated list of 100 weeknight-friendly dinners that use accessible pantry staple
     #italian #seafood
 
 ## Chicken (25)
+
 1. **Lemon Herb Chicken Thighs**  
    Crispy-skinned thighs roasted with garlic, lemon, and rosemary, served with roasted root vegetables.  
    #american #chicken #glutenfree
@@ -234,6 +237,7 @@ Curated list of 100 weeknight-friendly dinners that use accessible pantry staple
     #italian #chicken #glutenfree
 
 ## Meat (Beef, Pork, Lamb) (25)
+
 1. **Classic Beef Tacos**  
    Seasoned ground beef tucked into crispy corn shells with lettuce and cheddar, served alongside Mexican rice.  
    #mexican #beef #glutenfree

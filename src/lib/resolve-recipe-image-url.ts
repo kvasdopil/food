@@ -21,4 +21,3 @@ export function resolveRecipeImageUrl(imagePath: string | null | undefined) {
   const { data } = supabase.storage.from(bucket).getPublicUrl(pathParts.join("/"));
   return data.publicUrl ?? null;
 }
-

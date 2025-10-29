@@ -9,10 +9,10 @@ ingredients:
   - name: vegetable oil
     amount: 15ml
   - name: small onion
-    amount: '1'
+    amount: "1"
     notes: approximately 100g; finely chopped
   - name: garlic cloves
-    amount: '2'
+    amount: "2"
     notes: minced
   - name: ground cumin
     amount: 5ml
@@ -24,7 +24,7 @@ ingredients:
     amount: 2 x 400g cans
     notes: drained and rinsed
   - name: corn tortillas
-    amount: '12'
+    amount: "12"
   - name: shredded cheddar cheese
     amount: 200g
     notes: plus extra for topping
@@ -38,7 +38,7 @@ ingredients:
     amount: 30g
     notes: chopped, for garnish and rice
   - name: lime
-    amount: '1'
+    amount: "1"
     notes: cut into wedges, for garnish and rice
   - name: quick-cook white rice
     amount: 200g

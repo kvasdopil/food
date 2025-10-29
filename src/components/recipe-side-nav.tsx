@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useCallback, useState } from "react";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
@@ -52,11 +52,7 @@ export function RecipeSideNav({ direction, currentSlug }: RecipeSideNavProps) {
   }, [isPrevious, navigateToRandom, router]);
 
   return (
-    <div
-      className={`hidden xl:flex xl:w-40 xl:flex-col ${
-        isPrevious ? "" : "xl:items-end"
-      }`}
-    >
+    <div className={`hidden xl:flex xl:w-40 xl:flex-col ${isPrevious ? "" : "xl:items-end"}`}>
       <button
         type="button"
         onClick={handleClick}

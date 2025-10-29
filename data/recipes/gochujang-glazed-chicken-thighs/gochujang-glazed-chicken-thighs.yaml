@@ -32,9 +32,9 @@ ingredients:
   - name: kimchi juice
     amount: 2 tbsp
   - name: large egg
-    amount: '1'
+    amount: "1"
   - name: green onions, sliced
-    amount: '2'
+    amount: "2"
     notes: for garnish
   - name: vegetable oil
     amount: 1 tbsp
@@ -46,7 +46,7 @@ instructions:
       *minced garlic*, *grated fresh ginger*, and 1 tsp *sesame oil* to create the glaze.
   - step: 2
     action: >-
-      Pat *boneless, skinless chicken thighs* dry. Place them on a foil-lined baking sheet. Brush about half of the *gochujang* glaze
+      Pat *boneless, skinless chicken thighs* dry. Place them on a foil-lined baking sheet. Brush about half of the gochujang glaze
       generously over both sides of the chicken. Bake for 15 minutes.
   - step: 3
     action: >-
@@ -62,9 +62,8 @@ instructions:
       glaze is sticky and lacquered.
   - step: 5
     action: >-
-      Remove chicken from oven. Let rest for a few minutes. Serve the gochujang-glazed *boneless, skinless chicken
-      thighs* over the glossy *kimchi, chopped* fried *cooked day-old rice*, garnished with *toasted sesame seeds* and
-      *green onions, sliced*.
+      Remove chicken from oven. Let rest for a few minutes. Serve the gochujang-glazed boneless, skinless chicken
+      thighs over the glossy kimchi fried rice, garnished with *toasted sesame seeds* and *green onions, sliced*.
 tags:
   - korean
   - chicken

@@ -62,9 +62,7 @@ async function loadRecipes(): Promise<RecipePayload[]> {
         name: String(data.title ?? slug),
         description: String(data.summary ?? ""),
         ingredients: serializedIngredients,
-        instructions: instructions
-          .map((step) => `${step.step}. ${step.action}`)
-          .join("\n"),
+        instructions: instructions.map((step) => `${step.step}. ${step.action}`).join("\n"),
         image_url: `${STORAGE_BUCKET}/${slug}.jpg`,
         tags,
       });
@@ -86,9 +84,7 @@ async function main() {
 
   const recipes = await loadRecipes();
 
-  const { error } = await supabase
-    .from("recipes")
-    .upsert(recipes, { onConflict: "slug" });
+  const { error } = await supabase.from("recipes").upsert(recipes, { onConflict: "slug" });
 
   if (error) {
     throw error;

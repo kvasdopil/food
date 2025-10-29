@@ -13,10 +13,10 @@ ingredients:
     amount: 250g
     notes: pressed and cut into 1.5 cm cubes
   - name: carrot
-    amount: '1'
+    amount: "1"
     notes: large, julienned
   - name: red bell pepper
-    amount: '1'
+    amount: "1"
     notes: medium, thinly sliced
   - name: broccoli florets
     amount: 150g
@@ -25,7 +25,7 @@ ingredients:
     amount: 100g
     notes: fresh
   - name: spring onions
-    amount: '3'
+    amount: "3"
     notes: sliced into 2.5 cm pieces
   - name: garlic
     amount: 2 cloves
@@ -45,13 +45,13 @@ ingredients:
     amount: 50g
     notes: for garnish
   - name: fresh lime
-    amount: '1'
+    amount: "1"
     notes: cut into wedges, for garnish
   - name: fresh coriander
     amount: 15g
     notes: chopped, for garnish
   - name: cucumber
-    amount: '1'
+    amount: "1"
     notes: medium, for ribbon salad
   - name: lime juice
     amount: 1 tbsp
@@ -71,29 +71,30 @@ instructions:
       vinegar*. Set aside.
   - step: 3
     action: >-
-      Sauté *tofu* and Aromatics: Heat 1 tbsp of *vegetable oil* in a large wok or frying pan over medium-high heat. Add
-      cubed tofu and cook, stirring occasionally, until golden brown and slightly crispy on all sides, about 5-7
-      minutes. Remove tofu from the pan and set aside. Add the remaining 1 tbsp of oil to the pan. Add minced *garlic*
-      and sauté for 30 seconds until fragrant.
+      Sauté *extra-firm tofu* and aromatics: Heat 1 tbsp of *vegetable oil* in a large wok or frying pan over
+      medium-high heat. Add the cubed tofu and cook, stirring occasionally, until golden brown and slightly
+      crispy on all sides, about 5-7 minutes. Remove the tofu from the pan and set aside. Add the remaining 1 tbsp of
+      oil to the pan. Add minced *garlic* and sauté for 30 seconds until fragrant.
   - step: 4
     action: >-
       Stir-fry Vegetables: Add julienned *carrot*, thinly sliced *red bell pepper*, and small *broccoli florets* to the
       pan. Stir-fry for 3-4 minutes until vegetables are tender-crisp.
   - step: 5
     action: >-
-      Combine and Finish Pad Thai: Add the soaked and drained rice *noodles* to the pan with the vegetables. Pour the
-      prepared Pad Thai *sauce* over the noodles and vegetables. Toss everything together vigorously for 2-3 minutes
-      until the noodles are well coated and heated through. Add the cooked *tofu*, *bean sprouts*, and sliced *spring
+      Combine and Finish Pad Thai: Add the soaked and drained *rice stick noodles* to the pan with the vegetables. Pour
+      the prepared Pad Thai sauce over the noodles and vegetables. Toss everything together vigorously for 2-3 minutes
+      until the noodles are well coated and heated through. Add the cooked *extra-firm tofu*, *bean sprouts*, and sliced *spring
       onions*. Toss for another minute until bean sprouts are slightly wilted and all ingredients are combined.
   - step: 6
     action: >-
-      Prepare *cucumber*-*lime* Ribbon Salad: While the Pad Thai is finishing, use a vegetable peeler to create long
-      ribbons from the cucumber. In a small bowl, gently toss the cucumber ribbons with *lime juice* and a pinch of
-      *salt*.
+      Prepare the *cucumber* and *fresh lime* ribbon salad: While the Pad Thai is finishing, use a vegetable peeler to
+      create long ribbons from the cucumber. In a small bowl, gently toss the cucumber ribbons with *lime juice* and a
+      pinch of *salt*. Finish with a squeeze of *fresh lime* if you like extra brightness.
   - step: 7
     action: >-
       Serve: Divide the Veggie Pad Thai among serving plates. Garnish generously with *crushed roasted peanuts*, *fresh
-      coriander*, and *lime* wedges. Serve immediately with the refreshing *cucumber*-lime ribbon salad on the side.
+      coriander*, and fresh lime wedges. Serve immediately with the refreshing *cucumber* and lime ribbon salad on the
+      side.
 tags:
   - thai
   - vegan

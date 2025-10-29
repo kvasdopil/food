@@ -54,8 +54,8 @@ instructions:
   - step: 1
     action: >-
       Preheat your oven to 200°C. Line a large baking sheet. In a large bowl, whisk together the
-      *all-purpose flour*, *cornstarch*, *garlic powder*, *onion powder*, *smoked paprika*, 1/2 tsp *salt*, and 1/4 tsp
-      *black pepper*. Gradually whisk in the *water* until a smooth, thick batter forms. Add the *cauliflower* florets
+      *all-purpose flour*, *cornstarch*, *garlic powder*, *onion powder*, *smoked paprika*, *salt*, and *black pepper*.
+      Gradually whisk in the *water* until a smooth, thick batter forms. Add the *cauliflower* florets
       to the batter and toss until each piece is evenly coated.
   - step: 2
     action: >-
@@ -65,7 +65,7 @@ instructions:
     action: >-
       While the *cauliflower* bakes, prepare the slaw. In a medium bowl, combine the shredded *cabbage* and shredded
       *carrot*. In a small separate bowl, whisk together the *vegan mayonnaise*, *apple cider vinegar*, *maple syrup*, a
-      pinch of *salt*, and a pinch of *black pepper*. Pour the dressing over the cabbage and carrot mixture and toss
+      pinch of salt, and a pinch of black pepper. Pour the dressing over the cabbage and carrot mixture and toss
       well to combine.
   - step: 4
     action: >-
@@ -74,11 +74,11 @@ instructions:
       thoroughly coated.
   - step: 5
     action: >-
-      Warm the *flour* tortillas according to package directions (typically 15-30 seconds in the microwave, or briefly
+      Warm the *flour tortillas* according to package directions (typically 15-30 seconds in the microwave, or briefly
       in a dry pan). Fill each warm tortilla with a generous portion of the buffalo *cauliflower* and a spoonful of the
       crunchy slaw.
   - step: 6
-    action: Fold the *tortillas* into wraps and serve immediately with extra *carrot* and *celery sticks* on the side.
+    action: Fold the tortillas into wraps and serve immediately with extra carrot and *celery sticks* on the side.
 tags:
   - american
   - vegan

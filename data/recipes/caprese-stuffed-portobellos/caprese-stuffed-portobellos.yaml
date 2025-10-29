@@ -7,7 +7,7 @@ prepTimeMinutes: 15
 cookTimeMinutes: 35
 ingredients:
   - name: large portobello mushrooms
-    amount: '4'
+    amount: "4"
     notes: Stems removed, gills gently scraped out
   - name: baby potatoes
     amount: 500g

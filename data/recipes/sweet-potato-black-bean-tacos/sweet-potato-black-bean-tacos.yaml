@@ -29,24 +29,22 @@ ingredients:
     notes: plus extra for charring corn
   - name: chili powder
     amount: 10ml
-    notes: divided; 2 tsp
+    notes: divided
   - name: ground cumin
     amount: 10ml
-    notes: divided; 2 tsp
+    notes: divided
   - name: smoked paprika
     amount: 5ml
-    notes: 1 tsp
   - name: salt
     amount: 5ml
-    notes: plus more to taste; 1 tsp
+    notes: plus more to taste
   - name: black pepper
     amount: 2.5ml
-    notes: 0.5 tsp
   - name: sour cream
     amount: 120ml
     notes: or a vegan alternative for a plant-based option
   - name: corn tortillas
-    amount: '12'
+    amount: "12"
     notes: small, for gluten-free option
 instructions:
   - step: 1
@@ -75,7 +73,7 @@ instructions:
       the oven for a few minutes.
   - step: 6
     action: >-
-      Assemble the tacos by spooning the roasted sweet potato and *black bean* mixture into the warm *tortillas*. Top
+      Assemble the tacos by spooning the roasted sweet potato and *black beans* mixture into the warm *corn tortillas*. Top
       with a generous dollop of *lime* crema, a spoonful of the charred street-*corn* salad, and a sprinkle of *fresh
       cilantro*. Serve immediately with extra lime wedges.
 tags:

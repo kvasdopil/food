@@ -1,13 +1,6 @@
-'use client';
+"use client";
 
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { supabase } from "@/lib/supabaseClient";
@@ -25,9 +18,7 @@ type RecipePreloadContextValue = {
   isPrefetching: boolean;
 };
 
-const RecipePreloadContext = createContext<RecipePreloadContextValue | null>(
-  null,
-);
+const RecipePreloadContext = createContext<RecipePreloadContextValue | null>(null);
 
 async function preloadImage(url: string | null) {
   if (!url || typeof window === "undefined") {
@@ -123,20 +114,13 @@ export function RecipePreloadProvider({
     [getNextSlug, isPrefetching, prefetched],
   );
 
-  return (
-    <RecipePreloadContext.Provider value={value}>
-      {children}
-    </RecipePreloadContext.Provider>
-  );
+  return <RecipePreloadContext.Provider value={value}>{children}</RecipePreloadContext.Provider>;
 }
 
 export function useRecipePreload() {
   const context = useContext(RecipePreloadContext);
   if (!context) {
-    throw new Error(
-      "useRecipePreload must be used within a RecipePreloadProvider",
-    );
+    throw new Error("useRecipePreload must be used within a RecipePreloadProvider");
   }
   return context;
 }
-

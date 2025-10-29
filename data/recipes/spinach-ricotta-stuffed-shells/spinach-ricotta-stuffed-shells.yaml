@@ -23,7 +23,7 @@ ingredients:
     amount: 50g
     notes: grated
   - name: large egg
-    amount: '1'
+    amount: "1"
     notes: beaten
   - name: garlic
     amount: 2 cloves
@@ -43,7 +43,7 @@ ingredients:
 instructions:
   - step: 1
     action: >-
-      Preheat oven to 190°C. Lightly grease a 23cm x 33cm baking dish with 1 tbsp of *olive oil*. If using *fresh
+      Preheat oven to 190°C. Lightly grease a 23cm x 33cm baking dish with *olive oil*. If using *fresh
       spinach*, quickly wilt it in a pan over medium heat, then squeeze out excess water and roughly chop. If using
       frozen, thaw and squeeze dry, then chop.
   - step: 2
@@ -53,8 +53,8 @@ instructions:
   - step: 3
     action: >-
       In a large bowl, combine the *ricotta cheese*, wilted and chopped *fresh spinach*, beaten *large egg*, minced
-      *garlic*, *dried oregano*, chopped *fresh parsley*, 0.5 tsp *salt*, and 0.25 tsp *black pepper*. Mix thoroughly
-      until all ingredients are well combined.
+      *garlic*, *dried oregano*, chopped *fresh parsley*, *salt*, and *black pepper*. Mix thoroughly until all
+      ingredients are well combined.
   - step: 4
     action: >-
       Spread half of the *marinara sauce* evenly over the bottom of the prepared baking dish. Carefully stuff each

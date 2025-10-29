@@ -55,9 +55,7 @@ async function loadGeneratedSeeds(): Promise<SeedRecord[]> {
         name: String(data.title ?? slug),
         description: String(data.summary ?? ""),
         ingredients: JSON.stringify(ingredientObjects),
-        instructions: instructions
-          .map((step) => `${step.step}. ${step.action}`)
-          .join("\n"),
+        instructions: instructions.map((step) => `${step.step}. ${step.action}`).join("\n"),
         imagePath: `${STORAGE_BUCKET}/${slug}.jpg`,
         tags,
       });

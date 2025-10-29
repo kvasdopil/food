@@ -6,7 +6,7 @@ cookTimeMinutes: 35
 ingredients:
   - name: bell peppers
     amount: 4 large
-    notes: any color, halved lengthwise, seeds and membranes removed
+    notes: any color
   - name: uncooked long-grain white rice
     amount: 200g
   - name: vegetable broth
@@ -15,10 +15,10 @@ ingredients:
   - name: olive oil
     amount: 2 tbsp
   - name: small onion
-    amount: '1'
+    amount: "1"
     notes: finely chopped
   - name: garlic cloves
-    amount: '2'
+    amount: "2"
     notes: minced
   - name: tomato paste
     amount: 2 tbsp
@@ -77,9 +77,9 @@ instructions:
       Bake for 25 minutes. Remove the foil and continue baking for another 10-15 minutes, or until the *peppers* are
       tender and the filling is heated through and slightly golden on top. While the peppers bake uncovered, prepare the
       quick *cucumber* salad by combining diced cucumber, *lemon juice*, chopped *fresh dill* (if using), and a pinch of
-      *salt* and pepper in a small bowl.
+      salt and black pepper in a small bowl.
   - step: 7
-    action: Serve the hot stuffed *peppers* immediately with the refreshing lemony *cucumber* salad on the side.
+    action: Serve the hot stuffed peppers immediately with the refreshing lemony cucumber salad on the side.
 tags:
   - greek
   - vegetarian
