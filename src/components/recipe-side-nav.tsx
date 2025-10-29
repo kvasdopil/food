@@ -4,32 +4,17 @@ import { useCallback, useState } from "react";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 
+import { useRecipePreload } from "@/components/recipe-preload-provider";
+import { fetchRandomSlug } from "@/lib/random-recipe";
+
 type RecipeSideNavProps = {
   direction: "previous" | "next";
   currentSlug: string;
 };
 
-async function fetchRandomSlug(exclude?: string) {
-  const url = exclude
-    ? `/api/random-recipe?exclude=${encodeURIComponent(exclude)}`
-    : "/api/random-recipe";
-
-  const response = await fetch(url, { cache: "no-store" });
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch random recipe slug");
-  }
-
-  const body = (await response.json()) as { slug?: string };
-  if (!body.slug) {
-    throw new Error("Random slug missing from response");
-  }
-
-  return body.slug;
-}
-
 export function RecipeSideNav({ direction, currentSlug }: RecipeSideNavProps) {
   const router = useRouter();
+  const { getNextSlug } = useRecipePreload();
   const [isBusy, setIsBusy] = useState(false);
   const isPrevious = direction === "previous";
   const label = isPrevious ? "Previous Recipe" : "Next Recipe";
@@ -38,14 +23,20 @@ export function RecipeSideNav({ direction, currentSlug }: RecipeSideNavProps) {
   const navigateToRandom = useCallback(async () => {
     setIsBusy(true);
     try {
-      const slug = await fetchRandomSlug(currentSlug);
+      const slug = await getNextSlug();
       router.push(`/recipes/${slug}`);
     } catch (error) {
-      console.error("Random navigation failed:", error);
+      console.error("Prefetched navigation failed:", error);
+      try {
+        const fallbackSlug = await fetchRandomSlug(currentSlug);
+        router.push(`/recipes/${fallbackSlug}`);
+      } catch (fallbackError) {
+        console.error("Fallback navigation failed:", fallbackError);
+      }
     } finally {
       setIsBusy(false);
     }
-  }, [currentSlug, router]);
+  }, [currentSlug, getNextSlug, router]);
 
   const handleClick = useCallback(async () => {
     if (isPrevious) {

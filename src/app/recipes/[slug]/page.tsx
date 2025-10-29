@@ -6,8 +6,10 @@ import { FavoriteButton } from "@/components/favorite-button";
 import { KeyboardNav } from "@/components/keyboard-nav";
 import { ShareRecipeButton } from "@/components/share-recipe-button";
 import { RecipeSideNav } from "@/components/recipe-side-nav";
+import { RecipePreloadProvider } from "@/components/recipe-preload-provider";
 import { supabase } from "@/lib/supabaseClient";
 import type { Tables } from "@/types/supabase";
+import { resolveRecipeImageUrl } from "@/lib/resolve-recipe-image-url";
 
 type Recipe = Tables<"recipes">;
 
@@ -44,29 +46,6 @@ async function fetchRecipeBySlug(slug: string) {
   return data satisfies Recipe | null;
 }
 
-function resolveImageUrl(imageRef: string | null) {
-  if (!imageRef) {
-    return null;
-  }
-
-  if (/^https?:\/\//i.test(imageRef)) {
-    return imageRef;
-  }
-
-  if (!supabase) {
-    return null;
-  }
-
-  const [bucket, ...pathParts] = imageRef.split("/");
-  if (!bucket || pathParts.length === 0) {
-    return null;
-  }
-
-  const objectPath = pathParts.join("/");
-  const { data } = supabase.storage.from(bucket).getPublicUrl(objectPath);
-  return data.publicUrl ?? null;
-}
-
 export async function generateMetadata({
   params,
 }: RecipePageProps): Promise<Metadata> {
@@ -86,7 +65,7 @@ export async function generateMetadata({
       title: recipe.name,
       description: recipe.description ?? undefined,
       images: (() => {
-        const imageUrl = resolveImageUrl(recipe.image_url);
+        const imageUrl = resolveRecipeImageUrl(recipe.image_url);
         return imageUrl ? [{ url: imageUrl }] : undefined;
       })(),
     },
@@ -112,100 +91,102 @@ export default async function RecipePage({ params }: RecipePageProps) {
     .filter(Boolean)
     .map((step) => step.replace(/^\d+\.\s*/, ""));
 
-  const imageUrl = resolveImageUrl(recipe.image_url);
+  const imageUrl = resolveRecipeImageUrl(recipe.image_url);
 
   return (
-    <main className="relative min-h-screen bg-slate-50 text-slate-900">
-      <KeyboardNav currentSlug={recipe.slug} />
-      <div className="mx-auto flex w-full max-w-5xl flex-col px-0 sm:px-6 xl:flex-row xl:items-stretch xl:gap-6">
-        <RecipeSideNav direction="previous" currentSlug={recipe.slug} />
-        <article className="flex w-full flex-col bg-white pb-12 text-base leading-relaxed text-slate-600 sm:shadow-2xl sm:shadow-slate-200/70">
-          <figure className="relative aspect-[4/3] w-full overflow-hidden md:aspect-[16/9] lg:h-[520px]">
-            {imageUrl ? (
-              <Image
-                src={imageUrl}
-                alt={recipe.name}
-                fill
-                priority
-                sizes="(max-width: 768px) 100vw, 640px"
-                className="object-cover"
-              />
-            ) : (
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-200 via-slate-100 to-slate-300" />
-            )}
+    <RecipePreloadProvider currentSlug={recipe.slug}>
+      <main className="relative min-h-screen bg-slate-50 text-slate-900">
+        <KeyboardNav currentSlug={recipe.slug} />
+        <div className="mx-auto flex w-full max-w-5xl flex-col px-0 sm:px-6 xl:flex-row xl:items-stretch xl:gap-6">
+          <RecipeSideNav direction="previous" currentSlug={recipe.slug} />
+          <article className="flex w-full flex-col bg-white pb-12 text-base leading-relaxed text-slate-600 sm:shadow-2xl sm:shadow-slate-200/70">
+            <figure className="relative aspect-[4/3] w-full overflow-hidden md:aspect-[16/9] lg:h-[520px]">
+              {imageUrl ? (
+                <Image
+                  src={imageUrl}
+                  alt={recipe.name}
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 100vw, 640px"
+                  className="object-cover"
+                />
+              ) : (
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-200 via-slate-100 to-slate-300" />
+              )}
 
-            <div className="absolute top-4 right-4 flex items-center gap-3">
-              <ShareRecipeButton
-                slug={recipe.slug}
-                title={recipe.name}
-                variant="icon"
-              />
-              <FavoriteButton />
-            </div>
-
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent px-5 pb-6 pt-16">
-              <h1 className="text-3xl font-semibold text-white drop-shadow-sm md:text-4xl">
-                {recipe.name}
-              </h1>
-            </div>
-          </figure>
-
-          <section className="space-y-6 px-5 pt-8 sm:px-8">
-            {recipe.description ? (
-              <p className="text-base text-slate-600">{recipe.description}</p>
-            ) : null}
-
-            {recipe.tags.length > 0 ? (
-              <div className="flex flex-wrap gap-2">
-                {recipe.tags.map((tag, index) => (
-                  <span
-                    key={tag}
-                    className={`rounded-full px-3 py-1 text-sm font-medium ${chipPalette[index % chipPalette.length]}`}
-                  >
-                    {tag}
-                  </span>
-                ))}
+              <div className="absolute top-4 right-4 flex items-center gap-3">
+                <ShareRecipeButton
+                  slug={recipe.slug}
+                  title={recipe.name}
+                  variant="icon"
+                />
+                <FavoriteButton />
               </div>
-            ) : null}
-          </section>
 
-          <section className="mt-8 space-y-5 px-5 sm:px-10 lg:px-12">
-            <h2 className="text-xl font-semibold text-slate-900">
-              Ingredients
-            </h2>
-            <ul className="grid gap-3 md:grid-cols-2 md:gap-4">
-              {ingredientLines.map((item) => (
-                <li
-                  key={item}
-                  className="relative pl-6 text-base text-slate-700 before:absolute before:left-0 before:top-2.5 before:h-2 before:w-2 before:rounded-full before:bg-amber-500"
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </section>
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent px-5 pb-6 pt-16">
+                <h1 className="text-3xl font-semibold text-white drop-shadow-sm md:text-4xl">
+                  {recipe.name}
+                </h1>
+              </div>
+            </figure>
 
-          <section className="mt-8 space-y-5 px-5 pb-12 sm:px-10 lg:px-12">
-            <h2 className="text-xl font-semibold text-slate-900">
-              Instructions
-            </h2>
-            <ol className="space-y-3">
-              {instructionSteps.map((step, index) => (
-                <li
-                  key={`${index}-${step}`}
-                  className="flex items-start gap-3 text-base text-slate-700"
-                >
-                  <span className="mt-0.5 w-5 flex-shrink-0 text-right text-base font-semibold text-amber-500">
-                    {index + 1}
-                  </span>
-                  <span className="flex-1">{step}</span>
-                </li>
-              ))}
-            </ol>
-          </section>
-        </article>
-        <RecipeSideNav direction="next" currentSlug={recipe.slug} />
-      </div>
-    </main>
+            <section className="space-y-6 px-5 pt-8 sm:px-8">
+              {recipe.description ? (
+                <p className="text-base text-slate-600">{recipe.description}</p>
+              ) : null}
+
+              {recipe.tags.length > 0 ? (
+                <div className="flex flex-wrap gap-2">
+                  {recipe.tags.map((tag, index) => (
+                    <span
+                      key={tag}
+                      className={`rounded-full px-3 py-1 text-sm font-medium ${chipPalette[index % chipPalette.length]}`}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
+            </section>
+
+            <section className="mt-8 space-y-5 px-5 sm:px-10 lg:px-12">
+              <h2 className="text-xl font-semibold text-slate-900">
+                Ingredients
+              </h2>
+              <ul className="grid gap-3 md:grid-cols-2 md:gap-4">
+                {ingredientLines.map((item) => (
+                  <li
+                    key={item}
+                    className="relative pl-6 text-base text-slate-700 before:absolute before:left-0 before:top-2.5 before:h-2 before:w-2 before:rounded-full before:bg-amber-500"
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <section className="mt-8 space-y-5 px-5 pb-12 sm:px-10 lg:px-12">
+              <h2 className="text-xl font-semibold text-slate-900">
+                Instructions
+              </h2>
+              <ol className="space-y-3">
+                {instructionSteps.map((step, index) => (
+                  <li
+                    key={`${index}-${step}`}
+                    className="flex items-start gap-3 text-base text-slate-700"
+                  >
+                    <span className="mt-0.5 w-5 flex-shrink-0 text-right text-base font-semibold text-amber-500">
+                      {index + 1}
+                    </span>
+                    <span className="flex-1">{step}</span>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          </article>
+          <RecipeSideNav direction="next" currentSlug={recipe.slug} />
+        </div>
+      </main>
+    </RecipePreloadProvider>
   );
 }

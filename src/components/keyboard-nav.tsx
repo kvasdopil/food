@@ -3,23 +3,8 @@
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect } from "react";
 
-async function fetchRandomSlug(exclude?: string) {
-  const url = exclude
-    ? `/api/random-recipe?exclude=${encodeURIComponent(exclude)}`
-    : "/api/random-recipe";
-
-  const response = await fetch(url, { cache: "no-store" });
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch random recipe slug");
-  }
-
-  const body = (await response.json()) as { slug?: string };
-  if (!body.slug) {
-    throw new Error("Random slug missing from response");
-  }
-  return body.slug;
-}
+import { useRecipePreload } from "@/components/recipe-preload-provider";
+import { fetchRandomSlug } from "@/lib/random-recipe";
 
 type KeyboardNavProps = {
   currentSlug: string;
@@ -27,6 +12,7 @@ type KeyboardNavProps = {
 
 export function KeyboardNav({ currentSlug }: KeyboardNavProps) {
   const router = useRouter();
+  const { getNextSlug } = useRecipePreload();
 
   const handleKeydown = useCallback(
     async (event: KeyboardEvent) => {
@@ -46,16 +32,28 @@ export function KeyboardNav({ currentSlug }: KeyboardNavProps) {
         if (window.history.length > 1) {
           router.back();
         } else {
-          const slug = await fetchRandomSlug(currentSlug);
-          router.push(`/recipes/${slug}`);
+          try {
+            const slug = await getNextSlug();
+            router.push(`/recipes/${slug}`);
+          } catch (error) {
+            console.error("Keyboard navigation (left) failed:", error);
+            const slug = await fetchRandomSlug(currentSlug);
+            router.push(`/recipes/${slug}`);
+          }
         }
       } else if (event.key === "ArrowRight") {
         event.preventDefault();
-        const slug = await fetchRandomSlug(currentSlug);
-        router.push(`/recipes/${slug}`);
+        try {
+          const slug = await getNextSlug();
+          router.push(`/recipes/${slug}`);
+        } catch (error) {
+          console.error("Keyboard navigation (right) failed:", error);
+          const slug = await fetchRandomSlug(currentSlug);
+          router.push(`/recipes/${slug}`);
+        }
       }
     },
-    [currentSlug, router],
+    [currentSlug, getNextSlug, router],
   );
 
   useEffect(() => {
@@ -65,4 +63,3 @@ export function KeyboardNav({ currentSlug }: KeyboardNavProps) {
 
   return null;
 }
-
