@@ -508,12 +508,12 @@ async function main() {
       ? `${cuisineTag.toLowerCase()}-inspired table`
       : "rustic dining table";
 
-    const baseImagePrompt = [
-      `Vibrant close-up of ${recipe.title}, plated to showcase vivid textures and color.`,
-      `Incorporate visual cues from this description: ${recipe.summary}.`,
-      `Scene: ${tableSetting} with soft natural daylight, eye-level perspective, and shallow depth of field.`,
-      "Capture fresh garnish, gentle steam, and a sense of homemade comfort. No people or branded props.",
-    ].join(" ");
+  const baseImagePrompt = [
+    `Vibrant close-up of ${recipe.title}, plated to showcase vivid textures and color.`,
+    `Incorporate visual cues from this description: ${recipe.summary}.`,
+    `Scene: ${tableSetting} with soft natural daylight, eye-level perspective, and shallow depth of field.`,
+    "Capture fresh garnish, inviting lighting, and a sense of homemade comfort with no visible steam or vapor. No people or branded props.",
+  ].join(" ");
 
     const enhancedImagePrompt = await enhanceImagePrompt(recipe, baseImagePrompt, apiKey);
     const imageData = await generateImage(enhancedImagePrompt, apiKey);
