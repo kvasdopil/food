@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 
-import { useRecipePreload } from "@/components/recipe/preload-provider";
+import { useRecipeNavigation } from "@/app/recipes/[slug]/client/navigation-provider";
 import { fetchRandomSlug } from "@/lib/random-recipe";
 
 type RecipeSideNavProps = {
@@ -14,7 +14,7 @@ type RecipeSideNavProps = {
 
 export function RecipeSideNav({ direction, currentSlug }: RecipeSideNavProps) {
   const router = useRouter();
-  const { getNextSlug } = useRecipePreload();
+  const { getNextSlug } = useRecipeNavigation();
   const [isBusy, setIsBusy] = useState(false);
   const isPrevious = direction === "previous";
   const label = isPrevious ? "Previous Recipe" : "Next Recipe";

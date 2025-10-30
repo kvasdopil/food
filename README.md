@@ -66,7 +66,7 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
 - Client helpers:
   - `KeyboardNav` handles arrow-key navigation with random fallback when history is empty.
   - `RecipeSideNav` renders prev/next buttons using `/api/random-recipe`.
-  - `useSwipeNavigation` enables left/right swipes on touch devices to jump between recipes.
+  - `RecipeSwipeableCarousel` provides mobile swipe gestures with preloaded next/previous recipes.
 
 ## Page Structure
 

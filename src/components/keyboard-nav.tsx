@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect } from "react";
 
-import { useRecipePreload } from "@/components/recipe/preload-provider";
+import { useRecipeNavigation } from "@/app/recipes/[slug]/client/navigation-provider";
 import { fetchRandomSlug } from "@/lib/random-recipe";
 
 type KeyboardNavProps = {
@@ -12,7 +12,7 @@ type KeyboardNavProps = {
 
 export function KeyboardNav({ currentSlug }: KeyboardNavProps) {
   const router = useRouter();
-  const { getNextSlug } = useRecipePreload();
+  const { getNextSlug } = useRecipeNavigation();
 
   const handleKeydown = useCallback(
     async (event: KeyboardEvent) => {

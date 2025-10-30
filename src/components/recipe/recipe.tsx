@@ -1,64 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 import { Description } from "./description";
 import { RecipeImage } from "./image";
 import { Ingredients } from "./ingredients";
 import { Instructions } from "./instructions";
-import { fetchRecipeData, type RecipeData } from "@/lib/fetch-recipe-data";
+import { useRecipe } from "@/hooks/useRecipe";
 
 type RecipeProps = {
   slug: string;
 };
 
 export function Recipe({ slug }: RecipeProps) {
-  const [recipeData, setRecipeData] = useState<RecipeData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  // Fetch recipe data when slug changes
-  useEffect(() => {
-    let isActive = true;
-
-    async function loadRecipe() {
-      setIsLoading(true);
-      setError(null);
-
-      try {
-        const data = await fetchRecipeData(slug);
-
-        if (!isActive) {
-          return;
-        }
-
-        if (!data) {
-          setError("Recipe not found");
-          setIsLoading(false);
-          return;
-        }
-
-        setRecipeData(data);
-      } catch (err) {
-        if (!isActive) {
-          return;
-        }
-
-        console.error("Failed to load recipe:", err);
-        setError("Failed to load recipe");
-      } finally {
-        if (isActive) {
-          setIsLoading(false);
-        }
-      }
-    }
-
-    loadRecipe();
-
-    return () => {
-      isActive = false;
-    };
-  }, [slug]);
+  const { recipeData, isLoading, error } = useRecipe(slug);
 
   if (isLoading) {
     return (
@@ -89,4 +42,3 @@ export function Recipe({ slug }: RecipeProps) {
     </article>
   );
 }
-

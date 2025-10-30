@@ -27,11 +27,6 @@ export function SwipeableCarousel<T>({
   // Keep opacity at 1 for the current card - no transparency
   const opacity = useMotionValue(1);
 
-  // Get items for display (current, previous, next)
-  const currentItem = items[currentIndex];
-  const previousItem = currentIndex > 0 ? items[currentIndex - 1] : null;
-  const nextItem = currentIndex < items.length - 1 ? items[currentIndex + 1] : null;
-
   // Aggressively lock Y to 0 using requestAnimationFrame
   useEffect(() => {
     let rafId: number;
@@ -124,62 +119,71 @@ export function SwipeableCarousel<T>({
       className={`relative w-full min-h-screen overflow-x-hidden bg-slate-50 sm:hidden ${className}`}
       style={{ touchAction: "pan-y pinch-zoom" }}
     >
-      {/* Previous item (behind, revealed on swipe right) */}
-      {previousItem && !isTransitioning && (
-        <div className="absolute inset-0 z-0 w-full pointer-events-none">
-          {renderItem(previousItem, false)}
-        </div>
-      )}
+      {items.map((item, index) => {
+        const isActive = index === currentIndex;
+        const offset = index - currentIndex;
+        const slot =
+          offset === 0
+            ? "current"
+            : offset < 0
+              ? `previous${Math.abs(offset)}`
+              : `next${offset}`;
+        const itemKey = `${slot}-${String(item)}`;
 
-      {/* Next item (behind, revealed on swipe left) */}
-      {nextItem && !isTransitioning && (
-        <div className="absolute inset-0 z-0 w-full pointer-events-none">
-          {renderItem(nextItem, false)}
-        </div>
-      )}
+        if (!isActive && isTransitioning) {
+          return null;
+        }
 
-      {/* Current item (draggable) - Always visible */}
-      <motion.div
-        className="relative z-10 w-full shadow-2xl shadow-slate-900/20"
-        style={{
-          x,
-          y: 0,
-          opacity,
-          touchAction: "pan-y",
-          willChange: "transform",
-        }}
-        drag="x"
-        dragDirectionLock={true}
-        dragMomentum={false}
-        dragConstraints={{ left: -1000, right: 1000, top: 0, bottom: 0 }}
-        dragElastic={0.2}
-        dragPropagation={false}
-        onDragStart={() => {
-          y.set(0);
-        }}
-        onDrag={(event) => {
-          // Force Y to 0 continuously
-          y.set(0);
+        return (
+          <motion.div
+            key={itemKey}
+            className={`w-full ${isActive ? "relative z-10 shadow-2xl shadow-slate-900/20" : "absolute inset-0 z-0 pointer-events-none"}`}
+            style={{
+              x: isActive ? x : 0,
+              y: 0,
+              opacity: isActive ? opacity : 1,
+              touchAction: "pan-y",
+              willChange: "transform",
+            }}
+            drag={isActive ? "x" : false}
+            dragDirectionLock={true}
+            dragMomentum={false}
+            dragConstraints={{ left: -1000, right: 1000, top: 0, bottom: 0 }}
+            dragElastic={0.2}
+            dragPropagation={false}
+            onDragStart={() => {
+              if (isActive) {
+                y.set(0);
+              }
+            }}
+            onDrag={(event) => {
+              if (!isActive) {
+                return;
+              }
 
-          // Override DOM transform directly to force translateY(0)
-          const element = event?.currentTarget as HTMLElement;
-          if (element) {
-            const currentX = x.get();
-            // Force transform with explicit translateY(0) and no scale
-            element.style.transform = `translateX(${currentX}px) translateY(0px)`;
-          }
-        }}
-        onDragEnd={(event, info) => {
-          // Reset Y before handling drag end
-          y.set(0);
-          handleDragEnd(event, info);
-        }}
-        initial={{ x: 0, y: 0 }}
-        animate={{ x: 0, y: 0 }}
-        whileDrag={{ cursor: "grabbing", y: 0 }}
-      >
-        {currentItem && renderItem(currentItem, true)}
-      </motion.div>
+              y.set(0);
+              const element = event?.currentTarget as HTMLElement;
+              if (element) {
+                const currentX = x.get();
+                element.style.transform = `translateX(${currentX}px) translateY(0px)`;
+              }
+            }}
+            onDragEnd={(event, info) => {
+              if (!isActive) {
+                return;
+              }
+
+              y.set(0);
+              handleDragEnd(event, info);
+            }}
+            initial={{ x: 0, y: 0 }}
+            animate={{ x: 0, y: 0 }}
+            whileDrag={isActive ? { cursor: "grabbing", y: 0 } : undefined}
+          >
+            {renderItem(item, isActive)}
+          </motion.div>
+        );
+      })}
     </div>
   );
 }

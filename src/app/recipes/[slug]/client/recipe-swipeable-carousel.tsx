@@ -1,26 +1,68 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
-import { SwipeableCarousel } from "../swipeable-carousel";
-import { Recipe } from "./recipe";
+import { SwipeableCarousel } from "@/components/swipeable-carousel";
+import { Recipe } from "@/components/recipe/recipe";
 import { fetchRandomSlug } from "@/lib/random-recipe";
 
 type RecipeSwipeableCarouselProps = {
   slug: string;
 };
 
+type CarouselSnapshot = {
+  current: string;
+  next: string | null;
+  previous: string | null;
+};
+
+let lastSnapshot: CarouselSnapshot | null = null;
+
+function getInitialSnapshot(slug: string): CarouselSnapshot {
+  if (lastSnapshot?.current === slug) {
+    return lastSnapshot;
+  }
+
+  return {
+    current: slug,
+    next: null,
+    previous: null,
+  };
+}
+
 export function RecipeSwipeableCarousel({ slug }: RecipeSwipeableCarouselProps) {
   const router = useRouter();
-  const pathname = usePathname();
-  const [currentSlug, setCurrentSlug] = useState<string>(slug);
-  const [nextSlug, setNextSlug] = useState<string | null>(null);
-  const [previousSlug, setPreviousSlug] = useState<string | null>(null);
+  const initialSnapshotRef = useRef<CarouselSnapshot | null>(null);
+
+  if (initialSnapshotRef.current === null) {
+    initialSnapshotRef.current = getInitialSnapshot(slug);
+  }
+
+  const initialSnapshot = initialSnapshotRef.current;
+
+  const [currentSlug, setCurrentSlug] = useState<string>(initialSnapshot.current);
+  const [nextSlug, setNextSlug] = useState<string | null>(initialSnapshot.next);
+  const [previousSlug, setPreviousSlug] = useState<string | null>(initialSnapshot.previous);
+
+  useEffect(() => {
+    lastSnapshot = {
+      current: currentSlug,
+      next: nextSlug,
+      previous: previousSlug,
+    };
+  }, [currentSlug, nextSlug, previousSlug]);
 
   // Create carousel items array (just slugs)
-  const carouselItems: string[] = [previousSlug, currentSlug, nextSlug].filter(Boolean) as string[];
-  const currentIndex = carouselItems.findIndex(item => item === currentSlug);
+  const carouselItems: string[] = [
+    previousSlug && previousSlug !== currentSlug ? previousSlug : null,
+    currentSlug,
+    nextSlug && nextSlug !== currentSlug && nextSlug !== previousSlug ? nextSlug : null,
+  ].filter(Boolean) as string[];
+  const currentIndex = (() => {
+    const index = carouselItems.findIndex((item) => item === currentSlug);
+    return index === -1 ? 0 : index;
+  })();
 
   // Load next recipe slug
   const loadNextSlug = useCallback(async () => {
@@ -54,21 +96,18 @@ export function RecipeSwipeableCarousel({ slug }: RecipeSwipeableCarouselProps) 
     }
   }, [currentSlug, previousSlug]);
 
-  // Update current slug when prop changes
+  // Update current slug when prop changes (external navigation)
   useEffect(() => {
-    setCurrentSlug(slug);
-    setNextSlug(null);
-    setPreviousSlug(null);
-  }, [slug]);
+    setCurrentSlug((prev) => {
+      if (prev === slug) {
+        return prev;
+      }
 
-  // Update when pathname changes (external navigation)
-  useEffect(() => {
-    if (pathname !== `/recipes/${currentSlug}`) {
-      // Reset state when navigating externally
       setNextSlug(null);
       setPreviousSlug(null);
-    }
-  }, [pathname, currentSlug]);
+      return slug;
+    });
+  }, [slug]);
 
   // Preload next and previous slugs when current slug is available
   useEffect(() => {
@@ -79,26 +118,20 @@ export function RecipeSwipeableCarousel({ slug }: RecipeSwipeableCarouselProps) 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentSlug]);
 
-  // Log rendered cards and current route
-  useEffect(() => {
-    const cards = [];
-    if (currentSlug) cards.push(`current: ${currentSlug}`);
-    if (previousSlug) cards.push(`previous: ${previousSlug}`);
-    if (nextSlug) cards.push(`next: ${nextSlug}`);
-    console.log("Rendered cards:", cards.join(", "), "| Route:", pathname);
-  }, [currentSlug, previousSlug, nextSlug, pathname]);
-
   const handleNavigate = useCallback(async (direction: "next" | "previous") => {
     if (!currentSlug) return;
 
     if (direction === "next") {
-      const targetSlug = nextSlug || await fetchRandomSlug(currentSlug);
+      const targetSlug = nextSlug || (await fetchRandomSlug(currentSlug));
       if (targetSlug) {
-        // Hide underlying recipes during transition
-        setPreviousSlug(null);
-        setNextSlug(null);
-        // Update current slug
+        setPreviousSlug(currentSlug);
         setCurrentSlug(targetSlug);
+        setNextSlug(null);
+        lastSnapshot = {
+          current: targetSlug,
+          previous: currentSlug,
+          next: null,
+        };
         router.replace(`/recipes/${targetSlug}`, { scroll: false });
         // Wait for React to process the state update
         await new Promise((resolve) => requestAnimationFrame(resolve));
@@ -106,13 +139,16 @@ export function RecipeSwipeableCarousel({ slug }: RecipeSwipeableCarouselProps) 
         // loadNextSlug() will be called by the useEffect when currentSlug changes
       }
     } else if (direction === "previous") {
-      const targetSlug = previousSlug || await fetchRandomSlug(currentSlug);
+      const targetSlug = previousSlug || (await fetchRandomSlug(currentSlug));
       if (targetSlug) {
-        // Hide underlying recipes during transition
-        setNextSlug(null);
-        setPreviousSlug(null);
-        // Update current slug
+        setNextSlug(currentSlug);
         setCurrentSlug(targetSlug);
+        setPreviousSlug(null);
+        lastSnapshot = {
+          current: targetSlug,
+          previous: null,
+          next: currentSlug,
+        };
         router.replace(`/recipes/${targetSlug}`, { scroll: false });
         // Wait for React to process the state update
         await new Promise((resolve) => requestAnimationFrame(resolve));

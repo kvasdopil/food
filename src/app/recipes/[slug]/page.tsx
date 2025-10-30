@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { RecipePageClient } from "@/components/recipe/recipe-page-client";
+import { RecipePageClient } from "./client/page-client";
 import { resolveRecipeImageUrl } from "@/lib/resolve-recipe-image-url";
 import { supabase } from "@/lib/supabaseClient";
 import type { Tables } from "@/types/supabase";
