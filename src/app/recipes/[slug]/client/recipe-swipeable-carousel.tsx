@@ -13,6 +13,7 @@ import {
   syncHistoryWithCurrentSlug,
   type RecipeHistorySnapshot,
   getCurrentSlug,
+  getNextSlugFromHistory,
 } from "./recipe-history";
 
 type RecipeSwipeableCarouselProps = {
@@ -86,6 +87,19 @@ export function RecipeSwipeableCarousel({ slug }: RecipeSwipeableCarouselProps) 
     // Don't load if we already have a next slug
     if (nextSlug) return;
 
+    // Check if there's forward history available (no need to call API)
+    const snapshot = historySnapshotRef.current ?? (typeof window !== "undefined"
+      ? syncHistoryWithCurrentSlug(currentSlug)
+      : null);
+    
+    const forwardSlug = getNextSlugFromHistory(snapshot);
+    if (forwardSlug) {
+      console.log("[carousel] Using forward history instead of API call", forwardSlug);
+      setNextSlug(forwardSlug);
+      return;
+    }
+
+    // Only call API when there's no forward history
     try {
       const slug = await fetchRandomSlug(currentSlug);
       setNextSlug(slug);
@@ -130,9 +144,15 @@ export function RecipeSwipeableCarousel({ slug }: RecipeSwipeableCarouselProps) 
     if (!currentSlug) return;
 
     if (direction === "next") {
-      const targetSlug = nextSlug || (await fetchRandomSlug(currentSlug));
+      // Check forward history first, then nextSlug state, then API
+      let snapshot = historySnapshotRef.current ?? (typeof window !== "undefined"
+        ? syncHistoryWithCurrentSlug(currentSlug)
+        : null);
+      const forwardSlug = getNextSlugFromHistory(snapshot);
+      const targetSlug = forwardSlug || nextSlug || (await fetchRandomSlug(currentSlug));
       if (targetSlug) {
-        const snapshot = historySnapshotRef.current ?? (typeof window !== "undefined"
+        // Re-sync snapshot in case it changed
+        snapshot = historySnapshotRef.current ?? (typeof window !== "undefined"
           ? syncHistoryWithCurrentSlug(currentSlug)
           : null);
         const updatedSnapshot = snapshot ? pushSlugOntoHistory(snapshot, targetSlug) : null;

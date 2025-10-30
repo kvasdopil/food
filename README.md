@@ -66,11 +66,11 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
 - Dynamic route `src/app/recipes/[slug]/page.tsx` handles metadata generation only; rendering is handled by the layout.
 - Layout `src/app/recipes/layout.tsx` manages the persistent carousel wrapper to prevent remounting during navigation, and includes a back-to-feed button in the top-left corner.
 - Navigation history checks use `document.referrer` to ensure same-origin navigation (prevents "about:blank" issues). Previous navigation is disabled/hidden when there's no same-origin history.
-- Supabase provides recipe data via RPC (`get_random_recipe`) and table queries; types generated in `src/types/supabase.ts`.
+- Supabase provides recipe data via table queries; types generated in `src/types/supabase.ts`.
 - Authenticated POST to `/api/recipes` upserts recipes from JSON payloads that match the YAML schema. Requires a `Bearer` token that matches `EDIT_TOKEN`.
 - Client helpers:
   - `KeyboardNav` handles arrow-key navigation with random fallback when there's no same-origin history.
-  - `RecipeSideNav` renders prev/next buttons using `/api/random-recipe`. Previous button is hidden when there's no same-origin history.
+  - `RecipeSideNav` renders prev/next buttons using `/api/recipes?from={slug}` for slug-based pagination (matches feed order). Previous button is hidden when there's no same-origin history.
   - `RecipeSwipeableCarousel` provides mobile swipe gestures with preloaded next recipes. Previous swipe is disabled when there's no same-origin history. Swipes require the card to visually cross 50% of screen width before navigation (not just finger movement).
   - `RecipeFeedCard` displays recipe cards with images, titles, descriptions, tags, and like status (persisted in localStorage).
 
@@ -108,8 +108,7 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
 - `src/app/recipes/[slug]/client/recipe-swipeable-carousel.tsx`: carousel component managing swipe navigation with preloaded recipes. Maintains state across navigation using module-level snapshot.
 - `src/components/*`: client-side interactivity (share, favorite, nav, keyboard shortcuts).
 - `src/components/recipe-feed-card.tsx`: recipe card component for feed page with image, title overlay, description, tags, and favorite button.
-- `src/app/api/random-recipe/route.ts`: edge handler selecting a random recipe slug.
-- `src/app/api/recipes/route.ts`: API endpoint returning paginated recipes (20 per page) with pagination metadata.
+- `src/app/api/recipes/route.ts`: API endpoint returning paginated recipes (20 per page) with pagination metadata. Supports `page` parameter for traditional pagination or `from={slug}` for slug-based pagination that matches feed order.
 
 ## Recipe Asset Workflow
 
@@ -153,7 +152,7 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
 2. `/feed` → fetches paginated recipes from `/api/recipes` → displays in responsive grid/list with infinite scroll.
 3. `/recipes/[slug]` → layout extracts slug from pathname → `fetchRecipeBySlug` (Supabase query) → render via layout wrapper.
 4. Layout `src/app/recipes/layout.tsx` persists across route changes, preventing carousel remounting during navigation. Includes back-to-feed button in top-left corner.
-5. Client navigation → `/api/random-recipe` (exclude current slug) → `router.replace('/recipes/[slug]')` → layout updates slug and re-renders.
+5. Client navigation → `/api/recipes?from={slug}` (slug-based pagination matching feed order) → `router.replace('/recipes/[slug]')` → layout updates slug and re-renders.
 6. Previous navigation only works when `document.referrer` indicates same-origin navigation (prevents "about:blank" issues).
 7. Supabase trigger `generate_recipe_slug` ensures unique slugs and suffixes.
 8. Favorites are stored in browser localStorage (key: `recipe-favorites`) and persist across page reloads.

@@ -1,5 +1,3 @@
-import { supabase } from "@/lib/supabaseClient";
-
 export type RecipeData = {
   slug: string;
   name: string;
@@ -11,33 +9,23 @@ export type RecipeData = {
 };
 
 export async function fetchRecipeData(slug: string): Promise<RecipeData | null> {
-  if (!supabase) {
-    return null;
-  }
+  try {
+    const response = await fetch(`/api/recipes/${encodeURIComponent(slug)}`, {
+      cache: "no-store",
+    });
 
-  const { data, error } = await supabase
-    .from("recipes")
-    .select("*")
-    .eq("slug", slug)
-    .limit(1)
-    .maybeSingle();
+    if (!response.ok) {
+      if (response.status === 404) {
+        return null;
+      }
+      console.error("Failed to load recipe:", response.statusText);
+      return null;
+    }
 
-  if (error) {
+    const data = (await response.json()) as RecipeData;
+    return data;
+  } catch (error) {
     console.error("Failed to load recipe:", error);
     return null;
   }
-
-  if (!data) {
-    return null;
-  }
-
-  return {
-    slug: data.slug,
-    name: data.name,
-    description: data.description ?? "",
-    ingredients: data.ingredients,
-    instructions: data.instructions,
-    imageUrl: data.image_url,
-    tags: data.tags ?? [],
-  };
 }

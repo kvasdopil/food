@@ -31,9 +31,12 @@ export default function FeedPage() {
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchRecipes = useCallback(async (page: number) => {
+  const fetchRecipes = useCallback(async (fromSlug?: string) => {
     try {
-      const response = await fetch(`/api/recipes?page=${page}`);
+      const url = fromSlug 
+        ? `/api/recipes?from=${encodeURIComponent(fromSlug)}`
+        : `/api/recipes`; // First load: no parameters
+      const response = await fetch(url);
       if (!response.ok) {
         throw new Error("Failed to fetch recipes");
       }
@@ -48,7 +51,7 @@ export default function FeedPage() {
     setIsLoading(true);
     setError(null);
     try {
-      const data = await fetchRecipes(1);
+      const data = await fetchRecipes(); // No slug = first page
       setRecipes(data.recipes);
       setPagination(data.pagination);
     } catch (err) {
@@ -59,12 +62,13 @@ export default function FeedPage() {
   }, [fetchRecipes]);
 
   const loadMore = useCallback(async () => {
-    if (!pagination || !pagination.hasMore || isLoadingMore) return;
+    if (!pagination || !pagination.hasMore || isLoadingMore || recipes.length === 0) return;
 
     setIsLoadingMore(true);
     try {
-      const nextPage = pagination.page + 1;
-      const data = await fetchRecipes(nextPage);
+      // Use the slug of the last recipe in the current list for pagination
+      const lastRecipe = recipes[recipes.length - 1];
+      const data = await fetchRecipes(lastRecipe.slug);
       setRecipes((prev) => [...prev, ...data.recipes]);
       setPagination(data.pagination);
     } catch (err) {
@@ -72,7 +76,7 @@ export default function FeedPage() {
     } finally {
       setIsLoadingMore(false);
     }
-  }, [pagination, isLoadingMore, fetchRecipes]);
+  }, [pagination, isLoadingMore, fetchRecipes, recipes]);
 
   useEffect(() => {
     loadInitialRecipes();

@@ -26,6 +26,14 @@ type RecipePayload = {
   imageUrl?: string | null;
 };
 
+type RecipeListItem = {
+  slug: string;
+  name: string;
+  description: string | null;
+  tags: string[];
+  image_url: string | null;
+};
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
 }
@@ -134,11 +142,7 @@ function buildInstructions(instructions: InstructionPayload[]) {
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const pageParam = searchParams.get("page");
-  const page = pageParam ? parseInt(pageParam, 10) : 1;
-
-  if (page < 1) {
-    return NextResponse.json({ error: "Page must be 1 or greater" }, { status: 400 });
-  }
+  const fromSlug = searchParams.get("from");
 
   if (!supabase) {
     return NextResponse.json({ error: "Database not configured" }, { status: 500 });
@@ -155,26 +159,122 @@ export async function GET(request: NextRequest) {
     }
 
     const total = count || 0;
-    const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
-    const offset = (page - 1) * ITEMS_PER_PAGE;
+    let recipes: RecipeListItem[] = [];
+    let hasMore = false;
+    let currentPage = 1;
 
-    // Get paginated recipes
-    const { data: recipes, error: recipesError } = await supabase
-      .from("recipes")
-      .select("slug, name, description, tags, image_url")
-      .order("created_at", { ascending: false })
-      .range(offset, offset + ITEMS_PER_PAGE - 1);
+    if (fromSlug) {
+      // Slug-based pagination: find recipes after the given slug in feed order
+      // Feed order is: created_at DESC, slug ASC (for stable sorting)
+      
+      // First, find the recipe with the given slug
+      const { data: fromRecipe, error: fromError } = await supabase
+        .from("recipes")
+        .select("created_at, slug")
+        .eq("slug", fromSlug)
+        .single();
 
-    if (recipesError) {
-      throw recipesError;
+      if (fromError || !fromRecipe) {
+        // If slug not found, return first page
+        const { data: firstPageRecipes, error: firstPageError } = await supabase
+          .from("recipes")
+          .select("slug, name, description, tags, image_url")
+          .order("created_at", { ascending: false })
+          .order("slug", { ascending: true })
+          .limit(ITEMS_PER_PAGE);
+
+        if (firstPageError) {
+          throw firstPageError;
+        }
+
+        recipes = firstPageRecipes;
+        hasMore = (firstPageRecipes?.length || 0) === ITEMS_PER_PAGE && total > ITEMS_PER_PAGE;
+      } else {
+        // Get recipes that come after the from slug in feed order
+        // Feed order: created_at DESC, slug ASC
+        // After means: created_at < fromRecipe.created_at OR (created_at = fromRecipe.created_at AND slug > fromRecipe.slug)
+        
+        // Strategy: Try to get recipes with created_at < fromRecipe.created_at first
+        // Then if we need more, get recipes with same created_at but slug > fromRecipe.slug
+        const { data: olderRecipes, error: olderError } = await supabase
+          .from("recipes")
+          .select("slug, name, description, tags, image_url")
+          .lt("created_at", fromRecipe.created_at)
+          .order("created_at", { ascending: false })
+          .order("slug", { ascending: true })
+          .limit(ITEMS_PER_PAGE);
+
+        if (olderError) {
+          throw olderError;
+        }
+
+        let allAfterRecipes = olderRecipes || [];
+        
+        // If we don't have enough recipes, get ones with same created_at but slug > fromRecipe.slug
+        if (allAfterRecipes.length < ITEMS_PER_PAGE) {
+          const remainingNeeded = ITEMS_PER_PAGE - allAfterRecipes.length;
+          const { data: sameTimeRecipes, error: sameTimeError } = await supabase
+            .from("recipes")
+            .select("slug, name, description, tags, image_url")
+            .eq("created_at", fromRecipe.created_at)
+            .gt("slug", fromRecipe.slug)
+            .order("slug", { ascending: true })
+            .limit(remainingNeeded);
+
+          if (sameTimeError) {
+            throw sameTimeError;
+          }
+
+          // Combine: older recipes first, then same-time recipes
+          allAfterRecipes = [...allAfterRecipes, ...(sameTimeRecipes || [])];
+        }
+
+        recipes = allAfterRecipes.slice(0, ITEMS_PER_PAGE);
+        hasMore = allAfterRecipes.length === ITEMS_PER_PAGE;
+        
+        // Calculate approximate page number
+        // Count recipes that come before the from slug
+        const { count: beforeCount } = await supabase
+          .from("recipes")
+          .select("*", { count: "exact", head: true })
+          .or(`created_at.gt.${fromRecipe.created_at},and(created_at.eq.${fromRecipe.created_at},slug.lt.${fromRecipe.slug})`);
+        
+        currentPage = beforeCount ? Math.floor((beforeCount + 1) / ITEMS_PER_PAGE) + 1 : 1;
+      }
+    } else {
+      // Traditional page-based pagination
+      const page = pageParam ? parseInt(pageParam, 10) : 1;
+
+      if (page < 1) {
+        return NextResponse.json({ error: "Page must be 1 or greater" }, { status: 400 });
+      }
+
+      const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
+      const offset = (page - 1) * ITEMS_PER_PAGE;
+
+      // Get paginated recipes
+      const { data: pageRecipes, error: recipesError } = await supabase
+        .from("recipes")
+        .select("slug, name, description, tags, image_url")
+        .order("created_at", { ascending: false })
+        .order("slug", { ascending: true })
+        .range(offset, offset + ITEMS_PER_PAGE - 1);
+
+      if (recipesError) {
+        throw recipesError;
+      }
+
+      recipes = pageRecipes;
+      currentPage = page;
+      hasMore = page < totalPages;
     }
 
-    const hasMore = page < totalPages;
+    const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
 
     return NextResponse.json({
       recipes: recipes || [],
       pagination: {
-        page,
+        page: currentPage,
         limit: ITEMS_PER_PAGE,
         total,
         totalPages,

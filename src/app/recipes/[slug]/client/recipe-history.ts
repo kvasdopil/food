@@ -214,3 +214,21 @@ export function hasPreviousRecipe(): boolean {
   const value = snapshot.stack[snapshot.index - 1];
   return typeof value === "string" && value.length > 0;
 }
+
+export function getNextSlugFromHistory(snapshot: RecipeHistorySnapshot | null): string | null {
+  if (!snapshot) {
+    return null;
+  }
+
+  // Check if there's a forward entry (index < stack.length - 1)
+  if (snapshot.index >= snapshot.stack.length - 1) {
+    return null;
+  }
+
+  const value = snapshot.stack[snapshot.index + 1];
+  return typeof value === "string" && value.length > 0 ? value : null;
+}
+
+export function hasForwardRecipe(snapshot: RecipeHistorySnapshot | null): boolean {
+  return getNextSlugFromHistory(snapshot) !== null;
+}
