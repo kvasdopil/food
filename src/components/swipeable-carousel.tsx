@@ -11,7 +11,8 @@ type SwipeableCarouselProps<T> = {
   className?: string;
 };
 
-const SWIPE_THRESHOLD = 100;
+const SWIPE_THRESHOLD = 50;
+const VELOCITY_THRESHOLD = 500;
 
 export function SwipeableCarousel<T>({
   items,
@@ -81,14 +82,14 @@ export function SwipeableCarousel<T>({
 
       // Determine if swipe is significant enough (distance or velocity)
       const isSignificantSwipe =
-        isHorizontalSwipe && (Math.abs(offset) > SWIPE_THRESHOLD || Math.abs(velocity) > 500);
+        isHorizontalSwipe && (Math.abs(offset) > SWIPE_THRESHOLD || Math.abs(velocity) > VELOCITY_THRESHOLD);
 
       // Check if card has actually moved past 50% threshold visually
       const cardCrossedThreshold = Math.abs(currentX) >= threshold;
 
       // Navigate to next item (swipe left, negative offset)
       // Only navigate if card visually crossed 50% threshold
-      if (isSignificantSwipe && (offset < -SWIPE_THRESHOLD || velocity < -500) && cardCrossedThreshold) {
+      if (isSignificantSwipe && (offset < -SWIPE_THRESHOLD || velocity < -VELOCITY_THRESHOLD) && cardCrossedThreshold) {
         setIsTransitioning(true);
 
         // Calculate remaining distance to edge
@@ -125,7 +126,7 @@ export function SwipeableCarousel<T>({
 
       // Navigate to previous item (swipe right, positive offset)
       // Only navigate if card visually crossed 50% threshold
-      if (isSignificantSwipe && (offset > SWIPE_THRESHOLD || velocity > 500)) {
+      if (isSignificantSwipe && (offset > SWIPE_THRESHOLD || velocity > VELOCITY_THRESHOLD)) {
         setIsTransitioning(true);
 
         // Calculate remaining distance to edge
@@ -171,7 +172,7 @@ export function SwipeableCarousel<T>({
 
   return (
     <div
-      className={`relative w-full min-h-screen overflow-x-hidden bg-slate-50 sm:hidden ${className}`}
+      className={`relative w-full min-h-screen overflow-hidden bg-slate-50 sm:hidden ${className}`}
       style={{ touchAction: "pan-y pinch-zoom" }}
     >
       {items.map((item, index) => {

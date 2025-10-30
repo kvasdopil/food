@@ -27,7 +27,7 @@
 
 3. Open [http://localhost:3000](http://localhost:3000).
 
-The home page queries the `recipes` table provisioned via Supabase migrations. Run:
+The app uses the `recipes` table provisioned via Supabase migrations. Run:
 
 ```bash
 supabase db push          # apply migrations to the linked project
@@ -60,7 +60,8 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
 
 ## Project Status
 
-- Home route `/` server-redirects to a random recipe slug (`/recipes/[slug]`).
+- Home route `/` server-redirects to the recipe feed (`/feed`).
+- Feed route `/feed` displays a scrollable grid/list of recipes with pagination (20 per page), infinite scroll, and favorite functionality. Desktop shows up to 4 columns in a grid with gaps and shadows; mobile shows single-column full-width cards.
 - Dynamic route `src/app/recipes/[slug]/page.tsx` handles metadata generation only; rendering is handled by the layout.
 - Layout `src/app/recipes/layout.tsx` manages the persistent carousel wrapper to prevent remounting during navigation.
 - Supabase provides recipe data via RPC (`get_random_recipe`) and table queries; types generated in `src/types/supabase.ts`.
@@ -68,15 +69,19 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
   - `KeyboardNav` handles arrow-key navigation with random fallback when history is empty.
   - `RecipeSideNav` renders prev/next buttons using `/api/random-recipe`.
   - `RecipeSwipeableCarousel` provides mobile swipe gestures with preloaded next/previous recipes. Swipes require the card to visually cross 50% of screen width before navigation (not just finger movement).
+  - `RecipeFeedCard` displays recipe cards with images, titles, descriptions, tags, and like status (persisted in localStorage).
 
 ## Page Structure
 
-- `src/app/page.tsx`: server component redirecting to a random slug.
+- `src/app/page.tsx`: server component redirecting to `/feed`.
+- `src/app/feed/page.tsx`: client component displaying paginated recipe feed with infinite scroll.
 - `src/app/recipes/layout.tsx`: client layout component that manages the persistent carousel, navigation, and recipe rendering. Prevents carousel remounting during route changes.
 - `src/app/recipes/[slug]/page.tsx`: server component that only handles metadata generation (OpenGraph, title, etc.). Returns `null` as layout handles all rendering.
 - `src/app/recipes/[slug]/client/recipe-swipeable-carousel.tsx`: carousel component managing swipe navigation with preloaded recipes. Maintains state across navigation using module-level snapshot.
 - `src/components/*`: client-side interactivity (share, favorite, nav, keyboard shortcuts).
+- `src/components/recipe-feed-card.tsx`: recipe card component for feed page with image, title overlay, description, tags, and favorite button.
 - `src/app/api/random-recipe/route.ts`: edge handler selecting a random recipe slug.
+- `src/app/api/recipes/route.ts`: API endpoint returning paginated recipes (20 per page) with pagination metadata.
 
 ## Recipe Asset Workflow
 
@@ -103,17 +108,19 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
 
 ## Data Flow
 
-1. `/` → `getRandomSlug()` (Supabase RPC) → redirect to `/recipes/[slug]`.
-2. `/recipes/[slug]` → layout extracts slug from pathname → `fetchRecipeBySlug` (Supabase query) → render via layout wrapper.
-3. Layout `src/app/recipes/layout.tsx` persists across route changes, preventing carousel remounting during navigation.
-4. Client navigation → `/api/random-recipe` (exclude current slug) → `router.replace('/recipes/[slug]')` → layout updates slug and re-renders.
-5. Supabase trigger `generate_recipe_slug` ensures unique slugs and suffixes.
+1. `/` → redirect to `/feed`.
+2. `/feed` → fetches paginated recipes from `/api/recipes` → displays in responsive grid/list with infinite scroll.
+3. `/recipes/[slug]` → layout extracts slug from pathname → `fetchRecipeBySlug` (Supabase query) → render via layout wrapper.
+4. Layout `src/app/recipes/layout.tsx` persists across route changes, preventing carousel remounting during navigation.
+5. Client navigation → `/api/random-recipe` (exclude current slug) → `router.replace('/recipes/[slug]')` → layout updates slug and re-renders.
+6. Supabase trigger `generate_recipe_slug` ensures unique slugs and suffixes.
+7. Favorites are stored in browser localStorage (key: `recipe-favorites`) and persist across page reloads.
 
 ## Supabase Configuration
 
 - Schema is defined in `supabase/migrations/*create_recipes_table.sql` and includes:
   - `slug`, `name`, `description`, `ingredients`, `instructions`, `image_url`, `tags`, timestamps
-  - Slugs auto-generate from recipe names (duplicates receive `-2`, `-3`, … suffixes) and the homepage immediately redirects to `/recipes/[slug]`.
+  - Slugs auto-generate from recipe names (duplicates receive `-2`, `-3`, … suffixes)
   - Row Level Security with read-only anonymous policy
 - Example content is seeded from `supabase/seed.sql` during `supabase db reset`.
 - Regenerate TypeScript types whenever the schema changes:
