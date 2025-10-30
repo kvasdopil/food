@@ -73,6 +73,7 @@ export function SwipeableCarousel<T>({
         thresholdPercent: `${((Math.abs(currentX) / screenWidth) * 100).toFixed(1)}%`,
         crossedThreshold: Math.abs(currentX) >= threshold,
         velocity: velocity,
+        velocityMagnitude: Math.abs(velocity),
       });
 
       // Only navigate if horizontal movement is significant compared to vertical
@@ -90,9 +91,18 @@ export function SwipeableCarousel<T>({
       if (isSignificantSwipe && (offset < -SWIPE_THRESHOLD || velocity < -500) && cardCrossedThreshold) {
         setIsTransitioning(true);
 
-        // Animate to left edge
+        // Calculate remaining distance to edge
+        const remainingDistance = Math.abs(-screenWidth - currentX);
+        // Use velocity to calculate duration (velocity is in pixels/sec)
+        // Clamp duration between 0.1s (fast) and 0.5s (slow)
+        const velocityMagnitude = Math.abs(velocity);
+        const calculatedDuration = velocityMagnitude > 0
+          ? Math.max(0.1, Math.min(0.5, remainingDistance / velocityMagnitude))
+          : 0.3;
+
+        // Animate to left edge with velocity-based duration
         await animate(x, -screenWidth, {
-          duration: 0.3,
+          duration: calculatedDuration,
           ease: "easeOut",
         });
 
@@ -115,12 +125,21 @@ export function SwipeableCarousel<T>({
 
       // Navigate to previous item (swipe right, positive offset)
       // Only navigate if card visually crossed 50% threshold
-      if (isSignificantSwipe && (offset > SWIPE_THRESHOLD || velocity > 500) && cardCrossedThreshold) {
+      if (isSignificantSwipe && (offset > SWIPE_THRESHOLD || velocity > 500)) {
         setIsTransitioning(true);
 
-        // Animate to right edge
+        // Calculate remaining distance to edge
+        const remainingDistance = Math.abs(screenWidth - currentX);
+        // Use velocity to calculate duration (velocity is in pixels/sec)
+        // Clamp duration between 0.1s (fast) and 0.5s (slow)
+        const velocityMagnitude = Math.abs(velocity);
+        const calculatedDuration = velocityMagnitude > 0
+          ? Math.max(0.1, Math.min(0.5, remainingDistance / velocityMagnitude))
+          : 0.3;
+
+        // Animate to right edge with velocity-based duration
         await animate(x, screenWidth, {
-          duration: 0.3,
+          duration: calculatedDuration,
           ease: "easeOut",
         });
 
