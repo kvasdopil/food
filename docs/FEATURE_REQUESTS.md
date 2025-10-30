@@ -1,5 +1,11 @@
-- add a button 'another variation of same meal', like vegeterian
+- next recipe should open next recipe on the feed, not a random one
+- back swipe should go back in history
+- feed should be a card within a swiper, so it preserves position when swiped back to
+- feed should be infinite
 - list liked meals
 - filter by tags
+- add recipe via agent
+  - secure token via vercel?
+- another variation of same meal, like vegeterian version of the same
 - ssr
 - proper loading preview for a recipe
