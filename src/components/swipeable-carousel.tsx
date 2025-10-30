@@ -20,6 +20,14 @@ export function SwipeableCarousel<T>({
   renderItem,
   className = ""
 }: SwipeableCarouselProps<T>) {
+
+  useEffect(() => {
+    console.log("SwipeableCarousel component mounted");
+    return () => {
+      console.log("SwipeableCarousel component unmounted");
+    };
+  }, []);
+
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   const x = useMotionValue(0);
@@ -40,6 +48,10 @@ export function SwipeableCarousel<T>({
     };
   }, [y]);
 
+  useEffect(() => {
+    console.log("SwipeableCarousel:", items);
+  }, [items]);
+
   const handleDragEnd = useCallback(
     async (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
       const offset = info.offset.x;
@@ -50,6 +62,19 @@ export function SwipeableCarousel<T>({
       const screenWidth = typeof window !== "undefined" ? window.innerWidth : 400;
       const threshold = screenWidth * 0.5;
 
+      // Get the actual visual position of the card (not just drag offset)
+      const currentX = x.get();
+
+      // Log finger release moment
+      console.log("🎯 Finger released:", {
+        fingerOffset: offset,
+        cardVisualPosition: currentX,
+        threshold: threshold,
+        thresholdPercent: `${((Math.abs(currentX) / screenWidth) * 100).toFixed(1)}%`,
+        crossedThreshold: Math.abs(currentX) >= threshold,
+        velocity: velocity,
+      });
+
       // Only navigate if horizontal movement is significant compared to vertical
       const isHorizontalSwipe = Math.abs(offset) > Math.abs(offsetY) * 1.5;
 
@@ -57,50 +82,61 @@ export function SwipeableCarousel<T>({
       const isSignificantSwipe =
         isHorizontalSwipe && (Math.abs(offset) > SWIPE_THRESHOLD || Math.abs(velocity) > 500);
 
+      // Check if card has actually moved past 50% threshold visually
+      const cardCrossedThreshold = Math.abs(currentX) >= threshold;
+
       // Navigate to next item (swipe left, negative offset)
-      if (isSignificantSwipe && (offset < -SWIPE_THRESHOLD || velocity < -500)) {
+      // Only navigate if card visually crossed 50% threshold
+      if (isSignificantSwipe && (offset < -SWIPE_THRESHOLD || velocity < -500) && cardCrossedThreshold) {
         setIsTransitioning(true);
 
-        // Check if we need to animate to edge first
-        if (Math.abs(offset) >= threshold) {
-          // Animate to left edge
-          await animate(x, -screenWidth, {
-            duration: 0.3,
-            ease: "easeOut",
-          });
-        }
+        // Animate to left edge
+        await animate(x, -screenWidth, {
+          duration: 0.3,
+          ease: "easeOut",
+        });
 
         // Navigate to next item
         onNavigate("next");
 
-        // Wait for state updates and reset
-        await new Promise((resolve) => requestAnimationFrame(resolve));
-        await new Promise((resolve) => requestAnimationFrame(resolve));
+        // Wait for state updates to propagate and new item to render
+        // await new Promise((resolve) => requestAnimationFrame(resolve));
+        // await new Promise((resolve) => requestAnimationFrame(resolve));
+        // await new Promise((resolve) => requestAnimationFrame(resolve));
+
+        // Reset position immediately so new item is visible
         x.set(0);
+
+        // Small delay to ensure new item is rendered before ending transition
+        await new Promise((resolve) => setTimeout(resolve, 50));
         setIsTransitioning(false);
         return;
       }
 
       // Navigate to previous item (swipe right, positive offset)
-      if (isSignificantSwipe && (offset > SWIPE_THRESHOLD || velocity > 500)) {
+      // Only navigate if card visually crossed 50% threshold
+      if (isSignificantSwipe && (offset > SWIPE_THRESHOLD || velocity > 500) && cardCrossedThreshold) {
         setIsTransitioning(true);
 
-        // Check if we need to animate to edge first
-        if (Math.abs(offset) >= threshold) {
-          // Animate to right edge
-          await animate(x, screenWidth, {
-            duration: 0.3,
-            ease: "easeOut",
-          });
-        }
+        // Animate to right edge
+        await animate(x, screenWidth, {
+          duration: 0.3,
+          ease: "easeOut",
+        });
 
         // Navigate to previous item
         onNavigate("previous");
 
-        // Wait for state updates and reset
-        await new Promise((resolve) => requestAnimationFrame(resolve));
-        await new Promise((resolve) => requestAnimationFrame(resolve));
+        // Wait for state updates to propagate and new item to render
+        // await new Promise((resolve) => requestAnimationFrame(resolve));
+        // await new Promise((resolve) => requestAnimationFrame(resolve));
+        // await new Promise((resolve) => requestAnimationFrame(resolve));
+
+        // Reset position immediately so new item is visible
         x.set(0);
+
+        // Small delay to ensure new item is rendered before ending transition
+        await new Promise((resolve) => setTimeout(resolve, 50));
         setIsTransitioning(false);
         return;
       }
@@ -122,28 +158,25 @@ export function SwipeableCarousel<T>({
       {items.map((item, index) => {
         const isActive = index === currentIndex;
         const offset = index - currentIndex;
-        const slot =
-          offset === 0
-            ? "current"
-            : offset < 0
-              ? `previous${Math.abs(offset)}`
-              : `next${offset}`;
-        const itemKey = `${slot}-${String(item)}`;
-
-        if (!isActive && isTransitioning) {
-          return null;
-        }
+        // Keep next/previous items visible during transition (they might become active)
+        // Only hide items that are far from the active one
+        const shouldHide = !isActive && isTransitioning && Math.abs(offset) > 1;
 
         return (
           <motion.div
-            key={itemKey}
+            key={String(item)}
+            layout={false}
             className={`w-full ${isActive ? "relative z-10 shadow-2xl shadow-slate-900/20" : "absolute inset-0 z-0 pointer-events-none"}`}
             style={{
               x: isActive ? x : 0,
               y: 0,
-              opacity: isActive ? opacity : 1,
+              // Ensure active item is always fully opaque, and adjacent items (next/previous) stay visible
+              opacity: isActive ? opacity : (shouldHide ? 0 : 1),
               touchAction: "pan-y",
               willChange: "transform",
+              visibility: isActive ? "visible" : (shouldHide ? "hidden" : "visible"),
+              // Ensure next/previous items are behind but ready to become active
+              zIndex: isActive ? 10 : (Math.abs(offset) === 1 ? 5 : 0),
             }}
             drag={isActive ? "x" : false}
             dragDirectionLock={true}
@@ -176,7 +209,7 @@ export function SwipeableCarousel<T>({
               y.set(0);
               handleDragEnd(event, info);
             }}
-            initial={{ x: 0, y: 0 }}
+            initial={false}
             animate={{ x: 0, y: 0 }}
             whileDrag={isActive ? { cursor: "grabbing", y: 0 } : undefined}
           >

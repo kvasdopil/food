@@ -61,18 +61,20 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
 ## Project Status
 
 - Home route `/` server-redirects to a random recipe slug (`/recipes/[slug]`).
-- Dynamic route `src/app/recipes/[slug]/page.tsx` fetches recipe data server-side and renders the page through the `RecipePageClient` component (image, tags, ingredients, instructions).
+- Dynamic route `src/app/recipes/[slug]/page.tsx` handles metadata generation only; rendering is handled by the layout.
+- Layout `src/app/recipes/layout.tsx` manages the persistent carousel wrapper to prevent remounting during navigation.
 - Supabase provides recipe data via RPC (`get_random_recipe`) and table queries; types generated in `src/types/supabase.ts`.
 - Client helpers:
   - `KeyboardNav` handles arrow-key navigation with random fallback when history is empty.
   - `RecipeSideNav` renders prev/next buttons using `/api/random-recipe`.
-  - `RecipeSwipeableCarousel` provides mobile swipe gestures with preloaded next/previous recipes.
+  - `RecipeSwipeableCarousel` provides mobile swipe gestures with preloaded next/previous recipes. Swipes require the card to visually cross 50% of screen width before navigation (not just finger movement).
 
 ## Page Structure
 
 - `src/app/page.tsx`: server component redirecting to a random slug.
-- `src/app/recipes/[slug]/page.tsx`: server component building the recipe layout and metadata.
-- `src/components/recipe-page-client.tsx`: client component that handles rendering, ingredient highlighting, swipe navigation, and prefetch behaviour.
+- `src/app/recipes/layout.tsx`: client layout component that manages the persistent carousel, navigation, and recipe rendering. Prevents carousel remounting during route changes.
+- `src/app/recipes/[slug]/page.tsx`: server component that only handles metadata generation (OpenGraph, title, etc.). Returns `null` as layout handles all rendering.
+- `src/app/recipes/[slug]/client/recipe-swipeable-carousel.tsx`: carousel component managing swipe navigation with preloaded recipes. Maintains state across navigation using module-level snapshot.
 - `src/components/*`: client-side interactivity (share, favorite, nav, keyboard shortcuts).
 - `src/app/api/random-recipe/route.ts`: edge handler selecting a random recipe slug.
 
@@ -102,9 +104,10 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
 ## Data Flow
 
 1. `/` → `getRandomSlug()` (Supabase RPC) → redirect to `/recipes/[slug]`.
-2. `/recipes/[slug]` → `fetchRecipeBySlug` (Supabase query) → render sections.
-3. Client navigation → `/api/random-recipe` (exclude current slug) → `router.push('/recipes/[slug]')` or `router.back()`.
-4. Supabase trigger `generate_recipe_slug` ensures unique slugs and suffixes.
+2. `/recipes/[slug]` → layout extracts slug from pathname → `fetchRecipeBySlug` (Supabase query) → render via layout wrapper.
+3. Layout `src/app/recipes/layout.tsx` persists across route changes, preventing carousel remounting during navigation.
+4. Client navigation → `/api/random-recipe` (exclude current slug) → `router.replace('/recipes/[slug]')` → layout updates slug and re-renders.
+5. Supabase trigger `generate_recipe_slug` ensures unique slugs and suffixes.
 
 ## Supabase Configuration
 

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 
-import { RecipePageClient } from "./client/page-client";
 import { resolveRecipeImageUrl } from "@/lib/resolve-recipe-image-url";
 import { supabase } from "@/lib/supabaseClient";
 import type { Tables } from "@/types/supabase";
@@ -57,8 +56,7 @@ export async function generateMetadata({ params }: RecipePageProps): Promise<Met
   };
 }
 
-export default async function RecipePageRoute({ params }: RecipePageProps) {
-  const { slug } = await params;
-
-  return <RecipePageClient slug={slug} />;
+// Layout handles all rendering, page is just for metadata
+export default async function RecipePageRoute() {
+  return null;
 }

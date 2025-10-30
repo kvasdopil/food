@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { Description } from "./description";
 import { RecipeImage } from "./image";
 import { Ingredients } from "./ingredients";
@@ -12,6 +13,13 @@ type RecipeProps = {
 
 export function Recipe({ slug }: RecipeProps) {
   const { recipeData, isLoading, error } = useRecipe(slug);
+
+  useEffect(() => {
+    console.log("Recipe component mounted for slug:", slug);
+    return () => {
+      console.log("recipe unmounted");
+    };
+  }, []);
 
   if (isLoading) {
     return (
