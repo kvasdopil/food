@@ -27,7 +27,7 @@ export default function RecipesLayout({ children }: RecipesLayoutProps) {
 
   return (
     <NavigationProvider currentSlug={slug}>
-      <main className="relative min-h-screen bg-slate-50 text-slate-900">
+      <main className="relative h-screen overflow-hidden bg-slate-50 text-slate-900">
         <KeyboardNav currentSlug={slug} />
 
         {/* Back to feed button */}
@@ -39,16 +39,16 @@ export default function RecipesLayout({ children }: RecipesLayoutProps) {
           <FiChevronLeft className="h-5 w-5 text-slate-700" />
         </button>
 
-        <div className="mx-auto flex w-full max-w-5xl min-h-screen flex-col px-0 sm:px-6 xl:flex-row xl:items-stretch xl:gap-6">
+        <div className="mx-auto flex h-full w-full max-w-5xl flex-col px-0 sm:px-6 xl:flex-row xl:items-stretch xl:gap-6">
           <RecipeSideNav direction="previous" currentSlug={slug} />
 
           {/* Mobile: Swipeable Carousel - persists across navigation */}
-          <div className="w-full sm:hidden">
+          <div className="h-full w-full overflow-hidden sm:hidden">
             <RecipeSwipeableCarousel slug={slug} />
           </div>
 
           {/* Desktop: Standard Recipe Content */}
-          <div className="hidden sm:block">
+          <div className="hidden h-full sm:block">
             <Recipe slug={slug} />
           </div>
 

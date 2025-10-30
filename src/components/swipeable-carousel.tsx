@@ -187,7 +187,7 @@ export function SwipeableCarousel<T>({
 
   return (
     <div
-      className={`relative w-full min-h-screen overflow-hidden bg-slate-50 sm:hidden ${className}`}
+      className={`relative h-full w-full overflow-hidden bg-slate-50 sm:hidden ${className}`}
       style={{ touchAction: "pan-y pinch-zoom" }}
     >
       {items.map((item, index) => {
@@ -236,7 +236,7 @@ export function SwipeableCarousel<T>({
           <motion.div
             key={String(item)}
             layout={false}
-            className={`w-full ${isActive ? "relative z-10 shadow-2xl shadow-slate-900/20" : "absolute inset-0 z-0 pointer-events-none"}`}
+            className={`h-full w-full ${isActive ? "relative z-10 shadow-2xl shadow-slate-900/20" : "absolute inset-0 z-0 pointer-events-none"}`}
             style={{
               x: isActive ? x : 0,
               y: 0,
@@ -254,10 +254,16 @@ export function SwipeableCarousel<T>({
             dragConstraints={{ left: -1000, right: canSwipeRight ? 1000 : 0, top: 0, bottom: 0 }}
             dragElastic={0.2}
             dragPropagation={false}
-            onDragStart={() => {
+            onDragStart={(event) => {
               if (isActive) {
                 y.set(0);
                 setDragDirection(null);
+                // Prevent scroll when starting horizontal drag
+                const target = event.target as HTMLElement;
+                const scrollContainer = target.closest('[data-scroll-container]') as HTMLElement;
+                if (scrollContainer) {
+                  scrollContainer.style.overflow = 'hidden';
+                }
               }
             }}
             onDrag={(event) => {
@@ -284,12 +290,16 @@ export function SwipeableCarousel<T>({
               }
             }}
             onDragEnd={(event, info) => {
-              if (!isActive) {
-                return;
+              if (isActive) {
+                y.set(0);
+                // Restore scroll after drag ends
+                const target = event.target as HTMLElement;
+                const scrollContainer = target.closest('[data-scroll-container]') as HTMLElement;
+                if (scrollContainer) {
+                  scrollContainer.style.overflow = '';
+                }
+                handleDragEnd(event, info);
               }
-
-              y.set(0);
-              handleDragEnd(event, info);
             }}
             initial={false}
             animate={{ x: 0, y: 0 }}

@@ -166,7 +166,7 @@ export async function GET(request: NextRequest) {
     if (fromSlug) {
       // Slug-based pagination: find recipes after the given slug in feed order
       // Feed order is: created_at DESC, slug ASC (for stable sorting)
-      
+
       // First, find the recipe with the given slug
       const { data: fromRecipe, error: fromError } = await supabase
         .from("recipes")
@@ -193,7 +193,7 @@ export async function GET(request: NextRequest) {
         // Get recipes that come after the from slug in feed order
         // Feed order: created_at DESC, slug ASC
         // After means: created_at < fromRecipe.created_at OR (created_at = fromRecipe.created_at AND slug > fromRecipe.slug)
-        
+
         // Strategy: Try to get recipes with created_at < fromRecipe.created_at first
         // Then if we need more, get recipes with same created_at but slug > fromRecipe.slug
         const { data: olderRecipes, error: olderError } = await supabase
@@ -209,7 +209,7 @@ export async function GET(request: NextRequest) {
         }
 
         let allAfterRecipes = olderRecipes || [];
-        
+
         // If we don't have enough recipes, get ones with same created_at but slug > fromRecipe.slug
         if (allAfterRecipes.length < ITEMS_PER_PAGE) {
           const remainingNeeded = ITEMS_PER_PAGE - allAfterRecipes.length;
@@ -231,14 +231,14 @@ export async function GET(request: NextRequest) {
 
         recipes = allAfterRecipes.slice(0, ITEMS_PER_PAGE);
         hasMore = allAfterRecipes.length === ITEMS_PER_PAGE;
-        
+
         // Calculate approximate page number
         // Count recipes that come before the from slug
         const { count: beforeCount } = await supabase
           .from("recipes")
           .select("*", { count: "exact", head: true })
           .or(`created_at.gt.${fromRecipe.created_at},and(created_at.eq.${fromRecipe.created_at},slug.lt.${fromRecipe.slug})`);
-        
+
         currentPage = beforeCount ? Math.floor((beforeCount + 1) / ITEMS_PER_PAGE) + 1 : 1;
       }
     } else {

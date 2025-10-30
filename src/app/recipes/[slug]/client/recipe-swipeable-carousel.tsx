@@ -117,6 +117,7 @@ export function RecipeSwipeableCarousel({ slug }: RecipeSwipeableCarouselProps) 
       }
 
       setNextSlug(null);
+      // Scroll reset will be handled by Recipe component's useEffect when slug changes
       return slug;
     });
   }, [slug]);
@@ -175,7 +176,7 @@ export function RecipeSwipeableCarousel({ slug }: RecipeSwipeableCarouselProps) 
         setCurrentSlug(targetSlug);
         setNextSlug(null);
         router.push(`/recipes/${targetSlug}`, { scroll: false });
-        // Wait for React to process the state update
+        // Wait for React to process the state update - scroll reset handled by Recipe component useEffect
         await new Promise((resolve) => requestAnimationFrame(resolve));
         await new Promise((resolve) => requestAnimationFrame(resolve));
         // loadNextSlug() will be called by the useEffect when currentSlug changes
@@ -209,16 +210,16 @@ export function RecipeSwipeableCarousel({ slug }: RecipeSwipeableCarouselProps) 
           next: currentSlug,
         };
         router.back();
-        // Wait for React to process the state update
+        // Wait for React to process the state update - scroll reset handled by Recipe component useEffect
         await new Promise((resolve) => requestAnimationFrame(resolve));
         await new Promise((resolve) => requestAnimationFrame(resolve));
       }
     }
   }, [currentSlug, nextSlug, previousSlug, router]);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const renderRecipeItem = useCallback((slug: string, _isActive: boolean) => {
-    return <Recipe slug={slug} />;
+  const renderRecipeItem = useCallback((slug: string, isActive: boolean) => {
+    // Each card gets its own scroll container that resets when it becomes active
+    return <Recipe key={slug} slug={slug} />;
   }, []);
 
   return (
