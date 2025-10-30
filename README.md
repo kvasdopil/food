@@ -135,10 +135,17 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
 - Upload an existing YAML recipe to a running API (defaults to `http://localhost:3000/api/recipes`):
 
   ```bash
-  ./scripts/upload-recipe data/recipes/creamy-mushroom-risotto/creamy-mushroom-risotto.yaml --token "$EDIT_TOKEN"
+  yarn ts-node scripts/upload-recipe.ts data/recipes/creamy-mushroom-risotto/creamy-mushroom-risotto.yaml --token "$EDIT_TOKEN"
   ```
 
 - Recipe metadata lives in `data/recipes/<slug>/` (YAML + manifest). Storage uploads land in the `recipe-images` bucket by default. Ingredient entries should use `{ name, amount, notes }` with metric abbreviations (`g`, `ml`, `tsp`, etc.).
+
+### Recipe Upload CLI & API
+
+- `scripts/upload-recipe.ts` posts YAML recipe files to the recipe API, resolving image URLs from the local manifest or Supabase storage when possible.
+- The command reads `EDIT_TOKEN` from `--token`, the environment, or `.env.local`, and falls back to `http://localhost:3000/api/recipes` unless `--endpoint` or `RECIPE_API_URL` is provided.
+- `POST /api/recipes` accepts normalized recipe payloads, upserting by slug. Requests must include `Authorization: Bearer <EDIT_TOKEN>`; the server rejects missing or mismatched tokens with `401`.
+- Typical workflow: generate or edit a recipe YAML locally, verify assets are uploaded, then run the CLI to seed a local or remote deployment (e.g., `https://your-app.vercel.app/api/recipes`) with the corresponding bearer token.
 
 ## Data Flow
 

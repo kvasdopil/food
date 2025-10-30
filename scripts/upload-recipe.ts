@@ -1,18 +1,66 @@
-#!/usr/bin/env node
+#!/usr/bin/env ts-node
 
-const fs = require("fs/promises");
-const path = require("path");
-const yaml = require("js-yaml");
+import { access, readFile } from "node:fs/promises";
+import path from "node:path";
+import yaml from "js-yaml";
+
+type Ingredient = {
+  name: string;
+  amount: string;
+  notes?: string;
+};
+
+type Instruction = {
+  step: number;
+  action: string;
+};
+
+type UploadPayload = {
+  slug: string;
+  title: string;
+  summary?: string;
+  description?: string;
+  ingredients: Ingredient[];
+  instructions: Instruction[];
+  tags: string[];
+  imageUrl?: string;
+};
+
+type UploadResponse = {
+  recipe?: {
+    slug?: string;
+  };
+};
+
+type ManifestEntry = {
+  slug: string;
+  publicUrl: string;
+};
+
+type RecipeYaml = {
+  title?: unknown;
+  summary?: unknown;
+  description?: unknown;
+  slug?: unknown;
+  ingredients?: unknown;
+  instructions?: unknown;
+  tags?: unknown;
+  imageUrl?: unknown;
+  image_url?: unknown;
+  image?: unknown;
+};
 
 const MANIFEST_PATH = path.resolve("data/recipe-storage-manifest.json");
-let manifestCache;
+let manifestCache: ManifestEntry[] | undefined;
 
-function usage() {
-  console.log("Usage: ./scripts/upload-recipe <file.yaml> [--endpoint <url>] [--token <token>]");
+function usage(): never {
+  console.log(
+    "Usage: yarn ts-node scripts/upload-recipe.ts <file.yaml> [--endpoint <url>] [--token <token>]",
+  );
   process.exit(1);
 }
 
-function slugify(value) {
+function slugify(value: string): string {
   return value
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
@@ -20,15 +68,16 @@ function slugify(value) {
     .slice(0, 80);
 }
 
-async function loadEnvValue(key) {
-  if (process.env[key]) {
-    return process.env[key];
+async function loadEnvValue(key: string): Promise<string | undefined> {
+  const envValue = process.env[key];
+  if (envValue) {
+    return envValue;
   }
 
   const envPath = path.resolve(process.cwd(), ".env.local");
 
   try {
-    const content = await fs.readFile(envPath, "utf-8");
+    const content = await readFile(envPath, "utf-8");
     const lines = content.split(/\r?\n/);
     for (const rawLine of lines) {
       const line = rawLine.trim();
@@ -43,21 +92,22 @@ async function loadEnvValue(key) {
       }
     }
   } catch (error) {
-    if (error.code !== "ENOENT") {
-      console.warn(`Failed to read .env.local: ${error.message}`);
+    const err = error as NodeJS.ErrnoException;
+    if (err.code !== "ENOENT") {
+      console.warn(`Failed to read .env.local: ${err.message}`);
     }
   }
 
   return undefined;
 }
 
-function normalizeIngredients(entries) {
+function normalizeIngredients(entries: unknown): Ingredient[] {
   if (!Array.isArray(entries)) {
     return [];
   }
 
   return entries
-    .map((item) => {
+    .map((item): Ingredient | null => {
       if (typeof item === "string") {
         const [name, ...rest] = item.split(":");
         const amount = rest.join(":").trim();
@@ -66,44 +116,52 @@ function normalizeIngredients(entries) {
       if (typeof item !== "object" || item === null) {
         return null;
       }
-      const name = typeof item.name === "string" ? item.name.trim() : "";
-      const amount = typeof item.amount === "string" ? item.amount.trim() : "";
+      const maybeName = Reflect.get(item, "name");
+      const maybeAmount = Reflect.get(item, "amount");
+      const maybeNotes = Reflect.get(item, "notes");
+      const name = typeof maybeName === "string" ? maybeName.trim() : "";
+      const amount = typeof maybeAmount === "string" ? maybeAmount.trim() : "";
       if (!name || !amount) {
         return null;
       }
-      const notes = typeof item.notes === "string" ? item.notes.trim() : undefined;
+      const notes = typeof maybeNotes === "string" ? maybeNotes.trim() : undefined;
       return notes ? { name, amount, notes } : { name, amount };
     })
-    .filter(Boolean);
+    .filter((entry): entry is Ingredient => Boolean(entry));
 }
 
-function normalizeInstructions(entries) {
+function normalizeInstructions(entries: unknown): Instruction[] {
   if (!Array.isArray(entries)) {
     return [];
   }
 
   return entries
-    .map((item, index) => {
+    .map((item, index): Instruction | null => {
       if (typeof item === "string") {
         return { step: index + 1, action: item.trim() };
       }
       if (typeof item !== "object" || item === null) {
         return null;
       }
-      const action = typeof item.action === "string" ? item.action.trim() : "";
+
+      const maybeAction = Reflect.get(item, "action");
+      const action = typeof maybeAction === "string" ? maybeAction.trim() : "";
       if (!action) {
         return null;
       }
+
+      const maybeStep = Reflect.get(item, "step");
       const step =
-        typeof item.step === "number" && Number.isFinite(item.step)
-          ? Math.max(1, Math.trunc(item.step))
+        typeof maybeStep === "number" && Number.isFinite(maybeStep)
+          ? Math.max(1, Math.trunc(maybeStep))
           : index + 1;
+
       return { step, action };
     })
-    .filter(Boolean);
+    .filter((entry): entry is Instruction => Boolean(entry));
 }
 
-function normalizeTags(entries) {
+function normalizeTags(entries: unknown): string[] {
   if (Array.isArray(entries)) {
     return entries
       .map((tag) => (typeof tag === "string" ? tag.trim().toLowerCase() : ""))
@@ -118,22 +176,33 @@ function normalizeTags(entries) {
   return [];
 }
 
-async function loadManifest() {
-  if (manifestCache !== undefined) {
+async function loadManifest(): Promise<ManifestEntry[]> {
+  if (manifestCache) {
     return manifestCache;
   }
 
   try {
-    const content = await fs.readFile(MANIFEST_PATH, "utf-8");
-    const parsed = JSON.parse(content);
+    const content = await readFile(MANIFEST_PATH, "utf-8");
+    const parsed = JSON.parse(content) as unknown;
     if (Array.isArray(parsed)) {
-      manifestCache = parsed;
+      manifestCache = parsed
+        .map((entry): ManifestEntry | null => {
+          if (!entry || typeof entry !== "object") return null;
+          const slug = Reflect.get(entry, "slug");
+          const publicUrl = Reflect.get(entry, "publicUrl");
+          if (typeof slug === "string" && typeof publicUrl === "string") {
+            return { slug, publicUrl };
+          }
+          return null;
+        })
+        .filter((entry): entry is ManifestEntry => Boolean(entry));
     } else {
       manifestCache = [];
     }
   } catch (error) {
-    if (error.code !== "ENOENT") {
-      console.warn(`Unable to read manifest at ${MANIFEST_PATH}: ${error.message}`);
+    const err = error as NodeJS.ErrnoException;
+    if (err.code !== "ENOENT") {
+      console.warn(`Unable to read manifest at ${MANIFEST_PATH}: ${err.message}`);
     }
     manifestCache = [];
   }
@@ -141,30 +210,34 @@ async function loadManifest() {
   return manifestCache;
 }
 
-async function getManifestImageUrl(slug) {
+async function getManifestImageUrl(slug: string): Promise<string | undefined> {
   const manifest = await loadManifest();
-  const match = manifest.find((entry) => entry && entry.slug === slug && typeof entry.publicUrl === "string");
-  return match ? match.publicUrl : undefined;
+  const match = manifest.find((entry) => entry.slug === slug);
+  return match?.publicUrl;
 }
 
-async function findLocalImageExtension(slug, inputPath) {
+async function findLocalImageExtension(slug: string, inputPath: string): Promise<string | undefined> {
   const directory = path.dirname(inputPath);
   const candidates = [".jpg", ".jpeg", ".png", ".webp"];
 
   for (const extension of candidates) {
     const candidatePath = path.join(directory, `${slug}${extension}`);
     try {
-      await fs.access(candidatePath);
+      await access(candidatePath);
       return extension;
     } catch {
-      // try next
+      // continue searching
     }
   }
 
   return undefined;
 }
 
-async function resolveImageUrl(slug, providedUrl, inputPath) {
+async function resolveImageUrl(
+  slug: string,
+  providedUrl: string | null,
+  inputPath: string,
+): Promise<string | undefined> {
   if (providedUrl) {
     return providedUrl;
   }
@@ -175,9 +248,8 @@ async function resolveImageUrl(slug, providedUrl, inputPath) {
   }
 
   const supabaseUrl =
-    process.env.RECIPE_IMAGE_BASE_URL ||
-    process.env.NEXT_PUBLIC_SUPABASE_URL ||
-    process.env.SUPABASE_URL ||
+    process.env.RECIPE_IMAGE_BASE_URL ??
+    process.env.NEXT_PUBLIC_SUPABASE_URL ??
     process.env.SUPABASE_URL;
 
   if (supabaseUrl) {
@@ -192,25 +264,22 @@ async function resolveImageUrl(slug, providedUrl, inputPath) {
   return undefined;
 }
 
-async function buildPayload(inputPath) {
-  const fileContent = await fs.readFile(inputPath, "utf-8");
-  const data = yaml.load(fileContent);
+async function buildPayload(inputPath: string): Promise<UploadPayload> {
+  const fileContent = await readFile(inputPath, "utf-8");
+  const data = yaml.load(fileContent) as RecipeYaml;
 
   if (typeof data !== "object" || data === null) {
     throw new Error("YAML payload is empty or invalid.");
   }
 
-  const title = typeof data.title === "string" ? data.title.trim() : "";
+  const rawTitle = data.title;
+  const title = typeof rawTitle === "string" ? rawTitle.trim() : "";
   if (!title) {
     throw new Error("YAML must include a title.");
   }
 
-  const summary =
-    typeof data.summary === "string"
-      ? data.summary.trim()
-      : typeof data.description === "string"
-        ? data.description.trim()
-        : undefined;
+  const rawSummary = data.summary ?? data.description;
+  const summary = typeof rawSummary === "string" ? rawSummary.trim() : undefined;
 
   const ingredients = normalizeIngredients(data.ingredients);
   if (ingredients.length === 0) {
@@ -232,7 +301,7 @@ async function buildPayload(inputPath) {
       ? data.slug.trim()
       : slugify(path.basename(inputPath, path.extname(inputPath)));
 
-  const imageUrl =
+  const imageUrlCandidate =
     typeof data.imageUrl === "string"
       ? data.imageUrl.trim()
       : typeof data.image_url === "string"
@@ -243,7 +312,7 @@ async function buildPayload(inputPath) {
 
   const slug = slugify(slugSource);
 
-  const payload = {
+  const payload: UploadPayload = {
     slug,
     title,
     summary,
@@ -253,7 +322,7 @@ async function buildPayload(inputPath) {
     tags,
   };
 
-  const resolvedImageUrl = await resolveImageUrl(slug, imageUrl, inputPath);
+  const resolvedImageUrl = await resolveImageUrl(slug, imageUrlCandidate, inputPath);
   if (resolvedImageUrl) {
     payload.imageUrl = resolvedImageUrl;
   }
@@ -261,15 +330,15 @@ async function buildPayload(inputPath) {
   return payload;
 }
 
-async function main() {
+async function main(): Promise<void> {
   const args = process.argv.slice(2);
   if (args.length === 0) {
     usage();
   }
 
-  let endpoint = process.env.RECIPE_API_URL || "http://localhost:3000/api/recipes";
-  let token = process.env.EDIT_TOKEN || null;
-  let filePath = null;
+  let endpoint = process.env.RECIPE_API_URL ?? "http://localhost:3000/api/recipes";
+  let token: string | null = process.env.EDIT_TOKEN ?? null;
+  let filePath: string | null = null;
 
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i];
@@ -303,14 +372,14 @@ async function main() {
   const absolutePath = path.resolve(process.cwd(), filePath);
 
   try {
-    await fs.access(absolutePath);
+    await access(absolutePath);
   } catch {
     console.error(`File not found: ${absolutePath}`);
     process.exit(1);
   }
 
   if (!token) {
-    token = await loadEnvValue("EDIT_TOKEN");
+    token = await loadEnvValue("EDIT_TOKEN") ?? null;
   }
 
   if (!token) {
@@ -335,12 +404,13 @@ async function main() {
     process.exit(1);
   }
 
-  const result = await response.json();
-  const slug = result?.recipe?.slug || payload.slug;
+  const result = (await response.json()) as UploadResponse;
+  const slug = result?.recipe?.slug ?? payload.slug;
   console.log(`Uploaded recipe ${slug} → ${endpoint}`);
 }
 
-main().catch((error) => {
-  console.error(error.message || error);
+main().catch((error: unknown) => {
+  const message = error instanceof Error ? error.message : String(error);
+  console.error(message);
   process.exit(1);
 });
