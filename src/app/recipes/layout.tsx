@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { FiChevronLeft } from "react-icons/fi";
 import { KeyboardNav } from "@/components/keyboard-nav";
 import { RecipeSideNav } from "@/components/recipe-side-nav";
-import { RecipeSwipeableCarousel } from "./[slug]/client/recipe-swipeable-carousel";
 import { NavigationProvider } from "./[slug]/client/navigation-provider";
 import { Recipe } from "@/components/recipe/recipe";
 
@@ -42,11 +41,7 @@ export default function RecipesLayout({ children }: RecipesLayoutProps) {
         <div className="mx-auto flex h-full w-full max-w-5xl flex-col px-0 sm:px-6 xl:flex-row xl:items-stretch xl:gap-6">
           <RecipeSideNav direction="previous" currentSlug={slug} />
 
-          {/* Mobile: Swipeable Carousel - persists across navigation */}
-          <div className="h-full w-full overflow-hidden sm:hidden">
-            <RecipeSwipeableCarousel slug={slug} />
-          </div>
-
+          {/* Mobile: Content hidden - handled by root-level carousel */}
           {/* Desktop: Standard Recipe Content */}
           <div className="hidden h-full sm:block">
             <Recipe slug={slug} />

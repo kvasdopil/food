@@ -188,7 +188,7 @@ export function SwipeableCarousel<T>({
   return (
     <div
       className={`relative h-full w-full overflow-hidden bg-slate-50 sm:hidden ${className}`}
-      style={{ touchAction: "pan-y pinch-zoom" }}
+      style={{ touchAction: "none" }}
     >
       {items.map((item, index) => {
         const isActive = index === currentIndex;
@@ -232,9 +232,23 @@ export function SwipeableCarousel<T>({
           canSwipeRight,
           dragDirection,
         });
+        // Generate a unique key from the item
+        let itemKey: string;
+        if (typeof item === 'object' && item !== null) {
+          if ('id' in item && typeof item.id === 'string') {
+            itemKey = item.id;
+          } else if ('slug' in item && typeof item.slug === 'string') {
+            itemKey = `recipe-${item.slug}`;
+          } else {
+            itemKey = String(item);
+          }
+        } else {
+          itemKey = String(item);
+        }
+        
         return (
           <motion.div
-            key={String(item)}
+            key={itemKey}
             layout={false}
             className={`h-full w-full ${isActive ? "relative z-10 shadow-2xl shadow-slate-900/20" : "absolute inset-0 z-0 pointer-events-none"}`}
             style={{
@@ -242,7 +256,7 @@ export function SwipeableCarousel<T>({
               y: 0,
               // Ensure active item is always fully opaque, and adjacent items (next/previous) stay visible
               opacity: finalOpacity,
-              touchAction: "pan-y",
+              touchAction: "none",
               willChange: "transform",
               visibility: finalVisibility,
               // Ensure next/previous items are behind but ready to become active
@@ -258,35 +272,51 @@ export function SwipeableCarousel<T>({
               if (isActive) {
                 y.set(0);
                 setDragDirection(null);
-                // Prevent scroll when starting horizontal drag
+                
+                // Always prevent scroll container when drag starts - we'll restore if it's vertical
                 const target = event.target as HTMLElement;
                 const scrollContainer = target.closest('[data-scroll-container]') as HTMLElement;
                 if (scrollContainer) {
-                  scrollContainer.style.overflow = 'hidden';
+                  scrollContainer.style.pointerEvents = 'none';
                 }
               }
             }}
-            onDrag={(event) => {
+            onDrag={(event, info) => {
               if (!isActive) {
                 return;
               }
 
+              // Lock vertical movement
               y.set(0);
+              
               let currentX = x.get();
+              
+              // Check if gesture is primarily vertical (1.5x threshold)
+              const isVerticalGesture = Math.abs(info.offset.y) > Math.abs(info.offset.x) * 1.5;
+              
+              if (isVerticalGesture && Math.abs(info.offset.x) < 10) {
+                // Pure vertical gesture - cancel drag and restore scroll
+                const target = event.target as HTMLElement;
+                const scrollContainer = target.closest('[data-scroll-container]') as HTMLElement;
+                if (scrollContainer) {
+                  scrollContainer.style.pointerEvents = '';
+                }
+                x.set(0);
+                return;
+              }
+              
+              // Horizontal swipe - keep scroll disabled
               if (!canSwipeRight && currentX > 0) {
                 x.set(0);
                 currentX = 0;
               }
+              
               if (currentX > 0 && canSwipeRight) {
                 setDragDirection("previous");
               } else if (currentX < 0) {
                 setDragDirection("next");
               } else {
                 setDragDirection(null);
-              }
-              const element = event?.currentTarget as HTMLElement;
-              if (element) {
-                element.style.transform = `translateX(${currentX}px) translateY(0px)`;
               }
             }}
             onDragEnd={(event, info) => {
@@ -297,6 +327,7 @@ export function SwipeableCarousel<T>({
                 const scrollContainer = target.closest('[data-scroll-container]') as HTMLElement;
                 if (scrollContainer) {
                   scrollContainer.style.overflow = '';
+                  scrollContainer.style.pointerEvents = '';
                 }
                 handleDragEnd(event, info);
               }

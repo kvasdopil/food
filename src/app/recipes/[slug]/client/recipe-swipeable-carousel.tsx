@@ -217,7 +217,7 @@ export function RecipeSwipeableCarousel({ slug }: RecipeSwipeableCarouselProps) 
     }
   }, [currentSlug, nextSlug, previousSlug, router]);
 
-  const renderRecipeItem = useCallback((slug: string, isActive: boolean) => {
+  const renderRecipeItem = useCallback((slug: string) => {
     // Each card gets its own scroll container that resets when it becomes active
     return <Recipe key={slug} slug={slug} />;
   }, []);

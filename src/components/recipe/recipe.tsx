@@ -51,7 +51,7 @@ export function Recipe({ slug }: RecipeProps) {
   }
 
   return (
-    <div ref={scrollContainerRef} data-scroll-container className="h-full overflow-y-auto overscroll-contain">
+    <div ref={scrollContainerRef} data-scroll-container className="h-full overflow-y-auto overscroll-contain" style={{ touchAction: "pan-y" }}>
       <article className="flex w-full flex-col bg-white text-base leading-relaxed text-slate-600">
         <RecipeImage name={recipeData.name} imageUrl={recipeData.imageUrl} slug={recipeData.slug} />
         <Description description={recipeData.description || null} tags={recipeData.tags} />
