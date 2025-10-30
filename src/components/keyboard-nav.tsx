@@ -27,7 +27,8 @@ export function KeyboardNav({ currentSlug }: KeyboardNavProps) {
 
       if (event.key === "ArrowLeft") {
         event.preventDefault();
-        if (window.history.length > 1) {
+        const hasSameOriginHistory = document.referrer && new URL(document.referrer).origin === window.location.origin;
+        if (hasSameOriginHistory) {
           router.back();
         } else {
           try {

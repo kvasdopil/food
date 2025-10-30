@@ -38,9 +38,11 @@ export function RecipeSideNav({ direction, currentSlug }: RecipeSideNavProps) {
     }
   }, [currentSlug, getNextSlug, router]);
 
+  const hasSameOriginHistory = document.referrer && new URL(document.referrer).origin === window.location.origin;
+
   const handleClick = useCallback(async () => {
     if (isPrevious) {
-      if (window.history.length > 1) {
+      if (hasSameOriginHistory) {
         router.back();
         return;
       }
@@ -49,7 +51,12 @@ export function RecipeSideNav({ direction, currentSlug }: RecipeSideNavProps) {
     }
 
     await navigateToRandom();
-  }, [isPrevious, navigateToRandom, router]);
+  }, [isPrevious, navigateToRandom, router, hasSameOriginHistory]);
+
+  // Hide previous button if there's no same-origin history
+  if (isPrevious && !hasSameOriginHistory) {
+    return null;
+  }
 
   return (
     <div className={`hidden xl:flex xl:w-40 xl:flex-col ${isPrevious ? "" : "xl:items-end"}`}>

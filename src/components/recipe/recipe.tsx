@@ -19,7 +19,7 @@ export function Recipe({ slug }: RecipeProps) {
     return () => {
       console.log("recipe unmounted");
     };
-  }, []);
+  }, [slug]);
 
   if (isLoading) {
     return (

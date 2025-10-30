@@ -9,6 +9,7 @@ type SwipeableCarouselProps<T> = {
   onNavigate: (direction: "next" | "previous") => void;
   renderItem: (item: T, isActive: boolean) => ReactNode;
   className?: string;
+  disablePrevious?: boolean;
 };
 
 const SWIPE_THRESHOLD = 50;
@@ -19,7 +20,8 @@ export function SwipeableCarousel<T>({
   currentIndex,
   onNavigate,
   renderItem,
-  className = ""
+  className = "",
+  disablePrevious = false
 }: SwipeableCarouselProps<T>) {
 
   useEffect(() => {
@@ -125,8 +127,8 @@ export function SwipeableCarousel<T>({
       }
 
       // Navigate to previous item (swipe right, positive offset)
-      // Only navigate if card visually crossed 50% threshold
-      if (isSignificantSwipe && (offset > SWIPE_THRESHOLD || velocity > VELOCITY_THRESHOLD)) {
+      // Only navigate if card visually crossed 50% threshold and previous navigation is not disabled
+      if (isSignificantSwipe && (offset > SWIPE_THRESHOLD || velocity > VELOCITY_THRESHOLD) && !disablePrevious) {
         setIsTransitioning(true);
 
         // Calculate remaining distance to edge
@@ -167,7 +169,7 @@ export function SwipeableCarousel<T>({
         ease: "easeOut",
       });
     },
-    [x, onNavigate],
+    [x, onNavigate, disablePrevious],
   );
 
   return (

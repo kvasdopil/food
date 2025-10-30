@@ -79,22 +79,6 @@ export function RecipeSwipeableCarousel({ slug }: RecipeSwipeableCarouselProps) 
     }
   }, [currentSlug, nextSlug]);
 
-  // Load previous recipe slug
-  const loadPreviousSlug = useCallback(async () => {
-    if (!currentSlug) return;
-
-    // Don't load if we already have a previous slug
-    if (previousSlug) return;
-
-    try {
-      // For previous, we'll use a random recipe as fallback
-      // In a real app, you might want to track navigation history
-      const slug = await fetchRandomSlug(currentSlug);
-      setPreviousSlug(slug);
-    } catch (error) {
-      console.error("Failed to load previous recipe slug:", error);
-    }
-  }, [currentSlug, previousSlug]);
 
   // Update current slug when prop changes (external navigation)
   useEffect(() => {
@@ -109,11 +93,10 @@ export function RecipeSwipeableCarousel({ slug }: RecipeSwipeableCarouselProps) 
     });
   }, [slug]);
 
-  // Preload next and previous slugs when current slug is available
+  // Preload next slug when current slug is available
   useEffect(() => {
     if (currentSlug) {
       loadNextSlug();
-      loadPreviousSlug();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentSlug]);
@@ -139,21 +122,19 @@ export function RecipeSwipeableCarousel({ slug }: RecipeSwipeableCarouselProps) 
         // loadNextSlug() will be called by the useEffect when currentSlug changes
       }
     } else if (direction === "previous") {
-      const targetSlug = previousSlug || (await fetchRandomSlug(currentSlug));
-      if (targetSlug) {
+      if (previousSlug) {
         setNextSlug(currentSlug);
-        setCurrentSlug(targetSlug);
+        setCurrentSlug(previousSlug);
         setPreviousSlug(null);
         lastSnapshot = {
-          current: targetSlug,
+          current: previousSlug,
           previous: null,
           next: currentSlug,
         };
-        router.replace(`/recipes/${targetSlug}`, { scroll: false });
+        router.replace(`/recipes/${previousSlug}`, { scroll: false });
         // Wait for React to process the state update
         await new Promise((resolve) => requestAnimationFrame(resolve));
         await new Promise((resolve) => requestAnimationFrame(resolve));
-        // loadPreviousSlug() will be called by the useEffect when currentSlug changes
       }
     }
   }, [currentSlug, nextSlug, previousSlug, router]);
@@ -169,6 +150,7 @@ export function RecipeSwipeableCarousel({ slug }: RecipeSwipeableCarouselProps) 
       currentIndex={currentIndex}
       onNavigate={handleNavigate}
       renderItem={renderRecipeItem}
+      disablePrevious={!document.referrer || new URL(document.referrer).origin !== window.location.origin}
     />
   );
 }
