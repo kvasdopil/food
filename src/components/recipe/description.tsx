@@ -1,3 +1,5 @@
+import { FavoriteButton } from "@/components/favorite-button";
+
 const chipPalette = [
   "bg-amber-100 text-amber-700",
   "bg-sky-100 text-sky-700",
@@ -21,18 +23,17 @@ export function Description({ description, tags }: DescriptionProps) {
         <p className="text-base text-slate-600">{description}</p>
       ) : null}
 
-      {tags.length > 0 ? (
-        <div className="flex flex-wrap gap-2">
-          {tags.map((tag, index) => (
-            <span
-              key={tag}
-              className={`rounded-full px-3 py-1 text-sm font-medium ${chipPalette[index % chipPalette.length]}`}
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-      ) : null}
+      <div className="flex flex-wrap items-center gap-2">
+        <FavoriteButton />
+        {tags.map((tag, index) => (
+          <span
+            key={tag}
+            className={`rounded-full px-3 py-1 text-sm font-medium ${chipPalette[index % chipPalette.length]}`}
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
     </section>
   );
 }

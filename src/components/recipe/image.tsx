@@ -1,6 +1,5 @@
 import NextImage from "next/image";
 
-import { FavoriteButton } from "@/components/favorite-button";
 import { ShareRecipeButton } from "@/components/share-recipe-button";
 import { resolveRecipeImageUrl } from "@/lib/resolve-recipe-image-url";
 
@@ -30,7 +29,6 @@ export function RecipeImage({ name, imageUrl, slug }: RecipeImageProps) {
 
       <div className="absolute top-4 right-4 flex items-center gap-3">
         <ShareRecipeButton slug={slug} title={name} variant="icon" />
-        <FavoriteButton />
       </div>
 
       <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent px-5 pt-16 pb-6">
