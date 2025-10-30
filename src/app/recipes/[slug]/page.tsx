@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 
-import { RecipePageClient } from "@/components/recipe/page-client";
+import { RecipePageClient } from "@/components/recipe/recipe-page-client";
 import { resolveRecipeImageUrl } from "@/lib/resolve-recipe-image-url";
 import { supabase } from "@/lib/supabaseClient";
 import type { Tables } from "@/types/supabase";
@@ -58,25 +57,8 @@ export async function generateMetadata({ params }: RecipePageProps): Promise<Met
   };
 }
 
-export default async function RecipePage({ params }: RecipePageProps) {
+export default async function RecipePageRoute({ params }: RecipePageProps) {
   const { slug } = await params;
-  const recipe = await fetchRecipeBySlug(slug);
 
-  if (!recipe) {
-    notFound();
-  }
-
-  return (
-    <RecipePageClient
-      recipe={{
-        slug: recipe.slug,
-        name: recipe.name,
-        description: recipe.description ?? "",
-        ingredients: recipe.ingredients,
-        instructions: recipe.instructions,
-        imageUrl: recipe.image_url,
-        tags: recipe.tags ?? [],
-      }}
-    />
-  );
+  return <RecipePageClient slug={slug} />;
 }
