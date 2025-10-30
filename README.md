@@ -61,30 +61,168 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
 
 ## Project Status
 
-- Home route `/` server-redirects to a random recipe slug (`/recipes/[slug]`) for optimal sharing.
+- Home route `/` server-redirects to `/feed`.
 - Feed route `/feed` displays a scrollable grid/list of recipes with pagination (20 per page), infinite scroll, and favorite functionality. Desktop shows up to 4 columns in a grid with gaps and shadows; mobile shows single-column full-width cards.
 - Dynamic route `src/app/recipes/[slug]/page.tsx` handles metadata generation only; rendering is handled by the layout.
 - Layout `src/app/recipes/layout.tsx` manages the persistent carousel wrapper to prevent remounting during navigation, and includes a back-to-feed button in the top-left corner.
 - Navigation history checks use `document.referrer` to ensure same-origin navigation (prevents "about:blank" issues). Previous navigation is disabled/hidden when there's no same-origin history.
 - Supabase provides recipe data via table queries; types generated in `src/types/supabase.ts`.
 - Authenticated POST to `/api/recipes` upserts recipes from JSON payloads that match the YAML schema. Requires a `Bearer` token that matches `EDIT_TOKEN`.
-- Client helpers:
-  - `KeyboardNav` handles arrow-key navigation with random fallback when there's no same-origin history.
-  - `RecipeSideNav` renders prev/next buttons using `/api/recipes?from={slug}` for slug-based pagination (matches feed order). Previous button is hidden when there's no same-origin history.
-  - `RecipeSwipeableCarousel` provides mobile swipe gestures with preloaded next recipes. Previous swipe is disabled when there's no same-origin history. Swipes require the card to visually cross 50% of screen width before navigation (not just finger movement).
-  - `RecipeFeedCard` displays recipe cards with images, titles, descriptions, tags, and like status (persisted in localStorage).
+
+## Screen Structure & Navigation
+
+### Route Hierarchy
+
+The app has three main routes:
+
+1. **`/` (Home)** → Server redirects to `/feed`
+2. **`/feed`** → Recipe feed page with paginated grid/list
+3. **`/recipes/[slug]`** → Individual recipe pages with unique URLs
+
+### Layout Architecture
+
+**Root Layout** (`src/app/layout.tsx`)
+- Minimal wrapper providing fonts (Geist Sans/Mono) and global styles
+- No navigation UI
+
+**Recipes Layout** (`src/app/recipes/layout.tsx`)
+- **Persistent wrapper** that prevents carousel remounting during navigation
+- Manages recipe rendering and navigation state
+- Contains:
+  - Back-to-feed button (top-left corner)
+  - Keyboard navigation handler (global)
+  - Side navigation buttons (prev/next) for desktop
+  - Mobile swipeable carousel wrapper
+  - Desktop standard recipe view
+
+**Recipe Page** (`src/app/recipes/[slug]/page.tsx`)
+- Server component that only generates metadata (OpenGraph, title, description)
+- Returns `null` - all rendering is handled by the layout
+
+### Navigation System
+
+The app supports three navigation modes:
+
+#### 1. Feed → Recipe Navigation
+- Users click on `RecipeFeedCard` components in the feed
+- Standard Next.js `Link` navigation to `/recipes/[slug]`
+- Cards display: image, title overlay, description, tags, and favorite button (localStorage)
+
+#### 2. Recipe → Recipe Navigation (Desktop)
+
+**Side Navigation Buttons** (`RecipeSideNav`)
+- **Previous**: Uses browser `router.back()` (only enabled when history exists)
+- **Next**: Fetches next recipe using `/api/recipes?from={slug}` (maintains feed order)
+- Fallback to random recipe if API call fails
+- Buttons hidden when no history available
+
+**Keyboard Navigation** (`KeyboardNav`)
+- **Left Arrow**: Navigate to previous recipe via `router.back()` (if history exists)
+- **Right Arrow**: Navigate to next recipe (feed order, with random fallback)
+- Disabled when user is typing in input fields
+
+#### 3. Recipe → Recipe Navigation (Mobile)
+
+**Swipeable Carousel** (`RecipeSwipeableCarousel`)
+- **Swipe left**: Navigate to next recipe (preloaded)
+- **Swipe right**: Navigate to previous recipe (if history exists)
+- Requires 50% swipe threshold before navigation triggers
+- Preloads next recipe slug automatically
+- Maintains carousel state across route changes using module-level snapshot
+- Previous swipe disabled when no history available
+
+### History Management
+
+Navigation history is managed via **session storage** (`recipe-history.ts`):
+
+- Tracks recipe navigation stack: `{ stack: string[], index: number }`
+- Stored in `sessionStorage` (clears when tab closes)
+- Syncs with `document.referrer` to detect same-origin navigation
+- Prevents "about:blank" referrer issues
+- Enables forward/backward navigation through visited recipes
+
+**History Sync Logic:**
+- If `document.referrer` indicates navigation from another recipe page → appends to existing history stack
+- If no referrer or external referrer → resets to new stack with current slug
+- Reuses existing stack entries when revisiting recipes
+
+**Forward History Support:**
+- When user navigates backward, forward entries are preserved
+- Forward navigation reuses history entries instead of API calls
+- History stack is truncated when navigating forward from middle of stack
+
+### Feed Pagination
+
+**API Endpoint** (`/api/recipes`)
+- Supports two pagination modes:
+  - `?page=N` → Traditional page-based pagination (20 items per page)
+  - `?from={slug}` → Slug-based pagination matching feed order
+- Returns 20 recipes with pagination metadata (`hasMore`, `total`, etc.)
+
+**Infinite Scroll:**
+- Initial load fetches first 20 recipes
+- Auto-loads more when scrolling within 1000px of bottom
+- Uses last recipe's slug for `?from=` parameter to maintain order
+
+### Component Hierarchy
+
+```
+Feed Page (`/feed`)
+├── RecipeFeedCard (multiple, clickable links)
+│   ├── Image with title overlay
+│   ├── Description
+│   ├── Tags (colored chips)
+│   └── Favorite button (localStorage)
+
+Recipe Layout (`/recipes/[slug]`)
+├── Back to Feed button (top-left)
+├── KeyboardNav (global keyboard shortcuts)
+├── RecipeSideNav (prev/next buttons - desktop only, xl breakpoint)
+├── Mobile (< sm): RecipeSwipeableCarousel
+│   └── SwipeableCarousel
+│       └── Recipe component (preloaded items)
+└── Desktop (≥ sm): Recipe component
+    ├── RecipeImage
+    ├── Description (with tags)
+    ├── Ingredients
+    └── Instructions
+```
+
+### Navigation Flow Examples
+
+**Flow 1: Feed → Recipe → Next Recipe**
+1. User clicks card in feed → navigates to `/recipes/beef-tacos`
+2. Layout syncs history: `{ stack: ['beef-tacos'], index: 0 }`
+3. User clicks "Next" button or swipes left (mobile)
+4. Fetches `/api/recipes?from=beef-tacos` → gets next recipe in feed order
+5. Navigates to `/recipes/chicken-stir-fry`
+6. History updated: `{ stack: ['beef-tacos', 'chicken-stir-fry'], index: 1 }`
+
+**Flow 2: Back Navigation**
+1. User on `/recipes/chicken-stir-fry` (index: 1)
+2. User clicks "Previous" button or swipes right (mobile)
+3. History moves backward: `{ index: 0 }`
+4. Browser `router.back()` → navigates to `/recipes/beef-tacos`
+5. Layout detects same slug, reuses history entry
+
+**Flow 3: Direct Link from External Source**
+1. User shares `/recipes/beef-tacos` URL
+2. New visitor opens link (no referrer or external referrer)
+3. History resets: `{ stack: ['beef-tacos'], index: 0 }`
+4. Previous navigation disabled/hidden (no history to go back to)
+
+This architecture provides stateful navigation that tracks forward and backward movement while gracefully handling external links.
 
 ## Roadmap & Planned Features
 
 - **Navigation Improvements**:
-  - "Next" button should navigate to next recipe in feed order (not random)
-  - Back swipe should navigate back in browser history
   - Feed should be a card within a swiper to preserve position when swiped back to
+  - Improve history persistence across page refreshes
 
 - **Feed Enhancements**:
-  - Make feed truly infinite (currently paginated)
   - Add tag filtering functionality
   - Add dedicated page to list all liked/favorited meals
+  - Search functionality
 
 - **Recipe Management**:
   - Add new recipes via agent/API integration (with secure Vercel token authentication)
@@ -93,6 +231,7 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
 - **Performance & UX**:
   - Implement SSR for better performance and SEO
   - Add proper loading preview/skeleton for recipe pages
+  - Optimize image loading and preloading
 
 - **Future Schema Extensions**:
   - Prep time and cooking time fields
@@ -148,14 +287,28 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
 
 ## Data Flow
 
-1. `/` → redirect to random recipe slug (`/recipes/[slug]`) for optimal sharing.
-2. `/feed` → fetches paginated recipes from `/api/recipes` → displays in responsive grid/list with infinite scroll.
-3. `/recipes/[slug]` → layout extracts slug from pathname → `fetchRecipeBySlug` (Supabase query) → render via layout wrapper.
-4. Layout `src/app/recipes/layout.tsx` persists across route changes, preventing carousel remounting during navigation. Includes back-to-feed button in top-left corner.
-5. Client navigation → `/api/recipes?from={slug}` (slug-based pagination matching feed order) → `router.replace('/recipes/[slug]')` → layout updates slug and re-renders.
-6. Previous navigation only works when `document.referrer` indicates same-origin navigation (prevents "about:blank" issues).
-7. Supabase trigger `generate_recipe_slug` ensures unique slugs and suffixes.
-8. Favorites are stored in browser localStorage (key: `recipe-favorites`) and persist across page reloads.
+1. **Home Route** (`/`) → Server redirects to `/feed`
+2. **Feed Route** (`/feed`) → Client component fetches paginated recipes from `/api/recipes` → Displays in responsive grid/list with infinite scroll → Cards link to `/recipes/[slug]`
+3. **Recipe Route** (`/recipes/[slug]`)
+   - Page component: Generates metadata (OpenGraph, title) via server-side Supabase query
+   - Layout component: Extracts slug from pathname → Uses `useRecipe` hook → Fetches recipe data via Supabase → Renders recipe components
+   - Layout persists across route changes, preventing carousel remounting
+4. **Next Recipe Navigation**:
+   - Desktop: `RecipeSideNav` or keyboard right arrow → Fetches `/api/recipes?from={slug}` → Gets next in feed order → `router.push('/recipes/[slug]')`
+   - Mobile: Swipe left → Carousel triggers same navigation flow
+   - History: Updates session storage with new slug in stack
+5. **Previous Recipe Navigation**:
+   - Desktop: `RecipeSideNav` or keyboard left arrow → `router.back()` (if history exists)
+   - Mobile: Swipe right → Carousel moves backward in history → `router.back()`
+   - History: Updates session storage index
+6. **History Management**:
+   - On route change, layout syncs history with `document.referrer` check
+   - If same-origin recipe referrer → appends to existing stack
+   - If no/external referrer → resets stack
+   - Forward navigation reuses history entries (no API call needed)
+7. **Back to Feed**: Button in top-left navigates to `/feed` (preserves feed scroll position via browser history)
+8. **Supabase**: Trigger `generate_recipe_slug` ensures unique slugs with `-2`, `-3`, etc. suffixes
+9. **Favorites**: Stored in browser `localStorage` (key: `recipe-favorites`) as array of slugs, persist across page reloads
 
 ## Supabase Configuration
 
