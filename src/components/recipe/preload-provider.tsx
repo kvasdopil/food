@@ -33,7 +33,7 @@ async function preloadImage(url: string | null) {
   });
 }
 
-export function RecipePreloadProvider({
+export function PreloadProvider({
   currentSlug,
   children,
 }: {

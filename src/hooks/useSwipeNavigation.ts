@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-import { useRecipePreload } from "@/components/recipe-preload-provider";
+import { useRecipePreload } from "@/components/recipe/preload-provider";
 import { fetchRandomSlug } from "@/lib/random-recipe";
 
 const TOUCH_THRESHOLD = 60;

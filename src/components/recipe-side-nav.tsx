@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 
-import { useRecipePreload } from "@/components/recipe-preload-provider";
+import { useRecipePreload } from "@/components/recipe/preload-provider";
 import { fetchRandomSlug } from "@/lib/random-recipe";
 
 type RecipeSideNavProps = {

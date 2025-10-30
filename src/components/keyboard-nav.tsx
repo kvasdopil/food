@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect } from "react";
 
-import { useRecipePreload } from "@/components/recipe-preload-provider";
+import { useRecipePreload } from "@/components/recipe/preload-provider";
 import { fetchRandomSlug } from "@/lib/random-recipe";
 
 type KeyboardNavProps = {
