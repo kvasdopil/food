@@ -1,0 +1,91 @@
+title: Garlic Butter Shrimp Scampi
+summary: >-
+  Juicy shrimp in garlic butter with lemon and parsley over linguine, served
+  with a mixed green salad.
+servings: 4
+prepTimeMinutes: 15
+cookTimeMinutes: 20
+ingredients:
+  - name: linguine
+    amount: 350 g
+  - name: large shrimp
+    amount: 500 g
+    notes: raw, peeled, deveined, tail-on
+  - name: unsalted butter
+    amount: 60 g
+  - name: olive oil
+    amount: 30 ml
+  - name: garlic
+    amount: 4-6 cloves
+    notes: minced
+  - name: lemon
+    amount: 1 medium
+    notes: juiced and zested
+  - name: fresh parsley
+    amount: 30 g
+    notes: finely chopped
+  - name: dry white wine
+    amount: 60 ml
+    notes: or chicken/vegetable broth
+  - name: red pepper flakes
+    amount: 1/2 tsp
+    notes: optional
+  - name: mixed green salad
+    amount: 150 g
+  - name: vinaigrette
+    amount: 30 ml
+    notes: for salad
+instructions:
+  - step: 1
+    action: >-
+      Bring a large pot of salted water to a boil. Add the *linguine* and cook
+      according to package directions until al dente. Reserve 120 ml of the
+      pasta cooking water before draining.
+  - step: 2
+    action: >-
+      While the pasta cooks, pat the *shrimp* dry with paper towels and season
+      with salt and pepper. In a large pan or skillet, heat the *olive oil* over
+      medium-high heat. Add the *shrimp* and cook for 1-2 minutes per side until
+      pink and opaque. Remove the shrimp from the pan and set aside.
+  - step: 3
+    action: >-
+      Reduce heat to medium. Add the *unsalted butter* to the same pan. Once
+      melted, add the minced *garlic* and *red pepper flakes* (if using) and
+      sauté for about 1 minute until fragrant, being careful not to burn the
+      garlic. Pour in the *dry white wine* (or broth) and scrape up any browned
+      bits from the bottom of the pan. Let it simmer for 1-2 minutes until
+      slightly reduced.
+  - step: 4
+    action: >-
+      Stir in the zest and juice of the *lemon*. Return the cooked *shrimp* to
+      the pan. Add the drained *linguine* and the reserved pasta cooking water.
+      Toss everything together until the pasta is well coated and the sauce
+      emulsifies slightly.
+  - step: 5
+    action: >-
+      Remove from heat and stir in the finely chopped *fresh parsley*. Taste and
+      adjust seasoning with salt and pepper as needed.
+  - step: 6
+    action: >-
+      Serve the *shrimp* immediately, accompanied by the
+      *mixed green salad* dressed with *vinaigrette*.
+tags:
+  - italian
+  - seafood
+imagePrompt:
+  base: >-
+    Vibrant close-up of Garlic Butter Shrimp Scampi, plated to showcase vivid
+    textures and color. Incorporate visual cues from this description: Juicy
+    shrimp in garlic butter with lemon and parsley over linguine, served with a
+    mixed green salad.. Scene: italian-inspired table with soft natural
+    daylight, eye-level perspective, and shallow depth of field. Capture fresh
+    garnish, gentle steam, and a sense of homemade comfort. No people or branded
+    props.
+  enhanced: >-
+    Capture an intimate, slightly elevated close-up of glistening Garlic Butter
+    Shrimp Scampi. Luscious linguine forms a gentle swirl, piled high with
+    perfectly cooked, succulent shrimp. A generous sprinkle of bright, finely
+    chopped parsley and a fresh lemon wedge add vibrant contrast. Bathed in
+    soft, directional natural light, the dish emits a subtle wisp of steam,
+    evoking homemade warmth. A crisp side salad, delicately dressed, completes
+    this inviting Italian-inspired scene with shallow depth of field.

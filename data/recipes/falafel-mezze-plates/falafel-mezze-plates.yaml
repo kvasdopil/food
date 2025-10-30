@@ -1,0 +1,121 @@
+title: Falafel Mezze Plates
+summary: >-
+  Herb chickpea patties with hummus, tabbouleh, and pickled vegetables,
+  accompanied by warm pita triangles.
+servings: 4
+prepTimeMinutes: 30
+cookTimeMinutes: 20
+ingredients:
+  - name: canned chickpeas
+    amount: 400 g
+    notes: drained and rinsed
+  - name: fresh parsley
+    amount: 45 g
+  - name: fresh coriander
+    amount: 15 g
+  - name: small onion
+    amount: '1'
+  - name: garlic cloves
+    amount: '2'
+  - name: plain flour
+    amount: 30 g
+  - name: baking powder
+    amount: 1 tsp
+  - name: ground cumin
+    amount: 1 tsp
+  - name: ground coriander
+    amount: 1 tsp
+  - name: vegetable oil
+    amount: 500 ml
+    notes: for frying
+  - name: prepared hummus
+    amount: 200 g
+  - name: fine bulgur wheat
+    amount: 60 g
+  - name: medium cucumber
+    amount: '1.5'
+  - name: medium tomatoes
+    amount: '2'
+  - name: fresh mint
+    amount: 15 g
+  - name: lemon
+    amount: '1'
+  - name: olive oil
+    amount: 30 ml
+  - name: medium carrot
+    amount: '1'
+  - name: white vinegar
+    amount: 120 ml
+  - name: sugar
+    amount: 2 tsp
+  - name: pita breads
+    amount: '4'
+  - name: salt
+    amount: to taste
+  - name: black pepper
+    amount: to taste
+instructions:
+  - step: 1
+    action: >-
+      Prepare Pickled Vegetables: Thinly slice the *medium carrot* and half of
+      the *medium cucumber*. In a small bowl, combine the *white vinegar*, 120
+      ml water, *sugar*, and a pinch of *salt*. Add the sliced carrot and cucumber,
+      stirring to combine. Let them sit while you prepare the rest of the meal.
+  - step: 2
+    action: >-
+      Prepare Bulgur for Tabbouleh: Place the *fine bulgur wheat* in a small
+      heatproof bowl. Pour over 120 ml boiling water, cover the bowl tightly,
+      and let it sit for 10-15 minutes until the bulgur is softened and the
+      water is absorbed. Fluff with a fork.
+  - step: 3
+    action: >-
+      Make Falafel Mixture: Drain and rinse the *canned chickpeas*. In a food
+      processor, combine the chickpeas, 30 g of the *fresh parsley*, all of the
+      *fresh coriander*, the *small onion*, *garlic cloves*, *plain flour*,
+      *baking powder*, *ground cumin*, *ground coriander*, a pinch of *salt*, and
+      a grind of *black pepper*. Pulse until the mixture is well combined but
+      still has a slightly coarse texture. Form the mixture into 12-15 small
+      patties or balls.
+  - step: 4
+    action: >-
+      Prepare Tabbouleh: While the bulgur softens, finely dice the remaining
+      *medium cucumber* and *medium tomatoes*. Finely chop the *fresh mint* and
+      the remaining 15 g of *fresh parsley*. Once the bulgur is ready, combine
+      it in a bowl with the diced vegetables, chopped mint, chopped parsley,
+      juice of half a *lemon*, and *olive oil*. Season with *salt* and *black pepper* to
+      taste, mixing well.
+  - step: 5
+    action: >-
+      Fry Falafel: Heat the *vegetable oil* in a deep pan or pot over
+      medium-high heat until it reaches 170-180°C. Carefully fry the falafel
+      patties in batches for 3-5 minutes per side, until they are golden brown
+      and cooked through. Remove the falafel with a slotted spoon and drain on
+      paper towels to remove excess oil.
+  - step: 6
+    action: >-
+      Assemble Mezze Plates: Warm the *pita breads* in a dry pan or in an oven
+      preheated to 180°C for 1-2 minutes until they are soft and pliable.
+      Arrange the falafel, *prepared hummus*, tabbouleh, and the drained
+      pickled vegetables on individual plates. Serve immediately with the
+      pita breads and lemon wedges for squeezing. A drizzle of *olive oil*
+      and a few *fresh mint* leaves can be added as a garnish if desired.
+tags:
+  - middleeastern
+  - vegan
+imagePrompt:
+  base: >-
+    Vibrant close-up of Falafel Mezze Plates, plated to showcase vivid textures
+    and color. Incorporate visual cues from this description: Herb chickpea
+    patties with hummus, tabbouleh, and pickled vegetables, accompanied by warm
+    pita triangles.. Scene: middleeastern-inspired table with soft natural
+    daylight, eye-level perspective, and shallow depth of field. Capture fresh
+    garnish, gentle steam, and a sense of homemade comfort. No people or branded
+    props.
+  enhanced: >-
+    Intimate close-up: Golden-crisp falafel patties, their herb-flecked
+    interiors peeking, nestle beside a creamy hummus swirl, artfully drizzled
+    with olive oil and a sumac dusting. Vibrant tabbouleh and jewel-toned
+    pickled carrots and cucumbers add fresh pops of color. Warm, pillow-soft
+    pita triangles, gently steaming, complete the generous mezze. Bathed in
+    soft, diffused natural daylight, an eye-level perspective with shallow depth
+    of field emphasizes irresistible textures and homemade comfort.

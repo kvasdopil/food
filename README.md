@@ -16,6 +16,7 @@
    - `NEXT_PUBLIC_SUPABASE_URL`: Project URL from the Supabase dashboard
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: anon public key from Supabase
    - `SUPABASE_SERVICE_ROLE_KEY`: service role token (used by the CLI scripts for storage + seeding)
+   - `EDIT_TOKEN`: shared bearer token required for protected API endpoints (e.g. recipe imports)
    - _(optional)_ `RECIPE_STORAGE_BUCKET`: overrides the default `recipe-images` bucket name
 
 2. Install dependencies and run the dev server:
@@ -66,6 +67,7 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
 - Layout `src/app/recipes/layout.tsx` manages the persistent carousel wrapper to prevent remounting during navigation, and includes a back-to-feed button in the top-left corner.
 - Navigation history checks use `document.referrer` to ensure same-origin navigation (prevents "about:blank" issues). Previous navigation is disabled/hidden when there's no same-origin history.
 - Supabase provides recipe data via RPC (`get_random_recipe`) and table queries; types generated in `src/types/supabase.ts`.
+- Authenticated POST to `/api/recipes` upserts recipes from JSON payloads that match the YAML schema. Requires a `Bearer` token that matches `EDIT_TOKEN`.
 - Client helpers:
   - `KeyboardNav` handles arrow-key navigation with random fallback when there's no same-origin history.
   - `RecipeSideNav` renders prev/next buttons using `/api/random-recipe`. Previous button is hidden when there's no same-origin history.
@@ -128,6 +130,12 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
   ```bash
   yarn ts-node scripts/build-recipe-seed.ts
   yarn ts-node scripts/seed-recipes.ts
+  ```
+
+- Upload an existing YAML recipe to a running API (defaults to `http://localhost:3000/api/recipes`):
+
+  ```bash
+  ./scripts/upload-recipe data/recipes/creamy-mushroom-risotto/creamy-mushroom-risotto.yaml --token "$EDIT_TOKEN"
   ```
 
 - Recipe metadata lives in `data/recipes/<slug>/` (YAML + manifest). Storage uploads land in the `recipe-images` bucket by default. Ingredient entries should use `{ name, amount, notes }` with metric abbreviations (`g`, `ml`, `tsp`, etc.).

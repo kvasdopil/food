@@ -1,5 +1,11 @@
 [
   {
+    "slug": "beef-broccoli-stir-fry",
+    "bucket": "recipe-images",
+    "path": "beef-broccoli-stir-fry.jpg",
+    "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/beef-broccoli-stir-fry.jpg"
+  },
+  {
     "slug": "black-bean-enchiladas",
     "bucket": "recipe-images",
     "path": "black-bean-enchiladas.jpg",
@@ -40,6 +46,18 @@
     "bucket": "recipe-images",
     "path": "creamy-mushroom-risotto.jpg",
     "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/creamy-mushroom-risotto.jpg"
+  },
+  {
+    "slug": "falafel-mezze-plates",
+    "bucket": "recipe-images",
+    "path": "falafel-mezze-plates.jpg",
+    "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/falafel-mezze-plates.jpg"
+  },
+  {
+    "slug": "garlic-butter-shrimp-scampi",
+    "bucket": "recipe-images",
+    "path": "garlic-butter-shrimp-scampi.jpg",
+    "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/garlic-butter-shrimp-scampi.jpg"
   },
   {
     "slug": "gochujang-glazed-chicken-thighs",

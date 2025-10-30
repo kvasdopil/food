@@ -1,0 +1,16 @@
+{
+  "requestedMeal": "Garlic Butter Shrimp Scampi",
+  "generatedAt": "2025-10-30T15:33:10.783Z",
+  "description": "Juicy shrimp in garlic butter with lemon and parsley over linguine, served with a mixed green salad.",
+  "recipeFile": "garlic-butter-shrimp-scampi.yaml",
+  "imageFile": "garlic-butter-shrimp-scampi.jpg",
+  "tagsProvided": [
+    "italian",
+    "seafood"
+  ],
+  "imagePrompt": {
+    "base": "Vibrant close-up of Garlic Butter Shrimp Scampi, plated to showcase vivid textures and color. Incorporate visual cues from this description: Juicy shrimp in garlic butter with lemon and parsley over linguine, served with a mixed green salad.. Scene: italian-inspired table with soft natural daylight, eye-level perspective, and shallow depth of field. Capture fresh garnish, gentle steam, and a sense of homemade comfort. No people or branded props.",
+    "enhanced": "Capture an intimate, slightly elevated close-up of glistening Garlic Butter Shrimp Scampi. Luscious linguine forms a gentle swirl, piled high with perfectly cooked, succulent shrimp. A generous sprinkle of bright, finely chopped parsley and a fresh lemon wedge add vibrant contrast. Bathed in soft, directional natural light, the dish emits a subtle wisp of steam, evoking homemade warmth. A crisp side salad, delicately dressed, completes this inviting Italian-inspired scene with shallow depth of field.",
+    "mimeType": "image/jpeg"
+  }
+}

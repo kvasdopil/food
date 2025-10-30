@@ -1,0 +1,346 @@
+#!/usr/bin/env node
+
+const fs = require("fs/promises");
+const path = require("path");
+const yaml = require("js-yaml");
+
+const MANIFEST_PATH = path.resolve("data/recipe-storage-manifest.json");
+let manifestCache;
+
+function usage() {
+  console.log("Usage: ./scripts/upload-recipe <file.yaml> [--endpoint <url>] [--token <token>]");
+  process.exit(1);
+}
+
+function slugify(value) {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 80);
+}
+
+async function loadEnvValue(key) {
+  if (process.env[key]) {
+    return process.env[key];
+  }
+
+  const envPath = path.resolve(process.cwd(), ".env.local");
+
+  try {
+    const content = await fs.readFile(envPath, "utf-8");
+    const lines = content.split(/\r?\n/);
+    for (const rawLine of lines) {
+      const line = rawLine.trim();
+      if (!line || line.startsWith("#")) continue;
+      const [lhs, ...rhs] = line.split("=");
+      if (!lhs || rhs.length === 0) continue;
+      const currentKey = lhs.trim();
+      if (currentKey !== key) continue;
+      const value = rhs.join("=").trim();
+      if (value) {
+        return value;
+      }
+    }
+  } catch (error) {
+    if (error.code !== "ENOENT") {
+      console.warn(`Failed to read .env.local: ${error.message}`);
+    }
+  }
+
+  return undefined;
+}
+
+function normalizeIngredients(entries) {
+  if (!Array.isArray(entries)) {
+    return [];
+  }
+
+  return entries
+    .map((item) => {
+      if (typeof item === "string") {
+        const [name, ...rest] = item.split(":");
+        const amount = rest.join(":").trim();
+        return { name: name.trim(), amount: amount || "to taste" };
+      }
+      if (typeof item !== "object" || item === null) {
+        return null;
+      }
+      const name = typeof item.name === "string" ? item.name.trim() : "";
+      const amount = typeof item.amount === "string" ? item.amount.trim() : "";
+      if (!name || !amount) {
+        return null;
+      }
+      const notes = typeof item.notes === "string" ? item.notes.trim() : undefined;
+      return notes ? { name, amount, notes } : { name, amount };
+    })
+    .filter(Boolean);
+}
+
+function normalizeInstructions(entries) {
+  if (!Array.isArray(entries)) {
+    return [];
+  }
+
+  return entries
+    .map((item, index) => {
+      if (typeof item === "string") {
+        return { step: index + 1, action: item.trim() };
+      }
+      if (typeof item !== "object" || item === null) {
+        return null;
+      }
+      const action = typeof item.action === "string" ? item.action.trim() : "";
+      if (!action) {
+        return null;
+      }
+      const step =
+        typeof item.step === "number" && Number.isFinite(item.step)
+          ? Math.max(1, Math.trunc(item.step))
+          : index + 1;
+      return { step, action };
+    })
+    .filter(Boolean);
+}
+
+function normalizeTags(entries) {
+  if (Array.isArray(entries)) {
+    return entries
+      .map((tag) => (typeof tag === "string" ? tag.trim().toLowerCase() : ""))
+      .filter(Boolean);
+  }
+  if (typeof entries === "string") {
+    return entries
+      .split(",")
+      .map((tag) => tag.trim().toLowerCase())
+      .filter(Boolean);
+  }
+  return [];
+}
+
+async function loadManifest() {
+  if (manifestCache !== undefined) {
+    return manifestCache;
+  }
+
+  try {
+    const content = await fs.readFile(MANIFEST_PATH, "utf-8");
+    const parsed = JSON.parse(content);
+    if (Array.isArray(parsed)) {
+      manifestCache = parsed;
+    } else {
+      manifestCache = [];
+    }
+  } catch (error) {
+    if (error.code !== "ENOENT") {
+      console.warn(`Unable to read manifest at ${MANIFEST_PATH}: ${error.message}`);
+    }
+    manifestCache = [];
+  }
+
+  return manifestCache;
+}
+
+async function getManifestImageUrl(slug) {
+  const manifest = await loadManifest();
+  const match = manifest.find((entry) => entry && entry.slug === slug && typeof entry.publicUrl === "string");
+  return match ? match.publicUrl : undefined;
+}
+
+async function findLocalImageExtension(slug, inputPath) {
+  const directory = path.dirname(inputPath);
+  const candidates = [".jpg", ".jpeg", ".png", ".webp"];
+
+  for (const extension of candidates) {
+    const candidatePath = path.join(directory, `${slug}${extension}`);
+    try {
+      await fs.access(candidatePath);
+      return extension;
+    } catch {
+      // try next
+    }
+  }
+
+  return undefined;
+}
+
+async function resolveImageUrl(slug, providedUrl, inputPath) {
+  if (providedUrl) {
+    return providedUrl;
+  }
+
+  const manifestUrl = await getManifestImageUrl(slug);
+  if (manifestUrl) {
+    return manifestUrl;
+  }
+
+  const supabaseUrl =
+    process.env.RECIPE_IMAGE_BASE_URL ||
+    process.env.NEXT_PUBLIC_SUPABASE_URL ||
+    process.env.SUPABASE_URL ||
+    process.env.SUPABASE_URL;
+
+  if (supabaseUrl) {
+    const extension = await findLocalImageExtension(slug, inputPath);
+    if (extension) {
+      const bucket = process.env.RECIPE_STORAGE_BUCKET || "recipe-images";
+      const base = supabaseUrl.replace(/\/$/, "");
+      return `${base}/storage/v1/object/public/${bucket}/${slug}${extension}`;
+    }
+  }
+
+  return undefined;
+}
+
+async function buildPayload(inputPath) {
+  const fileContent = await fs.readFile(inputPath, "utf-8");
+  const data = yaml.load(fileContent);
+
+  if (typeof data !== "object" || data === null) {
+    throw new Error("YAML payload is empty or invalid.");
+  }
+
+  const title = typeof data.title === "string" ? data.title.trim() : "";
+  if (!title) {
+    throw new Error("YAML must include a title.");
+  }
+
+  const summary =
+    typeof data.summary === "string"
+      ? data.summary.trim()
+      : typeof data.description === "string"
+        ? data.description.trim()
+        : undefined;
+
+  const ingredients = normalizeIngredients(data.ingredients);
+  if (ingredients.length === 0) {
+    throw new Error("YAML must include at least one ingredient.");
+  }
+
+  const instructions = normalizeInstructions(data.instructions);
+  if (instructions.length === 0) {
+    throw new Error("YAML must include at least one instruction.");
+  }
+
+  const tags = normalizeTags(data.tags);
+  if (tags.length === 0) {
+    throw new Error("YAML must include at least one tag.");
+  }
+
+  const slugSource =
+    typeof data.slug === "string" && data.slug.trim()
+      ? data.slug.trim()
+      : slugify(path.basename(inputPath, path.extname(inputPath)));
+
+  const imageUrl =
+    typeof data.imageUrl === "string"
+      ? data.imageUrl.trim()
+      : typeof data.image_url === "string"
+        ? data.image_url.trim()
+        : typeof data.image === "string"
+          ? data.image.trim()
+          : null;
+
+  const slug = slugify(slugSource);
+
+  const payload = {
+    slug,
+    title,
+    summary,
+    description: summary,
+    ingredients,
+    instructions,
+    tags,
+  };
+
+  const resolvedImageUrl = await resolveImageUrl(slug, imageUrl, inputPath);
+  if (resolvedImageUrl) {
+    payload.imageUrl = resolvedImageUrl;
+  }
+
+  return payload;
+}
+
+async function main() {
+  const args = process.argv.slice(2);
+  if (args.length === 0) {
+    usage();
+  }
+
+  let endpoint = process.env.RECIPE_API_URL || "http://localhost:3000/api/recipes";
+  let token = process.env.EDIT_TOKEN || null;
+  let filePath = null;
+
+  for (let i = 0; i < args.length; i += 1) {
+    const arg = args[i];
+    if (arg === "--endpoint") {
+      const next = args[i + 1];
+      if (!next) usage();
+      endpoint = next;
+      i += 1;
+    } else if (arg.startsWith("--endpoint=")) {
+      endpoint = arg.split("=")[1];
+    } else if (arg === "--token") {
+      const next = args[i + 1];
+      if (!next) usage();
+      token = next;
+      i += 1;
+    } else if (arg.startsWith("--token=")) {
+      token = arg.split("=")[1];
+    } else if (arg.startsWith("-")) {
+      usage();
+    } else if (!filePath) {
+      filePath = arg;
+    } else {
+      usage();
+    }
+  }
+
+  if (!filePath) {
+    usage();
+  }
+
+  const absolutePath = path.resolve(process.cwd(), filePath);
+
+  try {
+    await fs.access(absolutePath);
+  } catch {
+    console.error(`File not found: ${absolutePath}`);
+    process.exit(1);
+  }
+
+  if (!token) {
+    token = await loadEnvValue("EDIT_TOKEN");
+  }
+
+  if (!token) {
+    console.error("Missing EDIT_TOKEN. Provide via --token, EDIT_TOKEN env var, or .env.local.");
+    process.exit(1);
+  }
+
+  const payload = await buildPayload(absolutePath);
+
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    console.error(`Request failed (${response.status}):\n${text}`);
+    process.exit(1);
+  }
+
+  const result = await response.json();
+  const slug = result?.recipe?.slug || payload.slug;
+  console.log(`Uploaded recipe ${slug} → ${endpoint}`);
+}
+
+main().catch((error) => {
+  console.error(error.message || error);
+  process.exit(1);
+});

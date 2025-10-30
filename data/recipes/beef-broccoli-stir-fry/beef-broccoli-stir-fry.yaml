@@ -1,0 +1,100 @@
+title: Beef & Broccoli Stir-Fry
+summary: >-
+  Thin beef slices and broccoli in savory soy ginger sauce, paired with steamed
+  jasmine rice.
+servings: 4
+prepTimeMinutes: 20
+cookTimeMinutes: 25
+ingredients:
+  - name: beef flank steak or sirloin
+    amount: 400 g
+    notes: thinly sliced against the grain
+  - name: broccoli
+    amount: 500 g
+    notes: cut into bite-sized florets
+  - name: fresh ginger
+    amount: 30 g
+    notes: grated
+  - name: garlic
+    amount: 4 cloves
+    notes: minced
+  - name: soy sauce
+    amount: 60 ml
+  - name: cornstarch
+    amount: 15 g
+  - name: sesame oil
+    amount: 5 ml
+  - name: rice vinegar
+    amount: 15 ml
+  - name: brown sugar
+    amount: 10 g
+  - name: vegetable oil
+    amount: 30 ml
+    notes: for stir-frying
+  - name: water or beef broth
+    amount: 120 ml
+  - name: jasmine rice
+    amount: 200 g
+    notes: for serving
+instructions:
+  - step: 1
+    action: >-
+      Slice the *beef flank steak or sirloin* thinly against the grain. In a
+      bowl, combine the *beef flank steak or sirloin*, 5 ml of *soy sauce*, 5 g
+      of *cornstarch*, and a pinch of black pepper. Mix well and set aside to
+      marinate for at least 10 minutes.
+  - step: 2
+    action: >-
+      Cut *broccoli* into bite-sized florets. Mince *garlic* and grate *fresh
+      ginger*.
+  - step: 3
+    action: >-
+      Prepare the sauce: In a small bowl, whisk together the remaining 55 ml of
+      *soy sauce*, 10 g of *cornstarch*, *sesame oil*, *rice vinegar*, *brown
+      sugar*, and *water or beef broth*. Set aside.
+  - step: 4
+    action: Cook *jasmine rice* according to package directions.
+  - step: 5
+    action: >-
+      Heat 15 ml of *vegetable oil* in a large wok or skillet over high heat.
+      Add the marinated *beef flank steak or sirloin* in a single layer and
+      stir-fry for 2-3 minutes until browned and cooked through. Remove the
+      beef from the wok and set aside.
+  - step: 6
+    action: >-
+      Add the remaining 15 ml of *vegetable oil* to the wok. Add *broccoli* and
+      stir-fry for 3-5 minutes until tender-crisp. If needed, add a tablespoon
+      of water and cover for a minute to steam slightly.
+  - step: 7
+    action: >-
+      Add the *garlic* and *fresh ginger* to the wok with the broccoli. Stir-fry
+      for 30 seconds until fragrant.
+  - step: 8
+    action: >-
+      Pour the prepared sauce into the wok, stirring constantly until it
+      thickens, about 1-2 minutes.
+  - step: 9
+    action: >-
+      Return the cooked *beef flank steak or sirloin* to the wok with the
+      *broccoli* and sauce. Toss everything together to coat evenly.
+  - step: 10
+    action: Serve immediately over the cooked *jasmine rice*.
+tags:
+  - chinese
+  - beef
+imagePrompt:
+  base: >-
+    Vibrant close-up of Beef & Broccoli Stir-Fry, plated to showcase vivid
+    textures and color. Incorporate visual cues from this description: Thin beef
+    slices and broccoli in savory soy ginger sauce, paired with steamed jasmine
+    rice.. Scene: chinese-inspired table with soft natural daylight, eye-level
+    perspective, and shallow depth of field. Capture fresh garnish, gentle
+    steam, and a sense of homemade comfort. No people or branded props.
+  enhanced: >-
+    A captivating, eye-level close-up of tender, thinly sliced beef and vibrant
+    broccoli florets, glistening in a savory soy-ginger sauce. Artfully arranged
+    over a bed of fluffy jasmine rice in a ceramic bowl. Garnish with delicate
+    fresh ginger slivers and a sprinkle of toasted sesame seeds. Bathed in soft,
+    diffused natural daylight, with a shallow depth of field, capturing the
+    gentle steam and comforting homemade essence on a subtly textured,
+    Chinese-inspired table.
