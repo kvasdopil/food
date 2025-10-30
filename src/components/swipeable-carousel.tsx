@@ -32,6 +32,7 @@ export function SwipeableCarousel<T>({
   }, []);
 
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [dragDirection, setDragDirection] = useState<"next" | "previous" | null>(null);
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -54,6 +55,9 @@ export function SwipeableCarousel<T>({
   useEffect(() => {
     console.log("SwipeableCarousel:", items);
   }, [items]);
+  useEffect(() => {
+    console.log("SwipeableCarousel props", { currentIndex, disablePrevious, dragDirection, items });
+  }, [currentIndex, disablePrevious, dragDirection, items]);
 
   const handleDragEnd = useCallback(
     async (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
@@ -93,6 +97,7 @@ export function SwipeableCarousel<T>({
       // Only navigate if card visually crossed 50% threshold
       if (isSignificantSwipe && (offset < -SWIPE_THRESHOLD || velocity < -VELOCITY_THRESHOLD) && cardCrossedThreshold) {
         setIsTransitioning(true);
+        setDragDirection("next");
 
         // Calculate remaining distance to edge
         const remainingDistance = Math.abs(-screenWidth - currentX);
@@ -123,6 +128,7 @@ export function SwipeableCarousel<T>({
         // Small delay to ensure new item is rendered before ending transition
         await new Promise((resolve) => setTimeout(resolve, 50));
         setIsTransitioning(false);
+        setDragDirection(null);
         return;
       }
 
@@ -130,6 +136,7 @@ export function SwipeableCarousel<T>({
       // Only navigate if card visually crossed 50% threshold and previous navigation is not disabled
       if (isSignificantSwipe && (offset > SWIPE_THRESHOLD || velocity > VELOCITY_THRESHOLD) && !disablePrevious) {
         setIsTransitioning(true);
+        setDragDirection("previous");
 
         // Calculate remaining distance to edge
         const remainingDistance = Math.abs(screenWidth - currentX);
@@ -160,6 +167,7 @@ export function SwipeableCarousel<T>({
         // Small delay to ensure new item is rendered before ending transition
         await new Promise((resolve) => setTimeout(resolve, 50));
         setIsTransitioning(false);
+        setDragDirection(null);
         return;
       }
 
@@ -168,9 +176,14 @@ export function SwipeableCarousel<T>({
         duration: 0.3,
         ease: "easeOut",
       });
+      console.log("SwipeableCarousel: swipe cancelled");
+      setDragDirection(null);
     },
     [x, onNavigate, disablePrevious],
   );
+
+  const hasPreviousCard = items.some((_, index) => index - currentIndex < 0);
+  const hasNextCard = items.some((_, index) => index - currentIndex > 0);
 
   return (
     <div
@@ -183,7 +196,42 @@ export function SwipeableCarousel<T>({
         // Keep next/previous items visible during transition (they might become active)
         // Only hide items that are far from the active one
         const shouldHide = !isActive && isTransitioning && Math.abs(offset) > 1;
+        const hideDueToDirection =
+          !isActive &&
+          ((dragDirection === "previous" && offset > 0 && hasPreviousCard) ||
+            (dragDirection === "next" && offset < 0 && hasNextCard));
+        const finalOpacity = isActive ? opacity : shouldHide || hideDueToDirection ? 0 : 1;
+        const finalVisibility = isActive ? "visible" : shouldHide || hideDueToDirection ? "hidden" : "visible";
+        const resolvedOpacityValue = isActive ? opacity.get() : finalOpacity;
 
+        const baseZIndex = isActive ? 10 : offset < 0 ? 6 : offset > 0 ? 4 : 2;
+        const directionalZIndex =
+          dragDirection === "previous"
+            ? offset < 0
+              ? 7
+              : offset > 0
+              ? 3
+              : baseZIndex
+            : dragDirection === "next"
+            ? offset > 0
+              ? 7
+              : offset < 0
+              ? 3
+              : baseZIndex
+            : baseZIndex;
+
+        const canSwipeRight = !disablePrevious;
+        console.log("SwipeableCarousel render card", {
+          item,
+          index,
+          isActive,
+          offset,
+          shouldHide,
+          hideDueToDirection,
+          resolvedOpacityValue,
+          canSwipeRight,
+          dragDirection,
+        });
         return (
           <motion.div
             key={String(item)}
@@ -193,22 +241,23 @@ export function SwipeableCarousel<T>({
               x: isActive ? x : 0,
               y: 0,
               // Ensure active item is always fully opaque, and adjacent items (next/previous) stay visible
-              opacity: isActive ? opacity : (shouldHide ? 0 : 1),
+              opacity: finalOpacity,
               touchAction: "pan-y",
               willChange: "transform",
-              visibility: isActive ? "visible" : (shouldHide ? "hidden" : "visible"),
+              visibility: finalVisibility,
               // Ensure next/previous items are behind but ready to become active
-              zIndex: isActive ? 10 : (Math.abs(offset) === 1 ? 5 : 0),
+              zIndex: directionalZIndex,
             }}
             drag={isActive ? "x" : false}
             dragDirectionLock={true}
             dragMomentum={false}
-            dragConstraints={{ left: -1000, right: 1000, top: 0, bottom: 0 }}
+            dragConstraints={{ left: -1000, right: canSwipeRight ? 1000 : 0, top: 0, bottom: 0 }}
             dragElastic={0.2}
             dragPropagation={false}
             onDragStart={() => {
               if (isActive) {
                 y.set(0);
+                setDragDirection(null);
               }
             }}
             onDrag={(event) => {
@@ -217,9 +266,20 @@ export function SwipeableCarousel<T>({
               }
 
               y.set(0);
+              let currentX = x.get();
+              if (!canSwipeRight && currentX > 0) {
+                x.set(0);
+                currentX = 0;
+              }
+              if (currentX > 0 && canSwipeRight) {
+                setDragDirection("previous");
+              } else if (currentX < 0) {
+                setDragDirection("next");
+              } else {
+                setDragDirection(null);
+              }
               const element = event?.currentTarget as HTMLElement;
               if (element) {
-                const currentX = x.get();
                 element.style.transform = `translateX(${currentX}px) translateY(0px)`;
               }
             }}

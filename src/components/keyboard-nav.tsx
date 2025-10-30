@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect } from "react";
 
 import { useRecipeNavigation } from "@/app/recipes/[slug]/client/navigation-provider";
+import { hasPreviousRecipe } from "@/app/recipes/[slug]/client/recipe-history";
 import { fetchRandomSlug } from "@/lib/random-recipe";
 
 type KeyboardNavProps = {
@@ -27,18 +28,8 @@ export function KeyboardNav({ currentSlug }: KeyboardNavProps) {
 
       if (event.key === "ArrowLeft") {
         event.preventDefault();
-        const hasSameOriginHistory = document.referrer && new URL(document.referrer).origin === window.location.origin;
-        if (hasSameOriginHistory) {
+        if (hasPreviousRecipe()) {
           router.back();
-        } else {
-          try {
-            const slug = await getNextSlug();
-            router.push(`/recipes/${slug}`);
-          } catch (error) {
-            console.error("Keyboard navigation (left) failed:", error);
-            const slug = await fetchRandomSlug(currentSlug);
-            router.push(`/recipes/${slug}`);
-          }
         }
       } else if (event.key === "ArrowRight") {
         event.preventDefault();

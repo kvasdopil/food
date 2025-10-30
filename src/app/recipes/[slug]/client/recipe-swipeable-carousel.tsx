@@ -6,6 +6,14 @@ import { useRouter } from "next/navigation";
 import { SwipeableCarousel } from "@/components/swipeable-carousel";
 import { Recipe } from "@/components/recipe/recipe";
 import { fetchRandomSlug } from "@/lib/random-recipe";
+import {
+  getPreviousSlug,
+  moveHistoryBackward,
+  pushSlugOntoHistory,
+  syncHistoryWithCurrentSlug,
+  type RecipeHistorySnapshot,
+  getCurrentSlug,
+} from "./recipe-history";
 
 type RecipeSwipeableCarouselProps = {
   slug: string;
@@ -19,7 +27,7 @@ type CarouselSnapshot = {
 
 let lastSnapshot: CarouselSnapshot | null = null;
 
-function getInitialSnapshot(slug: string): CarouselSnapshot {
+function getInitialSnapshot(slug: string, historySnapshot: RecipeHistorySnapshot | null): CarouselSnapshot {
   if (lastSnapshot?.current === slug) {
     return lastSnapshot;
   }
@@ -27,16 +35,19 @@ function getInitialSnapshot(slug: string): CarouselSnapshot {
   return {
     current: slug,
     next: null,
-    previous: null,
+    previous: getPreviousSlug(historySnapshot),
   };
 }
 
 export function RecipeSwipeableCarousel({ slug }: RecipeSwipeableCarouselProps) {
   const router = useRouter();
   const initialSnapshotRef = useRef<CarouselSnapshot | null>(null);
+  const historySnapshotRef = useRef<RecipeHistorySnapshot | null>(null);
 
   if (initialSnapshotRef.current === null) {
-    initialSnapshotRef.current = getInitialSnapshot(slug);
+    const historySnapshot = typeof window !== "undefined" ? syncHistoryWithCurrentSlug(slug) : null;
+    historySnapshotRef.current = historySnapshot;
+    initialSnapshotRef.current = getInitialSnapshot(slug, historySnapshot);
   }
 
   const initialSnapshot = initialSnapshotRef.current;
@@ -46,6 +57,7 @@ export function RecipeSwipeableCarousel({ slug }: RecipeSwipeableCarouselProps) 
   const [previousSlug, setPreviousSlug] = useState<string | null>(initialSnapshot.previous);
 
   useEffect(() => {
+    console.log("[carousel] state update", { currentSlug, nextSlug, previousSlug });
     lastSnapshot = {
       current: currentSlug,
       next: nextSlug,
@@ -59,6 +71,9 @@ export function RecipeSwipeableCarousel({ slug }: RecipeSwipeableCarouselProps) 
     currentSlug,
     nextSlug && nextSlug !== currentSlug && nextSlug !== previousSlug ? nextSlug : null,
   ].filter(Boolean) as string[];
+  useEffect(() => {
+    console.log("[carousel] items", { carouselItems, currentSlug, nextSlug, previousSlug });
+  }, [carouselItems, currentSlug, nextSlug, previousSlug]);
   const currentIndex = (() => {
     const index = carouselItems.findIndex((item) => item === currentSlug);
     return index === -1 ? 0 : index;
@@ -88,9 +103,18 @@ export function RecipeSwipeableCarousel({ slug }: RecipeSwipeableCarouselProps) 
       }
 
       setNextSlug(null);
-      setPreviousSlug(null);
       return slug;
     });
+  }, [slug]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const historySnapshot = syncHistoryWithCurrentSlug(slug);
+    historySnapshotRef.current = historySnapshot;
+    setPreviousSlug(getPreviousSlug(historySnapshot));
   }, [slug]);
 
   // Preload next slug when current slug is available
@@ -102,20 +126,35 @@ export function RecipeSwipeableCarousel({ slug }: RecipeSwipeableCarouselProps) 
   }, [currentSlug]);
 
   const handleNavigate = useCallback(async (direction: "next" | "previous") => {
+    console.log("[carousel] handleNavigate", { direction, currentSlug, nextSlug, previousSlug });
     if (!currentSlug) return;
 
     if (direction === "next") {
       const targetSlug = nextSlug || (await fetchRandomSlug(currentSlug));
       if (targetSlug) {
-        setPreviousSlug(currentSlug);
+        const snapshot = historySnapshotRef.current ?? (typeof window !== "undefined"
+          ? syncHistoryWithCurrentSlug(currentSlug)
+          : null);
+        const updatedSnapshot = snapshot ? pushSlugOntoHistory(snapshot, targetSlug) : null;
+        if (updatedSnapshot) {
+          historySnapshotRef.current = updatedSnapshot;
+          setPreviousSlug(getPreviousSlug(updatedSnapshot));
+          lastSnapshot = {
+            current: targetSlug,
+            previous: getPreviousSlug(updatedSnapshot),
+            next: null,
+          };
+        } else {
+          setPreviousSlug(currentSlug);
+          lastSnapshot = {
+            current: targetSlug,
+            previous: currentSlug,
+            next: null,
+          };
+        }
         setCurrentSlug(targetSlug);
         setNextSlug(null);
-        lastSnapshot = {
-          current: targetSlug,
-          previous: currentSlug,
-          next: null,
-        };
-        router.replace(`/recipes/${targetSlug}`, { scroll: false });
+        router.push(`/recipes/${targetSlug}`, { scroll: false });
         // Wait for React to process the state update
         await new Promise((resolve) => requestAnimationFrame(resolve));
         await new Promise((resolve) => requestAnimationFrame(resolve));
@@ -123,15 +162,33 @@ export function RecipeSwipeableCarousel({ slug }: RecipeSwipeableCarouselProps) 
       }
     } else if (direction === "previous") {
       if (previousSlug) {
+        const snapshot = historySnapshotRef.current ?? (typeof window !== "undefined"
+          ? syncHistoryWithCurrentSlug(currentSlug)
+          : null);
+        const movedSnapshot = snapshot ? moveHistoryBackward(snapshot) : null;
+        const targetSlug = movedSnapshot ? getCurrentSlug(movedSnapshot) : null;
+        if (!movedSnapshot || !targetSlug) {
+          return;
+        }
+
+        historySnapshotRef.current = movedSnapshot;
+        console.log("[carousel] previous resolved", {
+          targetSlug,
+          movedSnapshot,
+          currentSlug,
+          previousSlug,
+          historyPrevious: getPreviousSlug(movedSnapshot),
+        });
         setNextSlug(currentSlug);
-        setCurrentSlug(previousSlug);
-        setPreviousSlug(null);
+        setCurrentSlug(targetSlug);
+        const historyPrevious = getPreviousSlug(movedSnapshot);
+        setPreviousSlug(historyPrevious);
         lastSnapshot = {
-          current: previousSlug,
-          previous: null,
+          current: targetSlug,
+          previous: historyPrevious,
           next: currentSlug,
         };
-        router.replace(`/recipes/${previousSlug}`, { scroll: false });
+        router.back();
         // Wait for React to process the state update
         await new Promise((resolve) => requestAnimationFrame(resolve));
         await new Promise((resolve) => requestAnimationFrame(resolve));
@@ -150,7 +207,7 @@ export function RecipeSwipeableCarousel({ slug }: RecipeSwipeableCarouselProps) 
       currentIndex={currentIndex}
       onNavigate={handleNavigate}
       renderItem={renderRecipeItem}
-      disablePrevious={!document.referrer || new URL(document.referrer).origin !== window.location.origin}
+      disablePrevious={!previousSlug}
     />
   );
 }
