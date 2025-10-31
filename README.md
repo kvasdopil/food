@@ -17,9 +17,9 @@
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: anon public key from Supabase
    - `SUPABASE_SERVICE_ROLE_KEY`: service role token (used by the CLI scripts for storage + seeding)
    - `EDIT_TOKEN`: shared bearer token required for protected API endpoints (e.g. recipe generation, imports)
-   - `GEMINI_API_KEY`: Google Gemini API key (for recipe text generation and prompt enhancement - used by `/api/recipes/generate` endpoint)
-   - `FIREFLY_API_TOKEN`: Adobe Firefly API bearer token (for image generation)
-   - `FIREFLY_API_KEY`: Adobe Firefly API key (defaults to "clio-playground-web" if not set)
+   - `GEMINI_API_KEY`: Google Gemini API key (for recipe text generation and prompt enhancement - used by `/api/recipes/generate` and `/api/recipes/[slug]/generate-image` endpoints)
+   - `FIREFLY_API_TOKEN`: Adobe Firefly API bearer token (for image generation - used by `/api/recipes/[slug]/generate-image` endpoint)
+   - `FIREFLY_API_KEY`: Adobe Firefly API key (defaults to "clio-playground-web" if not set, used by `/api/recipes/[slug]/generate-image` endpoint)
    - _(optional)_ `RECIPE_STORAGE_BUCKET`: overrides the default `recipe-images` bucket name
    - _(optional)_ `RECIPE_API_URL`: API endpoint URL for scripts (defaults to `http://localhost:3000`)
 
@@ -63,8 +63,11 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
 4. In the Vercel dashboard, add the following environment variables under **Settings → Environment Variables**, then redeploy:
    - `NEXT_PUBLIC_SUPABASE_URL`
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-   - `EDIT_TOKEN` (required for recipe generation endpoint)
-   - `GEMINI_API_KEY` (required for recipe generation endpoint)
+   - `SUPABASE_SERVICE_ROLE_KEY` (required for storage and database operations)
+   - `EDIT_TOKEN` (required for protected API endpoints)
+   - `GEMINI_API_KEY` (required for recipe generation and image prompt enhancement)
+   - `FIREFLY_API_TOKEN` (required for image generation endpoint)
+   - `FIREFLY_API_KEY` (optional, defaults to "clio-playground-web")
 
 ## Requirements
 
@@ -110,9 +113,9 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
 
 #### Responsive Design
 
-- **US-24**: As a user, I want the app to be mobile-first with responsive design so it works well on phones, tablets, and desktops.
-- **US-25**: As a user, I want to swipe left/right on mobile to navigate between recipes so I can use touch gestures naturally.
-- **US-26**: As a user, I want different layouts optimized for mobile vs desktop (carousel on mobile, standard view on desktop) so the UI is appropriate for each screen size.
+- **US-24**: As a user, I want the app to be mobile-first with responsive design so it works well on phones, tablets, and desktops. ✅ **Implemented**: Mobile-first design with breakpoints at 640px (sm) and 1280px (xl).
+- **US-25**: As a user, I want to swipe left/right on mobile to navigate between recipes so I can use touch gestures naturally. ✅ **Implemented**: Swipeable carousel on mobile devices (< 640px).
+- **US-26**: As a user, I want different layouts optimized for mobile vs desktop (carousel on mobile, standard view on desktop) so the UI is appropriate for each screen size. ✅ **Implemented**: Carousel on mobile, centered recipe view on medium/desktop, side navigation buttons on extra-large screens.
 
 #### Performance & UX
 
@@ -142,6 +145,7 @@ The following user stories are planned but not yet implemented:
 - Supabase provides recipe data via table queries; types generated in `src/types/supabase.ts`.
 - Authenticated POST to `/api/recipes` upserts recipes from JSON payloads that match the YAML schema. Requires a `Bearer` token that matches `EDIT_TOKEN`.
 - POST to `/api/recipes/generate` generates recipe content (ingredients, instructions, image prompts) using Gemini API. Does not save to database. Requires `EDIT_TOKEN` authentication and `GEMINI_API_KEY` on the server.
+- POST to `/api/recipes/[slug]/generate-image` generates and uploads images for existing recipes. Requires `EDIT_TOKEN`, `FIREFLY_API_TOKEN`, and `GEMINI_API_KEY` on the server. Handles prompt enrichment, Firefly image generation, storage upload, and database update.
 
 ## Screen Structure & Navigation
 
@@ -164,12 +168,16 @@ The app has three main routes:
 
 - **Persistent wrapper** that prevents carousel remounting during navigation
 - Manages recipe rendering and navigation state
+- Responsive breakpoints:
+  - **Mobile (< 640px / sm)**: Content handled by root-level mobile carousel wrapper
+  - **Medium/Desktop (≥ 640px / sm+)**: Recipe content displayed and centered with max-width 5xl
+  - **Extra Large (≥ 1280px / xl+)**: Side navigation buttons (prev/next) appear, floating outside centered content
 - Contains:
-  - Back-to-feed button (top-left corner)
+  - Back-to-feed button (floating, top-left corner, absolute positioned)
   - Keyboard navigation handler (global)
-  - Side navigation buttons (prev/next) for desktop
-  - Mobile swipeable carousel wrapper
-  - Desktop standard recipe view
+  - Side navigation buttons (prev/next) for desktop XL+ only
+  - Mobile swipeable carousel wrapper (handled by root layout)
+  - Centered recipe view for medium and desktop screens
 
 **Recipe Page** (`src/app/recipes/[slug]/page.tsx`)
 
@@ -194,6 +202,7 @@ The app supports three navigation modes:
 - **Next**: Fetches next recipe using `/api/recipes?from={slug}` (maintains feed order)
 - Fallback to random recipe if API call fails
 - Buttons hidden when no history available
+- **Only visible on XL+ screens (≥1280px)**: Positioned absolutely outside the centered content area
 
 **Keyboard Navigation** (`KeyboardNav`)
 
@@ -276,17 +285,21 @@ Tag Filtering Infrastructure
     └── buildFeedUrlWithTags - Build feed URL with tags
 
 Recipe Layout (`/recipes/[slug]`)
-├── Back to Feed button (top-left)
+├── Back to Feed button (floating, absolute positioned, top-left)
 ├── KeyboardNav (global keyboard shortcuts)
-├── RecipeSideNav (prev/next buttons - desktop only, xl breakpoint)
-├── Mobile (< sm): RecipeSwipeableCarousel
-│   └── SwipeableCarousel
-│       └── Recipe component (preloaded items)
-└── Desktop (≥ sm): Recipe component
-    ├── RecipeImage
-    ├── Description (with tags)
-    ├── Ingredients
-    └── Instructions
+├── Mobile (< 640px / sm): Content handled by root-level MobileCarouselWrapper
+│   └── RecipeSwipeableCarousel
+│       └── SwipeableCarousel
+│           └── Recipe component (preloaded items)
+├── Medium/Desktop (≥ 640px / sm+): Centered Recipe component
+│   └── Recipe component (centered, max-w-5xl)
+│       ├── RecipeImage
+│       ├── Description (with tags)
+│       ├── Ingredients
+│       └── Instructions
+└── Desktop XL+ (≥ 1280px / xl+): Side navigation buttons
+    ├── RecipeSideNav (previous) - floating left of content
+    └── RecipeSideNav (next) - floating right of content
 ```
 
 ### Navigation Flow Examples
@@ -380,23 +393,39 @@ The recipe generation process is split into two steps:
 
    The API endpoint requires `GEMINI_API_KEY` to be configured on the server (Vercel environment variables for production).
 
-2. **Generate Recipe Image** (using Firefly API):
+2. **Upload Recipe to Database** (required before image generation):
 
    ```bash
-   yarn ts-node scripts/generate-recipe-image.ts data/recipes/<slug>/<slug>.yaml
+   yarn ts-node scripts/upload-recipe.ts data/recipes/<slug>/<slug>.yaml --token "$EDIT_TOKEN"
+   ```
+
+   This uploads the recipe to the database. The recipe must exist in the database before generating images.
+
+3. **Generate Recipe Image** (using API endpoint):
+
+   ```bash
+   yarn ts-node scripts/generate-recipe-image.ts <slug>
    ```
 
    This script:
-   - Reads the YAML file and extracts the image prompt (uses `enhanced` if available, falls back to `base`)
+   - Calls the `/api/recipes/[slug]/generate-image` endpoint
+   - The endpoint loads recipe data from the database
+   - Enriches the image prompt using Gemini API
    - Generates an image using Firefly API (async, with polling)
-   - Saves the image as `{slug}.jpg` in the same directory as the YAML
-   - Updates `metadata.json` with image generation info
+   - Uploads the image to Supabase Storage with hashed filename
+   - Updates the recipe's `image_url` in the database
 
-   **Required:** `FIREFLY_API_TOKEN` (and optionally `FIREFLY_API_KEY`, defaults to "clio-playground-web")
+   **Required:** `EDIT_TOKEN` (for API authentication)
+   **Optional:** 
+   - `--endpoint <url>` to specify API URL (defaults to `http://localhost:3000` or `RECIPE_API_URL` env var)
+   - `--firefly-key <key>` to pass Firefly API key via header (defaults to `FIREFLY_API_KEY` env var or "clio-playground-web")
+   - `--save-to <path>` to download and save the image locally
+
+   The API endpoint requires `FIREFLY_API_TOKEN`, `GEMINI_API_KEY` (or `GOOGLE_API_KEY`), and optionally `FIREFLY_API_KEY` configured on the server.
 
 ### Uploading Recipes
 
-Upload recipe and image together to the API (defaults to `http://localhost:3000`):
+Upload recipe to the database (defaults to `http://localhost:3000`):
 
 ```bash
 yarn ts-node scripts/upload-recipe.ts data/recipes/<slug>/<slug>.yaml --token "$EDIT_TOKEN"
@@ -404,9 +433,9 @@ yarn ts-node scripts/upload-recipe.ts data/recipes/<slug>/<slug>.yaml --token "$
 
 The script will:
 
-1. Automatically find the corresponding image file (`{slug}.jpg`, `.jpeg`, `.png`, or `.webp`) in the same directory
-2. Upload the image to Supabase Storage with hashed filename (`{slug}.{hash}.jpg`)
-3. Upload the recipe YAML to the database with the image URL
+1. Automatically find the corresponding image file (`{slug}.jpg`, `.jpeg`, `.png`, or `.webp`) in the same directory if it exists
+2. Upload the image to Supabase Storage with hashed filename (`{slug}.{hash}.jpg`) if image file is found
+3. Upload the recipe YAML to the database with the image URL (if image was uploaded)
 4. If the recipe already exists, its image URL is automatically updated
 
 - Recipe metadata lives in `data/recipes/<slug>/` (YAML files + images). Storage uploads land in the `recipe-images` bucket by default with hashed filenames for versioning. Ingredient entries should use `{ name, amount, notes }` with metric abbreviations (`g`, `ml`, `tsp`, etc.).
@@ -419,11 +448,11 @@ The script will:
   - Saves YAML file to `data/recipes/<slug>/<slug>.yaml`
   - Requires `EDIT_TOKEN` for authentication
   - Supports `--endpoint` flag to specify API URL
-- **`scripts/generate-recipe-image.ts`**: Generates images from YAML files
-  - Uses Firefly API (V5) for image generation
-  - Reads image prompts from YAML file
-  - Supports async generation with polling for completion
-  - Saves generated images as JPEG files
+- **`scripts/generate-recipe-image.ts`**: Generates images for recipes in the database
+  - Calls `/api/recipes/[slug]/generate-image` endpoint
+  - Endpoint handles prompt enrichment, Firefly image generation, upload, and database update
+  - Requires recipe to exist in database first
+  - Supports `--endpoint`, `--firefly-key`, and `--save-to` options
 
 ### Recipe Upload CLI & API
 
@@ -438,13 +467,14 @@ The script will:
 
 - **`POST /api/recipes`**: Creates or updates a recipe in the database. Accepts normalized recipe payloads, upserting by slug. Requests must include `Authorization: Bearer <EDIT_TOKEN>`; the server rejects missing or mismatched tokens with `401`.
 - **`POST /api/recipes/generate`**: Generates recipe content (ingredients, instructions, image prompts) using Gemini API. Does not save to database. Requires `Authorization: Bearer <EDIT_TOKEN>` and `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) configured on the server. Returns recipe data in the same format as `POST /api/recipes`.
+- **`POST /api/recipes/[slug]/generate-image`**: Generates and uploads an image for an existing recipe. Loads recipe from database, enriches prompt using Gemini API, generates image with Firefly API, uploads to Supabase Storage, and updates recipe's `image_url` in database. Requires `Authorization: Bearer <EDIT_TOKEN>`, `FIREFLY_API_TOKEN`, `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) on server. Optional `x-firefly-key` header for Firefly API key (defaults to `FIREFLY_API_KEY` env var or "clio-playground-web").
 - **`POST /api/images`**: Accepts image uploads with `slug` and `file` (multipart/form-data), automatically updating recipe `image_url` if the recipe exists. Requires `Authorization: Bearer <EDIT_TOKEN>`.
 
 ### Typical Workflow
 
 1. Generate recipe YAML: `yarn ts-node scripts/generate-recipe-yaml.ts "Meal Name" --description "..." --tags "tag1,tag2"`
-2. Generate recipe image: `yarn ts-node scripts/generate-recipe-image.ts data/recipes/<slug>/<slug>.yaml`
-3. Upload to database: `yarn ts-node scripts/upload-recipe.ts data/recipes/<slug>/<slug>.yaml`
+2. Upload to database: `yarn ts-node scripts/upload-recipe.ts data/recipes/<slug>/<slug>.yaml`
+3. Generate recipe image: `yarn ts-node scripts/generate-recipe-image.ts <slug>`
 
 ## Data Flow
 
@@ -458,6 +488,10 @@ The script will:
    - Page component: Generates metadata (OpenGraph, title) via server-side Supabase query
    - Layout component: Extracts slug from pathname → Uses `useRecipe` hook → Fetches recipe data via Supabase → Renders recipe components
    - Layout persists across route changes, preventing carousel remounting
+   - Responsive rendering:
+     - **Mobile (< 640px)**: Content handled by root-level `MobileCarouselWrapper` with swipeable carousel
+     - **Medium/Desktop (≥ 640px)**: Recipe content displayed centered with max-width 5xl
+     - **XL+ (≥ 1280px)**: Side navigation buttons appear, floating outside centered content area
 5. **Next Recipe Navigation**:
    - Desktop: `RecipeSideNav` or keyboard right arrow → Fetches `/api/recipes?from={slug}` → Gets next in feed order → `router.push('/recipes/[slug]')`
    - Mobile: Swipe left → Carousel triggers same navigation flow
