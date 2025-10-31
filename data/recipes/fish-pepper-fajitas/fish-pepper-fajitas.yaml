@@ -1,0 +1,91 @@
+title: Fish & Pepper Fajitas
+summary: >-
+  Sautéed white fish with peppers and onions for sizzling skillet fajitas,
+  paired with black beans.
+servings: 4
+prepTimeMinutes: 20
+cookTimeMinutes: 25
+ingredients:
+  - name: fish fillets
+    amount: 400 g
+    notes: firm white fish (e.g., cod, tilapia), cut into 2 cm strips
+  - name: bell peppers
+    amount: 2 large
+    notes: mixed colours, thinly sliced
+  - name: onion
+    amount: 1 large
+    notes: thinly sliced
+  - name: limes
+    amount: '2'
+    notes: 1 for juice, 1 for wedges for serving
+  - name: black beans
+    amount: 1 can
+    notes: 400 g, rinsed and drained
+  - name: small flour tortillas
+    amount: '8'
+  - name: olive oil
+    amount: 2 tbsp
+    notes: plus a little extra for cooking
+  - name: chili powder
+    amount: 2 tsp
+  - name: ground cumin
+    amount: 1 tsp
+  - name: smoked paprika
+    amount: 1 tsp
+  - name: garlic powder
+    amount: 0.5 tsp
+  - name: salt
+    amount: 0.5 tsp
+    notes: or to taste
+  - name: black pepper
+    amount: 0.25 tsp
+    notes: or to taste
+instructions:
+  - step: 1
+    action: >-
+      Pat *fish fillets* dry and cut into 2 cm strips. In a small bowl, combine
+      *chili powder*, *ground cumin*, *smoked paprika*, *garlic powder*, *salt*,
+      and *black pepper*. Drizzle fish fillets with a little *olive oil* and
+      toss with half of the spice mixture until evenly coated. Set aside.
+  - step: 2
+    action: >-
+      Heat 1 tbsp of *olive oil* in a large skillet or frying pan over
+      medium-high heat. Add the sliced *bell peppers* and *onion* to the pan.
+      Sauté for 5-7 minutes, stirring occasionally, until the *vegetables* are
+      tender-crisp. Add the remaining half of the *spice mixture* and stir for
+      another minute until fragrant. Remove the *peppers* and *onion* from the
+      pan and set aside.
+  - step: 3
+    action: >-
+      Add another drizzle of *olive oil* to the same skillet. Increase heat to
+      high. Once hot, add the seasoned *fish fillets* in a single layer, working
+      in batches if necessary to avoid overcrowding. Cook for 2-3 minutes per
+      side, until the *fish fillets* are opaque and cooked through and lightly browned.
+  - step: 4
+    action: >-
+      Return the *sautéed peppers and onion* to the skillet with the *cooked
+      fish fillets*. Squeeze the juice from one *limes* over the mixture and toss gently
+      to combine. Warm the *small flour tortillas* according to package
+      instructions (e.g., in a dry skillet, microwave, or oven). Serve the
+      sizzling *fish and pepper fajita* mixture immediately with the warm
+      *small flour tortillas*, rinsed *black beans*, and *limes*.
+tags:
+  - mexican
+  - seafood
+imagePrompt:
+  base: >-
+    Vibrant close-up of Fish & Pepper Fajitas, plated to showcase vivid textures
+    and color. Incorporate visual cues from this description: Sautéed white fish
+    with peppers and onions for sizzling skillet fajitas, paired with black
+    beans.. Scene: mexican-inspired table with soft natural daylight, eye-level
+    perspective, and shallow depth of field. Capture fresh garnish, inviting
+    lighting, and a sense of homemade comfort with no visible steam or vapor. No
+    people or branded props.
+  enhanced: >-
+    Vibrant close-up of sizzling, golden-brown fish strips, tender-crisp bell
+    peppers, and caramelized onions piled high in a rustic skillet. Beside it, a
+    small bowl of glossy black beans and warm, pliable tortillas. Garnish with
+    bright lime wedges and fresh cilantro leaves. Bathed in soft, warm natural
+    daylight with a shallow depth of field, evoking homemade comfort on a
+    Mexican-inspired table. No visible steam or vapor.
+

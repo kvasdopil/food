@@ -1,0 +1,100 @@
+title: Spicy Tuna Poke Bowl
+summary: >-
+  Diced tuna with chili mayo over sushi rice, avocado, and cucumber, served with
+  seaweed salad.
+servings: 2
+prepTimeMinutes: 15
+cookTimeMinutes: 25
+ingredients:
+  - name: sushi rice
+    amount: 250 g
+  - name: water
+    amount: 300 ml
+    notes: for cooking rice
+  - name: rice vinegar
+    amount: 30 ml
+  - name: sugar
+    amount: 15 g
+  - name: salt
+    amount: 5 g
+    notes: for rice seasoning
+  - name: ahi tuna
+    amount: 300 g
+    notes: sushi-grade, diced into 1.5 cm cubes
+  - name: mayonnaise
+    amount: 60 ml
+  - name: sriracha
+    amount: 15 ml
+    notes: adjust to taste
+  - name: sesame oil
+    amount: 5 ml
+  - name: soy sauce
+    amount: 15 ml
+  - name: cucumber
+    amount: 1 medium
+    notes: diced
+  - name: avocado
+    amount: 1 large
+    notes: sliced
+  - name: nori
+    amount: 1 sheet
+    notes: seaweed sheets, cut into thin strips for garnish
+  - name: seaweed salad
+    amount: 150 g
+    notes: pre-made, for serving
+  - name: sesame seeds
+    amount: 5 g
+    notes: for garnish
+instructions:
+  - step: 1
+    action: >-
+      Prepare the sushi rice: Wash *sushi rice* under cold water until the water
+      runs clear. Cook the *sushi rice* with *water* in a rice cooker or a pot
+      according to package directions. While the rice is hot, combine *rice
+      vinegar*, *sugar*, and *salt* in a small bowl and stir until dissolved.
+      Gently fold this seasoning mixture into the cooked *sushi rice* and let it
+      cool slightly.
+  - step: 2
+    action: >-
+      Prepare the spicy tuna: In a medium bowl, combine *mayonnaise*,
+      *sriracha*, *sesame oil*, and *soy sauce*. Add the diced *ahi tuna* to the
+      bowl and gently toss to coat all the pieces evenly with the spicy
+      mayonnaise mixture.
+  - step: 3
+    action: >-
+      Prepare vegetables: Dice the *cucumber* into small, uniform cubes. Halve,
+      pit, peel, and then slice the *avocado*. Using kitchen scissors, cut the
+      *nori* sheet into thin, delicate strips for garnish.
+  - step: 4
+    action: >-
+      Assemble the bowls: Divide the seasoned *sushi rice* evenly between two
+      serving bowls. Arrange the prepared *spicy tuna* mixture on top of the
+      rice in the center of each bowl. Artfully place the diced *cucumber*,
+      sliced *avocado*, and a portion of the *seaweed salad* around the tuna.
+  - step: 5
+    action: >-
+      Garnish and serve: Finish each bowl by sprinkling with *sesame seeds* and
+      the *nori* strips. Serve your spicy tuna poke bowls immediately for the
+      best flavor and texture.
+tags:
+  - hawaiian
+  - seafood
+  - spicy
+imagePrompt:
+  base: >-
+    Vibrant close-up of Spicy Tuna Poke Bowl, plated to showcase vivid textures
+    and color. Incorporate visual cues from this description: Diced tuna with
+    chili mayo over sushi rice, avocado, and cucumber, served with seaweed
+    salad.. Scene: hawaiian-inspired table with soft natural daylight, eye-level
+    perspective, and shallow depth of field. Capture fresh garnish, inviting
+    lighting, and a sense of homemade comfort with no visible steam or vapor. No
+    people or branded props.
+  enhanced: >-
+    An intimate close-up of a Spicy Tuna Poke Bowl, artfully arranged.
+    Iridescent sushi rice forms the base, topped with a generous mound of
+    crimson chili-mayo tuna. Fanned avocado, crisp cucumber cubes, and a vibrant
+    side of seaweed salad create a feast for the eyes. Delicate nori strips
+    garnish the fresh components. Bathed in soft, diffused natural light from an
+    eye-level perspective with shallow depth of field, evoking a homemade,
+    inviting comfort.
+

@@ -1,0 +1,80 @@
+title: Chicken Caesar Wraps
+summary: >-
+  Grilled chicken, romaine, and parmesan wrapped with tangy dressing, served
+  with baked parmesan crisps.
+servings: 4
+prepTimeMinutes: 20
+cookTimeMinutes: 15
+ingredients:
+  - name: chicken breast
+    amount: 4 medium
+    notes: approx. 600g
+  - name: romaine lettuce
+    amount: 1 large head
+  - name: parmesan cheese
+    amount: 100g
+    notes: finely grated
+  - name: large flour tortillas
+    amount: 4
+    notes: approx. 25-30 cm diameter
+  - name: Caesar dressing
+    amount: 120ml
+  - name: olive oil
+    amount: 1 tbsp
+  - name: garlic powder
+    amount: 1 tsp
+  - name: salt
+    amount: 1/2 tsp
+  - name: black pepper
+    amount: 1/4 tsp
+instructions:
+  - step: 1
+    action: >-
+      Preheat oven to 180°C. Slice *chicken breasts* horizontally to create
+      thinner cutlets. Drizzle with a little *olive oil*, then season generously
+      with *garlic powder*, *salt*, and *black pepper*.
+  - step: 2
+    action: >-
+      Line a baking tray with parchment paper. Spoon small mounds (approx. 1
+      tbsp each) of *finely grated parmesan cheese* onto the tray, spacing them
+      out. Bake for 8-10 minutes, or until golden and crispy. Let cool on the
+      tray; they will crisp further.
+  - step: 3
+    action: >-
+      Heat a grill pan or large skillet over medium-high heat. Cook the seasoned
+      *chicken cutlets* for 3-4 minutes per side, until cooked through and
+      lightly charred. Remove from heat, let rest for a few minutes, then slice
+      into strips. While chicken cooks, wash and chop the *romaine lettuce* into
+      bite-sized pieces.
+  - step: 4
+    action: >-
+      Lay out a *large flour tortilla*. Spread a generous amount of *Caesar
+      dressing* down the center. Top with a portion of the sliced *grilled
+      chicken* and chopped *romaine lettuce*. Add a sprinkle of any remaining
+      *parmesan cheese*.
+  - step: 5
+    action: >-
+      Fold in the sides of the *tortilla* and then tightly roll it up from the
+      bottom. Slice the wrap in half diagonally if desired. Serve immediately
+      with the baked *parmesan crisps* on the side.
+tags:
+  - american
+  - chicken
+imagePrompt:
+  base: >-
+    Vibrant close-up of Chicken Caesar Wraps, plated to showcase vivid textures
+    and color. Incorporate visual cues from this description: Grilled chicken,
+    romaine, and parmesan wrapped with tangy dressing, served with baked
+    parmesan crisps.. Scene: american-inspired table with soft natural daylight,
+    eye-level perspective, and shallow depth of field. Capture fresh garnish,
+    inviting lighting, and a sense of homemade comfort with no visible steam or
+    vapor. No people or branded props.
+  enhanced: >-
+    An intimate close-up of two Chicken Caesar Wraps, one halved diagonally to
+    reveal succulent, charred chicken strips, crisp romaine, and creamy
+    dressing. Golden, baked parmesan crisps are artfully fanned beside them,
+    lightly dusted with freshly cracked black pepper and a whisper of grated
+    parmesan. Bathed in soft, diffused natural daylight, creating inviting
+    highlights. Shallow depth of field emphasizes the homemade comfort and
+    delicious textures.
+

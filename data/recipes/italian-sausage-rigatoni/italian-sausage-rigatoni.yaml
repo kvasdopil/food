@@ -1,0 +1,96 @@
+title: Italian Sausage Rigatoni
+summary: >-
+  Rigatoni tossed in tomato sauce with sweet Italian sausage and herbs, paired
+  with rosemary focaccia.
+servings: 4
+prepTimeMinutes: 15
+cookTimeMinutes: 35
+ingredients:
+  - name: Rigatoni pasta
+    amount: 400 g
+  - name: Sweet Italian sausage
+    amount: 500 g
+    notes: casings removed
+  - name: Canned crushed tomatoes
+    amount: 700 g
+  - name: Yellow onion
+    amount: 1 medium
+    notes: finely chopped
+  - name: Garlic cloves
+    amount: '3'
+    notes: minced
+  - name: Fresh basil
+    amount: 30 g
+    notes: chopped, plus extra for garnish
+  - name: Fresh parsley
+    amount: 15 g
+    notes: chopped
+  - name: Parmesan cheese
+    amount: 50 g
+    notes: freshly grated, plus extra for serving
+  - name: Olive oil
+    amount: 2 tbsp
+  - name: Dried oregano
+    amount: 1 tsp
+  - name: Red pepper flakes
+    amount: 1/2 tsp
+    notes: optional, for a kick
+instructions:
+  - step: 1
+    action: >-
+      Heat a large, deep skillet or Dutch oven over medium-high heat. Add a
+      drizzle of *olive oil*. Add the *sweet italian sausage*
+      and break it up with a spoon. Cook for 8-10 minutes, browning it evenly,
+      until no pink remains. Remove the cooked sausage with a slotted spoon and
+      set aside, leaving about 1 tbsp of rendered fat in the pan.
+  - step: 2
+    action: >-
+      Reduce heat to medium. Add the *yellow onion* to the skillet and cook for
+      5-7 minutes until softened and translucent, scraping up any browned bits
+      from the bottom of the pan. Add the *garlic cloves* and cook for another
+      minute until fragrant, being careful not to burn it.
+  - step: 3
+    action: >-
+      Stir in the *canned crushed tomatoes*, *dried oregano*, and *red pepper
+      flakes*. Return the cooked sausage to the pan. Bring the sauce
+      to a simmer, then reduce heat to low, cover, and let it gently cook for at
+      least 15-20 minutes, stirring occasionally, to allow the flavors to meld.
+      Season with salt and freshly ground black pepper to taste.
+  - step: 4
+    action: >-
+      While the sauce simmers, bring a large pot of salted water to a rolling
+      boil. Add the *rigatoni pasta* and cook according to package directions
+      until al dente (usually 10-12 minutes). Reserve about 120 ml of the pasta
+      cooking water before draining the pasta.
+  - step: 5
+    action: >-
+      Once the pasta is cooked, add the drained *rigatoni pasta* directly to the
+      simmering sauce. Stir in the chopped *fresh basil* and *fresh parsley*,
+      and the *parmesan cheese*. If the sauce seems too thick, add a splash of
+      the reserved pasta cooking water until it reaches your desired
+      consistency. Toss everything together until the pasta is well coated.
+  - step: 6
+    action: >-
+      Serve immediately, garnished with extra fresh basil and parmesan cheese.
+      This dish pairs wonderfully with slices of warm rosemary focaccia.
+tags:
+  - italian
+  - pork
+imagePrompt:
+  base: >-
+    Vibrant close-up of Italian Sausage Rigatoni, plated to showcase vivid
+    textures and color. Incorporate visual cues from this description: Rigatoni
+    tossed in tomato sauce with sweet Italian sausage and herbs, paired with
+    rosemary focaccia.. Scene: italian-inspired table with soft natural
+    daylight, eye-level perspective, and shallow depth of field. Capture fresh
+    garnish, inviting lighting, and a sense of homemade comfort with no visible
+    steam or vapor. No people or branded props.
+  enhanced: >-
+    An intimate, slightly elevated eye-level close-up of a generous, artfully
+    mounded serving of Italian Sausage Rigatoni. Each al dente rigatoni is
+    richly coated in a rustic, herb-flecked tomato sauce, revealing savory
+    chunks of sweet Italian sausage. Vibrant fresh basil leaves are scattered
+    atop. Soft, warm natural light bathes the scene, accentuating the dish's
+    comforting textures and deep colors. A torn piece of rosemary focaccia rests
+    invitingly beside the plate, evoking homemade warmth.
+

@@ -1,0 +1,97 @@
+title: Creamy Tuscan Chicken
+summary: >-
+  Pan-seared chicken in garlic cream sauce with sun-dried tomatoes and spinach,
+  paired with herbed polenta.
+servings: 4
+prepTimeMinutes: 20
+cookTimeMinutes: 25
+ingredients:
+  - name: Chicken breasts
+    amount: 500 g
+    notes: 2 medium breasts, sliced horizontally into 4 thinner cutlets
+  - name: Quick-cooking polenta
+    amount: 150 g
+  - name: Heavy cream
+    amount: 250 ml
+  - name: Chicken broth
+    amount: 250 ml
+  - name: Sun-dried tomatoes
+    amount: 60 g
+    notes: drained and thinly sliced
+  - name: Fresh spinach
+    amount: 150 g
+  - name: Garlic
+    amount: 4 cloves
+    notes: minced
+  - name: Parmesan cheese
+    amount: 50 g
+    notes: grated
+  - name: Fresh parsley
+    amount: 2 tbsp
+    notes: chopped, for polenta
+  - name: Dried Italian seasoning
+    amount: 1 tsp
+  - name: Olive oil
+    amount: 2 tbsp
+  - name: Butter
+    amount: 30 g
+instructions:
+  - step: 1
+    action: >-
+      Prepare the chicken: Pat the *chicken breasts* dry and season generously
+      with salt and black pepper. Heat 1 tbsp of *olive oil* in a large pan or
+      skillet over medium-high heat.
+  - step: 2
+    action: >-
+      Sear the chicken: Once the oil is shimmering, add the seasoned *chicken
+      breasts* to the pan. Sear for 3-4 minutes per side, until golden brown and
+      cooked through. Remove the chicken from the pan and set aside on a plate,
+      loosely covered.
+  - step: 3
+    action: >-
+      Start the polenta: While the chicken cooks, bring 750 ml of water to a
+      boil in a medium saucepan. Add a pinch of salt. Slowly whisk in the
+      *quick-cooking polenta*, ensuring no lumps form. Reduce heat to low and
+      simmer, stirring frequently, for 5-7 minutes until thickened. Stir in 15 g
+      of *butter* and half of the *Parmesan cheese*.
+  - step: 4
+    action: >-
+      Build the sauce: In the same pan used for the chicken, melt the remaining
+      15 g of *butter* over medium heat. Add the minced *garlic* and *dried
+      Italian seasoning*, and sauté for 1 minute until fragrant. Stir in the
+      sliced *sun-dried tomatoes*.
+  - step: 5
+    action: >-
+      Finish the sauce: Pour in the *chicken broth* and bring to a gentle
+      simmer, scraping up any browned bits from the bottom of the pan. Stir in
+      the *heavy cream* and bring back to a simmer. Add the *fresh spinach* and
+      cook until wilted, about 2-3 minutes. Season the sauce with salt and
+      pepper to taste.
+  - step: 6
+    action: >-
+      Combine and serve: Return the cooked *chicken breasts* to the pan with the
+      sauce, spooning the sauce over the chicken to coat. Stir the *fresh
+      parsley* into the prepared *polenta*. Serve the creamy tuscan chicken
+      immediately alongside the herbed polenta, garnished with the remaining
+      *Parmesan cheese*.
+tags:
+  - italian
+  - chicken
+  - glutenfree
+imagePrompt:
+  base: >-
+    Vibrant close-up of Creamy Tuscan Chicken, plated to showcase vivid textures
+    and color. Incorporate visual cues from this description: Pan-seared chicken
+    in garlic cream sauce with sun-dried tomatoes and spinach, paired with
+    herbed polenta.. Scene: italian-inspired table with soft natural daylight,
+    eye-level perspective, and shallow depth of field. Capture fresh garnish,
+    inviting lighting, and a sense of homemade comfort with no visible steam or
+    vapor. No people or branded props.
+  enhanced: >-
+    A captivating eye-level close-up of golden-seared chicken, sliced to reveal
+    its tender interior, artfully arranged over a creamy mound of vibrant herbed
+    polenta. The rich garlic cream sauce, brimming with ruby sun-dried tomatoes
+    and emerald spinach, cascades invitingly. Garnished with fresh parsley, the
+    scene is bathed in soft, warm natural light, enhancing textures and colors
+    for a comforting, homemade feel. Shallow depth of field, no steam.
+

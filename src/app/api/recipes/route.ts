@@ -24,7 +24,7 @@ type RecipePayload = {
   ingredients: IngredientPayload[];
   instructions: InstructionPayload[];
   tags: string[];
-  imageUrl?: string | null;
+  imageUrl?: string | null | undefined; // undefined = not provided, null = explicitly cleared
 };
 
 type RecipeListItem = {
@@ -130,7 +130,9 @@ function normalizeRecipePayload(payload: unknown): RecipePayload | null {
       ? payload.imageUrl.trim()
       : typeof payload.image_url === "string"
         ? payload.image_url.trim()
-        : null;
+        : payload.imageUrl === null || payload.image_url === null
+          ? null
+          : undefined; // undefined means not provided, null means explicitly cleared
 
   return { slug: slugFromPayload, title, summary, ingredients, instructions, tags, imageUrl };
 }
@@ -390,15 +392,38 @@ export async function POST(request: NextRequest) {
   if (!slug) {
     return NextResponse.json({ error: "Unable to derive slug from title." }, { status: 400 });
   }
-  const dbPayload = {
+
+  // Check if recipe exists to preserve image_url if not provided
+  const { data: existingRecipe } = await supabaseAdmin
+    .from("recipes")
+    .select("image_url")
+    .eq("slug", slug)
+    .maybeSingle();
+
+  const dbPayload: {
+    slug: string;
+    name: string;
+    description: string | null;
+    ingredients: string;
+    instructions: string;
+    image_url?: string | null;
+    tags: string[];
+  } = {
     slug,
     name: payload.title,
     description: payload.summary ?? null,
     ingredients: JSON.stringify(payload.ingredients),
     instructions: buildInstructions(payload.instructions),
-    image_url: payload.imageUrl ?? null,
     tags: payload.tags,
   };
+
+  // Only include image_url if explicitly provided, otherwise preserve existing
+  if (payload.imageUrl !== undefined) {
+    dbPayload.image_url = payload.imageUrl ?? null;
+  } else if (existingRecipe?.image_url) {
+    // Preserve existing image_url if not provided in payload
+    dbPayload.image_url = existingRecipe.image_url;
+  }
 
   try {
     const { data, error } = await supabaseAdmin

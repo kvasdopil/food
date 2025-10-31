@@ -1,0 +1,106 @@
+title: Chicken Marsala
+summary: >-
+  Pan-seared chicken in mushroom marsala wine sauce, served with creamy mashed
+  potatoes.
+servings: 4
+prepTimeMinutes: 15
+cookTimeMinutes: 35
+ingredients:
+  - name: boneless, skinless chicken breasts
+    amount: 4
+    notes: about 600g total
+  - name: potatoes
+    amount: 700g
+    notes: starchy (e.g., Russet or Yukon Gold)
+  - name: cremini or button mushrooms
+    amount: 250g
+    notes: sliced
+  - name: dry Marsala wine
+    amount: 120ml
+  - name: chicken broth
+    amount: 120ml
+  - name: heavy cream
+    amount: 60ml
+  - name: shallot
+    amount: 1 medium
+    notes: finely chopped
+  - name: garlic cloves
+    amount: 2
+    notes: minced
+  - name: all-purpose flour
+    amount: 30g
+  - name: unsalted butter
+    amount: 90g
+    notes: 30g for chicken, 60g for potatoes
+  - name: milk
+    amount: 120ml
+    notes: warm
+  - name: fresh parsley
+    amount: a small bunch, chopped
+  - name: olive oil
+    amount: a drizzle
+  - name: salt
+    amount: to taste
+  - name: black pepper
+    amount: to taste
+instructions:
+  - step: 1
+    action: >-
+      Prepare the chicken and potatoes: Place the *chicken breasts* between two
+      sheets of cling film and pound them to an even 1.5 cm thickness. Peel and
+      quarter the *potatoes*. Place the quartered *potatoes* in a large pot,
+      cover with cold water, add a pinch of *salt*, and bring to a boil. Cook
+      until fork-tender, about 15-20 minutes.
+  - step: 2
+    action: >-
+      Sear the chicken: While potatoes cook, season the pounded *chicken
+      breasts* with *salt* and *black pepper*. Dredge each piece lightly in
+      *all-purpose flour*, shaking off any excess. Heat a drizzle of *olive oil*
+      and 30g of *unsalted butter* in a large frying pan over medium-high heat.
+      Sear the *chicken breasts* for 3-4 minutes per side until golden brown and
+      cooked through. Remove chicken from the pan and set aside.
+  - step: 3
+    action: >-
+      Make the Marsala sauce: In the same pan, add the chopped *shallot* and
+      cook for 2 minutes until softened. Add the *garlic cloves* and
+      *cremini or button mushrooms* and cook for 5-7 minutes until
+      mushrooms are tender and browned. Deglaze the pan with *dry Marsala wine*,
+      scraping up any browned bits from the bottom, and let it reduce by half,
+      about 2 minutes.
+  - step: 4
+    action: >-
+      Finish the sauce and chicken: Pour in the *chicken broth* and bring to a
+      simmer, cooking for 3-5 minutes until the sauce slightly thickens. Stir in
+      the *heavy cream*. Return the seared *chicken breasts* to the pan, turning
+      to coat them in the sauce. Let simmer gently for 2-3 minutes to heat
+      through.
+  - step: 5
+    action: >-
+      Finish the mashed potatoes: Drain the cooked *potatoes* thoroughly. Return
+      them to the hot pot. Add the remaining 60g of *unsalted butter* and the
+      *milk*. Mash until smooth and creamy. Season with *salt* and *black
+      pepper* to taste.
+  - step: 6
+    action: >-
+      Serve: Plate the creamy *potatoes* alongside the chicken Marsala.
+      Garnish with freshly chopped *fresh parsley*.
+tags:
+  - italian
+  - chicken
+imagePrompt:
+  base: >-
+    Vibrant close-up of Chicken Marsala, plated to showcase vivid textures and
+    color. Incorporate visual cues from this description: Pan-seared chicken in
+    mushroom marsala wine sauce, served with creamy mashed potatoes.. Scene:
+    italian-inspired table with soft natural daylight, eye-level perspective,
+    and shallow depth of field. Capture fresh garnish, inviting lighting, and a
+    sense of homemade comfort with no visible steam or vapor. No people or
+    branded props.
+  enhanced: >-
+    An intimate, slightly elevated close-up of golden-seared chicken, artfully
+    fanned over a silken mound of creamy mashed potatoes, takes center stage.
+    Rich Marsala mushroom sauce, generously draped, gleams under luminous,
+    directional natural daylight. A vibrant sprinkle of fresh Italian parsley
+    adds color. This shallow depth of field shot on an Italian-inspired table
+    evokes homemade comfort with inviting warmth and no visible steam.
+
