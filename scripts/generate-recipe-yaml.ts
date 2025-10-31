@@ -51,7 +51,6 @@ type GenerateRecipeResponse = {
     cookTimeMinutes: number | null;
     imagePrompt: {
       base: string;
-      enhanced: string;
     };
   };
 };
@@ -60,7 +59,7 @@ async function generateRecipe(
   options: CliOptions,
   endpoint: string,
   token: string,
-): Promise<{ recipe: RecipeData; imagePrompt: { base: string; enhanced: string } }> {
+): Promise<{ recipe: RecipeData; imagePrompt: { base: string } }> {
   const url = `${endpoint}/api/recipes/generate`;
   const requestBody = {
     title: options.mealName,
@@ -237,7 +236,6 @@ function toYaml(
   options: {
     imagePrompt: {
       base: string;
-      enhanced: string;
     };
   },
 ) {

@@ -1,0 +1,122 @@
+title: Sesame Ginger Vegetable Stir-Fry
+summary: >-
+  Broccoli, bell peppers, and snap peas seared in a soy-ginger glaze over
+  steamed rice with a side of sesame-dressed slaw.
+servings: 4
+prepTimeMinutes: 20
+cookTimeMinutes: 20
+ingredients:
+  - name: jasmine rice
+    amount: 200 g
+  - name: broccoli florets
+    amount: 400 g
+    notes: from 1 head
+  - name: red bell pepper
+    amount: 1 medium
+    notes: deseeded and sliced
+  - name: yellow bell pepper
+    amount: 1 medium
+    notes: deseeded and sliced
+  - name: snap peas
+    amount: 150 g
+    notes: trimmed
+  - name: garlic
+    amount: 3 cloves
+    notes: minced
+  - name: fresh ginger
+    amount: 2 cm piece
+    notes: grated
+  - name: soy sauce
+    amount: 60 ml
+  - name: maple syrup
+    amount: 15 ml
+    notes: or honey for non-vegan option
+  - name: rice vinegar
+    amount: 15 ml
+    notes: for stir-fry sauce
+  - name: sesame oil
+    amount: 15 ml
+    notes: for stir-fry sauce
+  - name: cornstarch
+    amount: 10 g
+  - name: white cabbage
+    amount: 200 g
+    notes: shredded for slaw
+  - name: carrot
+    amount: 1 medium
+    notes: grated for slaw
+  - name: green onions
+    amount: '2'
+    notes: thinly sliced for garnish
+  - name: toasted sesame seeds
+    amount: 5 g
+    notes: for garnish and slaw
+  - name: rice vinegar
+    amount: 30 ml
+    notes: for slaw dressing
+  - name: sesame oil
+    amount: 15 ml
+    notes: for slaw dressing
+instructions:
+  - step: 1
+    action: >-
+      Rinse *jasmine rice* thoroughly. Cook according to package instructions
+      (typically 200 g rice with 400 ml water) until fluffy. Keep warm.
+  - step: 2
+    action: >-
+      Cut *broccoli florets* into bite-sized pieces. Slice the *red bell pepper*
+      and *yellow bell pepper* into thin strips. Trim the ends of the *snap
+      peas*. Mince *garlic* and grate *fresh ginger*.
+  - step: 3
+    action: >-
+      Finely shred *white cabbage* and grate the *carrot*. Set aside in a medium
+      bowl.
+  - step: 4
+    action: >-
+      In a small bowl, whisk together *soy sauce*, *maple syrup*, 15 ml *rice
+      vinegar*, 15 ml *sesame oil*, and *cornstarch* with 30 ml of water until
+      smooth.
+  - step: 5
+    action: >-
+      In a separate small bowl, whisk together 30 ml *rice vinegar*, 15 ml
+      *sesame oil*, and a pinch of salt and pepper. Pour over the *white
+      cabbage* and *carrot* in the bowl, toss to combine, and sprinkle with half
+      of the *toasted sesame seeds*. Set aside.
+  - step: 6
+    action: >-
+      Heat a large wok or frying pan over high heat with a drizzle of vegetable
+      oil. Add the *broccoli florets* and stir-fry for 3-4 minutes until
+      slightly tender-crisp. Add the *red bell pepper*, *yellow bell pepper*,
+      *snap peas*, *minced garlic*, and *grated fresh ginger*. Stir-fry for
+      another 2-3 minutes until vegetables are bright and tender-crisp.
+  - step: 7
+    action: >-
+      Give the stir-fry sauce a quick whisk again, then pour it over the
+      vegetables in the pan. Cook, stirring constantly, for 1-2 minutes until
+      the sauce thickens and coats the vegetables.
+  - step: 8
+    action: >-
+      Divide the *jasmine rice* among serving bowls. Top with the *sesame ginger
+      vegetable stir-fry*. Serve immediately with a side of the *sesame-dressed
+      slaw*. Garnish with *sliced green onions* and the remaining *toasted
+      sesame seeds*.
+tags:
+  - chinese
+  - vegan
+imagePrompt:
+  base: >-
+    Vibrant close-up of Sesame Ginger Vegetable Stir-Fry, plated to showcase
+    vivid textures and color. Incorporate visual cues from this description:
+    Broccoli, bell peppers, and snap peas seared in a soy-ginger glaze over
+    steamed rice with a side of sesame-dressed slaw.. Scene: chinese-inspired
+    table with soft natural daylight, eye-level perspective, and shallow depth
+    of field. Capture fresh garnish, inviting lighting, and a sense of homemade
+    comfort with no visible steam or vapor. No people or branded props.
+  enhanced: >-
+    An irresistible, low-angle close-up of Sesame Ginger Vegetable Stir-Fry.
+    Glistening, perfectly seared broccoli, colorful bell peppers, and crisp snap
+    peas tumble over a fluffy bed of jasmine rice. A vibrant, sesame-dressed
+    slaw is artfully arranged alongside. Bathed in warm, soft directional light,
+    highlighting toasted sesame seeds and fresh scallion garnish. Shallow depth
+    of field creates an inviting, homemade comfort, no steam.
+

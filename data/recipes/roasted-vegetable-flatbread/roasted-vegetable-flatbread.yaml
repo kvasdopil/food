@@ -1,0 +1,102 @@
+title: Roasted Vegetable Flatbread
+summary: >-
+  Crisp flatbread topped with roasted veggies, goat cheese, and balsamic
+  drizzle, served with mixed olive tapenade.
+servings: 2
+prepTimeMinutes: 20
+cookTimeMinutes: 25
+ingredients:
+  - name: flatbreads
+    amount: '2'
+    notes: naan or pita bread
+  - name: red bell pepper
+    amount: 1 medium
+    notes: cut into 2 cm pieces
+  - name: yellow bell pepper
+    amount: 1 medium
+    notes: cut into 2 cm pieces
+  - name: zucchini
+    amount: 1 medium
+    notes: cut into 1 cm thick half-moons
+  - name: red onion
+    amount: 0.5 medium
+    notes: thinly sliced
+  - name: cherry tomatoes
+    amount: 150 g
+    notes: halved
+  - name: goat cheese
+    amount: 100 g
+    notes: crumbled
+  - name: balsamic vinegar
+    amount: 60 ml
+    notes: for making a glaze, or use pre-made balsamic glaze
+  - name: mixed olives
+    amount: 100 g
+    notes: pitted and roughly chopped
+  - name: capers
+    amount: 1 tbsp
+    notes: drained
+  - name: garlic clove
+    amount: '1'
+    notes: minced
+  - name: lemon
+    amount: '0.5'
+    notes: for juice
+instructions:
+  - step: 1
+    action: >-
+      Preheat oven to 200°C. If making balsamic glaze, pour *balsamic vinegar*
+      into a small saucepan and bring to a simmer over medium-low heat. Cook for
+      5-10 minutes, or until reduced by half and slightly thickened. Set aside
+      to cool.
+  - step: 2
+    action: >-
+      On a large baking tray, combine the chopped *red bell pepper*, *yellow
+      bell pepper*, *zucchini*, *red onion*, and *cherry tomatoes*. Drizzle
+      generously with olive oil, season with salt and black pepper, and toss to
+      coat evenly. Roast for 15-20 minutes, or until vegetables are tender and
+      slightly charred.
+  - step: 3
+    action: >-
+      While the vegetables roast, prepare the olive tapenade. In a small bowl,
+      combine the *mixed olives*, *capers*, *garlic clove*, and a squeeze of
+      fresh *lemon* juice. Drizzle with 1-2 tablespoons of olive oil and mix
+      well. Set aside.
+  - step: 4
+    action: >-
+      Once vegetables are roasted, remove them from the oven. Increase oven
+      temperature to 220°C (if needed, depending on how quickly your oven heats
+      up).
+  - step: 5
+    action: >-
+      Place the *flatbreads* directly on the oven rack or on a clean baking
+      tray. Distribute the roasted vegetables evenly over each flatbread, then
+      crumble the *goat cheese* over the top. Bake for 5-7 minutes, or until the
+      flatbread is crisp and the goat cheese is warmed through and slightly
+      softened.
+  - step: 6
+    action: >-
+      Carefully remove the flatbreads from the oven. Drizzle with the prepared
+      balsamic glaze. Serve immediately with a generous side of the mixed olive
+      tapenade.
+tags:
+  - mediterranean
+  - vegetarian
+imagePrompt:
+  base: >-
+    Vibrant close-up of Roasted Vegetable Flatbread, plated to showcase vivid
+    textures and color. Incorporate visual cues from this description: Crisp
+    flatbread topped with roasted veggies, goat cheese, and balsamic drizzle,
+    served with mixed olive tapenade.. Scene: mediterranean-inspired table with
+    soft natural daylight, eye-level perspective, and shallow depth of field.
+    Capture fresh garnish, inviting lighting, and a sense of homemade comfort
+    with no visible steam or vapor. No people or branded props.
+  enhanced: >-
+    A delectable, close-up shot of Roasted Vegetable Flatbread, artfully
+    arranged on a rustic board. Golden flatbread piled high with tender, charred
+    bell peppers, zucchini, and bursting cherry tomatoes, adorned with creamy
+    goat cheese crumbles and a glistening balsamic glaze. A vibrant olive
+    tapenade dollop sits beside. Bathed in warm, soft natural light from a low
+    angle, emphasizing texture and a cozy, homemade feel. Fresh basil leaves
+    scattered.
+

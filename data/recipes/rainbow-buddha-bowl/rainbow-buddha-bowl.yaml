@@ -1,0 +1,100 @@
+title: Rainbow Buddha Bowl
+summary: >-
+  Roasted veggies, chickpeas, and avocado drizzled with maple tahini sauce over
+  brown rice, complemented by citrus-dressed greens.
+servings: 2
+prepTimeMinutes: 20
+cookTimeMinutes: 30
+ingredients:
+  - name: brown rice
+    amount: 150 g
+    notes: uncooked
+  - name: sweet potato
+    amount: 1 medium
+    notes: peeled and diced into 2 cm cubes
+  - name: broccoli florets
+    amount: 200 g
+    notes: cut into bite-sized pieces
+  - name: red bell pepper
+    amount: 1 medium
+    notes: cored and diced into 2 cm pieces
+  - name: chickpeas
+    amount: 400 g can
+    notes: rinsed and drained
+  - name: avocado
+    amount: 1 medium
+    notes: ripe
+  - name: mixed greens
+    amount: 100 g
+    notes: such as spinach or spring mix
+  - name: tahini
+    amount: 60 ml
+  - name: maple syrup
+    amount: 30 ml
+  - name: lemon
+    amount: 1 large
+    notes: for juice
+  - name: garlic clove
+    amount: '1'
+    notes: minced
+  - name: olive oil
+    amount: 60 ml
+    notes: divided
+  - name: smoked paprika
+    amount: 5 g
+instructions:
+  - step: 1
+    action: >-
+      Cook *brown rice* according to package instructions. This usually takes
+      30-40 minutes and can be done simultaneously with the other steps.
+  - step: 2
+    action: >-
+      Preheat oven to 200°C. On a large baking tray, toss the diced *sweet
+      potato*, *broccoli florets*, *red bell pepper*, and *chickpeas* with 30 ml
+      of olive oil, a pinch of salt, black pepper, and *smoked paprika*. Spread
+      in a single layer.
+  - step: 3
+    action: >-
+      Roast for 20-25 minutes, or until vegetables are tender and slightly
+      caramelized, stirring halfway through.
+  - step: 4
+    action: >-
+      While vegetables roast, prepare the sauces. For the maple tahini sauce,
+      whisk together *tahini*, *maple syrup*, juice from half of the *lemon*,
+      *minced garlic*, and 60 ml of water until smooth and creamy. Add more
+      water if needed to reach desired consistency.
+  - step: 5
+    action: >-
+      For the citrus dressing, whisk together the juice from the remaining half
+      of the *lemon* and 30 ml of olive oil in a small bowl. Season with a pinch
+      of salt and pepper.
+  - step: 6
+    action: Halve and slice the *avocado*.
+  - step: 7
+    action: >-
+      To assemble, divide the cooked *brown rice* among serving bowls. Top with
+      roasted vegetables and chickpeas, *mixed greens*, and sliced avocado.
+      Drizzle generously with the maple tahini sauce and a spoonful of citrus
+      dressing over the greens.
+tags:
+  - fusion
+  - vegan
+  - glutenfree
+imagePrompt:
+  base: >-
+    Vibrant close-up of Rainbow Buddha Bowl, plated to showcase vivid textures
+    and color. Incorporate visual cues from this description: Roasted veggies,
+    chickpeas, and avocado drizzled with maple tahini sauce over brown rice,
+    complemented by citrus-dressed greens.. Scene: fusion-inspired table with
+    soft natural daylight, eye-level perspective, and shallow depth of field.
+    Capture fresh garnish, inviting lighting, and a sense of homemade comfort
+    with no visible steam or vapor. No people or branded props.
+  enhanced: >-
+    A vibrant, slightly elevated close-up of a Rainbow Buddha Bowl. Fluffy brown
+    rice forms the base, artfully topped with caramelized sweet potato, tender
+    broccoli, crimson bell pepper, and golden chickpeas. Creamy avocado slices
+    fan out, all generously drizzled with luscious maple tahini. Zesty
+    citrus-dressed greens nestle alongside, garnished with toasted sesame seeds
+    and fresh cilantro. Bathed in soft, golden natural light, highlighting rich
+    textures and homemade comfort, shallow depth of field.
+

@@ -1,0 +1,114 @@
+title: General Tso's Chicken
+summary: >-
+  Crispy chicken tossed in sweet, tangy sauce, paired with steamed broccoli and
+  rice.
+servings: 4
+prepTimeMinutes: 25
+cookTimeMinutes: 30
+ingredients:
+  - name: chicken breast
+    amount: 600 g
+    notes: cut into 2.5cm pieces
+  - name: egg
+    amount: 1 large
+    notes: beaten
+  - name: soy sauce
+    amount: 45 ml
+    notes: 15ml for chicken marinade, 30ml for sauce
+  - name: white pepper
+    amount: a pinch
+    notes: for chicken marinade
+  - name: cornflour
+    amount: 75 g
+    notes: 60g for chicken coating, 15g for sauce thickening
+  - name: vegetable oil
+    amount: 300 ml
+    notes: for frying
+  - name: fresh ginger
+    amount: 15 g
+    notes: minced
+  - name: garlic cloves
+    amount: '3'
+    notes: minced
+  - name: dried red chillies
+    amount: 4-6
+    notes: optional, whole or roughly chopped for heat
+  - name: rice vinegar
+    amount: 30 ml
+  - name: granulated sugar
+    amount: 45 g
+  - name: hoisin sauce
+    amount: 15 ml
+  - name: water
+    amount: 120 ml
+    notes: or chicken stock
+  - name: broccoli florets
+    amount: 400 g
+    notes: fresh or frozen
+  - name: basmati rice
+    amount: 200 g
+  - name: spring onions
+    amount: '2'
+    notes: thinly sliced for garnish
+  - name: sesame seeds
+    amount: 1 tsp
+    notes: for garnish
+instructions:
+  - step: 1
+    action: >-
+      Rinse *basmati rice* thoroughly, then cook according to package
+      instructions. While the rice cooks, steam *broccoli florets* until
+      tender-crisp, about 5-7 minutes. Set aside.
+  - step: 2
+    action: >-
+      Prepare the chicken: In a medium bowl, combine the *chicken breast* pieces
+      with 15 ml of the *soy sauce*, the *egg*, and *white pepper*. Mix well and
+      let marinate for 5-10 minutes.
+  - step: 3
+    action: >-
+      Make the General Tso's Sauce: In a separate small bowl, whisk together the
+      remaining 30 ml *soy sauce*, *rice vinegar*, *granulated sugar*, *hoisin
+      sauce*, 15g of the *cornflour*, and *water* (or chicken stock). Set aside.
+  - step: 4
+    action: >-
+      Coat and fry chicken: Place the remaining 60g *cornflour* in a shallow
+      dish. Dredge each piece of marinated chicken in the cornflour, ensuring
+      it's fully coated. Heat *vegetable oil* in a large wok or deep pan over
+      medium-high heat. Fry the coated chicken in batches for 3-4 minutes per
+      batch, until golden brown and crispy. Remove with a slotted spoon and
+      drain on a wire rack or paper towels.
+  - step: 5
+    action: >-
+      Cook the sauce: Carefully pour out most of the oil from the wok, leaving
+      about a drizzle. Add *minced fresh ginger*, *minced garlic cloves*, and
+      *dried red chillies* (if using) to the wok. Sauté for 30 seconds until
+      fragrant.
+  - step: 6
+    action: >-
+      Combine and serve: Pour the prepared General Tso's sauce into the wok.
+      Bring to a simmer, stirring constantly, until the sauce thickens. Add the
+      crispy chicken back into the wok and toss until all pieces are evenly
+      coated. Serve immediately with the cooked rice and steamed broccoli.
+      Garnish with *sliced spring onions* and *sesame seeds*.
+tags:
+  - chinese
+  - chicken
+  - spicy
+imagePrompt:
+  base: >-
+    Vibrant close-up of General Tso's Chicken, plated to showcase vivid textures
+    and color. Incorporate visual cues from this description: Crispy chicken
+    tossed in sweet, tangy sauce, paired with steamed broccoli and rice.. Scene:
+    chinese-inspired table with soft natural daylight, eye-level perspective,
+    and shallow depth of field. Capture fresh garnish, inviting lighting, and a
+    sense of homemade comfort with no visible steam or vapor. No people or
+    branded props.
+  enhanced: >-
+    An intimate, slightly elevated eye-level close-up. A fluffy mound of basmati
+    rice forms the base, crowned with glistening, mahogany-glazed crispy General
+    Tso's chicken pieces. Vibrant, tender-crisp broccoli florets are artfully
+    tucked alongside. Garnish with a sprinkle of toasted sesame seeds and finely
+    sliced green onions. Bathed in soft, golden hour natural light, creating
+    warm, inviting shadows and a shallow depth of field, evoking homemade
+    comfort.
+

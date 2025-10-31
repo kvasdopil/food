@@ -1,0 +1,86 @@
+title: Chicken & Broccoli Alfredo Bake
+summary: >-
+  Baked pasta with creamy alfredo, broccoli florets, and shredded chicken,
+  accompanied by garlic knots.
+servings: 6
+prepTimeMinutes: 15
+cookTimeMinutes: 30
+ingredients:
+  - name: penne pasta
+    amount: 300 g
+  - name: chicken breast
+    amount: 2 large
+    notes: approx. 200g each
+  - name: broccoli florets
+    amount: 400 g
+    notes: fresh or frozen
+  - name: unsalted butter
+    amount: 60 g
+  - name: garlic
+    amount: 4 cloves
+    notes: minced
+  - name: heavy cream
+    amount: 500 ml
+  - name: parmesan cheese
+    amount: 100 g
+    notes: freshly grated, plus extra for serving
+  - name: mozzarella cheese
+    amount: 150 g
+    notes: shredded
+  - name: chicken broth
+    amount: 125 ml
+  - name: olive oil
+    amount: 1 tbsp
+instructions:
+  - step: 1
+    action: >-
+      Preheat oven to 200°C. Bring a large pot of salted water to a boil. Add
+      *penne pasta* and cook according to package directions until al dente,
+      about 8-10 minutes. Drain well and set aside.
+  - step: 2
+    action: >-
+      While pasta cooks, heat *olive oil* in a large pan over medium-high heat.
+      Season *chicken breast* with salt and pepper. Cook chicken for 5-7 minutes
+      per side, until cooked through. Remove chicken from pan, let cool
+      slightly, then shred using two forks.
+  - step: 3
+    action: >-
+      In the same pan, melt *unsalted butter* over medium heat. Add *minced
+      garlic* and cook for 1 minute until fragrant. Slowly whisk in *heavy
+      cream* and *chicken broth*. Bring to a gentle simmer, then reduce heat to
+      low. Stir in *parmesan cheese* until melted and smooth. Season the alfredo
+      sauce with salt and black pepper to taste.
+  - step: 4
+    action: >-
+      Add the cooked *broccoli florets*, *shredded chicken*, and *drained pasta* to
+      the alfredo sauce. Stir gently to combine everything, ensuring the pasta
+      and chicken are well coated.
+  - step: 5
+    action: >-
+      Transfer the chicken and broccoli alfredo mixture into a 23x33 cm baking
+      dish. Sprinkle evenly with *shredded mozzarella cheese*.
+  - step: 6
+    action: Bake for 15-20 minutes, or until the cheese is bubbly and lightly golden.
+  - step: 7
+    action: Serve immediately, garnished with *extra parmesan cheese* if desired.
+tags:
+  - italian
+  - chicken
+imagePrompt:
+  base: >-
+    Vibrant close-up of Chicken & Broccoli Alfredo Bake, plated to showcase
+    vivid textures and color. Incorporate visual cues from this description:
+    Baked pasta with creamy alfredo, broccoli florets, and shredded chicken,
+    accompanied by garlic knots.. Scene: italian-inspired table with soft
+    natural daylight, eye-level perspective, and shallow depth of field. Capture
+    fresh garnish, inviting lighting, and a sense of homemade comfort with no
+    visible steam or vapor. No people or branded props.
+  enhanced: >-
+    A decadent close-up of a generous serving of Chicken & Broccoli Alfredo
+    Bake. Golden-baked penne, tender shredded chicken, and vibrant broccoli
+    florets are enveloped in a luscious, bubbly alfredo sauce. Garnish with a
+    sprinkle of fresh parsley and grated parmesan. Accompanying golden-brown
+    garlic knots glisten with garlic butter. Captured with soft, warm natural
+    light from a slightly elevated eye-level perspective, featuring a shallow
+    depth of field for ultimate homemade comfort.
+

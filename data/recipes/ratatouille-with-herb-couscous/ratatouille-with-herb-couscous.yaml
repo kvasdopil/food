@@ -1,0 +1,104 @@
+title: Ratatouille with Herb Couscous
+summary: >-
+  Provençal stewed vegetables served over fluffy couscous, paired with a crisp
+  butter lettuce salad.
+servings: 4
+prepTimeMinutes: 25
+cookTimeMinutes: 35
+ingredients:
+  - name: eggplant
+    amount: 1 medium
+    notes: diced into 2cm cubes
+  - name: courgette
+    amount: 1 medium
+    notes: diced into 2cm cubes
+  - name: red bell pepper
+    amount: '1'
+    notes: diced
+  - name: yellow bell pepper
+    amount: '1'
+    notes: diced
+  - name: onion
+    amount: '1'
+    notes: chopped
+  - name: garlic
+    amount: 3 cloves
+    notes: minced
+  - name: chopped tomatoes
+    amount: 400g
+    notes: 1 can
+  - name: vegetable stock
+    amount: 250ml
+  - name: dried oregano
+    amount: 1 tsp
+  - name: couscous
+    amount: 200g
+  - name: fresh parsley
+    amount: 2 tbsp
+    notes: chopped
+  - name: fresh mint
+    amount: 1 tbsp
+    notes: chopped
+  - name: butter lettuce
+    amount: 1 head
+  - name: lemon
+    amount: 1/2
+    notes: for dressing
+instructions:
+  - step: 1
+    action: >-
+      Prepare vegetables: Dice the *eggplant*, *courgette*, *red bell pepper*,
+      and *yellow bell pepper*. Chop the *onion*. Mince the *garlic*.
+  - step: 2
+    action: >-
+      Sauté the ratatouille base: Heat a drizzle of olive oil in a large pan or
+      pot over medium-high heat. Add the diced *eggplant*, *courgette*, *red
+      bell pepper*, *yellow bell pepper*, and chopped *onion*. Cook for 8-10
+      minutes, stirring occasionally, until the vegetables begin to soften and
+      lightly brown. Stir in the minced *garlic* and *dried oregano*, cooking
+      for another minute until fragrant.
+  - step: 3
+    action: >-
+      Simmer the ratatouille: Pour in the *chopped tomatoes* and *vegetable
+      stock*. Bring the mixture to a gentle simmer, then reduce the heat to
+      medium-low, cover, and let it cook for 15-20 minutes, or until all the
+      vegetables are tender. Season generously with salt and black pepper to
+      taste.
+  - step: 4
+    action: >-
+      Prepare the herb couscous: While the ratatouille simmers, bring 250ml of
+      water to a boil in a small saucepan. Add a pinch of salt. Remove from
+      heat, stir in the *couscous*, cover the pan, and let it stand for 5
+      minutes. Fluff the couscous with a fork, then stir in the chopped *fresh
+      parsley* and *fresh mint*.
+  - step: 5
+    action: >-
+      Make the butter lettuce salad: Wash and thoroughly dry the *butter
+      lettuce*. In a small bowl, whisk together a drizzle of olive oil, the
+      juice from the *lemon*, a pinch of salt, and a grind of black pepper. Toss
+      the lettuce with the simple dressing just before serving.
+  - step: 6
+    action: >-
+      Serve: Ladle the warm ratatouille generously over the fluffy herb
+      couscous. Serve immediately with the crisp butter lettuce salad on the
+      side.
+tags:
+  - french
+  - vegan
+imagePrompt:
+  base: >-
+    Vibrant close-up of Ratatouille with Herb Couscous, plated to showcase vivid
+    textures and color. Incorporate visual cues from this description: Provençal
+    stewed vegetables served over fluffy couscous, paired with a crisp butter
+    lettuce salad.. Scene: french-inspired table with soft natural daylight,
+    eye-level perspective, and shallow depth of field. Capture fresh garnish,
+    inviting lighting, and a sense of homemade comfort with no visible steam or
+    vapor. No people or branded props.
+  enhanced: >-
+    A close-up, eye-level shot of a rustic ceramic bowl. A generous, fluffy base
+    of fragrant herb couscous cradles vibrant, jewel-toned ratatouille, each
+    tender eggplant, courgette, and pepper glistening. A whisper of crisp butter
+    lettuce salad peeks from the side. Bathed in soft, diffused natural light,
+    highlighting fresh basil leaves and a delicate olive oil drizzle. Shallow
+    depth of field evokes homemade comfort.
+

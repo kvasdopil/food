@@ -1,0 +1,100 @@
+title: Cuban Picadillo
+summary: >-
+  Savory ground beef with olives, raisins, and tomatoes, served over white rice
+  with sweet plantains.
+servings: 4
+prepTimeMinutes: 15
+cookTimeMinutes: 30
+ingredients:
+  - name: ground beef
+    amount: 500 g
+    notes: lean
+  - name: onion
+    amount: 1 medium
+    notes: diced
+  - name: green bell pepper
+    amount: 1 medium
+    notes: diced
+  - name: garlic
+    amount: 3 cloves
+    notes: minced
+  - name: canned diced tomatoes
+    amount: 400 g
+    notes: undrained
+  - name: tomato paste
+    amount: 2 tbsp
+  - name: green olives
+    amount: 60 g
+    notes: pitted and sliced
+  - name: raisins
+    amount: 30 g
+  - name: beef broth
+    amount: 120 ml
+  - name: ground cumin
+    amount: 1 tsp
+  - name: dried oregano
+    amount: 0.5 tsp
+  - name: bay leaf
+    amount: '1'
+  - name: white rice
+    amount: 200 g
+    notes: uncooked, for serving
+  - name: ripe plantains
+    amount: '2'
+    notes: for serving
+instructions:
+  - step: 1
+    action: Dice the *onion* and *green bell pepper*. Mince the *garlic*.
+  - step: 2
+    action: >-
+      Heat a drizzle of olive oil in a large pan over medium heat. Add the diced
+      *onion* and *green bell pepper* and cook for 5-7 minutes until softened.
+      Add the minced *garlic* and cook for 1 minute more until fragrant.
+  - step: 3
+    action: >-
+      Add the *ground beef* to the pan, breaking it up with a spoon. Cook for
+      8-10 minutes until browned, then drain any excess fat.
+  - step: 4
+    action: >-
+      Stir in the *tomato paste*, *ground cumin*, *dried oregano*, and *bay
+      leaf*. Cook for 1 minute, stirring constantly. Pour in the *canned diced
+      tomatoes* and *beef broth*. Add the *green olives* and
+      *raisins*. Bring the mixture to a simmer, then reduce the heat to low,
+      cover, and cook for 15-20 minutes, allowing the flavors to meld and the
+      sauce to thicken slightly. Season with salt and black pepper to taste.
+  - step: 5
+    action: >-
+      While the picadillo simmers, cook the *white rice* according to package
+      instructions.
+  - step: 6
+    action: >-
+      Slice the *ripe plantains* diagonally into 1 cm thick pieces. Heat a
+      drizzle of oil in a separate frying pan over medium heat. Fry the plantain
+      slices for 2-3 minutes per side until golden brown and caramelized.
+  - step: 7
+    action: >-
+      Remove and discard the *bay leaf* from the picadillo. Serve the hot Cuban
+      Picadillo over the fluffy *white rice*, accompanied by the fried *ripe
+      plantains*.
+tags:
+  - cuban
+  - beef
+  - glutenfree
+imagePrompt:
+  base: >-
+    Vibrant close-up of Cuban Picadillo, plated to showcase vivid textures and
+    color. Incorporate visual cues from this description: Savory ground beef
+    with olives, raisins, and tomatoes, served over white rice with sweet
+    plantains.. Scene: cuban-inspired table with soft natural daylight,
+    eye-level perspective, and shallow depth of field. Capture fresh garnish,
+    inviting lighting, and a sense of homemade comfort with no visible steam or
+    vapor. No people or branded props.
+  enhanced: >-
+    An intimate, slightly elevated close-up of Cuban Picadillo. A generous mound
+    of fluffy white rice provides the canvas for glistening ground beef, rich
+    with tomatoes, plump raisins, and briny olives, cascading over it.
+    Golden-brown caramelized sweet plantains are artfully arranged alongside.
+    Garnish with a sprinkle of fresh cilantro. Bathed in warm, soft natural
+    daylight with a shallow depth of field, creating a mouthwatering, comforting
+    tableau of vibrant textures and rich, inviting colors.
+

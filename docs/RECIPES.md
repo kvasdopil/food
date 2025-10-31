@@ -109,7 +109,7 @@ Curated list of 102 weeknight-friendly dinners that use accessible pantry staple
 8. **Tuna Niçoise Salad** ✓  
    Seared tuna with potatoes, green beans, and olives, served alongside a crisp butter lettuce salad.  
    #french #seafood #glutenfree
-9. **Fish & Pepper Fajitas**  
+9. **Fish & Pepper Fajitas** ✓  
    Sautéed white fish with peppers and onions for sizzling skillet fajitas, paired with black beans.  
    #mexican #seafood
 10. **Garlic Butter Shrimp Scampi** ✓  
@@ -127,18 +127,18 @@ Curated list of 102 weeknight-friendly dinners that use accessible pantry staple
 14. **Thai Basil Shrimp Stir-Fry** ✓  
     Shrimp stir-fried with basil, chilies, and snap peas for aromatic heat, plated with coconut rice.  
     #thai #seafood #spicy
-15. **Herb-Crusted Trout**  
-    Trout fillets coated in fresh herbs and breadcrumbs, served with lemony roasted broccoli.  
-    #european #seafood
-16. **Lemon Pepper Tilapia**  
-    Quick-seared tilapia finished with lemon zest and cracked pepper, paired with garlic green beans and quinoa.  
-    #american #seafood #glutenfree
-17. **Spicy Tuna Poke Bowl**  
-    Diced tuna with chili mayo over sushi rice, avocado, and cucumber, served with seaweed salad.  
-    #hawaiian #seafood #spicy
-18. **Grilled Mahi Mahi with Pineapple Salsa**  
-    Char-grilled mahi mahi topped with bright pineapple jalapeño salsa, accompanied by coconut rice and beans.  
-    #caribbean #seafood #glutenfree
+15. **Herb-Crusted Trout** ✓  
+   Trout fillets coated in fresh herbs and breadcrumbs, served with lemony roasted broccoli.  
+   #european #seafood
+16. **Lemon Pepper Tilapia** ✓  
+   Quick-seared tilapia finished with lemon zest and cracked pepper, paired with garlic green beans and quinoa.  
+   #american #seafood #glutenfree
+17. **Spicy Tuna Poke Bowl** ✓  
+   Diced tuna with chili mayo over sushi rice, avocado, and cucumber, served with seaweed salad.  
+   #hawaiian #seafood #spicy
+18. **Grilled Mahi Mahi with Pineapple Salsa** ✓  
+   Char-grilled mahi mahi topped with bright pineapple jalapeño salsa, accompanied by coconut rice and beans.  
+   #caribbean #seafood #glutenfree
 19. **Shrimp Fried Rice** ✓  
     Wok-tossed rice with shrimp, peas, eggs, and soy sauce, served alongside steamed edamame.  
     #chinese #seafood
@@ -181,10 +181,10 @@ Curated list of 102 weeknight-friendly dinners that use accessible pantry staple
 6. **Chicken Tikka Masala** ✓  
    Yogurt-marinated chicken simmered in creamy spiced tomato sauce, served with basmati rice and cooling cucumber salad.  
    #indian #chicken #glutenfree
-7. **Creamy Tuscan Chicken**  
+7. **Creamy Tuscan Chicken** ✓  
    Pan-seared chicken in garlic cream sauce with sun-dried tomatoes and spinach, paired with herbed polenta.  
    #italian #chicken #glutenfree
-8. **Chicken Caesar Wraps**  
+8. **Chicken Caesar Wraps** ✓  
    Grilled chicken, romaine, and parmesan wrapped with tangy dressing, served with baked parmesan crisps.  
    #american #chicken
 9. **Honey Garlic Chicken Stir-Fry** ✓  
@@ -220,9 +220,9 @@ Curated list of 102 weeknight-friendly dinners that use accessible pantry staple
 19. **Chipotle Chicken Quesadillas**  
     Smoky chicken and cheese pressed in tortillas with chipotle salsa, served with guacamole.  
     #mexican #chicken #spicy
-20. **Chicken Marsala**  
-    Pan-seared chicken in mushroom marsala wine sauce, served with creamy mashed potatoes.  
-    #italian #chicken
+20. **Chicken Marsala** ✓  
+   Pan-seared chicken in mushroom marsala wine sauce, served with creamy mashed potatoes.  
+   #italian #chicken
 21. **General Tso's Chicken**  
     Crispy chicken tossed in sweet, tangy sauce, paired with steamed broccoli and rice.  
     #chinese #chicken #spicy
@@ -262,10 +262,10 @@ Curated list of 102 weeknight-friendly dinners that use accessible pantry staple
 7. **Beef Burrito Bowls** ✓  
    Chipotle-style bowls with seasoned beef, beans, corn, and salsa, accompanied by lime-dusted corn tortilla chips.  
    #mexican #beef #glutenfree
-8. **Pork Schnitzel with Lemon**  
+8. **Pork Schnitzel with Lemon** ✓  
    Lightly breaded pork cutlets pan-fried and finished with lemon, served with warm potato salad.  
    #german #pork
-9. **Italian Sausage Rigatoni**  
+9. **Italian Sausage Rigatoni** ✓  
    Rigatoni tossed in tomato sauce with sweet Italian sausage and herbs, paired with rosemary focaccia.  
    #italian #pork
 10. **Skillet Shepherd's Pie** ✓  

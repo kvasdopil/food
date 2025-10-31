@@ -1,0 +1,108 @@
+title: Beef Stroganoff
+summary: >-
+  Tender beef strips in creamy mushroom sauce over egg noodles, paired with
+  dressed cucumber salad.
+servings: 4
+prepTimeMinutes: 20
+cookTimeMinutes: 30
+ingredients:
+  - name: beef sirloin
+    amount: 500g
+    notes: thinly sliced against the grain into 1cm strips
+  - name: egg noodles
+    amount: 300g
+    notes: wide egg noodles
+  - name: brown mushrooms
+    amount: 250g
+    notes: cleaned and sliced
+  - name: onion
+    amount: 1 medium
+    notes: finely chopped
+  - name: garlic
+    amount: 2 cloves
+    notes: minced
+  - name: beef broth
+    amount: 250ml
+    notes: low sodium
+  - name: sour cream
+    amount: 150g
+    notes: full fat
+  - name: plain flour
+    amount: 15g
+    notes: for thickening
+  - name: dijon mustard
+    amount: 1 tsp
+  - name: paprika
+    amount: 1 tsp
+    notes: sweet paprika
+  - name: cucumber
+    amount: 1 large
+    notes: thinly sliced
+  - name: white wine vinegar
+    amount: 2 tbsp
+  - name: caster sugar
+    amount: 1 tsp
+  - name: fresh dill
+    amount: 1 tbsp
+    notes: finely chopped, for the salad
+instructions:
+  - step: 1
+    action: >-
+      Prepare ingredients: Season the *beef sirloin* with salt and pepper. In a
+      small bowl, whisk together the *plain flour* and *paprika*. Toss the
+      seasoned beef strips with the flour mixture until lightly coated. Slice
+      the *brown mushrooms*, chop the *onion*, mince the *garlic*, and thinly
+      slice the *cucumber*.
+  - step: 2
+    action: >-
+      Cook noodles and sear beef: Bring a large pot of salted water to a boil.
+      Add the *egg noodles* and cook according to package directions until al
+      dente. Drain and set aside. Meanwhile, heat a drizzle of oil in a large
+      pan over high heat. Sear the *beef sirloin* in batches for 1-2 minutes per
+      side until browned, then remove from the pan and set aside.
+  - step: 3
+    action: >-
+      Sauté vegetables and build sauce: Reduce heat to medium. Add a knob of
+      butter to the pan. Add the *onion* and cook for 3-4 minutes until
+      softened. Add the *brown mushrooms* and cook for 5-7 minutes until browned
+      and tender. Stir in the *garlic* and cook for 1 minute until fragrant.
+      Pour in the *beef broth*, scraping up any browned bits from the bottom of
+      the pan. Bring to a simmer.
+  - step: 4
+    action: >-
+      Finish stroganoff: Reduce heat to low. Stir in the *dijon mustard* and
+      then gradually whisk in the *sour cream* until smooth and heated through.
+      Do not boil the sauce after adding sour cream. Return the seared beef to
+      the pan and gently stir to combine with the sauce. Cook for 1-2 minutes
+      until the beef is just heated through.
+  - step: 5
+    action: >-
+      Prepare cucumber salad: In a medium bowl, combine the sliced *cucumber*,
+      *white wine vinegar*, *caster sugar*, and *fresh dill*. Season with a
+      pinch of salt and pepper. Toss gently to combine.
+  - step: 6
+    action: >-
+      Serve: Divide the cooked *egg noodles* among plates. Spoon the Beef
+      Stroganoff over the noodles. Serve immediately with the refreshing
+      cucumber salad on the side.
+tags:
+  - russian
+  - beef
+imagePrompt:
+  base: >-
+    Vibrant close-up of Beef Stroganoff, plated to showcase vivid textures and
+    color. Incorporate visual cues from this description: Tender beef strips in
+    creamy mushroom sauce over egg noodles, paired with dressed cucumber salad..
+    Scene: russian-inspired table with soft natural daylight, eye-level
+    perspective, and shallow depth of field. Capture fresh garnish, inviting
+    lighting, and a sense of homemade comfort with no visible steam or vapor. No
+    people or branded props.
+  enhanced: >-
+    A close-up, inviting shot of golden egg noodles forming a bed for succulent,
+    paprika-dusted beef strips generously coated in a rich, creamy mushroom
+    sauce. A vibrant side of thinly sliced cucumber salad, lightly dressed,
+    offers a fresh counterpoint. Bathed in soft, diffused natural daylight, the
+    scene evokes homemade comfort from a slightly elevated eye-level perspective
+    with a shallow depth of field. Garnish with fresh dill or parsley for a pop
+    of green, no visible steam.
+

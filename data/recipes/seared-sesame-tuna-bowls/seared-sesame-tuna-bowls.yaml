@@ -1,0 +1,88 @@
+title: Seared Sesame Tuna Bowls
+summary: >-
+  Sesame-crusted tuna with brown rice, avocado, and ginger soy drizzle,
+  accompanied by pickled radish salad.
+servings: 2
+prepTimeMinutes: 15
+cookTimeMinutes: 40
+ingredients:
+  - name: tuna steaks
+    amount: '2'
+    notes: approx. 150-180g each, fresh or thawed frozen
+  - name: brown rice
+    amount: 150g
+    notes: dry
+  - name: sesame seeds
+    amount: 30g
+    notes: mixed white and black
+  - name: avocado
+    amount: 1 large
+  - name: radishes
+    amount: 150g
+  - name: cucumber
+    amount: 100g
+  - name: rice vinegar
+    amount: 60ml
+  - name: soy sauce
+    amount: 30ml
+  - name: fresh ginger
+    amount: 1 piece
+    notes: approx. 30g
+  - name: sesame oil
+    amount: 15ml
+  - name: maple syrup
+    amount: 15ml
+    notes: or honey
+instructions:
+  - step: 1
+    action: >-
+      Rinse *brown rice* thoroughly. Combine with 300ml water in a small
+      saucepan. Bring to a boil, then reduce heat, cover, and simmer for 30-40
+      minutes until water is absorbed and rice is tender. Let stand, covered,
+      for 5 minutes, then fluff with a fork.
+  - step: 2
+    action: >-
+      Thinly slice *radishes* and *cucumber*. In a medium bowl, whisk together
+      30ml *rice vinegar*, 10ml *maple syrup*, and 5ml grated *fresh ginger*.
+      Add the sliced radishes and cucumber, toss to combine, and set aside to
+      marinate.
+  - step: 3
+    action: >-
+      In a small bowl, whisk together 30ml *soy sauce*, 30ml *rice vinegar*,
+      15ml *sesame oil*, 5ml *maple syrup*, and the remaining 10ml grated *fresh
+      ginger*. Set aside.
+  - step: 4
+    action: >-
+      Pat *tuna steaks* dry with paper towels. Press both sides of each tuna
+      steak firmly into the *sesame seeds* to create a crust. Heat a drizzle of
+      oil in a non-stick pan over medium-high heat until shimmering. Sear the
+      tuna for 1-2 minutes per side for rare, or 3-4 minutes per side for
+      medium, depending on thickness. Remove from pan and slice against the
+      grain into 1 cm thick pieces.
+  - step: 5
+    action: >-
+      Divide the cooked *brown rice* between two bowls. Top with sliced *seared
+      tuna*, sliced *avocado*, and the *pickled radish salad*. Drizzle
+      generously with the *ginger soy drizzle*. Serve immediately.
+tags:
+  - japanese
+  - seafood
+imagePrompt:
+  base: >-
+    Vibrant close-up of Seared Sesame Tuna Bowls, plated to showcase vivid
+    textures and color. Incorporate visual cues from this description:
+    Sesame-crusted tuna with brown rice, avocado, and ginger soy drizzle,
+    accompanied by pickled radish salad.. Scene: japanese-inspired table with
+    soft natural daylight, eye-level perspective, and shallow depth of field.
+    Capture fresh garnish, inviting lighting, and a sense of homemade comfort
+    with no visible steam or vapor. No people or branded props.
+  enhanced: >-
+    Vibrant close-up of perfectly seared, sesame-crusted tuna fanned over fluffy
+    brown rice. Creamy avocado slices and a jewel-toned pickled radish-cucumber
+    salad are artfully arranged. A glistening ginger-soy drizzle cascades,
+    hinting at rich flavor. Bathed in soft, ethereal natural daylight on a
+    Japanese-inspired table, the eye-level perspective with shallow depth of
+    field emphasizes exquisite textures. Garnish with a sprinkle of toasted
+    sesame seeds and a fresh herb sprig, conveying artisanal comfort. No steam,
+    no brands.
+

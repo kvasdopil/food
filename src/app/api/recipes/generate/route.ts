@@ -211,48 +211,6 @@ async function generateRecipe(options: GenerateRequest, apiKey: string): Promise
   }
 }
 
-async function enhanceImagePrompt(recipe: RecipeData, basePrompt: string, apiKey: string) {
-  const descriptiveIngredients = recipe.ingredients
-    .slice(0, 6)
-    .map((item) => item.name)
-    .join(", ");
-  const stepsPreview = recipe.instructions
-    .slice(0, 3)
-    .map((instruction) => instruction.action)
-    .join(" ");
-
-  const requestBody = {
-    contents: [
-      {
-        role: "user",
-        parts: [
-          {
-            text: [
-              "You are a culinary art director crafting vivid food photography prompts.",
-              `Current meal: ${recipe.title}.`,
-              recipe.summary ? `Flavor summary: ${recipe.summary}.` : "",
-              `Key ingredients: ${descriptiveIngredients}.`,
-              `Cooking approach: ${stepsPreview}.`,
-              "Elevate the provided base image brief so it sounds mouthwatering, specifying plating, garnish, lighting, and camera perspective.",
-              "Keep it under 80 words, omit brand names, and do not add people or utensils in hands.",
-              `Base prompt: ${basePrompt}`,
-              "Return only the enhanced prompt text.",
-            ]
-              .filter(Boolean)
-              .join("\n"),
-          },
-        ],
-      },
-    ],
-    generationConfig: {
-      temperature: 0.7,
-    },
-  };
-
-  const response = await callGemini(TEXT_MODEL, requestBody, apiKey);
-  return ensureText(response, "Image prompt enhancement");
-}
-
 function slugify(value: string) {
   return value
     .toLowerCase()
@@ -391,8 +349,6 @@ export async function POST(request: NextRequest) {
       "Capture fresh garnish, inviting lighting, and a sense of homemade comfort with no visible steam or vapor. No people or branded props.",
     ].join(" ");
 
-    const enhancedImagePrompt = await enhanceImagePrompt(recipe, baseImagePrompt, apiKey);
-
     const slug = slugify(recipe.title || title);
 
     // Format response to match POST /api/recipes format
@@ -413,7 +369,6 @@ export async function POST(request: NextRequest) {
       cookTimeMinutes: recipe.cookTimeMinutes ?? null,
       imagePrompt: {
         base: baseImagePrompt,
-        enhanced: enhancedImagePrompt,
       },
     };
 

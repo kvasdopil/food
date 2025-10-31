@@ -1,0 +1,103 @@
+title: Chicken Shawarma Bowls
+summary: >-
+  Spiced chicken cooked on a sheet pan with rice, cucumbers, and tahini sauce,
+  paired with roasted chickpeas.
+servings: 4
+prepTimeMinutes: 20
+cookTimeMinutes: 25
+ingredients:
+  - name: chicken breast
+    amount: 500 g
+    notes: cut into thin strips
+  - name: chickpeas
+    amount: 400 g
+    notes: rinsed and drained, from a 400g can
+  - name: basmati rice
+    amount: 200 g
+    notes: uncooked
+  - name: cucumber
+    amount: 1 large
+    notes: diced
+  - name: tahini
+    amount: 60 ml
+  - name: lemon
+    amount: '1'
+    notes: juiced
+  - name: garlic
+    amount: 2 cloves
+    notes: minced
+  - name: plain yoghurt
+    amount: 120 ml
+    notes: full-fat recommended
+  - name: olive oil
+    amount: 30 ml
+    notes: plus extra for drizzling
+  - name: cumin powder
+    amount: 1 tsp
+  - name: paprika
+    amount: 1 tsp
+  - name: coriander powder
+    amount: 0.5 tsp
+  - name: turmeric
+    amount: 0.5 tsp
+  - name: cinnamon
+    amount: 0.25 tsp
+  - name: fresh parsley
+    amount: a small bunch
+    notes: chopped, for garnish
+instructions:
+  - step: 1
+    action: >-
+      Preheat your oven to 200°C. In a large bowl, combine the *chicken breast*
+      strips with 15 ml of *olive oil*, *cumin powder*, *paprika*, *coriander
+      powder*, *turmeric*, *cinnamon*, a pinch of salt, and a grind of black
+      pepper. Toss well to coat. On a separate section of the same large baking
+      sheet, spread the *chickpeas* and drizzle with the remaining 15 ml of
+      olive oil, salt, and pepper.
+  - step: 2
+    action: >-
+      Place the baking sheet with the *chicken breast* and chickpeas into the
+      preheated oven. Roast for 20-25 minutes, flipping the chicken and stirring
+      the chickpeas halfway through, until the chicken is cooked through and the
+      chickpeas are lightly crisped.
+  - step: 3
+    action: >-
+      While the chicken and chickpeas roast, cook the *basmati rice* according
+      to package instructions.
+  - step: 4
+    action: >-
+      Prepare the tahini sauce. In a small bowl, whisk together the *tahini*,
+      *lemon* juice, *minced garlic*, *plain yoghurt*, and 30-60 ml of cold
+      water until smooth and a pourable consistency is reached. Season the sauce
+      with salt and pepper to taste.
+  - step: 5
+    action: >-
+      Assemble the bowls. Divide the cooked *basmati rice* among four serving
+      bowls. Top each with equal portions of the roasted chicken and chickpeas.
+      Add the diced *cucumber* to each bowl.
+  - step: 6
+    action: >-
+      Drizzle generously with the prepared *tahini* sauce. Garnish with chopped
+      *fresh parsley* before serving.
+tags:
+  - middleeastern
+  - chicken
+  - glutenfree
+imagePrompt:
+  base: >-
+    Vibrant close-up of Chicken Shawarma Bowls, plated to showcase vivid
+    textures and color. Incorporate visual cues from this description: Spiced
+    chicken cooked on a sheet pan with rice, cucumbers, and tahini sauce, paired
+    with roasted chickpeas.. Scene: middleeastern-inspired table with soft
+    natural daylight, eye-level perspective, and shallow depth of field. Capture
+    fresh garnish, inviting lighting, and a sense of homemade comfort with no
+    visible steam or vapor. No people or branded props.
+  enhanced: >-
+    A captivating, slightly low eye-level close-up of a Chicken Shawarma Bowl.
+    Golden, spice-crusted chicken strips are artfully piled atop fluffy basmati
+    rice, adorned with crisp roasted chickpeas and cool cucumber ribbons. A
+    luscious cascade of creamy tahini sauce glistens, finished with a vibrant
+    sprinkle of fresh parsley and a lemon wedge. Bathed in warm, soft natural
+    light with a shallow depth of field, evoking homemade comfort. No steam,
+    people, or branded props.
+

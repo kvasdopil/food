@@ -1,0 +1,80 @@
+title: Pesto Chicken Skillet
+summary: >-
+  Skillet-seared chicken breasts coated in basil pesto with cherry tomatoes,
+  paired with garlic roasted potatoes.
+servings: 4
+prepTimeMinutes: 10
+cookTimeMinutes: 35
+ingredients:
+  - name: chicken breast
+    amount: '4'
+    notes: approx. 150g each
+  - name: potatoes
+    amount: 500g
+    notes: small new potatoes or baby potatoes
+  - name: basil pesto
+    amount: 100g
+  - name: cherry tomatoes
+    amount: 250g
+  - name: garlic
+    amount: 2 cloves
+  - name: olive oil
+    amount: 2 tbsp
+  - name: fresh basil
+    amount: a few leaves
+    notes: for garnish
+  - name: parmesan cheese
+    amount: 20g
+    notes: for garnish, optional
+instructions:
+  - step: 1
+    action: >-
+      Preheat oven to 200°C. Wash and halve the *potatoes*. Mince the *garlic*
+      cloves.
+  - step: 2
+    action: >-
+      In a bowl, toss the halved potatoes with 1 tbsp *olive oil*, the minced
+      garlic, a pinch of salt, and a grind of black pepper. Spread the potatoes
+      in a single layer on a baking tray. Roast for 20-25 minutes, or until
+      tender and slightly crispy.
+  - step: 3
+    action: >-
+      While the potatoes roast, pat the *chicken breast* pieces dry with paper
+      towels. Season both sides with salt and pepper. Heat 1 tbsp *olive oil* in a
+      large skillet over medium-high heat. Sear the chicken breasts for 5-7
+      minutes per side until golden brown and cooked through (internal
+      temperature reaches 74°C). Remove the chicken from the skillet and set
+      aside on a plate.
+  - step: 4
+    action: >-
+      Add the *cherry tomatoes* to the same skillet. Cook for 3-5 minutes,
+      stirring occasionally, until the tomatoes begin to soften and burst.
+      Return the cooked chicken to the skillet. Stir in the *basil pesto*,
+      ensuring the chicken and tomatoes are well coated.
+  - step: 5
+    action: >-
+      Serve the pesto chicken and tomatoes immediately alongside the roasted
+      potatoes. Garnish with *fresh basil* leaves and a sprinkle of grated
+      *parmesan cheese* if desired.
+tags:
+  - italian
+  - chicken
+  - glutenfree
+imagePrompt:
+  base: >-
+    Vibrant close-up of Pesto Chicken Skillet, plated to showcase vivid textures
+    and color. Incorporate visual cues from this description: Skillet-seared
+    chicken breasts coated in basil pesto with cherry tomatoes, paired with
+    garlic roasted potatoes.. Scene: italian-inspired table with soft natural
+    daylight, eye-level perspective, and shallow depth of field. Capture fresh
+    garnish, inviting lighting, and a sense of homemade comfort with no visible
+    steam or vapor. No people or branded props.
+  enhanced: >-
+    A captivating, close-up, eye-level shot of a Pesto Chicken Skillet.
+    Perfectly seared, pesto-coated chicken breasts, artfully arranged with
+    vibrant, halved cherry tomatoes and golden, crispy garlic roasted potatoes.
+    Accentuate the rich green pesto and golden-brown chicken, showcasing tender
+    textures. Bathed in warm, directional natural light, creating inviting
+    highlights. Garnish with fresh basil leaves. Shallow depth of field,
+    conveying homemade comfort on an Italian-inspired table.
+

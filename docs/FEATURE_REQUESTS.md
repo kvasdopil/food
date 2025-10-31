@@ -1,11 +1,20 @@
-- next recipe should open next recipe on the feed, not a random one
-- back swipe should go back in history
-- feed should be a card within a swiper, so it preserves position when swiped back to
-- feed should be infinite
 - list liked meals
-- filter by tags
 - add recipe via agent
   - secure token via vercel?
 - another variation of same meal, like vegeterian version of the same
 - ssr
-- proper loading preview for a recipe
+- proper loading preview for a recipe and feed
+- preload next recipe on desktop
+- proper goback button on desktop
+- search for meals, names, components and tags
+- scenario: 
+  - take a meal, generate a variation (same but vegan/vegeterian/glutenfree/with chicken)
+- scenario: 
+  - give me 5 meals for a week, i need 1 meat, 1 fish, others random
+  - check liked, suggest new for the rest
+  - when done, ask for list of ingridients, go back to (2) if needed
+  - export list of ingridients
+- scenario: 
+  - i know what i want to have, add this recipe to the db
+  - user provides clarifications to generator until satisfied
+  - image preview with nanobanana (quick!)

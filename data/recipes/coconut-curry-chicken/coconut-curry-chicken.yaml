@@ -1,0 +1,91 @@
+title: Coconut Curry Chicken
+summary: >-
+  Chicken simmered in coconut milk with curry spices and bell peppers, served
+  over jasmine rice.
+servings: 4
+prepTimeMinutes: 20
+cookTimeMinutes: 20
+ingredients:
+  - name: chicken breast
+    amount: 500 g
+    notes: cut into 2.5 cm pieces
+  - name: jasmine rice
+    amount: 200 g
+    notes: for serving
+  - name: coconut milk
+    amount: 400 ml
+    notes: full-fat
+  - name: red curry paste
+    amount: 2 tbsp
+    notes: adjust to taste
+  - name: red bell pepper
+    amount: 1 medium
+    notes: deseeded and sliced
+  - name: onion
+    amount: 1 medium
+    notes: finely sliced
+  - name: garlic
+    amount: 3 cloves
+    notes: minced
+  - name: ginger
+    amount: 1 tbsp
+    notes: freshly grated
+  - name: chicken stock
+    amount: 100 ml
+  - name: lime
+    amount: '1'
+    notes: for wedges and juice
+  - name: fresh coriander
+    amount: a small bunch
+    notes: chopped, for garnish
+  - name: vegetable oil
+    amount: 1 tbsp
+instructions:
+  - step: 1
+    action: >-
+      Rinse *jasmine rice* under cold water until clear. Cook according to
+      package instructions (typically 1 part rice to 2 parts water) or in a rice
+      cooker. Set aside, covered, to keep warm.
+  - step: 2
+    action: >-
+      Heat *vegetable oil* in a large pan or wok over medium heat. Add the
+      *onion* and cook for 3-4 minutes until softened. Stir in the *garlic* and
+      *ginger*, cooking for another minute until fragrant.
+  - step: 3
+    action: >-
+      Add the *red curry paste* to the pan and cook for 1 minute, stirring
+      constantly, until aromatic. Add the *chicken breast* pieces and cook,
+      stirring occasionally, until lightly browned on all sides, about 3-5
+      minutes.
+  - step: 4
+    action: >-
+      Pour in the *chicken stock* and *coconut milk*. Bring to a gentle simmer,
+      then add the *red bell pepper*. Reduce heat to low, cover, and simmer for
+      10-12 minutes, or until the chicken is cooked through and the bell pepper
+      is tender-crisp.
+  - step: 5
+    action: >-
+      Stir in a squeeze of *lime* juice. Taste and season with salt and pepper
+      if needed. Serve the coconut curry chicken hot over the cooked jasmine
+      rice, garnished with fresh *coriander* and extra lime wedges.
+tags:
+  - thai
+  - chicken
+  - glutenfree
+imagePrompt:
+  base: >-
+    Vibrant close-up of Coconut Curry Chicken, plated to showcase vivid textures
+    and color. Incorporate visual cues from this description: Chicken simmered
+    in coconut milk with curry spices and bell peppers, served over jasmine
+    rice.. Scene: thai-inspired table with soft natural daylight, eye-level
+    perspective, and shallow depth of field. Capture fresh garnish, inviting
+    lighting, and a sense of homemade comfort with no visible steam or vapor. No
+    people or branded props.
+  enhanced: >-
+    Capture a luxurious, golden Coconut Curry Chicken, generously ladled over
+    pearly jasmine rice. Showcase succulent chicken pieces and vibrant crimson
+    bell peppers bathed in a rich, creamy sauce. Garnish with fresh cilantro and
+    a bright lime wedge. Bathed in warm, directional natural light, highlighting
+    glossy textures and aromatic depth. Eye-level, shallow depth of field,
+    evoking comforting warmth on a rustic, Thai-inspired surface.
+

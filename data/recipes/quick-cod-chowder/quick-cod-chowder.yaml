@@ -1,0 +1,94 @@
+title: Quick Cod Chowder
+summary: >-
+  Creamy potato and cod chowder with sweet corn and dill, served with a warm
+  roasted veggie salad.
+servings: 4
+prepTimeMinutes: 20
+cookTimeMinutes: 35
+ingredients:
+  - name: cod fillets
+    amount: 400 g
+    notes: skinless, boneless
+  - name: potatoes
+    amount: 400 g
+    notes: peeled and diced into 1.5 cm cubes
+  - name: onion
+    amount: 1 medium
+    notes: finely chopped
+  - name: garlic
+    amount: 2 cloves
+    notes: minced
+  - name: sweet corn
+    amount: 200 g
+    notes: frozen or canned, drained
+  - name: full-fat milk
+    amount: 400 ml
+  - name: vegetable stock
+    amount: 300 ml
+  - name: fresh dill
+    amount: 3 tbsp
+    notes: chopped, plus extra for garnish
+  - name: broccoli florets
+    amount: 300 g
+    notes: fresh or frozen
+  - name: cherry tomatoes
+    amount: 200 g
+    notes: halved
+  - name: olive oil
+    amount: 2 tbsp
+    notes: plus extra for roasting
+instructions:
+  - step: 1
+    action: >-
+      Preheat oven to 200°C. On a baking tray, toss *broccoli florets* and
+      *cherry tomatoes* with a drizzle of *olive oil*, salt, and pepper. Roast for
+      15-20 minutes until tender and slightly charred. Set aside.
+  - step: 2
+    action: >-
+      While vegetables roast, heat 1 tbsp *olive oil* in a large pot or Dutch oven
+      over medium heat. Add the *onion* and cook for 5-7 minutes until softened.
+      Add *garlic* and cook for another minute until fragrant.
+  - step: 3
+    action: >-
+      Stir in the diced *potatoes* and *vegetable stock*. Bring to a simmer,
+      then reduce heat, cover, and cook for 10-12 minutes, or until potatoes are
+      tender when pierced with a fork.
+  - step: 4
+    action: >-
+      Add the *cod fillets* to the pot, submerging them in the liquid. Pour in
+      the *full-fat milk* and *sweet corn*. Gently simmer for 5-7 minutes, or
+      until the cod is cooked through and flakes easily. Be careful not to boil,
+      as this can curdle the milk.
+  - step: 5
+    action: >-
+      Remove the cod from the pot and gently flake it into bite-sized pieces
+      using a fork. Return the flaked cod to the chowder. Stir in the *fresh
+      dill*. Season generously with salt and pepper to taste.
+  - step: 6
+    action: >-
+      For the roasted veggie salad dressing, whisk together 1 tbsp *olive oil* and
+      a squeeze of lemon juice. Toss the warm roasted broccoli and cherry
+      tomatoes with the dressing. Serve the hot cod chowder immediately,
+      garnished with extra fresh dill, alongside the warm roasted veggie salad.
+tags:
+  - newengland
+  - seafood
+imagePrompt:
+  base: >-
+    Vibrant close-up of Quick Cod Chowder, plated to showcase vivid textures and
+    color. Incorporate visual cues from this description: Creamy potato and cod
+    chowder with sweet corn and dill, served with a warm roasted veggie salad..
+    Scene: newengland-inspired table with soft natural daylight, eye-level
+    perspective, and shallow depth of field. Capture fresh garnish, inviting
+    lighting, and a sense of homemade comfort with no visible steam or vapor. No
+    people or branded props.
+  enhanced: >-
+    A decadent, intimate close-up of Quick Cod Chowder, generously ladled into a
+    rustic stoneware bowl, revealing creamy textures, flaky cod, and golden
+    corn. A vibrant sprig of fresh dill crowns the surface. Alongside, a warm
+    roasted broccoli and cherry tomato salad, showing delightful char, is
+    artfully arranged. Bathed in soft, luminous natural daylight, the scene
+    evokes pure New England comfort. Shot at a slightly elevated eye-level with
+    a shallow depth of field, highlighting the dish's inviting warmth and
+    homemade appeal.
+

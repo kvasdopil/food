@@ -1,0 +1,94 @@
+title: Thai Basil Tofu Stir-Fry
+summary: >-
+  Wok-seared tofu with basil, chilies, and green beans in a savory garlic sauce,
+  paired with jasmine rice.
+servings: 2
+prepTimeMinutes: 25
+cookTimeMinutes: 20
+ingredients:
+  - name: extra-firm tofu
+    amount: 400g
+    notes: pressed and cubed into 2cm pieces
+  - name: jasmine rice
+    amount: 200g
+    notes: uncooked
+  - name: garlic
+    amount: 4 cloves
+    notes: minced
+  - name: red bird's eye chilies
+    amount: 2-4
+    notes: sliced, adjust to preferred spice level
+  - name: green beans
+    amount: 200g
+    notes: trimmed and halved
+  - name: fresh thai basil leaves
+    amount: 50g
+    notes: packed
+  - name: soy sauce
+    amount: 30ml
+  - name: dark soy sauce
+    amount: 5ml
+    notes: for color and depth of flavor
+  - name: vegetarian oyster sauce
+    amount: 15ml
+    notes: or mushroom stir-fry sauce
+  - name: sugar
+    amount: 5g
+  - name: water
+    amount: 30ml
+instructions:
+  - step: 1
+    action: >-
+      Cook the *jasmine rice* according to package directions. While the rice
+      cooks, prepare the remaining ingredients.
+  - step: 2
+    action: >-
+      In a small bowl, whisk together the *soy sauce*, *dark soy sauce*,
+      *vegetarian oyster sauce*, *sugar*, and *water* to create the stir-fry
+      sauce. Set aside.
+  - step: 3
+    action: >-
+      Heat a wok or large frying pan over medium-high heat with a drizzle of
+      vegetable oil. Add the *extra-firm tofu* cubes and pan-fry for 5-7
+      minutes, turning occasionally, until golden brown and crispy on all sides.
+      Remove the tofu from the wok and set aside.
+  - step: 4
+    action: >-
+      Add a little more oil to the wok if needed. Add the *minced garlic* and
+      *sliced red bird's eye chilies*. Stir-fry for 30 seconds until fragrant,
+      being careful not to burn the garlic.
+  - step: 5
+    action: >-
+      Add the *trimmed green beans* to the wok and stir-fry for 2-3 minutes
+      until they are bright green and slightly tender-crisp.
+  - step: 6
+    action: >-
+      Return the *crispy tofu* to the wok. Pour in the prepared sauce. Toss
+      everything together to coat evenly and cook for 1-2 minutes until the
+      sauce slightly thickens.
+  - step: 7
+    action: >-
+      Remove the wok from the heat. Stir in the *fresh thai basil leaves* until
+      they are just wilted. Serve the Thai Basil Tofu Stir-Fry immediately over
+      the cooked jasmine rice.
+tags:
+  - thai
+  - vegan
+  - spicy
+imagePrompt:
+  base: >-
+    Vibrant close-up of Thai Basil Tofu Stir-Fry, plated to showcase vivid
+    textures and color. Incorporate visual cues from this description:
+    Wok-seared tofu with basil, chilies, and green beans in a savory garlic
+    sauce, paired with jasmine rice.. Scene: thai-inspired table with soft
+    natural daylight, eye-level perspective, and shallow depth of field. Capture
+    fresh garnish, inviting lighting, and a sense of homemade comfort with no
+    visible steam or vapor. No people or branded props.
+  enhanced: >-
+    A vibrant, close-up, slightly elevated shot of Thai Basil Tofu Stir-Fry.
+    Golden, crispy wok-seared tofu cubes are nestled among vibrant green beans
+    and fiery red bird's eye chilies, all glistening with a savory garlic sauce.
+    Artfully plated beside fluffy jasmine rice, garnished generously with fresh
+    Thai basil leaves. Bathed in soft, warm natural daylight, creating an
+    inviting, homemade glow with a shallow depth of field.
+

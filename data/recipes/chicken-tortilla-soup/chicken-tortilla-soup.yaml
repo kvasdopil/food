@@ -1,0 +1,95 @@
+title: Chicken Tortilla Soup
+summary: >-
+  Zesty tomato broth with shredded chicken, corn, and crunchy corn tortilla
+  strips, accompanied by avocado salad.
+servings: 4
+prepTimeMinutes: 25
+cookTimeMinutes: 25
+ingredients:
+  - name: chicken breast
+    amount: '2'
+    notes: approx. 200g each
+  - name: corn tortillas
+    amount: '6'
+    notes: 15 cm diameter
+  - name: vegetable oil
+    amount: 50 ml
+    notes: for frying tortillas
+  - name: onion
+    amount: 1 medium
+  - name: garlic
+    amount: 3 cloves
+  - name: chicken broth
+    amount: 1.5 L
+  - name: canned diced tomatoes
+    amount: 400g can
+  - name: canned corn
+    amount: 300g can
+    notes: drained
+  - name: chili powder
+    amount: 2 tsp
+  - name: cumin
+    amount: 1 tsp
+  - name: lime
+    amount: '1'
+  - name: avocados
+    amount: 2 medium
+  - name: coriander
+    amount: 1 small bunch
+    notes: approx. 30g
+instructions:
+  - step: 1
+    action: >-
+      Prep the chicken: Place *chicken breast* in a pot, cover with water, and
+      boil for 15-20 minutes until cooked through. Remove, let cool slightly,
+      then shred using two forks. Reserve the cooking liquid if desired for
+      extra broth.
+  - step: 2
+    action: >-
+      Prepare tortilla strips: Slice *corn tortillas* into thin strips (approx.
+      0.5 cm wide). Heat *vegetable oil* in a large pan over medium-high heat.
+      Fry tortilla strips in batches until golden and crispy. Remove with a
+      slotted spoon and drain on paper towels. Season lightly with salt.
+  - step: 3
+    action: >-
+      Sauté aromatics and build broth: In a large pot, sauté chopped *onion* and
+      minced *garlic* in a drizzle of oil until softened, about 5 minutes. Add
+      *chili powder* and *cumin*, cook for 1 minute until fragrant. Pour in
+      *chicken broth* and *canned diced tomatoes*. Bring to a simmer.
+  - step: 4
+    action: >-
+      Combine and finish soup: Add the shredded chicken and *canned corn* to the
+      simmering broth. Cook for 5-7 minutes to allow flavors to meld. Squeeze in
+      the juice of half a *lime*. Season with salt and pepper to taste.
+  - step: 5
+    action: >-
+      Prepare avocado salad: While the soup simmers, dice *avocados* and chop
+      *coriander*. In a small bowl, gently combine the diced avocado, chopped
+      coriander, and the juice of the remaining half lime. Season with a pinch
+      of salt.
+  - step: 6
+    action: >-
+      Serve: Ladle hot soup into bowls. Garnish generously with crispy tortilla
+      strips and a spoonful of the avocado salad.
+tags:
+  - mexican
+  - chicken
+  - glutenfree
+imagePrompt:
+  base: >-
+    Vibrant close-up of Chicken Tortilla Soup, plated to showcase vivid textures
+    and color. Incorporate visual cues from this description: Zesty tomato broth
+    with shredded chicken, corn, and crunchy corn tortilla strips, accompanied
+    by avocado salad.. Scene: mexican-inspired table with soft natural daylight,
+    eye-level perspective, and shallow depth of field. Capture fresh garnish,
+    inviting lighting, and a sense of homemade comfort with no visible steam or
+    vapor. No people or branded props.
+  enhanced: >-
+    An intimate, slightly overhead close-up of vibrant Chicken Tortilla Soup in
+    a rustic ceramic bowl. Zesty tomato broth cradles tender shredded chicken
+    and golden corn. Artfully arranged, crispy corn tortilla strips, diced
+    avocado, and a swirl of cool crema crown the dish. Garnished with fresh
+    cilantro and a lime wedge. Bathed in soft, diffused natural light on a
+    subtly textured, Mexican-inspired surface, with a shallow depth of field
+    accentuating homemade comfort. No steam.
+
