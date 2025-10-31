@@ -58,24 +58,24 @@ instructions:
       Cook *jasmine rice* according to package instructions. While rice cooks,
       prepare the vegetables. Cut *carrots* into thin rounds or julienne. Deseed
       and slice *red bell pepper* and *yellow bell pepper* into thin strips.
-      Break *broccoli* into small florets. Mince *garlic* and grate *ginger*.
+      Break *broccoli florets* into small florets. Mince *garlic* and grate *ginger*.
       Cut *chicken breast* into 2cm pieces.
   - step: 2
     action: >-
       In a small bowl, whisk together *soy sauce*, *honey*, *rice vinegar*,
-      *sesame oil*, 60ml water, and *cornstarch*. Set aside.
+      *sesame oil*, 60ml *water*, and *cornstarch*. Set aside.
   - step: 3
     action: >-
       Heat a large wok or frying pan over medium-high heat with a drizzle of
-      vegetable oil. Add the *chicken breast* pieces and stir-fry for 4-6
+      *vegetable oil*. Add the *chicken breast* pieces and stir-fry for 4-6
       minutes, until browned and cooked through. Remove chicken from the pan and
       set aside.
   - step: 4
     action: >-
-      Add a little more vegetable oil to the hot pan if needed. Add the
+      Add a little more *vegetable oil* to the hot pan if needed. Add the
       *carrots* and *broccoli florets* and stir-fry for 3-4 minutes until
       slightly tender-crisp. Add the *red bell pepper*, *yellow bell pepper*,
-      *minced garlic*, and *grated ginger*. Stir-fry for another 2-3 minutes
+      *garlic*, and *ginger*. Stir-fry for another 2-3 minutes
       until bell peppers are crisp-tender.
   - step: 5
     action: >-
@@ -85,9 +85,8 @@ instructions:
       thickens and coats everything beautifully.
   - step: 6
     action: >-
-      Serve the *honey garlic chicken stir-fry* immediately over the cooked
-      *jasmine rice*. Garnish with *toasted sesame seeds* and *sliced spring
-      onions*.
+      Serve the honey garlic chicken stir-fry immediately over the cooked
+      *jasmine rice*. Garnish with *sesame seeds* and *spring onions*.
 tags:
   - chinese
   - chicken

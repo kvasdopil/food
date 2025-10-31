@@ -6,41 +6,41 @@ servings: 4
 prepTimeMinutes: 15
 cookTimeMinutes: 30
 ingredients:
-  - name: Salmon fillets
-    amount: 4 (approx. 150-180g each)
-    notes: skin-on or skinless
-  - name: Olive oil
+  - name: salmon fillets
+    amount: 4
+    notes: approx. 150-180g each, skin-on or skinless
+  - name: olive oil
     amount: a drizzle
     notes: for searing and sauce
-  - name: Garlic
+  - name: garlic
     amount: 4-5 cloves
     notes: minced
-  - name: Sun-dried tomatoes
+  - name: sun-dried tomatoes
     amount: 60g
     notes: oil-packed, drained and chopped
-  - name: Fresh spinach
+  - name: fresh spinach
     amount: 200g
-  - name: Heavy cream
+  - name: heavy cream
     amount: 250ml
-  - name: Chicken or vegetable stock
+  - name: chicken or vegetable stock
     amount: 125ml
-  - name: Parmesan cheese
+  - name: parmesan cheese
     amount: 50g
     notes: freshly grated
-  - name: Potatoes
+  - name: potatoes
     amount: 750g
     notes: e.g., Maris Piper or Yukon Gold, peeled and quartered
-  - name: Unsalted butter
+  - name: unsalted butter
     amount: 60g
-  - name: Milk
+  - name: milk
     amount: 60ml
     notes: whole or semi-skimmed
-  - name: Fresh parsley
+  - name: fresh parsley
     amount: a small bunch
     notes: chopped, for garnish (optional)
-  - name: Salt
+  - name: salt
     amount: to taste
-  - name: Black pepper
+  - name: black pepper
     amount: to taste
 instructions:
   - step: 1

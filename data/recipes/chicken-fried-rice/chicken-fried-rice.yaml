@@ -6,37 +6,37 @@ servings: 4
 prepTimeMinutes: 20
 cookTimeMinutes: 30
 ingredients:
-  - name: Cooked chicken breast
+  - name: cooked chicken breast
     amount: 300g
     notes: shredded or diced, preferably leftover
-  - name: Cold cooked rice
+  - name: cold cooked rice
     amount: 500g
     notes: day-old jasmine rice works best
-  - name: Large eggs
+  - name: large eggs
     amount: '3'
-  - name: Frozen peas
+  - name: frozen peas
     amount: 100g
-  - name: Carrot
+  - name: carrot
     amount: 1 medium
     notes: finely diced
-  - name: Garlic
+  - name: garlic
     amount: 2 cloves
     notes: minced
-  - name: Ginger
+  - name: ginger
     amount: 1 cm piece
     notes: grated
-  - name: Soy sauce
+  - name: soy sauce
     amount: 60ml
-  - name: Sesame oil
+  - name: sesame oil
     amount: 15ml
-  - name: Scallions
+  - name: scallions
     amount: '4'
     notes: thinly sliced, divided for fried rice and salad
-  - name: Cucumber
+  - name: cucumber
     amount: 1 medium
-  - name: Rice vinegar
+  - name: rice vinegar
     amount: 30ml
-  - name: Sugar
+  - name: sugar
     amount: 5g
 instructions:
   - step: 1

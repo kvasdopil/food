@@ -6,34 +6,34 @@ servings: 4
 prepTimeMinutes: 20
 cookTimeMinutes: 35
 ingredients:
-  - name: Chicken breasts
-    amount: 2 (approx. 300-400g total)
-    notes: thinly sliced or pounded to 1cm thickness
-  - name: Plain flour
+  - name: chicken breasts
+    amount: 2
+    notes: approx. 300-400g total, thinly sliced or pounded to 1cm thickness
+  - name: plain flour
     amount: 50g
-  - name: Lemons
+  - name: lemons
     amount: 2 medium
     notes: juice of 1.5, slices of 0.5 for garnish
-  - name: Capers
+  - name: capers
     amount: 2 tbsp
     notes: drained
-  - name: Chicken stock
+  - name: chicken stock
     amount: 150ml
-  - name: Unsalted butter
+  - name: unsalted butter
     amount: 50g
     notes: 20g for chicken, 30g for potatoes
-  - name: Potatoes
+  - name: potatoes
     amount: 500g
     notes: peeled and diced (e.g., Maris Piper or similar starchy variety)
-  - name: Garlic
+  - name: garlic
     amount: 3 cloves
     notes: minced (2 cloves for potatoes, 1 clove for spinach)
-  - name: Milk
+  - name: milk
     amount: 60ml
     notes: warm
-  - name: Fresh spinach
+  - name: fresh spinach
     amount: 200g
-  - name: Fresh parsley
+  - name: fresh parsley
     amount: 2 tbsp
     notes: finely chopped, for garnish
 instructions:

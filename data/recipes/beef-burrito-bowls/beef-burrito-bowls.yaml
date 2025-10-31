@@ -6,45 +6,45 @@ servings: 4
 prepTimeMinutes: 20
 cookTimeMinutes: 30
 ingredients:
-  - name: Ground beef
+  - name: ground beef
     amount: 500 g
     notes: lean
-  - name: Long-grain white rice
+  - name: long-grain white rice
     amount: 200 g
-  - name: Canned black beans
+  - name: canned black beans
     amount: 400 g
     notes: rinsed and drained
-  - name: Canned corn
+  - name: canned corn
     amount: 300 g
     notes: drained
-  - name: Salsa
+  - name: salsa
     amount: 250 ml
     notes: mild or medium
-  - name: Onion
+  - name: onion
     amount: 1 medium
     notes: finely chopped
-  - name: Garlic
+  - name: garlic
     amount: 2 cloves
     notes: minced
-  - name: Chili powder
+  - name: chili powder
     amount: 2 tsp
-  - name: Ground cumin
+  - name: ground cumin
     amount: 1 tsp
-  - name: Dried oregano
+  - name: dried oregano
     amount: 0.5 tsp
-  - name: Corn tortillas
+  - name: corn tortillas
     amount: '6'
     notes: cut into wedges
-  - name: Lime
+  - name: lime
     amount: '1'
     notes: half for chips, half for serving
-  - name: Fresh cilantro
+  - name: fresh cilantro
     amount: small bunch
     notes: chopped, for garnish
 instructions:
   - step: 1
     action: >-
-      Cook the *long-grain white rice*: Combine 200 g of *long-grain white rice*
+      Cook the *long-grain white rice*: Combine 200 g of long-grain white rice
       with 400 ml of water and a pinch of salt in a saucepan. Bring to a boil,
       then reduce heat to low, cover, and simmer for 15-18 minutes, or until all
       water is absorbed. Remove from heat and let stand, covered, for 5 minutes.

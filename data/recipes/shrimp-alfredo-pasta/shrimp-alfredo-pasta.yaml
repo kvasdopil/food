@@ -6,27 +6,27 @@ servings: 4
 prepTimeMinutes: 15
 cookTimeMinutes: 25
 ingredients:
-  - name: Fettuccine
+  - name: fettuccine
     amount: 400 g
-  - name: Large shrimp
+  - name: large shrimp
     amount: 450 g
     notes: peeled and deveined
-  - name: Broccoli florets
+  - name: broccoli florets
     amount: 500 g
-  - name: Heavy cream
+  - name: heavy cream
     amount: 250 ml
-  - name: Parmesan cheese
+  - name: parmesan cheese
     amount: 100 g
     notes: freshly grated
-  - name: Garlic
+  - name: garlic
     amount: 4 cloves
     notes: minced
-  - name: Unsalted butter
+  - name: unsalted butter
     amount: 60 g
-  - name: Lemon
-    amount: 1/2
+  - name: lemon
+    amount: 1/2 lemon
     notes: for juice, optional
-  - name: Fresh parsley
+  - name: fresh parsley
     amount: 15 g
     notes: chopped, for garnish, optional
 instructions:

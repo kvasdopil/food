@@ -6,47 +6,47 @@ servings: 4
 prepTimeMinutes: 20
 cookTimeMinutes: 35
 ingredients:
-  - name: Lean ground beef
+  - name: lean ground beef
     amount: 500 g
-  - name: Potatoes
+  - name: potatoes
     amount: 700 g
     notes: Peeled and quartered, e.g., Russet or Yukon Gold
-  - name: Medium onion
+  - name: medium onion
     amount: '1'
     notes: Finely chopped
-  - name: Medium carrots
+  - name: medium carrots
     amount: '2'
     notes: Finely diced
-  - name: Frozen peas
+  - name: frozen peas
     amount: 150 g
-  - name: Beef broth
+  - name: beef broth
     amount: 250 ml
-  - name: Milk
+  - name: milk
     amount: 60 ml
-  - name: Butter
+  - name: butter
     amount: 30 g
     notes: Divided for mash and serving
-  - name: Tomato paste
+  - name: tomato paste
     amount: 2 tbsp
-  - name: Worcestershire sauce
+  - name: worcestershire sauce
     amount: 1 tsp
     notes: Optional
-  - name: Plain flour
+  - name: plain flour
     amount: 1 tbsp
     notes: Use cornstarch for a gluten-free option
-  - name: Olive oil
+  - name: olive oil
     amount: A drizzle
-  - name: Salt
+  - name: salt
     amount: To taste
-  - name: Black pepper
+  - name: black pepper
     amount: To taste
-  - name: Dried thyme
+  - name: dried thyme
     amount: 1/2 tsp
 instructions:
   - step: 1
     action: >-
       Place *potatoes* in a large pot, cover with cold water, and add a pinch of
-      salt. Bring to a boil and cook for 15-20 minutes, or until very tender.
+      *salt*. Bring to a boil and cook for 15-20 minutes, or until very tender.
       Drain well.
   - step: 2
     action: >-

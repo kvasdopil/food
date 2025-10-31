@@ -6,42 +6,42 @@ servings: 4
 prepTimeMinutes: 15
 cookTimeMinutes: 15
 ingredients:
-  - name: Cooked rice
+  - name: cooked rice
     amount: 400 g
     notes: preferably day-old and chilled
-  - name: Raw shrimp
+  - name: raw shrimp
     amount: 300 g
     notes: peeled, deveined, tails on or off
-  - name: Frozen peas
+  - name: frozen peas
     amount: 150 g
-  - name: Large eggs
+  - name: large eggs
     amount: '2'
-  - name: Soy sauce
+  - name: soy sauce
     amount: 60 ml
-  - name: Garlic
+  - name: garlic
     amount: 2 cloves
     notes: minced
-  - name: Fresh ginger
+  - name: fresh ginger
     amount: 15 g
     notes: grated
-  - name: Sesame oil
+  - name: sesame oil
     amount: 1 tsp
-  - name: Neutral cooking oil
+  - name: neutral cooking oil
     amount: 2 tbsp
     notes: such as canola or vegetable oil
-  - name: Frozen edamame
+  - name: frozen edamame
     amount: 200 g
     notes: in pods or shelled, for serving
-  - name: Salt
+  - name: salt
     amount: a pinch
-  - name: Black pepper
+  - name: black pepper
     amount: a pinch
 instructions:
   - step: 1
     action: >-
       Prepare your ingredients: If using *frozen peas*, thaw them. Mince the
       *garlic* and grate the *fresh ginger*. Whisk the *large eggs* in a small
-      bowl with a pinch of *salt* and *black pepper*. If your *shrimp* are not
+      bowl with a pinch of *salt* and *black pepper*. If your *raw shrimp* are not
       already peeled and deveined, prepare them now.
   - step: 2
     action: >-
@@ -64,15 +64,14 @@ instructions:
   - step: 5
     action: >-
       Add the thawed *frozen peas*, cooked *raw shrimp*, and scrambled *large
-      eggs* back into the wok. Pour the *soy sauce* over everything and drizzle
-      with *sesame oil*. Toss vigorously to combine all ingredients and ensure
+      eggs* back into the wok. Pour the *soy sauce* over everything and add 1 tsp of *sesame oil*. Toss vigorously to combine all ingredients and ensure
       the rice is evenly coated with the *soy sauce*. Cook for another 2-3
       minutes until everything is hot.
   - step: 6
     action: >-
       While the fried rice is cooking, prepare the *frozen edamame*: steam or
-      boil according to package directions. Serve the *shrimp fried rice*
-      immediately, garnished with the steamed *frozen edamame* on the side.
+      boil according to package directions. Serve the shrimp fried rice
+      immediately, garnished with the steamed frozen edamame on the side.
 tags:
   - chinese
   - seafood

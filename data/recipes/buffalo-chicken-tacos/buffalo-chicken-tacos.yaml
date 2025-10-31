@@ -6,36 +6,36 @@ servings: 4
 prepTimeMinutes: 15
 cookTimeMinutes: 15
 ingredients:
-  - name: Boneless, Skinless Chicken Breast
+  - name: boneless, skinless chicken breast
     amount: 500 g
     notes: cut into 1-2 cm cubes
-  - name: Buffalo Sauce
+  - name: buffalo sauce
     amount: 120 ml
-  - name: Small Tortillas
+  - name: small tortillas
     amount: '12'
     notes: corn or flour
-  - name: Red Cabbage
+  - name: red cabbage
     amount: 200 g
     notes: shredded
-  - name: Carrot
+  - name: carrot
     amount: 1 medium
     notes: grated
-  - name: Mayonnaise
+  - name: mayonnaise
     amount: 60 g
-  - name: Lime
+  - name: lime
     amount: '1'
     notes: juiced (approx 30 ml)
-  - name: Celery Stalks
+  - name: celery stalks
     amount: '4'
     notes: for serving
-  - name: Ranch Dressing
+  - name: ranch dressing
     amount: 120 ml
     notes: for serving
-  - name: Garlic Powder
+  - name: garlic powder
     amount: 1 tsp
-  - name: Onion Powder
+  - name: onion powder
     amount: 1 tsp
-  - name: Sugar
+  - name: sugar
     amount: 1/2 tsp
 instructions:
   - step: 1
@@ -66,7 +66,7 @@ instructions:
   - step: 6
     action: >-
       Fill each warm *tortilla* with a generous spoonful of the saucy *buffalo
-      chicken*. Top with a spoonful of the *slaw*. Serve immediately with
+      chicken*. Top with a spoonful of the prepared cabbage and carrot mixture. Serve immediately with
       *celery stalks* and a side of *ranch dressing*.
 tags:
   - american
