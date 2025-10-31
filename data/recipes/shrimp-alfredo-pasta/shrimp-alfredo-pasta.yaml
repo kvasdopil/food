@@ -1,0 +1,93 @@
+title: Shrimp Alfredo Pasta
+summary: >-
+  Creamy parmesan sauce coating fettuccine and sautéed shrimp, plated with
+  garlicky roasted broccoli.
+servings: 4
+prepTimeMinutes: 15
+cookTimeMinutes: 25
+ingredients:
+  - name: Fettuccine
+    amount: 400 g
+  - name: Large shrimp
+    amount: 450 g
+    notes: peeled and deveined
+  - name: Broccoli florets
+    amount: 500 g
+  - name: Heavy cream
+    amount: 250 ml
+  - name: Parmesan cheese
+    amount: 100 g
+    notes: freshly grated
+  - name: Garlic
+    amount: 4 cloves
+    notes: minced
+  - name: Unsalted butter
+    amount: 60 g
+  - name: Lemon
+    amount: 1/2
+    notes: for juice, optional
+  - name: Fresh parsley
+    amount: 15 g
+    notes: chopped, for garnish, optional
+instructions:
+  - step: 1
+    action: >-
+      Preheat oven to 200°C. On a baking sheet, toss the *broccoli florets* with
+      a drizzle of olive oil, half of the minced *garlic*, a pinch of salt, and
+      a grind of black pepper. Roast for 15-20 minutes, or until tender-crisp
+      and lightly browned.
+  - step: 2
+    action: >-
+      Bring a large pot of salted water to a boil. Add the *fettuccine* and cook
+      according to package directions until al dente. Reserve 120 ml of the
+      pasta cooking water before draining the pasta.
+  - step: 3
+    action: >-
+      While the broccoli roasts and pasta cooks, heat a large skillet over
+      medium-high heat. Add a drizzle of olive oil. Add the *large shrimp* and
+      cook for 2-3 minutes per side, or until pink and opaque. Season with a
+      pinch of salt and pepper. Remove the shrimp from the skillet and set
+      aside.
+  - step: 4
+    action: >-
+      In the same skillet, reduce heat to medium. Melt the *unsalted butter*.
+      Add the remaining minced *garlic* and cook for 30 seconds until fragrant.
+      Pour in the *heavy cream* and bring to a gentle simmer, stirring
+      occasionally.
+  - step: 5
+    action: >-
+      Stir in the grated *parmesan cheese* until melted and the sauce is smooth
+      and thickened. If the sauce is too thick, add a splash of the reserved
+      pasta water until it reaches your desired consistency. Season the sauce
+      with salt and black pepper to taste.
+  - step: 6
+    action: >-
+      Add the cooked *fettuccine* and sautéed *large shrimp* to the sauce in the
+      skillet. Toss gently to coat everything evenly. If using, squeeze in the
+      juice from the *lemon*.
+  - step: 7
+    action: >-
+      Serve the shrimp alfredo pasta immediately, topped with the roasted
+      *broccoli florets* and a sprinkle of chopped *fresh parsley* if desired.
+tags:
+  - italian
+  - seafood
+imagePrompt:
+  base: >-
+    Vibrant close-up of Shrimp Alfredo Pasta, plated to showcase vivid textures
+    and color. Incorporate visual cues from this description: Creamy parmesan
+    sauce coating fettuccine and sautéed shrimp, plated with garlicky roasted
+    broccoli.. Scene: italian-inspired table with soft natural daylight,
+    eye-level perspective, and shallow depth of field. Capture fresh garnish,
+    inviting lighting, and a sense of homemade comfort with no visible steam or
+    vapor. No people or branded props.
+  enhanced: >-
+    A captivating, tight close-up of Shrimp Alfredo. Golden fettuccine ribbons,
+    generously coated in a velvety parmesan sauce, artfully swirled and crowned
+    with perfectly seared pink shrimp. Alongside, vibrant emerald roasted
+    broccoli florets, glistening with garlic. Bathed in luminous, soft natural
+    side lighting, from a low eye-level perspective with a shallow depth of
+    field, emphasizing the rich textures and inviting homemade comfort.
+    Garnished with fresh parsley and a dusting of grated Parmesan. No steam, no
+    people, no brands.
+

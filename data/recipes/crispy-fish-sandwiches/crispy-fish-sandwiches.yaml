@@ -1,0 +1,101 @@
+title: Crispy Fish Sandwiches
+summary: >-
+  Lightly fried fish fillets tucked into buns with tartar sauce and lettuce,
+  served with oven-baked fries.
+servings: 4
+prepTimeMinutes: 25
+cookTimeMinutes: 20
+ingredients:
+  - name: cod fillets
+    amount: 400 g
+    notes: or other firm white fish, about 4 fillets
+  - name: plain flour
+    amount: 60 g
+  - name: large egg
+    amount: '1'
+  - name: panko breadcrumbs
+    amount: 100 g
+  - name: vegetable oil
+    amount: 250 ml
+    notes: for frying
+  - name: burger buns
+    amount: '4'
+  - name: iceberg lettuce
+    amount: 4 leaves
+    notes: or similar crisp lettuce
+  - name: potatoes
+    amount: 2 large
+    notes: russet or similar, for fries
+  - name: mayonnaise
+    amount: 120 ml
+  - name: gherkins
+    amount: 2 tbsp
+    notes: finely chopped
+  - name: fresh dill
+    amount: 1 tbsp
+    notes: finely chopped, optional
+  - name: lemon juice
+    amount: 1 tbsp
+  - name: salt
+    amount: to taste
+  - name: black pepper
+    amount: to taste
+  - name: olive oil
+    amount: a drizzle
+instructions:
+  - step: 1
+    action: >-
+      Preheat your oven to 200°C. Wash and cut the *potatoes* into fry-like
+      sticks. Toss them with a drizzle of *olive oil*, a pinch of *salt*, and
+      *black pepper* on a baking tray. Spread them in a single layer and bake
+      for 25-30 minutes, flipping halfway, until golden and crispy.
+  - step: 2
+    action: >-
+      While the fries bake, prepare the tartar sauce. In a small bowl, combine
+      the *mayonnaise*, finely chopped *gherkins*, *fresh dill* (if using), and
+      *lemon juice*. Season with a pinch of *salt* and *black pepper*, then stir
+      well and set aside.
+  - step: 3
+    action: >-
+      Pat the *cod fillets* dry with paper towels. Set up a breading station:
+      place the *plain flour* on one plate, whisk the *large egg* in a shallow
+      bowl, and put the *panko breadcrumbs* on another plate. Season the *flour*
+      with a pinch of salt and pepper. Dredge each *fish fillet* first in the
+      flour, shaking off excess, then dip in the egg, and finally coat
+      thoroughly in the breadcrumbs, pressing gently to adhere.
+  - step: 4
+    action: >-
+      Heat the *vegetable oil* in a large non-stick pan over medium-high heat
+      until shimmering (about 170°C). Carefully place 2 *breaded fish fillets*
+      into the hot oil, ensuring not to overcrowd the pan. Fry for 3-4 minutes
+      per side, until golden brown and cooked through. Remove and place on a
+      wire rack lined with paper towels to drain excess oil. Repeat with the
+      remaining fish fillets. Lightly toast the *burger buns* in the oven during
+      the last few minutes of the fries' cooking time, or in a dry pan.
+  - step: 5
+    action: >-
+      To assemble the sandwiches, spread a generous spoonful of the prepared
+      *tartar sauce* on both halves of each toasted *burger bun*. Place a
+      *lettuce* leaf on the bottom bun, top with a crispy *fish fillet*, and
+      then add the top bun. Serve immediately with the hot oven-baked fries.
+tags:
+  - american
+  - seafood
+imagePrompt:
+  base: >-
+    Vibrant close-up of Crispy Fish Sandwiches, plated to showcase vivid
+    textures and color. Incorporate visual cues from this description: Lightly
+    fried fish fillets tucked into buns with tartar sauce and lettuce, served
+    with oven-baked fries.. Scene: american-inspired table with soft natural
+    daylight, eye-level perspective, and shallow depth of field. Capture fresh
+    garnish, inviting lighting, and a sense of homemade comfort with no visible
+    steam or vapor. No people or branded props.
+  enhanced: >-
+    A dynamic close-up, eye-level shot of a Crispy Fish Sandwich, bun slightly
+    askew to reveal a golden panko-crusted cod fillet, vibrant green lettuce,
+    and a generous dollop of creamy dill tartar sauce. Freshly baked, perfectly
+    golden fries are artfully piled alongside. Bathed in soft, inviting natural
+    light, the scene exudes homemade comfort. Garnish with bright lemon wedges
+    and fresh dill sprigs, showcasing irresistible textures and vivid colors
+    with shallow depth of field. No steam, people, or brands.
+

@@ -1,0 +1,110 @@
+title: Honey Garlic Chicken Stir-Fry
+summary: >-
+  Quick stir-fry with carrots, bell peppers, and sticky honey garlic glaze,
+  plated with jasmine rice.
+servings: 4
+prepTimeMinutes: 25
+cookTimeMinutes: 15
+ingredients:
+  - name: chicken breast
+    amount: 500g
+    notes: cut into 2cm pieces
+  - name: carrots
+    amount: 2 medium
+    notes: peeled and thinly sliced into rounds or julienned
+  - name: red bell pepper
+    amount: 1 large
+    notes: deseeded and sliced into thin strips
+  - name: yellow bell pepper
+    amount: 1 large
+    notes: deseeded and sliced into thin strips
+  - name: broccoli florets
+    amount: 200g
+    notes: small florets
+  - name: garlic
+    amount: 4 cloves
+    notes: minced
+  - name: ginger
+    amount: 2cm piece
+    notes: grated
+  - name: soy sauce
+    amount: 60ml
+  - name: honey
+    amount: 60ml
+  - name: rice vinegar
+    amount: 15ml
+  - name: sesame oil
+    amount: 5ml
+  - name: cornstarch
+    amount: 15g
+  - name: water
+    amount: 60ml
+    notes: for sauce
+  - name: jasmine rice
+    amount: 200g
+    notes: uncooked
+  - name: vegetable oil
+    amount: a drizzle
+    notes: for stir-frying
+  - name: sesame seeds
+    amount: 5g
+    notes: toasted, for garnish
+  - name: spring onions
+    amount: '2'
+    notes: thinly sliced, for garnish
+instructions:
+  - step: 1
+    action: >-
+      Cook *jasmine rice* according to package instructions. While rice cooks,
+      prepare the vegetables. Cut *carrots* into thin rounds or julienne. Deseed
+      and slice *red bell pepper* and *yellow bell pepper* into thin strips.
+      Break *broccoli* into small florets. Mince *garlic* and grate *ginger*.
+      Cut *chicken breast* into 2cm pieces.
+  - step: 2
+    action: >-
+      In a small bowl, whisk together *soy sauce*, *honey*, *rice vinegar*,
+      *sesame oil*, 60ml water, and *cornstarch*. Set aside.
+  - step: 3
+    action: >-
+      Heat a large wok or frying pan over medium-high heat with a drizzle of
+      vegetable oil. Add the *chicken breast* pieces and stir-fry for 4-6
+      minutes, until browned and cooked through. Remove chicken from the pan and
+      set aside.
+  - step: 4
+    action: >-
+      Add a little more vegetable oil to the hot pan if needed. Add the
+      *carrots* and *broccoli florets* and stir-fry for 3-4 minutes until
+      slightly tender-crisp. Add the *red bell pepper*, *yellow bell pepper*,
+      *minced garlic*, and *grated ginger*. Stir-fry for another 2-3 minutes
+      until bell peppers are crisp-tender.
+  - step: 5
+    action: >-
+      Return the cooked *chicken breast* to the pan with the vegetables. Give
+      the prepared sauce a quick whisk again, then pour it over the chicken and
+      vegetables. Cook, stirring constantly, for 1-2 minutes, until the sauce
+      thickens and coats everything beautifully.
+  - step: 6
+    action: >-
+      Serve the *honey garlic chicken stir-fry* immediately over the cooked
+      *jasmine rice*. Garnish with *toasted sesame seeds* and *sliced spring
+      onions*.
+tags:
+  - chinese
+  - chicken
+imagePrompt:
+  base: >-
+    Vibrant close-up of Honey Garlic Chicken Stir-Fry, plated to showcase vivid
+    textures and color. Incorporate visual cues from this description: Quick
+    stir-fry with carrots, bell peppers, and sticky honey garlic glaze, plated
+    with jasmine rice.. Scene: chinese-inspired table with soft natural
+    daylight, eye-level perspective, and shallow depth of field. Capture fresh
+    garnish, inviting lighting, and a sense of homemade comfort with no visible
+    steam or vapor. No people or branded props.
+  enhanced: >-
+    A captivating close-up of Honey Garlic Chicken Stir-Fry, glistening with its
+    sticky glaze, artfully piled atop fluffy jasmine rice. Succulent chicken,
+    vibrant carrots, and crisp bell peppers burst with color and texture.
+    Garnish with a sprinkle of toasted sesame seeds and thinly sliced green
+    onions. Bathed in soft, inviting natural daylight from an eye-level
+    perspective with a shallow depth of field, evoking homemade comfort.
+

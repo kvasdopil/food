@@ -1,0 +1,100 @@
+title: Beef Burrito Bowls
+summary: >-
+  Chipotle-style bowls with seasoned beef, beans, corn, and salsa, accompanied
+  by lime-dusted corn tortilla chips.
+servings: 4
+prepTimeMinutes: 20
+cookTimeMinutes: 30
+ingredients:
+  - name: Ground beef
+    amount: 500 g
+    notes: lean
+  - name: Long-grain white rice
+    amount: 200 g
+  - name: Canned black beans
+    amount: 400 g
+    notes: rinsed and drained
+  - name: Canned corn
+    amount: 300 g
+    notes: drained
+  - name: Salsa
+    amount: 250 ml
+    notes: mild or medium
+  - name: Onion
+    amount: 1 medium
+    notes: finely chopped
+  - name: Garlic
+    amount: 2 cloves
+    notes: minced
+  - name: Chili powder
+    amount: 2 tsp
+  - name: Ground cumin
+    amount: 1 tsp
+  - name: Dried oregano
+    amount: 0.5 tsp
+  - name: Corn tortillas
+    amount: '6'
+    notes: cut into wedges
+  - name: Lime
+    amount: '1'
+    notes: half for chips, half for serving
+  - name: Fresh cilantro
+    amount: small bunch
+    notes: chopped, for garnish
+instructions:
+  - step: 1
+    action: >-
+      Cook the *long-grain white rice*: Combine 200 g of *long-grain white rice*
+      with 400 ml of water and a pinch of salt in a saucepan. Bring to a boil,
+      then reduce heat to low, cover, and simmer for 15-18 minutes, or until all
+      water is absorbed. Remove from heat and let stand, covered, for 5 minutes.
+      Fluff with a fork.
+  - step: 2
+    action: >-
+      Prepare the beef mixture: While the rice cooks, heat a drizzle of olive
+      oil in a large pan over medium-high heat. Add the *ground beef* and cook,
+      breaking it up with a spoon, until browned, about 5-7 minutes. Drain any
+      excess fat. Add the chopped *onion* and minced *garlic* to the pan,
+      cooking until softened, about 3-4 minutes. Stir in the *chili powder*,
+      *ground cumin*, and *dried oregano*, cooking for 1 minute until fragrant.
+      Season with salt and black pepper to taste.
+  - step: 3
+    action: >-
+      Combine and simmer: Stir the rinsed and drained *canned black beans*,
+      drained *canned corn*, and *salsa* into the beef mixture. Bring to a
+      gentle simmer and cook for 5-7 minutes, allowing the flavors to meld. Keep
+      warm over low heat.
+  - step: 4
+    action: >-
+      Make the lime chips: While the beef mixture simmers, preheat your oven to
+      180°C. Arrange the *corn tortillas* wedges on a baking sheet. Drizzle
+      lightly with olive oil and sprinkle with a pinch of salt. Bake for 8-10
+      minutes, or until golden and crispy. Squeeze juice from half a *lime* over
+      the hot chips immediately after removing from the oven.
+  - step: 5
+    action: >-
+      Assemble the bowls: Divide the cooked *long-grain white rice* among
+      serving bowls. Top with generous portions of the beef and bean mixture.
+      Garnish with chopped *fresh cilantro* and serve with the crispy *lime*
+      chips on the side. Offer extra lime wedges for squeezing.
+tags:
+  - mexican
+  - beef
+  - glutenfree
+imagePrompt:
+  base: >-
+    Vibrant close-up of Beef Burrito Bowls, plated to showcase vivid textures
+    and color. Incorporate visual cues from this description: Chipotle-style
+    bowls with seasoned beef, beans, corn, and salsa, accompanied by lime-dusted
+    corn tortilla chips.. Scene: mexican-inspired table with soft natural
+    daylight, eye-level perspective, and shallow depth of field. Capture fresh
+    garnish, inviting lighting, and a sense of homemade comfort with no visible
+    steam or vapor. No people or branded props.
+  enhanced: >-
+    Vibrant close-up: A rustic bowl brimming with fluffy white rice, generously
+    piled with richly seasoned beef, glossy black beans, golden corn, and chunky
+    salsa. Garnish with fresh cilantro sprigs and a bright lime wedge. Crisp,
+    lime-dusted corn tortilla chips are artfully arranged alongside. Bathed in
+    soft, inviting natural daylight from a slightly elevated eye-level
+    perspective with shallow depth of field, emphasizing homemade comfort.
+

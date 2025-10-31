@@ -1,0 +1,95 @@
+title: Shrimp Fried Rice
+summary: >-
+  Wok-tossed rice with shrimp, peas, eggs, and soy sauce, served alongside
+  steamed edamame.
+servings: 4
+prepTimeMinutes: 15
+cookTimeMinutes: 15
+ingredients:
+  - name: Cooked rice
+    amount: 400 g
+    notes: preferably day-old and chilled
+  - name: Raw shrimp
+    amount: 300 g
+    notes: peeled, deveined, tails on or off
+  - name: Frozen peas
+    amount: 150 g
+  - name: Large eggs
+    amount: '2'
+  - name: Soy sauce
+    amount: 60 ml
+  - name: Garlic
+    amount: 2 cloves
+    notes: minced
+  - name: Fresh ginger
+    amount: 15 g
+    notes: grated
+  - name: Sesame oil
+    amount: 1 tsp
+  - name: Neutral cooking oil
+    amount: 2 tbsp
+    notes: such as canola or vegetable oil
+  - name: Frozen edamame
+    amount: 200 g
+    notes: in pods or shelled, for serving
+  - name: Salt
+    amount: a pinch
+  - name: Black pepper
+    amount: a pinch
+instructions:
+  - step: 1
+    action: >-
+      Prepare your ingredients: If using *frozen peas*, thaw them. Mince the
+      *garlic* and grate the *fresh ginger*. Whisk the *large eggs* in a small
+      bowl with a pinch of *salt* and *black pepper*. If your *shrimp* are not
+      already peeled and deveined, prepare them now.
+  - step: 2
+    action: >-
+      Heat 1 tbsp of *neutral cooking oil* in a large wok or skillet over
+      medium-high heat. Add the *raw shrimp* and cook for 2-3 minutes until pink
+      and opaque. Remove the cooked *shrimp* from the wok and set aside.
+  - step: 3
+    action: >-
+      Add the remaining 1 tbsp of *neutral cooking oil* to the wok. Pour in the
+      whisked *large eggs* and scramble them, breaking them into small pieces as
+      they cook. Once cooked, remove the *eggs* from the wok and set aside with
+      the *shrimp*.
+  - step: 4
+    action: >-
+      Reduce heat to medium. Add the minced *garlic* and grated *fresh ginger*
+      to the wok and stir-fry for about 30 seconds until fragrant. Add the
+      *cooked rice* to the wok, breaking up any clumps with your spatula.
+      Stir-fry for 3-4 minutes, allowing the rice to heat through and slightly
+      crisp.
+  - step: 5
+    action: >-
+      Add the thawed *frozen peas*, cooked *raw shrimp*, and scrambled *large
+      eggs* back into the wok. Pour the *soy sauce* over everything and drizzle
+      with *sesame oil*. Toss vigorously to combine all ingredients and ensure
+      the rice is evenly coated with the *soy sauce*. Cook for another 2-3
+      minutes until everything is hot.
+  - step: 6
+    action: >-
+      While the fried rice is cooking, prepare the *frozen edamame*: steam or
+      boil according to package directions. Serve the *shrimp fried rice*
+      immediately, garnished with the steamed *frozen edamame* on the side.
+tags:
+  - chinese
+  - seafood
+imagePrompt:
+  base: >-
+    Vibrant close-up of Shrimp Fried Rice, plated to showcase vivid textures and
+    color. Incorporate visual cues from this description: Wok-tossed rice with
+    shrimp, peas, eggs, and soy sauce, served alongside steamed edamame.. Scene:
+    chinese-inspired table with soft natural daylight, eye-level perspective,
+    and shallow depth of field. Capture fresh garnish, inviting lighting, and a
+    sense of homemade comfort with no visible steam or vapor. No people or
+    branded props.
+  enhanced: >-
+    A vibrant close-up of golden wok-tossed rice, artfully mounded and studded
+    with plump pink shrimp, bright green peas, and fluffy scrambled egg. Served
+    alongside a vibrant cluster of perfectly steamed edamame, garnished with
+    fresh scallions and a rich soy sauce drizzle. Bathed in soft, warm natural
+    daylight from an intimate eye-level perspective, with a shallow depth of
+    field, evoking homemade comfort.
+

@@ -1,0 +1,100 @@
+title: Skillet Shepherd's Pie
+summary: >-
+  Ground beef and veggies topped with mashed potatoes and baked until golden,
+  served with buttered peas.
+servings: 4
+prepTimeMinutes: 20
+cookTimeMinutes: 35
+ingredients:
+  - name: Lean ground beef
+    amount: 500 g
+  - name: Potatoes
+    amount: 700 g
+    notes: Peeled and quartered, e.g., Russet or Yukon Gold
+  - name: Medium onion
+    amount: '1'
+    notes: Finely chopped
+  - name: Medium carrots
+    amount: '2'
+    notes: Finely diced
+  - name: Frozen peas
+    amount: 150 g
+  - name: Beef broth
+    amount: 250 ml
+  - name: Milk
+    amount: 60 ml
+  - name: Butter
+    amount: 30 g
+    notes: Divided for mash and serving
+  - name: Tomato paste
+    amount: 2 tbsp
+  - name: Worcestershire sauce
+    amount: 1 tsp
+    notes: Optional
+  - name: Plain flour
+    amount: 1 tbsp
+    notes: Use cornstarch for a gluten-free option
+  - name: Olive oil
+    amount: A drizzle
+  - name: Salt
+    amount: To taste
+  - name: Black pepper
+    amount: To taste
+  - name: Dried thyme
+    amount: 1/2 tsp
+instructions:
+  - step: 1
+    action: >-
+      Place *potatoes* in a large pot, cover with cold water, and add a pinch of
+      salt. Bring to a boil and cook for 15-20 minutes, or until very tender.
+      Drain well.
+  - step: 2
+    action: >-
+      While potatoes cook, heat a drizzle of *olive oil* in a large oven-safe
+      skillet (e.g., 25 cm cast iron) over medium-high heat. Add *onion* and
+      *carrots*, cook for 5-7 minutes until softened. Add *lean ground beef*,
+      break it apart with a spoon, and cook until browned, about 8-10 minutes.
+      Drain any excess fat. Stir in *tomato paste*, *dried thyme*, *salt*, and
+      *black pepper*. Cook for 1 minute. Sprinkle *plain flour* (or cornstarch)
+      over the mixture and stir for 1 minute. Pour in *beef broth* and
+      *Worcestershire sauce* (if using), bring to a simmer, stirring until the
+      sauce thickens. Stir in *frozen peas*. Remove from heat.
+  - step: 3
+    action: >-
+      Return drained *potatoes* to the hot pot. Add *milk* and 15 g of *butter*.
+      Mash until smooth and creamy. Season with *salt* and *black pepper* to
+      taste.
+  - step: 4
+    action: >-
+      Preheat oven to 190°C. Evenly spread the *beef and vegetable mixture* in
+      the skillet. Carefully spoon the *mashed potatoes* over the beef mixture,
+      spreading it to the edges. You can create peaks with a fork for a crispier
+      top. Bake for 20-25 minutes, or until the topping is golden brown and the
+      filling is bubbly.
+  - step: 5
+    action: >-
+      Let the *skillet shepherd's pie* rest for a few minutes before serving.
+      Meanwhile, melt the remaining 15 g of *butter* and toss with additional
+      *frozen peas* (if desired for a side). Serve hot.
+tags:
+  - irish
+  - beef
+  - glutenfree
+imagePrompt:
+  base: >-
+    Vibrant close-up of Skillet Shepherd's Pie, plated to showcase vivid
+    textures and color. Incorporate visual cues from this description: Ground
+    beef and veggies topped with mashed potatoes and baked until golden, served
+    with buttered peas.. Scene: irish-inspired table with soft natural daylight,
+    eye-level perspective, and shallow depth of field. Capture fresh garnish,
+    inviting lighting, and a sense of homemade comfort with no visible steam or
+    vapor. No people or branded props.
+  enhanced: >-
+    An inviting close-up of Skillet Shepherd's Pie, still in its rustic cast
+    iron skillet. Golden-baked mashed potato peaks, artfully swirled, reveal
+    glimpses of the savory beef and vegetable filling below. A scattering of
+    vibrant, buttered peas adds a fresh counterpoint. Garnished with a sprinkle
+    of fresh chopped parsley. Bathed in warm, soft natural daylight, from an
+    eye-level perspective with shallow depth of field, evoking ultimate homemade
+    comfort. No steam, people, or branded items.
+

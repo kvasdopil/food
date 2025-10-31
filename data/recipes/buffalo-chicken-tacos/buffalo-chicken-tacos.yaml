@@ -1,0 +1,91 @@
+title: Buffalo Chicken Tacos
+summary: >-
+  Saucy buffalo chicken tucked into tortillas with crunchy slaw, served with
+  celery sticks and ranch.
+servings: 4
+prepTimeMinutes: 15
+cookTimeMinutes: 15
+ingredients:
+  - name: Boneless, Skinless Chicken Breast
+    amount: 500 g
+    notes: cut into 1-2 cm cubes
+  - name: Buffalo Sauce
+    amount: 120 ml
+  - name: Small Tortillas
+    amount: '12'
+    notes: corn or flour
+  - name: Red Cabbage
+    amount: 200 g
+    notes: shredded
+  - name: Carrot
+    amount: 1 medium
+    notes: grated
+  - name: Mayonnaise
+    amount: 60 g
+  - name: Lime
+    amount: '1'
+    notes: juiced (approx 30 ml)
+  - name: Celery Stalks
+    amount: '4'
+    notes: for serving
+  - name: Ranch Dressing
+    amount: 120 ml
+    notes: for serving
+  - name: Garlic Powder
+    amount: 1 tsp
+  - name: Onion Powder
+    amount: 1 tsp
+  - name: Sugar
+    amount: 1/2 tsp
+instructions:
+  - step: 1
+    action: >-
+      Cut the *boneless, skinless chicken breast* into 1-2 cm cubes. Season with
+      *garlic powder*, *onion powder*, a pinch of salt, and black pepper.
+  - step: 2
+    action: >-
+      Heat a drizzle of olive oil in a large pan over medium-high heat. Add the
+      seasoned *chicken breast* and cook for 5-7 minutes, stirring occasionally,
+      until cooked through and lightly browned. Remove from heat.
+  - step: 3
+    action: >-
+      Once slightly cooled, shred the cooked *chicken breast* using two forks
+      directly in the pan or on a cutting board. Return to the pan (if removed)
+      and stir in the *buffalo sauce* until the chicken is well coated. Keep
+      warm over low heat.
+  - step: 4
+    action: >-
+      In a medium bowl, combine the shredded *red cabbage* and grated *carrot*.
+      In a small separate bowl, whisk together *mayonnaise*, the juice from the
+      *lime*, and *sugar*. Season with a pinch of salt and black pepper. Pour
+      the dressing over the *cabbage* and *carrot* mixture and toss to combine.
+  - step: 5
+    action: >-
+      Warm the *small tortillas* according to package instructions (e.g., in a
+      dry skillet for 30 seconds per side, or microwave briefly).
+  - step: 6
+    action: >-
+      Fill each warm *tortilla* with a generous spoonful of the saucy *buffalo
+      chicken*. Top with a spoonful of the *slaw*. Serve immediately with
+      *celery stalks* and a side of *ranch dressing*.
+tags:
+  - american
+  - chicken
+  - spicy
+imagePrompt:
+  base: >-
+    Vibrant close-up of Buffalo Chicken Tacos, plated to showcase vivid textures
+    and color. Incorporate visual cues from this description: Saucy buffalo
+    chicken tucked into tortillas with crunchy slaw, served with celery sticks
+    and ranch.. Scene: american-inspired table with soft natural daylight,
+    eye-level perspective, and shallow depth of field. Capture fresh garnish,
+    inviting lighting, and a sense of homemade comfort with no visible steam or
+    vapor. No people or branded props.
+  enhanced: >-
+    An intimate, low-angle close-up of two open Buffalo Chicken Tacos, revealing
+    generously sauced, shredded chicken nestled within warm tortillas. Vibrant
+    red cabbage and carrot slaw peek out, garnished with fresh cilantro. A side
+    of creamy ranch and crisp celery sticks completes the rustic presentation.
+    Bathed in soft, diffused natural daylight with a shallow depth of field,
+    highlighting the inviting textures and homemade comfort.
+

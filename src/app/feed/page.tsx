@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { RecipeFeedCard } from "@/components/recipe-feed-card";
 
@@ -45,7 +45,7 @@ function parseTagsFromUrl(searchParams: URLSearchParams): string[] {
   return [tagsParam.trim()].filter((tag) => tag.length > 0);
 }
 
-export default function FeedPage() {
+function FeedPageContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [recipes, setRecipes] = useState<RecipeListItem[]>([]);
@@ -239,5 +239,19 @@ export default function FeedPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function FeedPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center bg-gray-50">
+          <p className="text-lg text-gray-600">Loading recipes...</p>
+        </div>
+      }
+    >
+      <FeedPageContent />
+    </Suspense>
   );
 }
