@@ -25,6 +25,8 @@ ingredients:
     notes: chopped, for garnish
   - name: Olive oil
     amount: a drizzle
+  - name: Olive oil
+    amount: 1 tbsp
   - name: Dried rosemary
     amount: 1 tsp
   - name: Salt
@@ -35,17 +37,17 @@ instructions:
   - step: 1
     action: >-
       Preheat oven to 200°C. In a large bowl, toss the *baby potatoes* with a
-      drizzle of olive oil, *dried rosemary*, a pinch of salt, and black pepper.
+      drizzle of *olive oil*, *dried rosemary*, a pinch of *salt*, and *black pepper*.
       Spread them in a single layer on a baking tray. Roast for 20-25 minutes,
       or until tender and lightly browned.
   - step: 2
     action: >-
       While potatoes roast, pat the *sirloin steak* cubes dry with paper towels
-      and season generously with salt and black pepper. Trim the ends of the
+      and season generously with *salt* and *black pepper*. Trim the ends of the
       *fresh green beans*.
   - step: 3
     action: >-
-      Heat 1 tbsp of olive oil in a large heavy-bottomed pan or cast-iron
+      Heat 1 tbsp of *olive oil* in a large heavy-bottomed pan or cast-iron
       skillet over medium-high heat until shimmering. Add the *sirloin steak*
       cubes in a single layer, working in batches if necessary to avoid
       overcrowding, and sear for 2-3 minutes per side until nicely browned.
@@ -62,7 +64,7 @@ instructions:
       beans* for 5-7 minutes until tender-crisp.
   - step: 6
     action: >-
-      Serve the *garlic butter steak bites* immediately alongside the roasted
+      Serve the garlic butter steak bites immediately alongside the roasted
       *baby potatoes* and steamed *fresh green beans*. Garnish with fresh
       chopped *fresh parsley*.
 tags:

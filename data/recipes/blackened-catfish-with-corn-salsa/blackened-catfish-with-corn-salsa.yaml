@@ -7,7 +7,8 @@ prepTimeMinutes: 20
 cookTimeMinutes: 25
 ingredients:
   - name: Catfish fillets
-    amount: 2 (approx. 150-180g each)
+    amount: 2
+    notes: (approx. 150-180g each)
   - name: Cajun seasoning
     amount: 2 tbsp
   - name: Sweet corn
@@ -19,9 +20,9 @@ ingredients:
   - name: Cherry tomatoes
     amount: 100g
     notes: halved or quartered
-  - name: Coriander (fresh cilantro)
+  - name: Coriander
     amount: 15g
-    notes: chopped
+    notes: fresh cilantro, chopped
   - name: Lime
     amount: "1"
     notes: for juice
@@ -40,8 +41,8 @@ ingredients:
 instructions:
   - step: 1
     action: >-
-      Preheat oven to 200°C. Slice *zucchini* and toss with a drizzle of olive
-      oil, a pinch of salt, and a pinch of black pepper. Spread on a baking
+      Preheat oven to 200°C. Slice *zucchini* and toss with a drizzle of *olive
+      oil*, a pinch of *salt*, and a pinch of *black pepper*. Spread on a baking
       tray.
   - step: 2
     action: >-
@@ -57,8 +58,8 @@ instructions:
       and black pepper, then stir to combine. Set aside.
   - step: 4
     action: >-
-      Heat a large non-stick pan over medium-high heat with a drizzle of olive
-      oil. Once hot, carefully place the seasoned *catfish fillets* in the pan.
+      Heat a large non-stick pan over medium-high heat with a drizzle of *olive
+      oil*. Once hot, carefully place the seasoned *catfish fillets* in the pan.
       Cook for 3-5 minutes per side, or until the *catfish* is opaque and flakes
       easily with a fork. Adjust heat if the seasoning starts to burn too
       quickly.

@@ -6,55 +6,55 @@ servings: 4
 prepTimeMinutes: 25
 cookTimeMinutes: 25
 ingredients:
-  - name: Beef sirloin or flank steak
+  - name: beef sirloin or flank steak
     amount: 500g
     notes: thinly sliced against the grain
-  - name: Soy sauce
+  - name: soy sauce
     amount: 60ml
-  - name: Brown sugar
+  - name: brown sugar
     amount: 30g
-  - name: Sesame oil
+  - name: sesame oil
     amount: 15ml
-  - name: Garlic
+  - name: garlic
     amount: 3 cloves
     notes: minced
-  - name: Fresh ginger
+  - name: fresh ginger
     amount: 15g
     notes: grated
-  - name: Yellow onion
+  - name: yellow onion
     amount: 1/2 medium
     notes: grated or finely minced
-  - name: Asian pear (or apple)
+  - name: asian pear
     amount: 1/2 medium
-    notes: grated (optional, for tenderizing and sweetness)
-  - name: Short-grain white rice
+    notes: grated (or apple, optional, for tenderizing and sweetness)
+  - name: short-grain white rice
     amount: 300g
-  - name: Kimchi
+  - name: kimchi
     amount: 200g
     notes: for serving
-  - name: Cucumber
+  - name: cucumber
     amount: 1 large
     notes: thinly sliced
-  - name: Rice vinegar
+  - name: rice vinegar
     amount: 30ml
-  - name: Granulated sugar
+  - name: granulated sugar
     amount: 5g
-  - name: Green onions
+  - name: green onions
     amount: 2 stalks
     notes: thinly sliced, for garnish
-  - name: Toasted sesame seeds
+  - name: toasted sesame seeds
     amount: 5g
     notes: for garnish
-  - name: Vegetable oil
+  - name: vegetable oil
     amount: a drizzle
     notes: for cooking
 instructions:
   - step: 1
     action: >-
       In a large bowl, combine 60ml *soy sauce*, 30g *brown sugar*, 15ml *sesame
-      oil*, 3 cloves minced *garlic*, 15g grated *fresh ginger*, 1/2 medium
-      grated *yellow onion*, and 1/2 medium grated *Asian pear* (if using). Add
-      500g thinly sliced *beef sirloin or flank steak* to the marinade, ensuring
+      oil*, 3 cloves *garlic*, 15g *fresh ginger*, 1/2 medium
+      *yellow onion*, and 1/2 medium *asian pear*. Add
+      500g *beef sirloin or flank steak* to the marinade, ensuring
       it's well coated. Let it marinate at room temperature for at least 15
       minutes while you prepare other components, or refrigerate for up to 30
       minutes.
@@ -70,7 +70,7 @@ instructions:
       While the beef marinates and rice cooks, thinly slice 1 large *cucumber*.
       In a small bowl, whisk together 30ml *rice vinegar*, 5g *granulated
       sugar*, and a pinch of salt until the sugar dissolves. Add the sliced
-      *cucumber* and toss to coat. Set aside to quick pickle.
+      cucumber and toss to coat. Set aside to quick pickle.
   - step: 4
     action: >-
       Heat a large skillet or wok over high heat and add a drizzle of *vegetable
@@ -82,8 +82,8 @@ instructions:
     action: >-
       Divide the cooked *short-grain white rice* among four serving bowls. Top
       each with a generous portion of the cooked *bulgogi beef*. Add a side of
-      200g *kimchi* and the *quick pickled cucumbers*. Garnish with thinly
-      sliced *green onions* and 5g *toasted sesame seeds*. Serve immediately.
+      200g *kimchi* and the *quick pickled cucumbers*. Garnish with *green onions*
+      and 5g *toasted sesame seeds*. Serve immediately.
 tags:
   - korean
   - beef

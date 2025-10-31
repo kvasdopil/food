@@ -6,39 +6,39 @@ servings: 4
 prepTimeMinutes: 15
 cookTimeMinutes: 30
 ingredients:
-  - name: Cremini mushrooms
+  - name: cremini mushrooms
     amount: 500g
     notes: sliced
-  - name: Yellow onion
+  - name: yellow onion
     amount: 1 medium
     notes: finely chopped
-  - name: Garlic cloves
+  - name: garlic cloves
     amount: "2"
     notes: minced
-  - name: Vegetable broth
+  - name: vegetable broth
     amount: 500ml
-  - name: Sour cream
+  - name: sour cream
     amount: 200g
     notes: full-fat
-  - name: Egg noodles
+  - name: egg noodles
     amount: 300g
-  - name: Green beans
+  - name: green beans
     amount: 300g
     notes: trimmed
-  - name: Unsalted butter
+  - name: unsalted butter
     amount: 30g
-  - name: All-purpose flour
+  - name: all-purpose flour
     amount: 30g
-  - name: Smoked paprika
+  - name: smoked paprika
     amount: 1 tbsp
-  - name: Fresh dill
+  - name: fresh dill
     amount: 2 tbsp
     notes: chopped, for garnish
-  - name: Olive oil
+  - name: olive oil
     amount: a drizzle
-  - name: Salt
+  - name: salt
     amount: to taste
-  - name: Black pepper
+  - name: black pepper
     amount: to taste
 instructions:
   - step: 1

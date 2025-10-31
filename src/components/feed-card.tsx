@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { RecipeFeedCard } from "@/components/recipe-feed-card";
+import { useTags } from "@/hooks/useTags";
 
 type RecipeListItem = {
   slug: string;
@@ -24,7 +25,15 @@ type RecipesResponse = {
   pagination: PaginationInfo;
 };
 
+const chipPalette = [
+  "bg-amber-100 text-amber-700",
+  "bg-sky-100 text-sky-700",
+  "bg-emerald-100 text-emerald-700",
+  "bg-violet-100 text-violet-700",
+];
+
 export function FeedCard() {
+  const { activeTags, removeTag, clearAllTags } = useTags();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [recipes, setRecipes] = useState<RecipeListItem[]>([]);
   const [pagination, setPagination] = useState<PaginationInfo | null>(null);
@@ -32,9 +41,17 @@ export function FeedCard() {
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchRecipes = useCallback(async (fromSlug?: string) => {
+  const fetchRecipes = useCallback(async (fromSlug?: string, tags?: string[]) => {
     try {
-      const url = fromSlug ? `/api/recipes?from=${encodeURIComponent(fromSlug)}` : `/api/recipes`;
+      const params = new URLSearchParams();
+      if (fromSlug) {
+        params.append("from", fromSlug);
+      }
+      if (tags && tags.length > 0) {
+        params.append("tags", tags.join("+"));
+      }
+      const queryString = params.toString();
+      const url = queryString ? `/api/recipes?${queryString}` : `/api/recipes`;
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error("Failed to fetch recipes");
@@ -50,7 +67,7 @@ export function FeedCard() {
     setIsLoading(true);
     setError(null);
     try {
-      const data = await fetchRecipes();
+      const data = await fetchRecipes(undefined, activeTags);
       setRecipes(data.recipes);
       setPagination(data.pagination);
     } catch (err) {
@@ -58,7 +75,7 @@ export function FeedCard() {
     } finally {
       setIsLoading(false);
     }
-  }, [fetchRecipes]);
+  }, [fetchRecipes, activeTags]);
 
   const loadMore = useCallback(async () => {
     if (!pagination || !pagination.hasMore || isLoadingMore || recipes.length === 0) return;
@@ -66,7 +83,7 @@ export function FeedCard() {
     setIsLoadingMore(true);
     try {
       const lastRecipe = recipes[recipes.length - 1];
-      const data = await fetchRecipes(lastRecipe.slug);
+      const data = await fetchRecipes(lastRecipe.slug, activeTags);
       setRecipes((prev) => [...prev, ...data.recipes]);
       setPagination(data.pagination);
     } catch (err) {
@@ -74,15 +91,15 @@ export function FeedCard() {
     } finally {
       setIsLoadingMore(false);
     }
-  }, [pagination, isLoadingMore, fetchRecipes, recipes]);
+  }, [pagination, isLoadingMore, fetchRecipes, recipes, activeTags]);
 
-  // Only load if feed hasn't been initialized yet
+  // Load initial recipes or reload when tags change
   useEffect(() => {
-    if (recipes.length === 0 && !isLoading) {
+    if (!isLoading) {
       loadInitialRecipes();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Only run once on mount
+  }, [activeTags]); // Reload when tags change
 
   // Container-based infinite scroll (for carousel)
   useEffect(() => {
@@ -127,6 +144,40 @@ export function FeedCard() {
   return (
     <div ref={scrollRef} className="h-full overflow-y-auto bg-white">
       <main className="mx-auto max-w-7xl sm:px-6 sm:py-6 lg:px-8">
+        {activeTags.length > 0 && (
+          <div className="m-4 flex flex-wrap items-center gap-2 sm:mb-8">
+            <span className="text-sm font-medium text-gray-700 sm:text-base"></span>
+            {activeTags.map((tag, index) => (
+              <button
+                key={tag}
+                type="button"
+                onClick={() => removeTag(tag)}
+                className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-medium transition hover:opacity-80 ${chipPalette[index % chipPalette.length]}`}
+              >
+                {tag}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-4 w-4"
+                >
+                  <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+              </button>
+            ))}
+            <button
+              type="button"
+              onClick={clearAllTags}
+              className="ml-2 text-sm font-medium text-gray-600 underline transition hover:text-gray-800"
+            >
+              Clear filters
+            </button>
+          </div>
+        )}
         {recipes.length === 0 ? (
           <div className="flex items-center justify-center py-32">
             <p className="text-lg text-gray-600">No recipes found</p>

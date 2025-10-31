@@ -6,51 +6,51 @@ servings: 2
 prepTimeMinutes: 20
 cookTimeMinutes: 15
 ingredients:
-  - name: Salmon fillets
-    amount: 2 (approx. 180g each)
-    notes: skin on or off
-  - name: White miso paste
+  - name: salmon fillets
+    amount: 2
+    notes: approx. 180g each, skin on or off
+  - name: white miso paste
     amount: 2 tbsp
-  - name: Mirin
+  - name: mirin
     amount: 1 tbsp
-  - name: Sake
+  - name: sake
     amount: 1 tbsp
     notes: or dry white wine, or water
-  - name: Soy sauce
+  - name: soy sauce
     amount: 1 tsp
-  - name: Sesame oil
+  - name: sesame oil
     amount: 2 tsp
     notes: divided
-  - name: Brown sugar
+  - name: brown sugar
     amount: 1 tsp
     notes: or honey
-  - name: Fresh ginger
+  - name: fresh ginger
     amount: 1 cm piece
     notes: grated
-  - name: Garlic
+  - name: garlic
     amount: 1 clove
     notes: minced
-  - name: Bok choy
+  - name: bok choy
     amount: 2 medium heads
     notes: halved lengthwise
-  - name: Jasmine rice
+  - name: jasmine rice
     amount: 150g
-  - name: Water
+  - name: water
     amount: 250ml
     notes: for rice, adjust as per package instructions
-  - name: Salt
+  - name: salt
     amount: a pinch
     notes: to taste
-  - name: Black pepper
+  - name: black pepper
     amount: a pinch
     notes: to taste
-  - name: Vegetable oil
+  - name: vegetable oil
     amount: a drizzle
     notes: for cooking
-  - name: Sesame seeds
+  - name: sesame seeds
     amount: 1 tsp
     notes: toasted, for garnish
-  - name: Green onions
+  - name: green onions
     amount: 1 stalk
     notes: thinly sliced, for garnish
 instructions:

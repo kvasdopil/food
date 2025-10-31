@@ -66,8 +66,8 @@ instructions:
       well to combine all ingredients and ensure the *rice* is evenly coated.
   - step: 6
     action: >-
-      Return the scrambled *eggs* to the wok. Gently fold them into the *fried
-      rice*. Taste and adjust seasoning with salt if needed. Remove from heat.
+      Return the scrambled *eggs* to the wok. Gently fold them into the fried
+      rice. Taste and adjust seasoning with salt if needed. Remove from heat.
   - step: 7
     action: >-
       For the salad, thinly slice the *cucumber* into half-moons or ribbons. In
@@ -79,8 +79,8 @@ instructions:
       dressing. Toss gently to coat.
   - step: 9
     action: >-
-      Serve the *chicken fried rice* immediately, garnished with the remaining
-      fresh *scallions*, alongside the *scallion cucumber salad*.
+      Serve the chicken fried rice immediately, garnished with the remaining
+      fresh *scallions*, alongside the scallion cucumber salad.
 tags:
   - chinese
   - chicken
@@ -101,4 +101,3 @@ imagePrompt:
     natural daylight, casting a warm, inviting glow. Captured from an intimate,
     slightly elevated eye-level with a shallow depth of field, evoking homemade
     comfort without steam.
-

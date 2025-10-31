@@ -6,38 +6,38 @@ servings: 4
 prepTimeMinutes: 20
 cookTimeMinutes: 12
 ingredients:
-  - name: Flatbreads
+  - name: flatbreads
     amount: 4 medium
     notes: pita, naan, or similar
-  - name: Cooked Chicken
+  - name: cooked chicken
     amount: 250 g
     notes: shredded (e.g., rotisserie chicken)
-  - name: BBQ Sauce
+  - name: bbq sauce
     amount: 120 ml
     notes: your favorite brand
-  - name: Mozzarella Cheese
+  - name: mozzarella cheese
     amount: 150 g
     notes: shredded
-  - name: Red Onion
+  - name: red onion
     amount: 1 medium
     notes: thinly sliced
-  - name: Cilantro
+  - name: cilantro
     amount: 30 g
     notes: fresh, chopped
-  - name: Sweet Corn
+  - name: sweet corn
     amount: 350 g
     notes: canned (drained) or frozen (defrosted)
-  - name: Red Bell Pepper
+  - name: red bell pepper
     amount: 1 medium
     notes: diced
-  - name: Lime
+  - name: lime
     amount: 1 medium
     notes: juiced
-  - name: Olive Oil
+  - name: olive oil
     amount: a drizzle
-  - name: Salt
+  - name: salt
     amount: to taste
-  - name: Black Pepper
+  - name: black pepper
     amount: to taste
 instructions:
   - step: 1

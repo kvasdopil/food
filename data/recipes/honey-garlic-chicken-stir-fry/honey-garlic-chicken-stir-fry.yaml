@@ -50,7 +50,7 @@ ingredients:
     amount: 5g
     notes: toasted, for garnish
   - name: spring onions
-    amount: '2'
+    amount: 2
     notes: thinly sliced, for garnish
 instructions:
   - step: 1
@@ -106,4 +106,3 @@ imagePrompt:
     Garnish with a sprinkle of toasted sesame seeds and thinly sliced green
     onions. Bathed in soft, inviting natural daylight from an eye-level
     perspective with a shallow depth of field, evoking homemade comfort.
-

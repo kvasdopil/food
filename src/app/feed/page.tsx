@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo, Suspense } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useState, useEffect, useCallback, Suspense } from "react";
 import { RecipeFeedCard } from "@/components/recipe-feed-card";
+import { useTags } from "@/hooks/useTags";
 
 type RecipeListItem = {
   slug: string;
@@ -32,44 +32,18 @@ const chipPalette = [
   "bg-violet-100 text-violet-700",
 ];
 
-function parseTagsFromUrl(searchParams: URLSearchParams): string[] {
-  const tagsParam = searchParams.get("tags");
-  if (!tagsParam) return [];
-  // Support both "vegetarian+italian" format and "tags=vegetarian&tags=italian"
-  if (tagsParam.includes("+")) {
-    return tagsParam
-      .split("+")
-      .map((tag) => tag.trim())
-      .filter((tag) => tag.length > 0);
-  }
-  return [tagsParam.trim()].filter((tag) => tag.length > 0);
-}
-
 function FeedPageContent() {
-  const searchParams = useSearchParams();
-  const router = useRouter();
+  const { activeTags, removeTag, clearAllTags } = useTags();
   const [recipes, setRecipes] = useState<RecipeListItem[]>([]);
   const [pagination, setPagination] = useState<PaginationInfo | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Memoize activeTags to prevent unnecessary re-renders
-  const activeTags = useMemo(() => parseTagsFromUrl(searchParams), [searchParams]);
-
-  const buildTagsQuery = (tags: string[]): string => {
-    if (tags.length === 0) return "";
-    return tags.join("+");
-  };
-
-  const removeTag = (tagToRemove: string) => {
-    const newTags = activeTags.filter((tag) => tag !== tagToRemove);
-    if (newTags.length === 0) {
-      router.push("/feed");
-    } else {
-      router.push(`/feed?tags=${buildTagsQuery(newTags)}`);
-    }
-  };
+  // Debug: Log activeTags to see if they're being parsed correctly
+  useEffect(() => {
+    console.log("[FeedPageContent] activeTags:", activeTags);
+  }, [activeTags]);
 
   const fetchRecipes = useCallback(async (fromSlug?: string, tags?: string[]) => {
     try {
@@ -200,7 +174,7 @@ function FeedPageContent() {
             ))}
             <button
               type="button"
-              onClick={() => router.push("/feed")}
+              onClick={clearAllTags}
               className="ml-2 text-sm font-medium text-gray-600 underline transition hover:text-gray-800"
             >
               Clear all

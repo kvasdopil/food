@@ -38,7 +38,8 @@ ingredients:
   - name: coriander powder
     amount: 1 tsp
   - name: crushed tomatoes
-    amount: 400 g can
+    amount: 400 g
+    notes: 1 can
   - name: heavy cream
     amount: 120 ml
   - name: basmati rice
@@ -56,7 +57,7 @@ instructions:
   - step: 1
     action: >-
       In a bowl, combine the *boneless, skinless chicken breast or thigh* with
-      120 ml of *plain yogurt* (for marinade), 1 tbsp of *ginger-garlic paste*,
+      120 ml of *plain yogurt*, 1 tbsp of *ginger-garlic paste*,
       *lemon juice*, *ground turmeric*, 1 tsp of *garam masala*, 0.5 tsp of
       *chili powder*, 0.5 tsp of *cumin powder*, and 0.5 tsp salt. Mix well and
       set aside to marinate for at least 15 minutes. Rinse *basmati rice*
@@ -76,7 +77,7 @@ instructions:
       reduce heat to low, cover, and cook for 10-15 minutes, stirring
       occasionally. While the sauce simmers, prepare the cucumber salad: In a
       small bowl, combine the diced *cucumber* with a pinch of salt and a
-      spoonful of *plain yogurt* (for cucumber salad) if desired.
+      spoonful of *plain yogurt* if desired.
   - step: 4
     action: >-
       Add the marinated *boneless, skinless chicken breast or thigh* to the

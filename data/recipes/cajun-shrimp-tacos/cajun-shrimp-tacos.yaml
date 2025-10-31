@@ -6,46 +6,46 @@ servings: 4
 prepTimeMinutes: 25
 cookTimeMinutes: 30
 ingredients:
-  - name: Shrimp
+  - name: shrimp
     amount: 500g
     notes: raw, peeled, deveined, tails removed
-  - name: Corn tortillas
+  - name: corn tortillas
     amount: 12 small
-  - name: Red cabbage
+  - name: red cabbage
     amount: 300g
     notes: finely shredded
-  - name: Carrot
+  - name: carrot
     amount: 1 medium
     notes: grated
-  - name: Sour cream
+  - name: sour cream
     amount: 120ml
     notes: or plain Greek yogurt
-  - name: Limes
+  - name: limes
     amount: 2 medium
-  - name: Cooked rice
+  - name: cooked rice
     amount: 300g
     notes: warm, pre-cooked or freshly prepared
-  - name: Fresh cilantro
+  - name: fresh cilantro
     amount: 30g
     notes: chopped, plus extra for garnish
-  - name: Smoked paprika
+  - name: smoked paprika
     amount: 1 tsp
-  - name: Cayenne pepper
+  - name: cayenne pepper
     amount: 0.5 tsp
     notes: adjust to desired spice level
-  - name: Garlic powder
+  - name: garlic powder
     amount: 0.5 tsp
-  - name: Onion powder
+  - name: onion powder
     amount: 0.5 tsp
-  - name: Dried oregano
+  - name: dried oregano
     amount: 0.25 tsp
-  - name: Dried thyme
+  - name: dried thyme
     amount: 0.25 tsp
-  - name: Olive oil
+  - name: olive oil
     amount: 2 tbsp
-  - name: Salt
+  - name: salt
     amount: to taste
-  - name: Black pepper
+  - name: black pepper
     amount: to taste
 instructions:
   - step: 1
@@ -84,9 +84,9 @@ instructions:
   - step: 7
     action: >-
       Assemble the tacos: Fill each warm *corn tortilla* with a portion of the
-      cooked *shrimp*, top with the prepared *slaw*, and drizzle with *lime
-      crema*. Serve immediately with the *cilantro-lime rice* on the side,
-      garnished with extra fresh cilantro if desired.
+      cooked *shrimp*, top with the prepared slaw, and drizzle with lime crema.
+      Serve immediately with the cilantro-lime rice on the side, garnished with
+      extra fresh cilantro if desired.
 tags:
   - mexican
   - seafood

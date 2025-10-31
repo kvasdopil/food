@@ -6,47 +6,47 @@ servings: 4
 prepTimeMinutes: 15
 cookTimeMinutes: 25
 ingredients:
-  - name: Chicken breast
+  - name: chicken breast
     amount: 500g
     notes: sliced into thin strips
-  - name: Bell peppers
+  - name: bell peppers
     amount: 2 large
     notes: e.g., 1 red, 1 green, deseeded and sliced into thin strips
-  - name: Onion
+  - name: onion
     amount: 1 large
     notes: sliced into thin strips
-  - name: Olive oil
+  - name: olive oil
     amount: a drizzle
     notes: for cooking
-  - name: Fajita seasoning
+  - name: fajita seasoning
     amount: 2 tbsp
     notes: store-bought or homemade blend
-  - name: Lime
+  - name: lime
     amount: 1 medium
     notes: half for marinade, half for rice and garnish
-  - name: Garlic
+  - name: garlic
     amount: 2 cloves
     notes: minced
-  - name: Cilantro
+  - name: cilantro
     amount: 30g
     notes: fresh, chopped, divided for rice and garnish
-  - name: Long-grain white rice
+  - name: long-grain white rice
     amount: 200g
-  - name: Water or chicken broth
+  - name: water or chicken broth
     amount: 400ml
     notes: for cooking rice
-  - name: Salt
+  - name: salt
     amount: to taste
-  - name: Black pepper
+  - name: black pepper
     amount: to taste
-  - name: Small flour tortillas
+  - name: small flour tortillas
     amount: "8"
 instructions:
   - step: 1
     action: >-
       Prepare the chicken marinade: In a bowl, combine the sliced *chicken
       breast* with *fajita seasoning*, the juice of half a *lime*, minced
-      *garlic*, a pinch of *salt*, and *pepper*. Toss to coat and set aside
+      *garlic*, a pinch of *salt*, and *black pepper*. Toss to coat and set aside
       while you prepare the rice and vegetables.
   - step: 2
     action: >-
@@ -60,7 +60,7 @@ instructions:
     action: >-
       Sear the chicken: Heat a large skillet (cast iron works best) over
       medium-high heat with a drizzle of *olive oil*. Add the marinated *chicken
-      strips* in a single layer, ensuring not to overcrowd the pan (cook in
+      breast* in a single layer, ensuring not to overcrowd the pan (cook in
       batches if necessary). Cook for 3-4 minutes per side, until browned and
       cooked through. Remove the *chicken* from the skillet and set aside.
   - step: 4
@@ -72,7 +72,7 @@ instructions:
   - step: 5
     action: >-
       Combine and serve: Return the cooked *chicken* to the skillet with the
-      *peppers* and *onions*. Toss everything together to combine and heat
+      *bell peppers* and *onion*. Toss everything together to combine and heat
       through for 1-2 minutes. Serve immediately with warm *small flour
       tortillas*, the prepared *cilantro rice*, and the remaining fresh
       *cilantro* for garnish.

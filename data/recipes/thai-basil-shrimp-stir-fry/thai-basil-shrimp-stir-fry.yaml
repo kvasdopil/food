@@ -6,44 +6,44 @@ servings: 3
 prepTimeMinutes: 20
 cookTimeMinutes: 25
 ingredients:
-  - name: Jasmine rice
+  - name: jasmine rice
     amount: 200 g
-  - name: Coconut milk
+  - name: coconut milk
     amount: 150 ml
     notes: full-fat, for rice
-  - name: Large shrimp
+  - name: large shrimp
     amount: 400 g
     notes: peeled and deveined
-  - name: Vegetable oil
+  - name: vegetable oil
     amount: 2 tbsp
     notes: for stir-frying
-  - name: Shallots
+  - name: shallots
     amount: 2 medium
     notes: thinly sliced
-  - name: Garlic
+  - name: garlic
     amount: 4 cloves
     notes: minced
-  - name: Red chilies
+  - name: red chilies
     amount: 2-3 small
     notes: such as bird's eye, thinly sliced (adjust to taste)
-  - name: Red bell pepper
+  - name: red bell pepper
     amount: 1 medium
     notes: thinly sliced
-  - name: Snap peas
+  - name: snap peas
     amount: 150 g
-  - name: Thai basil leaves
+  - name: thai basil leaves
     amount: 1 large bunch
     notes: about 50 g, picked
-  - name: Soy sauce
+  - name: soy sauce
     amount: 2 tbsp
-  - name: Fish sauce
+  - name: fish sauce
     amount: 1 tbsp
-  - name: Oyster sauce
+  - name: oyster sauce
     amount: 1 tbsp
-  - name: Sugar
+  - name: sugar
     amount: 1 tsp
     notes: palm or brown sugar
-  - name: Lime
+  - name: lime
     amount: "1"
     notes: cut into wedges, for serving
 instructions:
@@ -80,8 +80,8 @@ instructions:
       they are just wilted.
   - step: 6
     action: >-
-      Serve: Serve the *thai basil shrimp stir-fry* immediately over the warm
-      *coconut rice*, garnished with *lime* wedges.
+      Serve: Serve the thai basil shrimp stir-fry immediately over the warm
+      coconut rice, garnished with *lime* wedges.
 tags:
   - thai
   - seafood

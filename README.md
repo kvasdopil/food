@@ -91,12 +91,12 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
 
 #### Tag Filtering
 
-- **US-14**: As a user, I want to click on tags in recipe cards to filter the feed by that tag so I can find recipes matching my preferences.
-- **US-15**: As a user, I want to combine multiple tags (e.g., `/feed?tags=vegetarian+italian`) so I can filter recipes by multiple criteria at once.
-- **US-16**: As a user, I want to see active tag filters displayed at the top of the feed so I know what filters are currently applied.
-- **US-17**: As a user, I want to remove individual tag filters or clear all filters so I can adjust my search criteria.
-- **US-18**: As a user, I want tag filters to persist in the URL so I can bookmark filtered views and share them with others.
-- **US-19**: As a user, I want tags to be clickable anchor links with visible URLs on hover so I can see where clicking will take me.
+- **US-14**: As a user, I want to click on tags in recipe cards to filter the feed by that tag so I can find recipes matching my preferences. ✅ **Implemented**: Tags toggle on click (add if not present, remove if already filtered).
+- **US-15**: As a user, I want to combine multiple tags (e.g., `/feed?tags=vegetarian+italian`) so I can filter recipes by multiple criteria at once. ✅ **Implemented**: Multiple tags are separated by `+` in the URL.
+- **US-16**: As a user, I want to see active tag filters displayed at the top of the feed so I know what filters are currently applied. ✅ **Implemented**: Filter section shows active tags with remove buttons on both desktop and mobile.
+- **US-17**: As a user, I want to remove individual tag filters or clear all filters so I can adjust my search criteria. ✅ **Implemented**: Individual tags can be removed via X button; "Clear filters" button removes all active filters.
+- **US-18**: As a user, I want tag filters to persist in the URL so I can bookmark filtered views and share them with others. ✅ **Implemented**: Tag filters are stored in URL query parameters.
+- **US-19**: As a user, I want tags to be clickable buttons so I can easily filter recipes. ✅ **Implemented**: Tags are clickable buttons that toggle filters.
 
 #### Favorites
 
@@ -134,8 +134,8 @@ The following user stories are planned but not yet implemented:
 ## Project Status
 
 - Home route `/` server-redirects to `/feed`.
-- Feed route `/feed` displays a scrollable grid/list of recipes with pagination (20 per page), infinite scroll, and favorite functionality. Desktop shows up to 4 columns in a grid with gaps and shadows; mobile shows single-column full-width cards.
-- Tag filtering: Users can click tags to filter recipes, active filters are shown at the top, tags are clickable anchor links with hover effects, and filters persist in URL (`/feed?tags=vegetarian+italian`).
+- Feed route `/feed` displays a scrollable grid/list of recipes with pagination (20 per page), infinite scroll, and favorite functionality. Desktop shows up to 4 columns in a grid with gaps and shadows; mobile uses the `FeedCard` component with single-column full-width cards.
+- Tag filtering: Users can click tags on recipe cards to toggle filters. Active filters are displayed at the top of the feed with remove buttons. Filters persist in the URL using `+` separator (e.g., `/feed?tags=vegetarian+italian`). Tag filtering works on both desktop (`feed/page.tsx`) and mobile (`feed-card.tsx`) views.
 - Dynamic route `src/app/recipes/[slug]/page.tsx` handles metadata generation only; rendering is handled by the layout.
 - Layout `src/app/recipes/layout.tsx` manages the persistent carousel wrapper to prevent remounting during navigation, and includes a back-to-feed button in the top-left corner.
 - Navigation history checks use `document.referrer` to ensure same-origin navigation (prevents "about:blank" issues). Previous navigation is disabled/hidden when there's no same-origin history.
@@ -150,7 +150,7 @@ The following user stories are planned but not yet implemented:
 The app has three main routes:
 
 1. **`/` (Home)** → Server redirects to `/feed`
-2. **`/feed`** → Recipe feed page with paginated grid/list
+2. **`/feed`** → Recipe feed page with paginated grid/list and tag filtering (supports `?tags=tag1+tag2` query parameter)
 3. **`/recipes/[slug]`** → Individual recipe pages with unique URLs
 
 ### Layout Architecture
@@ -253,11 +253,27 @@ Navigation history is managed via **session storage** (`recipe-history.ts`):
 
 ```
 Feed Page (`/feed`)
-├── RecipeFeedCard (multiple, clickable links)
-│   ├── Image with title overlay
-│   ├── Description
-│   ├── Tags (colored chips)
-│   └── Favorite button (localStorage)
+├── Desktop: FeedPageContent
+│   ├── Active Tags Filter Section (when tags are active)
+│   └── RecipeFeedCard (multiple, clickable links)
+│       ├── Image with title overlay
+│       ├── Description
+│       ├── Tags (clickable buttons, toggle filters)
+│       └── Favorite button (localStorage)
+└── Mobile: FeedCard (via mobile-carousel-wrapper)
+    ├── Active Tags Filter Section (when tags are active)
+    └── RecipeFeedCard (same structure as desktop)
+
+Tag Filtering Infrastructure
+├── useTags hook (src/hooks/useTags.ts)
+│   ├── Parses active tags from URL
+│   ├── Provides removeTag, clearAllTags functions
+│   └── Returns activeTags array
+└── tag-utils (src/lib/tag-utils.ts)
+    ├── parseTagsFromUrl - Parse tags from URLSearchParams
+    ├── parseTagsFromQuery - Parse tags from query string (API)
+    ├── toggleTagInUrl - Toggle tag in current URL
+    └── buildFeedUrlWithTags - Build feed URL with tags
 
 Recipe Layout (`/recipes/[slug]`)
 ├── Back to Feed button (top-left)
@@ -308,7 +324,7 @@ This architecture provides stateful navigation that tracks forward and backward 
   - Improve history persistence across page refreshes
 
 - **Feed Enhancements**:
-  - Add tag filtering functionality
+  - ✅ Tag filtering functionality - **Implemented**: Tags can be clicked to filter recipes, active filters shown at top, filters persist in URL
   - Add dedicated page to list all liked/favorited meals
   - Search functionality
 
@@ -329,13 +345,16 @@ This architecture provides stateful navigation that tracks forward and backward 
 ## Page Structure
 
 - `src/app/page.tsx`: server component redirecting to `/feed`.
-- `src/app/feed/page.tsx`: client component displaying paginated recipe feed with infinite scroll.
+- `src/app/feed/page.tsx`: client component displaying paginated recipe feed with infinite scroll and tag filtering (desktop view).
+- `src/components/feed-card.tsx`: client component displaying paginated recipe feed for mobile view with tag filtering support.
+- `src/components/recipe-feed-card.tsx`: recipe card component for feed page with image, title overlay, description, clickable tags (toggle filters), and favorite button.
+- `src/hooks/useTags.ts`: React hook for managing tags in feed context. Parses tags from URL, provides remove/clear functions.
+- `src/lib/tag-utils.ts`: Utility functions for parsing tags from URLs and building tag URLs. Used by both client components and API routes.
 - `src/app/recipes/layout.tsx`: client layout component that manages the persistent carousel, navigation, recipe rendering, and back-to-feed button. Prevents carousel remounting during route changes.
 - `src/app/recipes/[slug]/page.tsx`: server component that only handles metadata generation (OpenGraph, title, etc.). Returns `null` as layout handles all rendering.
 - `src/app/recipes/[slug]/client/recipe-swipeable-carousel.tsx`: carousel component managing swipe navigation with preloaded recipes. Maintains state across navigation using module-level snapshot.
 - `src/components/*`: client-side interactivity (share, favorite, nav, keyboard shortcuts).
-- `src/components/recipe-feed-card.tsx`: recipe card component for feed page with image, title overlay, description, tags, and favorite button.
-- `src/app/api/recipes/route.ts`: API endpoint returning paginated recipes (20 per page) with pagination metadata. Supports `page` parameter for traditional pagination or `from={slug}` for slug-based pagination that matches feed order.
+- `src/app/api/recipes/route.ts`: API endpoint returning paginated recipes (20 per page) with pagination metadata. Supports `page` parameter for traditional pagination, `from={slug}` for slug-based pagination, and `tags` parameter for filtering by tags (format: `tags=tag1+tag2`).
 - `src/app/api/recipes/generate/route.ts`: API endpoint for generating recipe content (ingredients, instructions, image prompts) using Gemini API. Requires `EDIT_TOKEN` authentication. Does not save to database, returns generated recipe data.
 
 ## Recipe Asset Workflow
@@ -430,7 +449,11 @@ The script will:
 ## Data Flow
 
 1. **Home Route** (`/`) → Server redirects to `/feed`
-2. **Feed Route** (`/feed`) → Client component fetches paginated recipes from `/api/recipes` → Displays in responsive grid/list with infinite scroll → Cards link to `/recipes/[slug]`
+2. **Feed Route** (`/feed`) → 
+   - Desktop: `FeedPageContent` component fetches paginated recipes from `/api/recipes` (supports `?tags=tag1+tag2` for filtering) → Displays in responsive grid with infinite scroll → Active tag filters shown at top → Cards link to `/recipes/[slug]`
+   - Mobile: `FeedCard` component (via `mobile-carousel-wrapper`) fetches paginated recipes with same tag filtering support → Displays single-column cards → Active tag filters shown at top → Cards link to `/recipes/[slug]`
+3. **Tag Filtering**: 
+   - User clicks tag on recipe card → `toggleTagInUrl` utility adds/removes tag from URL → `useTags` hook parses active tags → Feed reloads with filtered recipes → Active tags displayed at top with remove buttons
 3. **Recipe Route** (`/recipes/[slug]`)
    - Page component: Generates metadata (OpenGraph, title) via server-side Supabase query
    - Layout component: Extracts slug from pathname → Uses `useRecipe` hook → Fetches recipe data via Supabase → Renders recipe components

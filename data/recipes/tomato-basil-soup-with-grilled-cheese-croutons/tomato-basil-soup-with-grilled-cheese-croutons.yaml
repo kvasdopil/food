@@ -6,38 +6,38 @@ servings: 4
 prepTimeMinutes: 15
 cookTimeMinutes: 35
 ingredients:
-  - name: Canned Crushed Tomatoes
+  - name: canned crushed tomatoes
     amount: 800 g
     notes: Good quality, ripe tomatoes
-  - name: Vegetable Broth
+  - name: vegetable broth
     amount: 500 ml
-  - name: Yellow Onion
+  - name: yellow onion
     amount: 1 medium
-  - name: Garlic Cloves
+  - name: garlic cloves
     amount: "3"
-  - name: Fresh Basil
+  - name: fresh basil
     amount: 30 g
     notes: Roughly chopped, plus extra for garnish
-  - name: Heavy Cream
+  - name: heavy cream
     amount: 100 ml
     notes: Or milk for a lighter version
-  - name: Slices of White or Sourdough Bread
+  - name: slices of white or sourdough bread
     amount: "8"
-  - name: Slices of Cheddar or American Cheese
+  - name: slices of cheddar or american cheese
     amount: "4"
-  - name: Unsalted Butter
+  - name: unsalted butter
     amount: 30 g
-  - name: Mixed Greens
+  - name: mixed greens
     amount: 100 g
     notes: For a simple side salad
-  - name: Olive Oil
+  - name: olive oil
     amount: a drizzle
-  - name: Granulated Sugar
+  - name: granulated sugar
     amount: 1/2 tsp
     notes: Optional, to balance acidity
-  - name: Salt
+  - name: salt
     amount: to taste
-  - name: Black Pepper
+  - name: black pepper
     amount: to taste
 instructions:
   - step: 1
@@ -72,11 +72,11 @@ instructions:
   - step: 5
     action: >-
       Cut the cooled grilled cheese sandwiches into small, bite-sized cubes to
-      create the *grilled cheese croutons*.
+      create the grilled cheese croutons.
   - step: 6
     action: >-
       Ladle the hot soup into bowls. Top each serving generously with the
-      *grilled cheese croutons*. Garnish with the reserved *fresh basil* leaves.
+      grilled cheese croutons. Garnish with the reserved *fresh basil* leaves.
       Serve immediately with a side of *mixed greens*.
 tags:
   - american

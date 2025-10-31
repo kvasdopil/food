@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 
 import { supabaseAdmin } from "@/lib/supabaseAdminClient";
 import { supabase } from "@/lib/supabaseClient";
+import { parseTagsFromQuery } from "@/lib/tag-utils";
 
 const ITEMS_PER_PAGE = 20;
 
@@ -141,14 +142,6 @@ function buildInstructions(instructions: InstructionPayload[]) {
       return `${stepNumber}. ${entry.action}`;
     })
     .join("\n");
-}
-
-function parseTagsFromQuery(tagsParam: string | null): string[] {
-  if (!tagsParam) return [];
-  return tagsParam
-    .split("+")
-    .map((tag) => tag.trim().toLowerCase())
-    .filter((tag) => tag.length > 0);
 }
 
 export async function GET(request: NextRequest) {

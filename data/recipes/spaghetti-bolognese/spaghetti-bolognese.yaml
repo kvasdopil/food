@@ -6,35 +6,35 @@ servings: 4
 prepTimeMinutes: 15
 cookTimeMinutes: 40
 ingredients:
-  - name: Minced beef
+  - name: minced beef
     amount: 500g
     notes: lean
-  - name: Onion
+  - name: onion
     amount: 1 medium
     notes: finely chopped
-  - name: Carrots
+  - name: carrots
     amount: 2 medium
     notes: finely chopped
-  - name: Celery stalk
+  - name: celery stalk
     amount: "1"
     notes: finely chopped
-  - name: Garlic cloves
+  - name: garlic cloves
     amount: "2"
     notes: minced
-  - name: Canned chopped tomatoes
+  - name: canned chopped tomatoes
     amount: 400g
-  - name: Tomato paste
+  - name: tomato paste
     amount: 2 tbsp
-  - name: Beef stock
+  - name: beef stock
     amount: 250ml
-  - name: Dried oregano
+  - name: dried oregano
     amount: 1 tsp
-  - name: Spaghetti
+  - name: spaghetti
     amount: 300g
-  - name: Parmesan cheese
+  - name: parmesan cheese
     amount: 50g
     notes: freshly grated, for serving
-  - name: Garlic bread
+  - name: garlic bread
     amount: 4 slices
     notes: store-bought, optional
 instructions:
@@ -49,8 +49,8 @@ instructions:
       spoon, until thoroughly browned. Drain any excess fat from the pan.
   - step: 3
     action: >-
-      Sauté aromatics: Add the chopped *onion*, *carrots*, *celery stalk*, and
-      minced *garlic cloves* to the pan with the browned beef. Sauté for 5-7
+      Sauté aromatics: Add the chopped onion, carrots, celery stalk, and
+      minced garlic cloves to the pan with the browned beef. Sauté for 5-7
       minutes until the vegetables have softened.
   - step: 4
     action: >-
@@ -73,7 +73,7 @@ instructions:
     action: >-
       Serve: Drain the cooked spaghetti and divide among serving plates. Top
       generously with the rich bolognese sauce. Garnish with freshly grated
-      *Parmesan cheese* and serve immediately, optionally with the *garlic
+      *parmesan cheese* and serve immediately, optionally with the *garlic
       bread*.
 tags:
   - italian

@@ -6,30 +6,30 @@ servings: 4
 prepTimeMinutes: 15
 cookTimeMinutes: 25
 ingredients:
-  - name: Salmon fillets
+  - name: salmon fillets
     amount: 4 x 150g
     notes: skin-on or skinless
-  - name: Carrots
+  - name: carrots
     amount: 500g
     notes: about 3-4 medium, peeled and chopped into 2.5cm pieces
-  - name: Honey
+  - name: honey
     amount: 60ml
-  - name: Dijon mustard
+  - name: dijon mustard
     amount: 60ml
-  - name: Quick-cook wild rice blend
+  - name: quick-cook wild rice blend
     amount: 200g
-  - name: Vegetable broth
+  - name: vegetable broth
     amount: 400ml
-  - name: Olive oil
+  - name: olive oil
     amount: a drizzle
-  - name: Garlic powder
+  - name: garlic powder
     amount: 1 tsp
-  - name: Fresh parsley
+  - name: fresh parsley
     amount: a small bunch
     notes: chopped, for garnish
-  - name: Salt
+  - name: salt
     amount: to taste
-  - name: Black pepper
+  - name: black pepper
     amount: to taste
 instructions:
   - step: 1
@@ -39,13 +39,14 @@ instructions:
       olive oil, and season with salt and pepper. Roast for 10 minutes.
   - step: 2
     action: >-
-      While the carrots roast, prepare the *wild rice blend*. In a medium
-      saucepan, bring the *vegetable broth* to a boil. Add the *quick-cook wild
-      rice blend*, reduce heat to low, cover, and simmer according to package
-      directions (typically 10-15 minutes), until the liquid is absorbed.
+      While the carrots roast, prepare the *quick-cook wild rice blend*. In a
+      medium saucepan, bring the *vegetable broth* to a boil. Add the quick-cook
+      wild rice blend, reduce heat to low, cover, and simmer according to
+      package directions (typically 10-15 minutes), until the liquid is
+      absorbed.
   - step: 3
     action: >-
-      In a small bowl, whisk together the *honey*, *Dijon mustard*, *garlic
+      In a small bowl, whisk together the *honey*, *dijon mustard*, *garlic
       powder*, a drizzle of olive oil, and a pinch of salt and pepper to create
       the honey mustard glaze.
   - step: 4
@@ -58,10 +59,10 @@ instructions:
       tender.
   - step: 5
     action: >-
-      Once cooked, remove the sheet pan from the oven. Fluff the cooked *wild
-      rice blend* with a fork. Serve the honey mustard salmon and roasted
-      carrots alongside the wild rice pilaf, garnished with fresh chopped *fresh
-      parsley*.
+      Once cooked, remove the sheet pan from the oven. Fluff the cooked
+      *quick-cook wild rice blend* with a fork. Serve the honey mustard salmon
+      and roasted carrots alongside the wild rice pilaf, garnished with fresh
+      chopped *fresh parsley*.
 tags:
   - american
   - seafood

@@ -6,36 +6,37 @@ servings: 2
 prepTimeMinutes: 20
 cookTimeMinutes: 30
 ingredients:
-  - name: Fresh Tuna Steaks
-    amount: 2 (approx. 150-180g each)
-  - name: New Potatoes
+  - name: fresh tuna steaks
+    amount: 2
+    notes: approx. 150-180g each
+  - name: new potatoes
     amount: 500g
     notes: washed, unpeeled
-  - name: Green Beans
+  - name: green beans
     amount: 200g
     notes: trimmed
-  - name: Cherry Tomatoes
+  - name: cherry tomatoes
     amount: 250g
     notes: halved
-  - name: Black Olives
+  - name: black olives
     amount: 80g
     notes: pitted, such as Kalamata or Niçoise
-  - name: Butter Lettuce
+  - name: butter lettuce
     amount: 1 head
     notes: washed and torn
-  - name: Red Onion
+  - name: red onion
     amount: 1/2 medium
     notes: thinly sliced
-  - name: Eggs
+  - name: eggs
     amount: 2 large
-  - name: Dijon Mustard
+  - name: dijon mustard
     amount: 1 tbsp
-  - name: Red Wine Vinegar
+  - name: red wine vinegar
     amount: 3 tbsp
-  - name: Olive Oil
+  - name: olive oil
     amount: 80 ml
     notes: plus extra for searing tuna
-  - name: Garlic
+  - name: garlic
     amount: 1 clove
     notes: minced
 instructions:
@@ -50,14 +51,14 @@ instructions:
     action: >-
       In a separate small pot, bring water to a boil. Carefully add *eggs* and
       boil for 7-8 minutes for medium-boiled yolks. Transfer to an ice bath,
-      then peel and quarter. Heat a drizzle of olive oil in a non-stick pan over
+      then peel and quarter. Heat a drizzle of *olive oil* in a non-stick pan over
       high heat. Season *tuna steaks* with salt and pepper. Sear for 1-2 minutes
       per side for rare/medium-rare, or longer to desired doneness. Remove from
       pan and slice thickly.
   - step: 3
     action: >-
       In a small bowl, whisk together *dijon mustard*, *red wine vinegar*,
-      *minced garlic*, a pinch of salt, and a grind of black pepper. Slowly
+      *garlic*, a pinch of salt, and a grind of black pepper. Slowly
       drizzle in 80 ml *olive oil* while whisking continuously until emulsified.
       Taste and adjust seasoning.
   - step: 4
@@ -65,7 +66,7 @@ instructions:
       Arrange the *butter lettuce* leaves on two plates. Artfully arrange the
       *potatoes*, *green beans*, *cherry tomatoes*, *black olives*, *red onion*,
       sliced *tuna steaks*, and quartered *eggs* over the lettuce. Drizzle
-      generously with the prepared *vinaigrette* just before serving.
+      generously with the prepared dressing just before serving.
 tags:
   - french
   - seafood

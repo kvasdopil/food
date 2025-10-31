@@ -14,7 +14,7 @@ ingredients:
   - name: Garlic
     amount: 6-8 cloves
     notes: minced
-  - name: Parmesan cheese
+  - name: parmesan cheese
     amount: 100 g
     notes: freshly grated
   - name: Heavy cream
@@ -30,7 +30,7 @@ ingredients:
     notes: cut into florets
   - name: Dried oregano
     amount: 1 tsp
-  - name: Fresh parsley
+  - name: fresh parsley
     amount: 2 tbsp
     notes: chopped, for garnish (optional)
   - name: Salt
@@ -64,7 +64,7 @@ instructions:
     action: >-
       Pour in the *chicken broth* and *heavy cream*. Bring to a gentle simmer,
       stirring occasionally, and cook for 3-4 minutes until the sauce slightly
-      thickens. Stir in the *Parmesan cheese* until melted and smooth. If the
+      thickens. Stir in the *parmesan cheese* until melted and smooth. If the
       sauce is too thick, add a splash of the reserved pasta water until desired
       consistency is reached. Season with salt and black pepper to taste.
   - step: 6
@@ -73,14 +73,14 @@ instructions:
       drained *penne pasta* and toss to coat everything evenly. Keep warm.
   - step: 7
     action: >-
-      While the sauce simmers, steam the *broccoli florets*. You can use a
+      While the sauce simmers, steam the *broccoli*. You can use a
       steamer basket over the boiling pasta water (if available and timed well)
       or a separate pot with a small amount of water. Steam for 5-7 minutes
       until tender-crisp.
   - step: 8
     action: >-
-      Serve the *garlic parmesan chicken pasta* immediately, garnished with
-      fresh *parsley* if desired, alongside the steamed *broccoli*.
+      Serve the garlic parmesan chicken pasta immediately, garnished with
+      *fresh parsley* if desired, alongside the steamed *broccoli*.
 tags:
   - italian
   - chicken

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import NextImage from "next/image";
 import { resolveRecipeImageUrl } from "@/lib/resolve-recipe-image-url";
+import { toggleTagInUrl } from "@/lib/tag-utils";
 
 type RecipeFeedCardProps = {
   slug: string;
@@ -49,32 +50,6 @@ function toggleFavorite(slug: string): boolean {
   }
 }
 
-function buildTagUrl(tag: string): string {
-  if (typeof window === "undefined") {
-    return `/feed?tags=${encodeURIComponent(tag)}`;
-  }
-
-  // Get current tags from URL if we're on the feed page
-  const currentUrl = window.location.href;
-  const urlObj = new URL(currentUrl);
-  const isOnFeedPage = urlObj.pathname === "/feed";
-  const existingTagsParam = isOnFeedPage ? urlObj.searchParams.get("tags") : null;
-  const existingTags = existingTagsParam
-    ? existingTagsParam
-        .split("+")
-        .map((t) => t.trim())
-        .filter((t) => t.length > 0)
-    : [];
-
-  // Add the clicked tag if it's not already in the list
-  if (!existingTags.includes(tag)) {
-    const newTags = [...existingTags, tag];
-    return `/feed?tags=${newTags.map(encodeURIComponent).join("+")}`;
-  }
-
-  // Tag already active, return feed with current filters (or just feed if on recipe page)
-  return isOnFeedPage ? currentUrl.split("?")[0] + (urlObj.search ? urlObj.search : "") : `/feed`;
-}
 
 export function RecipeFeedCard({ slug, name, description, tags, imageUrl }: RecipeFeedCardProps) {
   const [isLiked, setIsLiked] = useState(false);
@@ -91,16 +66,17 @@ export function RecipeFeedCard({ slug, name, description, tags, imageUrl }: Reci
     setIsLiked(toggleFavorite(slug));
   };
 
-  const handleTagClick = (e: React.MouseEvent, tag: string) => {
+  const handleTagClick = (e: React.MouseEvent<HTMLButtonElement>, tag: string) => {
     e.preventDefault();
     e.stopPropagation();
-    router.push(buildTagUrl(tag));
+    const url = toggleTagInUrl(tag);
+    router.push(url);
   };
 
   return (
     <Link
       href={`/recipes/${slug}`}
-      className="block w-full cursor-pointer overflow-hidden bg-white transition-opacity hover:opacity-95 sm:rounded-lg sm:shadow-md lg:shadow-lg"
+      className="relative block w-full cursor-pointer overflow-hidden bg-white transition-opacity hover:opacity-95 sm:rounded-lg sm:shadow-md lg:shadow-lg"
     >
       <figure className="relative aspect-[4/3] w-full overflow-hidden">
         {resolvedImageUrl ? (
@@ -125,7 +101,17 @@ export function RecipeFeedCard({ slug, name, description, tags, imageUrl }: Reci
       <div className="space-y-4 px-4 pt-4 sm:px-5 sm:pt-6">
         {description && <p className="line-clamp-2 text-sm text-slate-600">{description}</p>}
 
-        <div className="flex flex-wrap items-center gap-2 pb-4 sm:pb-6">
+        <div
+          className="flex flex-wrap items-center gap-2 pb-4 sm:pb-6"
+          onClick={(e) => {
+            // Stop clicks in the tags/favorite area from triggering the parent Link
+            e.stopPropagation();
+          }}
+          onTouchStart={(e) => {
+            // Stop touch events from propagating to parent Link on mobile
+            e.stopPropagation();
+          }}
+        >
           <button
             type="button"
             onClick={handleLikeClick}
@@ -147,14 +133,16 @@ export function RecipeFeedCard({ slug, name, description, tags, imageUrl }: Reci
             </svg>
           </button>
           {tags.map((tag, index) => (
-            <a
+            <button
               key={tag}
-              href={buildTagUrl(tag)}
+              type="button"
               onClick={(e) => handleTagClick(e, tag)}
-              className={`cursor-pointer rounded-full px-2 py-0.5 text-xs font-medium transition-all sm:px-3 sm:py-1 sm:text-sm ${chipPalette[index % chipPalette.length]}`}
+              className={`relative z-10 cursor-pointer rounded-full px-2 py-0.5 text-xs font-medium transition-all sm:px-3 sm:py-1 sm:text-sm ${chipPalette[index % chipPalette.length]}`}
+              style={{ touchAction: "manipulation" }}
+              aria-label={`Filter by ${tag}`}
             >
               {tag}
-            </a>
+            </button>
           ))}
         </div>
       </div>

@@ -6,42 +6,42 @@ servings: 4
 prepTimeMinutes: 15
 cookTimeMinutes: 30
 ingredients:
-  - name: Shrimp
+  - name: shrimp
     amount: 500g
     notes: Peeled, deveined, tails on or off
-  - name: Coconut Milk
+  - name: coconut milk
     amount: 400ml
     notes: Full fat
-  - name: Limes
+  - name: limes
     amount: 2 medium
-  - name: Bell Peppers
+  - name: bell peppers
     amount: 2 medium
     notes: e.g., 1 red, 1 yellow, thinly sliced
-  - name: Fresh Cilantro
+  - name: fresh cilantro
     amount: 30g
     notes: Chopped, plus extra for garnish
-  - name: Jasmine Rice
+  - name: jasmine rice
     amount: 200g
-  - name: Cucumber
+  - name: cucumber
     amount: 1 medium
     notes: Thinly sliced
-  - name: Red Onion
+  - name: red onion
     amount: 1/4 medium
     notes: Thinly sliced
-  - name: Garlic
+  - name: garlic
     amount: 3 cloves
     notes: Minced
-  - name: Fresh Ginger
+  - name: fresh ginger
     amount: 2cm piece
     notes: Grated
-  - name: Red Curry Paste
+  - name: red curry paste
     amount: 2 tbsp
-  - name: Broth
+  - name: broth
     amount: 100ml
     notes: Chicken or vegetable
-  - name: Fish Sauce
+  - name: fish sauce
     amount: 1 tbsp
-  - name: Brown Sugar
+  - name: brown sugar
     amount: 1 tsp
 instructions:
   - step: 1
@@ -75,9 +75,9 @@ instructions:
       juice from the remaining *lime*. Taste and adjust seasoning if needed.
   - step: 8
     action: >-
-      Ladle the *coconut lime shrimp curry* over the cooked *jasmine rice*.
+      Ladle the coconut lime shrimp curry over the cooked *jasmine rice*.
       Garnish with the remaining *fresh cilantro* and serve immediately with the
-      *cucumber salad* on the side.
+      cucumber salad on the side.
 tags:
   - thai
   - seafood
