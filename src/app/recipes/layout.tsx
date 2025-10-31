@@ -31,7 +31,7 @@ export default function RecipesLayout({ children }: RecipesLayoutProps) {
 
         {/* Back to feed button */}
         <button
-          onClick={() => router.push('/feed')}
+          onClick={() => router.push("/feed")}
           className="absolute top-4 left-4 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md transition hover:bg-slate-50 sm:top-6 sm:left-6"
           aria-label="Back to feed"
         >
@@ -53,4 +53,3 @@ export default function RecipesLayout({ children }: RecipesLayoutProps) {
     </NavigationProvider>
   );
 }
-

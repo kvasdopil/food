@@ -99,7 +99,9 @@ function normalizeRecipePayload(payload: unknown): RecipePayload | null {
       return null;
     }
     const stepValue =
-      typeof entry.step === "number" && Number.isFinite(entry.step) ? Math.max(1, Math.trunc(entry.step)) : undefined;
+      typeof entry.step === "number" && Number.isFinite(entry.step)
+        ? Math.max(1, Math.trunc(entry.step))
+        : undefined;
     instructions.push(stepValue ? { step: stepValue, action } : { action });
   }
 
@@ -118,7 +120,9 @@ function normalizeRecipePayload(payload: unknown): RecipePayload | null {
   }
 
   const slugFromPayload =
-    typeof payload.slug === "string" && payload.slug.trim() ? slugify(payload.slug.trim()) : undefined;
+    typeof payload.slug === "string" && payload.slug.trim()
+      ? slugify(payload.slug.trim())
+      : undefined;
 
   const imageUrl =
     typeof payload.imageUrl === "string"
@@ -237,7 +241,9 @@ export async function GET(request: NextRequest) {
         const { count: beforeCount } = await supabase
           .from("recipes")
           .select("*", { count: "exact", head: true })
-          .or(`created_at.gt.${fromRecipe.created_at},and(created_at.eq.${fromRecipe.created_at},slug.lt.${fromRecipe.slug})`);
+          .or(
+            `created_at.gt.${fromRecipe.created_at},and(created_at.eq.${fromRecipe.created_at},slug.lt.${fromRecipe.slug})`,
+          );
 
         currentPage = beforeCount ? Math.floor((beforeCount + 1) / ITEMS_PER_PAGE) + 1 : 1;
       }
@@ -317,7 +323,10 @@ export async function POST(request: NextRequest) {
 
   const payload = normalizeRecipePayload(json);
   if (!payload) {
-    return NextResponse.json({ error: "Payload must include title, ingredients, instructions, and tags." }, { status: 400 });
+    return NextResponse.json(
+      { error: "Payload must include title, ingredients, instructions, and tags." },
+      { status: 400 },
+    );
   }
 
   const slug = payload.slug ?? slugify(payload.title);

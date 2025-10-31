@@ -33,9 +33,7 @@ export default function FeedPage() {
 
   const fetchRecipes = useCallback(async (fromSlug?: string) => {
     try {
-      const url = fromSlug 
-        ? `/api/recipes?from=${encodeURIComponent(fromSlug)}`
-        : `/api/recipes`; // First load: no parameters
+      const url = fromSlug ? `/api/recipes?from=${encodeURIComponent(fromSlug)}` : `/api/recipes`; // First load: no parameters
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error("Failed to fetch recipes");
@@ -159,4 +157,3 @@ export default function FeedPage() {
     </div>
   );
 }
-

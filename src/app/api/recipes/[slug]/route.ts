@@ -2,10 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 
 import { supabase } from "@/lib/supabaseClient";
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ slug: string }> }
-) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
 
   if (!supabase) {
@@ -44,4 +41,3 @@ export async function GET(
     return NextResponse.json({ error: "Failed to fetch recipe" }, { status: 500 });
   }
 }
-

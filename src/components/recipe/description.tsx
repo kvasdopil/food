@@ -19,9 +19,7 @@ export function Description({ description, tags }: DescriptionProps) {
 
   return (
     <section className="space-y-6 px-5 pt-8 sm:px-8">
-      {description ? (
-        <p className="text-base text-slate-600">{description}</p>
-      ) : null}
+      {description ? <p className="text-base text-slate-600">{description}</p> : null}
 
       <div className="flex flex-wrap items-center gap-2">
         <FavoriteButton />

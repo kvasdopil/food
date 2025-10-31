@@ -4,10 +4,7 @@
   "description": "Thin beef slices and broccoli in savory soy ginger sauce, paired with steamed jasmine rice.",
   "recipeFile": "beef-broccoli-stir-fry.yaml",
   "imageFile": "beef-broccoli-stir-fry.jpg",
-  "tagsProvided": [
-    "chinese",
-    "beef"
-  ],
+  "tagsProvided": ["chinese", "beef"],
   "imagePrompt": {
     "base": "Vibrant close-up of Beef & Broccoli Stir-Fry, plated to showcase vivid textures and color. Incorporate visual cues from this description: Thin beef slices and broccoli in savory soy ginger sauce, paired with steamed jasmine rice.. Scene: chinese-inspired table with soft natural daylight, eye-level perspective, and shallow depth of field. Capture fresh garnish, gentle steam, and a sense of homemade comfort. No people or branded props.",
     "enhanced": "A captivating, eye-level close-up of tender, thinly sliced beef and vibrant broccoli florets, glistening in a savory soy-ginger sauce. Artfully arranged over a bed of fluffy jasmine rice in a ceramic bowl. Garnish with delicate fresh ginger slivers and a sprinkle of toasted sesame seeds. Bathed in soft, diffused natural daylight, with a shallow depth of field, capturing the gentle steam and comforting homemade essence on a subtly textured, Chinese-inspired table.",

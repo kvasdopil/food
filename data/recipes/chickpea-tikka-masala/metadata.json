@@ -4,11 +4,7 @@
   "description": "Creamy tomato curry with spiced chickpeas and warm garam masala, served with steamed basmati rice and cooling cucumber salad.",
   "recipeFile": "chickpea-tikka-masala.yaml",
   "imageFile": "chickpea-tikka-masala.jpg",
-  "tagsProvided": [
-    "indian",
-    "vegan",
-    "glutenfree"
-  ],
+  "tagsProvided": ["indian", "vegan", "glutenfree"],
   "imagePrompt": {
     "base": "Vibrant close-up of Chickpea Tikka Masala, plated to showcase vivid textures and color. Incorporate visual cues from this description: Creamy tomato curry with spiced chickpeas and warm garam masala, served with steamed basmati rice and cooling cucumber salad.. Scene: indian-inspired table with soft natural daylight, eye-level perspective, and shallow depth of field. Capture fresh garnish, gentle steam, and a sense of homemade comfort. No people or branded props.",
     "enhanced": "An intimate, low-angle close-up: artfully mounded, fluffy basmati rice nestled beside a generous, glistening pool of creamy, crimson Chickpea Tikka Masala. Spiced chickpeas peek through the rich sauce, subtly dusted with warm garam masala. A vibrant, crisp cucumber salad provides a refreshing counterpoint. Bathed in soft, golden natural daylight, highlighting gentle steam and a delicate fresh cilantro garnish. Shallow depth of field evokes homemade comfort.",

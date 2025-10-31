@@ -34,9 +34,7 @@ export function FeedCard() {
 
   const fetchRecipes = useCallback(async (fromSlug?: string) => {
     try {
-      const url = fromSlug 
-        ? `/api/recipes?from=${encodeURIComponent(fromSlug)}`
-        : `/api/recipes`;
+      const url = fromSlug ? `/api/recipes?from=${encodeURIComponent(fromSlug)}` : `/api/recipes`;
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error("Failed to fetch recipes");
@@ -93,17 +91,13 @@ export function FeedCard() {
 
     const handleScroll = () => {
       const { scrollTop, scrollHeight, clientHeight } = container;
-      if (
-        scrollHeight - scrollTop - clientHeight < 1000 &&
-        pagination?.hasMore &&
-        !isLoadingMore
-      ) {
+      if (scrollHeight - scrollTop - clientHeight < 1000 && pagination?.hasMore && !isLoadingMore) {
         loadMore();
       }
     };
 
-    container.addEventListener('scroll', handleScroll);
-    return () => container.removeEventListener('scroll', handleScroll);
+    container.addEventListener("scroll", handleScroll);
+    return () => container.removeEventListener("scroll", handleScroll);
   }, [pagination, isLoadingMore, loadMore]);
 
   if (isLoading) {
@@ -167,4 +161,3 @@ export function FeedCard() {
     </div>
   );
 }
-

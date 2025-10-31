@@ -47,9 +47,7 @@ export function Ingredients({ ingredients }: IngredientsProps) {
           >
             <div className="pl-6">
               <div className="flex items-baseline gap-2">
-                {item.amount ? (
-                  <span className="text-slate-500">{item.amount}</span>
-                ) : null}
+                {item.amount ? <span className="text-slate-500">{item.amount}</span> : null}
                 <span className="text-slate-800">{item.name}</span>
               </div>
               {item.notes ? (

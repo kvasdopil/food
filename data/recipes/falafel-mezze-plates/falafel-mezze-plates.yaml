@@ -14,9 +14,9 @@ ingredients:
   - name: fresh coriander
     amount: 15 g
   - name: small onion
-    amount: '1'
+    amount: "1"
   - name: garlic cloves
-    amount: '2'
+    amount: "2"
   - name: plain flour
     amount: 30 g
   - name: baking powder
@@ -33,23 +33,23 @@ ingredients:
   - name: fine bulgur wheat
     amount: 60 g
   - name: medium cucumber
-    amount: '1.5'
+    amount: "1.5"
   - name: medium tomatoes
-    amount: '2'
+    amount: "2"
   - name: fresh mint
     amount: 15 g
   - name: lemon
-    amount: '1'
+    amount: "1"
   - name: olive oil
     amount: 30 ml
   - name: medium carrot
-    amount: '1'
+    amount: "1"
   - name: white vinegar
     amount: 120 ml
   - name: sugar
     amount: 2 tsp
   - name: pita breads
-    amount: '4'
+    amount: "4"
   - name: salt
     amount: to taste
   - name: black pepper

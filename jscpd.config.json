@@ -1,22 +1,7 @@
 {
   "threshold": 3,
   "mode": "strict",
-  "reporters": [
-    "console"
-  ],
-  "ignore": [
-    "**/node_modules/**",
-    "**/.next/**",
-    "**/out/**",
-    "**/dist/**",
-    "**/.yarn/**"
-  ],
-  "patterns": [
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.js",
-    "**/*.jsx",
-    "**/*.mjs",
-    "**/*.cjs"
-  ]
+  "reporters": ["console"],
+  "ignore": ["**/node_modules/**", "**/.next/**", "**/out/**", "**/dist/**", "**/.yarn/**"],
+  "patterns": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.mjs", "**/*.cjs"]
 }

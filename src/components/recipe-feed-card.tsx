@@ -63,7 +63,10 @@ export function RecipeFeedCard({ slug, name, description, tags, imageUrl }: Reci
   };
 
   return (
-    <Link href={`/recipes/${slug}`} className="block w-full cursor-pointer overflow-hidden bg-white transition-opacity hover:opacity-95 sm:rounded-lg sm:shadow-md lg:shadow-lg">
+    <Link
+      href={`/recipes/${slug}`}
+      className="block w-full cursor-pointer overflow-hidden bg-white transition-opacity hover:opacity-95 sm:rounded-lg sm:shadow-md lg:shadow-lg"
+    >
       <figure className="relative aspect-[4/3] w-full overflow-hidden">
         {resolvedImageUrl ? (
           <NextImage
@@ -78,14 +81,14 @@ export function RecipeFeedCard({ slug, name, description, tags, imageUrl }: Reci
         )}
 
         <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent px-4 pt-12 pb-4 sm:px-5 sm:pt-16 sm:pb-3">
-          <h2 className="text-3xl font-semibold text-white drop-shadow-sm sm:text-base lg:text-lg">{name}</h2>
+          <h2 className="text-3xl font-semibold text-white drop-shadow-sm sm:text-base lg:text-lg">
+            {name}
+          </h2>
         </div>
       </figure>
 
       <div className="space-y-4 px-4 pt-4 sm:px-5 sm:pt-6">
-        {description && (
-          <p className="text-sm text-slate-600 line-clamp-2">{description}</p>
-        )}
+        {description && <p className="line-clamp-2 text-sm text-slate-600">{description}</p>}
 
         <div className="flex flex-wrap items-center gap-2 pb-4 sm:pb-6">
           <button
@@ -121,4 +124,3 @@ export function RecipeFeedCard({ slug, name, description, tags, imageUrl }: Reci
     </Link>
   );
 }
-

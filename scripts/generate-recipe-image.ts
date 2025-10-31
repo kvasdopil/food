@@ -35,7 +35,14 @@ type FireflyJobStatus = {
   }>;
   message?: string;
   error_code?: string;
-  status?: "pending" | "running" | "succeeded" | "failed" | "cancel_pending" | "cancelled" | "timeout"; // Fallback
+  status?:
+    | "pending"
+    | "running"
+    | "succeeded"
+    | "failed"
+    | "cancel_pending"
+    | "cancelled"
+    | "timeout"; // Fallback
   links?: {
     result?: {
       href: string;
@@ -54,8 +61,6 @@ type RecipeYaml = {
   };
   [key: string]: unknown;
 };
-
-const OUTPUT_BASE = path.resolve(process.cwd(), "data/recipes");
 
 async function loadEnvValue(key: string): Promise<string | undefined> {
   if (process.env[key]) {
@@ -110,10 +115,10 @@ async function generateImageWithFirefly(
   const submitResponse = await fetch(submitUrl, {
     method: "POST",
     headers: {
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
       "x-api-key": apiKey,
-      "accept": "*/*",
+      accept: "*/*",
     },
     body: JSON.stringify({
       n: 1,
@@ -139,11 +144,11 @@ async function generateImageWithFirefly(
   }
 
   const jobData = (await submitResponse.json()) as FireflyJobResponse;
-  
+
   // Extract job ID from result URL if links are provided
   let jobId: string | undefined;
   let statusUrl: string | undefined;
-  
+
   if (jobData.links?.result?.href) {
     // Extract job ID from URL like: https://firefly-eph851254.adobe.io/jobs/result/5c550d58-fa4d-4cba-9580-79ba791ce406
     const urlMatch = jobData.links.result.href.match(/\/jobs\/result\/([^\/]+)/);
@@ -172,9 +177,9 @@ async function generateImageWithFirefly(
     const statusResponse = await fetch(statusUrl, {
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         "x-api-key": apiKey,
-        "accept": "*/*",
+        accept: "*/*",
       },
     });
 
@@ -192,7 +197,7 @@ async function generateImageWithFirefly(
       const errorMessage = status.errors[0].message || "Unknown error";
       throw new Error(`Firefly image generation failed: ${errorMessage}`);
     }
-    
+
     if (status.status === "failed") {
       const errorMessage = status.errors?.[0]?.message || status.message || "Unknown error";
       throw new Error(`Firefly image generation failed: ${errorMessage}`);
@@ -202,7 +207,7 @@ async function generateImageWithFirefly(
     if (status.outputs && Array.isArray(status.outputs) && status.outputs.length > 0) {
       const output = status.outputs[0];
       const imageUrl = output.image?.presignedUrl || output.image?.url;
-      
+
       if (imageUrl) {
         console.log("Image generation completed, downloading...");
         console.log(`Downloading image from presigned URL...`);
@@ -221,7 +226,7 @@ async function generateImageWithFirefly(
         };
       }
     }
-    
+
     // Fallback: check for other URL formats
     if (status.output?.imageUrl) {
       const imageUrl = status.output.imageUrl;
@@ -310,7 +315,7 @@ async function main() {
 
     const fireflyToken = await loadFireflyToken();
     const fireflyApiKey = await loadFireflyApiKey();
-    
+
     if (!fireflyToken) {
       throw new Error(
         "Provide FIREFLY_API_TOKEN via env or .env.local before running this script.",
@@ -374,4 +379,3 @@ async function main() {
 }
 
 void main();
-

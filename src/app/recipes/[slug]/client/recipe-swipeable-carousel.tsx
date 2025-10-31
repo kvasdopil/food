@@ -28,7 +28,10 @@ type CarouselSnapshot = {
 
 let lastSnapshot: CarouselSnapshot | null = null;
 
-function getInitialSnapshot(slug: string, historySnapshot: RecipeHistorySnapshot | null): CarouselSnapshot {
+function getInitialSnapshot(
+  slug: string,
+  historySnapshot: RecipeHistorySnapshot | null,
+): CarouselSnapshot {
   if (lastSnapshot?.current === slug) {
     return lastSnapshot;
   }
@@ -88,10 +91,10 @@ export function RecipeSwipeableCarousel({ slug }: RecipeSwipeableCarouselProps) 
     if (nextSlug) return;
 
     // Check if there's forward history available (no need to call API)
-    const snapshot = historySnapshotRef.current ?? (typeof window !== "undefined"
-      ? syncHistoryWithCurrentSlug(currentSlug)
-      : null);
-    
+    const snapshot =
+      historySnapshotRef.current ??
+      (typeof window !== "undefined" ? syncHistoryWithCurrentSlug(currentSlug) : null);
+
     const forwardSlug = getNextSlugFromHistory(snapshot);
     if (forwardSlug) {
       console.log("[carousel] Using forward history instead of API call", forwardSlug);
@@ -107,7 +110,6 @@ export function RecipeSwipeableCarousel({ slug }: RecipeSwipeableCarouselProps) 
       console.error("Failed to load next recipe slug:", error);
     }
   }, [currentSlug, nextSlug]);
-
 
   // Update current slug when prop changes (external navigation)
   useEffect(() => {
@@ -140,82 +142,85 @@ export function RecipeSwipeableCarousel({ slug }: RecipeSwipeableCarouselProps) 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentSlug]);
 
-  const handleNavigate = useCallback(async (direction: "next" | "previous") => {
-    console.log("[carousel] handleNavigate", { direction, currentSlug, nextSlug, previousSlug });
-    if (!currentSlug) return;
+  const handleNavigate = useCallback(
+    async (direction: "next" | "previous") => {
+      console.log("[carousel] handleNavigate", { direction, currentSlug, nextSlug, previousSlug });
+      if (!currentSlug) return;
 
-    if (direction === "next") {
-      // Check forward history first, then nextSlug state, then API
-      let snapshot = historySnapshotRef.current ?? (typeof window !== "undefined"
-        ? syncHistoryWithCurrentSlug(currentSlug)
-        : null);
-      const forwardSlug = getNextSlugFromHistory(snapshot);
-      const targetSlug = forwardSlug || nextSlug || (await fetchRandomSlug(currentSlug));
-      if (targetSlug) {
-        // Re-sync snapshot in case it changed
-        snapshot = historySnapshotRef.current ?? (typeof window !== "undefined"
-          ? syncHistoryWithCurrentSlug(currentSlug)
-          : null);
-        const updatedSnapshot = snapshot ? pushSlugOntoHistory(snapshot, targetSlug) : null;
-        if (updatedSnapshot) {
-          historySnapshotRef.current = updatedSnapshot;
-          setPreviousSlug(getPreviousSlug(updatedSnapshot));
+      if (direction === "next") {
+        // Check forward history first, then nextSlug state, then API
+        let snapshot =
+          historySnapshotRef.current ??
+          (typeof window !== "undefined" ? syncHistoryWithCurrentSlug(currentSlug) : null);
+        const forwardSlug = getNextSlugFromHistory(snapshot);
+        const targetSlug = forwardSlug || nextSlug || (await fetchRandomSlug(currentSlug));
+        if (targetSlug) {
+          // Re-sync snapshot in case it changed
+          snapshot =
+            historySnapshotRef.current ??
+            (typeof window !== "undefined" ? syncHistoryWithCurrentSlug(currentSlug) : null);
+          const updatedSnapshot = snapshot ? pushSlugOntoHistory(snapshot, targetSlug) : null;
+          if (updatedSnapshot) {
+            historySnapshotRef.current = updatedSnapshot;
+            setPreviousSlug(getPreviousSlug(updatedSnapshot));
+            lastSnapshot = {
+              current: targetSlug,
+              previous: getPreviousSlug(updatedSnapshot),
+              next: null,
+            };
+          } else {
+            setPreviousSlug(currentSlug);
+            lastSnapshot = {
+              current: targetSlug,
+              previous: currentSlug,
+              next: null,
+            };
+          }
+          setCurrentSlug(targetSlug);
+          setNextSlug(null);
+          router.push(`/recipes/${targetSlug}`, { scroll: false });
+          // Wait for React to process the state update - scroll reset handled by Recipe component useEffect
+          await new Promise((resolve) => requestAnimationFrame(resolve));
+          await new Promise((resolve) => requestAnimationFrame(resolve));
+          // loadNextSlug() will be called by the useEffect when currentSlug changes
+        }
+      } else if (direction === "previous") {
+        if (previousSlug) {
+          const snapshot =
+            historySnapshotRef.current ??
+            (typeof window !== "undefined" ? syncHistoryWithCurrentSlug(currentSlug) : null);
+          const movedSnapshot = snapshot ? moveHistoryBackward(snapshot) : null;
+          const targetSlug = movedSnapshot ? getCurrentSlug(movedSnapshot) : null;
+          if (!movedSnapshot || !targetSlug) {
+            return;
+          }
+
+          historySnapshotRef.current = movedSnapshot;
+          console.log("[carousel] previous resolved", {
+            targetSlug,
+            movedSnapshot,
+            currentSlug,
+            previousSlug,
+            historyPrevious: getPreviousSlug(movedSnapshot),
+          });
+          setNextSlug(currentSlug);
+          setCurrentSlug(targetSlug);
+          const historyPrevious = getPreviousSlug(movedSnapshot);
+          setPreviousSlug(historyPrevious);
           lastSnapshot = {
             current: targetSlug,
-            previous: getPreviousSlug(updatedSnapshot),
-            next: null,
+            previous: historyPrevious,
+            next: currentSlug,
           };
-        } else {
-          setPreviousSlug(currentSlug);
-          lastSnapshot = {
-            current: targetSlug,
-            previous: currentSlug,
-            next: null,
-          };
+          router.back();
+          // Wait for React to process the state update - scroll reset handled by Recipe component useEffect
+          await new Promise((resolve) => requestAnimationFrame(resolve));
+          await new Promise((resolve) => requestAnimationFrame(resolve));
         }
-        setCurrentSlug(targetSlug);
-        setNextSlug(null);
-        router.push(`/recipes/${targetSlug}`, { scroll: false });
-        // Wait for React to process the state update - scroll reset handled by Recipe component useEffect
-        await new Promise((resolve) => requestAnimationFrame(resolve));
-        await new Promise((resolve) => requestAnimationFrame(resolve));
-        // loadNextSlug() will be called by the useEffect when currentSlug changes
       }
-    } else if (direction === "previous") {
-      if (previousSlug) {
-        const snapshot = historySnapshotRef.current ?? (typeof window !== "undefined"
-          ? syncHistoryWithCurrentSlug(currentSlug)
-          : null);
-        const movedSnapshot = snapshot ? moveHistoryBackward(snapshot) : null;
-        const targetSlug = movedSnapshot ? getCurrentSlug(movedSnapshot) : null;
-        if (!movedSnapshot || !targetSlug) {
-          return;
-        }
-
-        historySnapshotRef.current = movedSnapshot;
-        console.log("[carousel] previous resolved", {
-          targetSlug,
-          movedSnapshot,
-          currentSlug,
-          previousSlug,
-          historyPrevious: getPreviousSlug(movedSnapshot),
-        });
-        setNextSlug(currentSlug);
-        setCurrentSlug(targetSlug);
-        const historyPrevious = getPreviousSlug(movedSnapshot);
-        setPreviousSlug(historyPrevious);
-        lastSnapshot = {
-          current: targetSlug,
-          previous: historyPrevious,
-          next: currentSlug,
-        };
-        router.back();
-        // Wait for React to process the state update - scroll reset handled by Recipe component useEffect
-        await new Promise((resolve) => requestAnimationFrame(resolve));
-        await new Promise((resolve) => requestAnimationFrame(resolve));
-      }
-    }
-  }, [currentSlug, nextSlug, previousSlug, router]);
+    },
+    [currentSlug, nextSlug, previousSlug, router],
+  );
 
   const renderRecipeItem = useCallback((slug: string) => {
     // Each card gets its own scroll container that resets when it becomes active

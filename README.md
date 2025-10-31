@@ -17,6 +17,9 @@
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: anon public key from Supabase
    - `SUPABASE_SERVICE_ROLE_KEY`: service role token (used by the CLI scripts for storage + seeding)
    - `EDIT_TOKEN`: shared bearer token required for protected API endpoints (e.g. recipe imports)
+   - `GEMINI_API_KEY`: Google Gemini API key (for recipe text generation and prompt enhancement)
+   - `FIREFLY_API_TOKEN`: Adobe Firefly API bearer token (for image generation)
+   - `FIREFLY_API_KEY`: Adobe Firefly API key (defaults to "clio-playground-web" if not set)
    - _(optional)_ `RECIPE_STORAGE_BUCKET`: overrides the default `recipe-images` bucket name
 
 2. Install dependencies and run the dev server:
@@ -82,10 +85,12 @@ The app has three main routes:
 ### Layout Architecture
 
 **Root Layout** (`src/app/layout.tsx`)
+
 - Minimal wrapper providing fonts (Geist Sans/Mono) and global styles
 - No navigation UI
 
 **Recipes Layout** (`src/app/recipes/layout.tsx`)
+
 - **Persistent wrapper** that prevents carousel remounting during navigation
 - Manages recipe rendering and navigation state
 - Contains:
@@ -96,6 +101,7 @@ The app has three main routes:
   - Desktop standard recipe view
 
 **Recipe Page** (`src/app/recipes/[slug]/page.tsx`)
+
 - Server component that only generates metadata (OpenGraph, title, description)
 - Returns `null` - all rendering is handled by the layout
 
@@ -104,6 +110,7 @@ The app has three main routes:
 The app supports three navigation modes:
 
 #### 1. Feed → Recipe Navigation
+
 - Users click on `RecipeFeedCard` components in the feed
 - Standard Next.js `Link` navigation to `/recipes/[slug]`
 - Cards display: image, title overlay, description, tags, and favorite button (localStorage)
@@ -111,12 +118,14 @@ The app supports three navigation modes:
 #### 2. Recipe → Recipe Navigation (Desktop)
 
 **Side Navigation Buttons** (`RecipeSideNav`)
+
 - **Previous**: Uses browser `router.back()` (only enabled when history exists)
 - **Next**: Fetches next recipe using `/api/recipes?from={slug}` (maintains feed order)
 - Fallback to random recipe if API call fails
 - Buttons hidden when no history available
 
 **Keyboard Navigation** (`KeyboardNav`)
+
 - **Left Arrow**: Navigate to previous recipe via `router.back()` (if history exists)
 - **Right Arrow**: Navigate to next recipe (feed order, with random fallback)
 - Disabled when user is typing in input fields
@@ -124,6 +133,7 @@ The app supports three navigation modes:
 #### 3. Recipe → Recipe Navigation (Mobile)
 
 **Swipeable Carousel** (`RecipeSwipeableCarousel`)
+
 - **Swipe left**: Navigate to next recipe (preloaded)
 - **Swipe right**: Navigate to previous recipe (if history exists)
 - Requires 50% swipe threshold before navigation triggers
@@ -142,11 +152,13 @@ Navigation history is managed via **session storage** (`recipe-history.ts`):
 - Enables forward/backward navigation through visited recipes
 
 **History Sync Logic:**
+
 - If `document.referrer` indicates navigation from another recipe page → appends to existing history stack
 - If no referrer or external referrer → resets to new stack with current slug
 - Reuses existing stack entries when revisiting recipes
 
 **Forward History Support:**
+
 - When user navigates backward, forward entries are preserved
 - Forward navigation reuses history entries instead of API calls
 - History stack is truncated when navigating forward from middle of stack
@@ -154,12 +166,14 @@ Navigation history is managed via **session storage** (`recipe-history.ts`):
 ### Feed Pagination
 
 **API Endpoint** (`/api/recipes`)
+
 - Supports two pagination modes:
   - `?page=N` → Traditional page-based pagination (20 items per page)
   - `?from={slug}` → Slug-based pagination matching feed order
 - Returns 20 recipes with pagination metadata (`hasMore`, `total`, etc.)
 
 **Infinite Scroll:**
+
 - Initial load fetches first 20 recipes
 - Auto-loads more when scrolling within 1000px of bottom
 - Uses last recipe's slug for `?from=` parameter to maintain order
@@ -191,6 +205,7 @@ Recipe Layout (`/recipes/[slug]`)
 ### Navigation Flow Examples
 
 **Flow 1: Feed → Recipe → Next Recipe**
+
 1. User clicks card in feed → navigates to `/recipes/beef-tacos`
 2. Layout syncs history: `{ stack: ['beef-tacos'], index: 0 }`
 3. User clicks "Next" button or swipes left (mobile)
@@ -199,6 +214,7 @@ Recipe Layout (`/recipes/[slug]`)
 6. History updated: `{ stack: ['beef-tacos', 'chicken-stir-fry'], index: 1 }`
 
 **Flow 2: Back Navigation**
+
 1. User on `/recipes/chicken-stir-fry` (index: 1)
 2. User clicks "Previous" button or swipes right (mobile)
 3. History moves backward: `{ index: 0 }`
@@ -206,6 +222,7 @@ Recipe Layout (`/recipes/[slug]`)
 5. Layout detects same slug, reuses history entry
 
 **Flow 3: Direct Link from External Source**
+
 1. User shares `/recipes/beef-tacos` URL
 2. New visitor opens link (no referrer or external referrer)
 3. History resets: `{ stack: ['beef-tacos'], index: 0 }`
@@ -251,25 +268,66 @@ This architecture provides stateful navigation that tracks forward and backward 
 
 ## Recipe Asset Workflow
 
-- Generate structured recipes + hero prompts and images via:
+### Generating Recipes
 
-  ```bash
-  yarn ts-node scripts/recipe-generator.ts "Meal Name" --description "..." --tags "tag1,tag2"
-  ```
+The recipe generation process is split into two steps:
 
-- Upload recipe and image together to the API (defaults to `http://localhost:3000`):
+1. **Generate Recipe YAML** (using Gemini API):
 
-  ```bash
-  yarn ts-node scripts/upload-recipe.ts data/recipes/creamy-mushroom-risotto/creamy-mushroom-risotto.yaml --token "$EDIT_TOKEN"
-  ```
+   ```bash
+   yarn ts-node scripts/generate-recipe-yaml.ts "Meal Name" --description "..." --tags "tag1,tag2"
+   ```
 
-  The script will:
-  1. Automatically find the corresponding image file (`{slug}.jpg`, `.jpeg`, `.png`, or `.webp`) in the same directory
-  2. Upload the image to Supabase Storage with hashed filename (`{slug}.{hash}.jpg`)
-  3. Upload the recipe YAML to the database with the image URL
-  4. If the recipe already exists, its image URL is automatically updated
+   This script:
+   - Generates recipe content (ingredients, instructions) using Gemini API
+   - Creates base and enhanced image prompts using Gemini API
+   - Saves the recipe as YAML to `data/recipes/<slug>/<slug>.yaml`
+   - Creates/updates `metadata.json` with recipe info and prompts
+
+   **Required:** `GEMINI_API_KEY` (or `GOOGLE_API_KEY`)
+
+2. **Generate Recipe Image** (using Firefly API):
+
+   ```bash
+   yarn ts-node scripts/generate-recipe-image.ts data/recipes/<slug>/<slug>.yaml
+   ```
+
+   This script:
+   - Reads the YAML file and extracts the image prompt (uses `enhanced` if available, falls back to `base`)
+   - Generates an image using Firefly API (async, with polling)
+   - Saves the image as `{slug}.jpg` in the same directory as the YAML
+   - Updates `metadata.json` with image generation info
+
+   **Required:** `FIREFLY_API_TOKEN` (and optionally `FIREFLY_API_KEY`, defaults to "clio-playground-web")
+
+### Uploading Recipes
+
+Upload recipe and image together to the API (defaults to `http://localhost:3000`):
+
+```bash
+yarn ts-node scripts/upload-recipe.ts data/recipes/<slug>/<slug>.yaml --token "$EDIT_TOKEN"
+```
+
+The script will:
+
+1. Automatically find the corresponding image file (`{slug}.jpg`, `.jpeg`, `.png`, or `.webp`) in the same directory
+2. Upload the image to Supabase Storage with hashed filename (`{slug}.{hash}.jpg`)
+3. Upload the recipe YAML to the database with the image URL
+4. If the recipe already exists, its image URL is automatically updated
 
 - Recipe metadata lives in `data/recipes/<slug>/` (YAML files + images). Storage uploads land in the `recipe-images` bucket by default with hashed filenames for versioning. Ingredient entries should use `{ name, amount, notes }` with metric abbreviations (`g`, `ml`, `tsp`, etc.).
+
+### Recipe Generation Scripts
+
+- **`scripts/generate-recipe-yaml.ts`**: Generates recipe YAML with image prompts
+  - Uses Gemini API for recipe text generation and prompt enhancement
+  - Creates both base and enhanced image prompts
+  - Saves YAML and metadata files
+- **`scripts/generate-recipe-image.ts`**: Generates images from YAML files
+  - Uses Firefly API (V5) for image generation
+  - Reads image prompts from YAML file
+  - Supports async generation with polling for completion
+  - Saves generated images as JPEG files
 
 ### Recipe Upload CLI & API
 
@@ -281,7 +339,12 @@ This architecture provides stateful navigation that tracks forward and backward 
 - The command reads `EDIT_TOKEN` from `--token`, the environment, or `.env.local`, and falls back to `http://localhost:3000` unless `--endpoint` or `RECIPE_API_URL` is provided.
 - `POST /api/recipes` accepts normalized recipe payloads, upserting by slug. Requests must include `Authorization: Bearer <EDIT_TOKEN>`; the server rejects missing or mismatched tokens with `401`.
 - `POST /api/images` accepts image uploads with `slug` and `file` (multipart/form-data), automatically updating recipe `image_url` if the recipe exists.
-- Typical workflow: generate a recipe, then upload it with a single command. The image and recipe are uploaded together, and existing recipes are automatically updated.
+
+### Typical Workflow
+
+1. Generate recipe YAML: `yarn ts-node scripts/generate-recipe-yaml.ts "Meal Name" --description "..." --tags "tag1,tag2"`
+2. Generate recipe image: `yarn ts-node scripts/generate-recipe-image.ts data/recipes/<slug>/<slug>.yaml`
+3. Upload to database: `yarn ts-node scripts/upload-recipe.ts data/recipes/<slug>/<slug>.yaml`
 
 ## Data Flow
 

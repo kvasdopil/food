@@ -57,7 +57,9 @@ function usage(): never {
   console.log("Usage: yarn ts-node scripts/upload-recipe.ts <recipe.yaml> [options]");
   console.log("");
   console.log("Options:");
-  console.log("  --endpoint <url>    Recipe API endpoint (default: http://localhost:3000/api/recipes)");
+  console.log(
+    "  --endpoint <url>    Recipe API endpoint (default: http://localhost:3000/api/recipes)",
+  );
   console.log("  --token <token>     Authentication token (or set EDIT_TOKEN env var)");
   console.log("  --skip-image        Skip image upload (use existing image URL from YAML)");
   process.exit(1);
@@ -370,7 +372,7 @@ async function main(): Promise<void> {
   }
 
   if (!token) {
-    token = await loadEnvValue("EDIT_TOKEN") ?? null;
+    token = (await loadEnvValue("EDIT_TOKEN")) ?? null;
   }
 
   if (!token) {
@@ -390,9 +392,13 @@ async function main(): Promise<void> {
         console.log(`Uploading image: ${path.basename(imagePath)}`);
         const imageResult = await uploadImage(imageEndpoint, token, slug, imagePath);
         payload.imageUrl = imageResult.publicUrl;
-        console.log(`✓ Image uploaded: ${imageResult.path} (${imageResult.recipeUpdated ? "recipe updated" : "recipe will be created"})`);
+        console.log(
+          `✓ Image uploaded: ${imageResult.path} (${imageResult.recipeUpdated ? "recipe updated" : "recipe will be created"})`,
+        );
       } catch (error) {
-        console.warn(`Failed to upload image: ${error instanceof Error ? error.message : String(error)}`);
+        console.warn(
+          `Failed to upload image: ${error instanceof Error ? error.message : String(error)}`,
+        );
         console.warn("Continuing with recipe upload without image URL...");
       }
     } else {

@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "tsc -b --noEmit && eslint . --max-warnings=0",
+    "format": "prettier --write .",
     "lint:prettier": "prettier --check .",
     "lint:knip": "knip",
     "lint:jscpd": "jscpd --config jscpd.config.json",

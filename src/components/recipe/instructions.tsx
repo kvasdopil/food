@@ -43,10 +43,7 @@ export function Instructions({ instructions }: InstructionsProps) {
       <h2 className="text-xl font-semibold text-slate-900">Instructions</h2>
       <ol className="space-y-3">
         {instructionSteps.map((step, index) => (
-          <li
-            key={`${index}-${step}`}
-            className="flex items-start gap-3 text-base text-slate-700"
-          >
+          <li key={`${index}-${step}`} className="flex items-start gap-3 text-base text-slate-700">
             <span className="mt-0.5 w-5 flex-shrink-0 text-right text-base font-semibold text-amber-500">
               {index + 1}
             </span>

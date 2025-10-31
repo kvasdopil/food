@@ -1,9 +1,7 @@
 export async function fetchRandomSlug(exclude?: string) {
   // Use recipes endpoint with from parameter for slug-based pagination
   // This ensures recipes match the feed order
-  const url = exclude
-    ? `/api/recipes?from=${encodeURIComponent(exclude)}`
-    : "/api/recipes";
+  const url = exclude ? `/api/recipes?from=${encodeURIComponent(exclude)}` : "/api/recipes";
 
   const response = await fetch(url, { cache: "no-store" });
 
@@ -12,7 +10,7 @@ export async function fetchRandomSlug(exclude?: string) {
   }
 
   const body = (await response.json()) as { recipes?: Array<{ slug: string }> };
-  
+
   if (!body.recipes || body.recipes.length === 0) {
     // If no recipes found after the exclude slug, wrap around to the first recipe
     // This handles the case where we're at the end of the feed

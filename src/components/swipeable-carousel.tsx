@@ -21,9 +21,8 @@ export function SwipeableCarousel<T>({
   onNavigate,
   renderItem,
   className = "",
-  disablePrevious = false
+  disablePrevious = false,
 }: SwipeableCarouselProps<T>) {
-
   useEffect(() => {
     console.log("SwipeableCarousel component mounted");
     return () => {
@@ -88,14 +87,19 @@ export function SwipeableCarousel<T>({
 
       // Determine if swipe is significant enough (distance or velocity)
       const isSignificantSwipe =
-        isHorizontalSwipe && (Math.abs(offset) > SWIPE_THRESHOLD || Math.abs(velocity) > VELOCITY_THRESHOLD);
+        isHorizontalSwipe &&
+        (Math.abs(offset) > SWIPE_THRESHOLD || Math.abs(velocity) > VELOCITY_THRESHOLD);
 
       // Check if card has actually moved past 50% threshold visually
       const cardCrossedThreshold = Math.abs(currentX) >= threshold;
 
       // Navigate to next item (swipe left, negative offset)
       // Only navigate if card visually crossed 50% threshold
-      if (isSignificantSwipe && (offset < -SWIPE_THRESHOLD || velocity < -VELOCITY_THRESHOLD) && cardCrossedThreshold) {
+      if (
+        isSignificantSwipe &&
+        (offset < -SWIPE_THRESHOLD || velocity < -VELOCITY_THRESHOLD) &&
+        cardCrossedThreshold
+      ) {
         setIsTransitioning(true);
         setDragDirection("next");
 
@@ -104,9 +108,10 @@ export function SwipeableCarousel<T>({
         // Use velocity to calculate duration (velocity is in pixels/sec)
         // Clamp duration between 0.1s (fast) and 0.5s (slow)
         const velocityMagnitude = Math.abs(velocity);
-        const calculatedDuration = velocityMagnitude > 0
-          ? Math.max(0.1, Math.min(0.5, remainingDistance / velocityMagnitude))
-          : 0.3;
+        const calculatedDuration =
+          velocityMagnitude > 0
+            ? Math.max(0.1, Math.min(0.5, remainingDistance / velocityMagnitude))
+            : 0.3;
 
         // Animate to left edge with velocity-based duration
         await animate(x, -screenWidth, {
@@ -134,7 +139,11 @@ export function SwipeableCarousel<T>({
 
       // Navigate to previous item (swipe right, positive offset)
       // Only navigate if card visually crossed 50% threshold and previous navigation is not disabled
-      if (isSignificantSwipe && (offset > SWIPE_THRESHOLD || velocity > VELOCITY_THRESHOLD) && !disablePrevious) {
+      if (
+        isSignificantSwipe &&
+        (offset > SWIPE_THRESHOLD || velocity > VELOCITY_THRESHOLD) &&
+        !disablePrevious
+      ) {
         setIsTransitioning(true);
         setDragDirection("previous");
 
@@ -143,9 +152,10 @@ export function SwipeableCarousel<T>({
         // Use velocity to calculate duration (velocity is in pixels/sec)
         // Clamp duration between 0.1s (fast) and 0.5s (slow)
         const velocityMagnitude = Math.abs(velocity);
-        const calculatedDuration = velocityMagnitude > 0
-          ? Math.max(0.1, Math.min(0.5, remainingDistance / velocityMagnitude))
-          : 0.3;
+        const calculatedDuration =
+          velocityMagnitude > 0
+            ? Math.max(0.1, Math.min(0.5, remainingDistance / velocityMagnitude))
+            : 0.3;
 
         // Animate to right edge with velocity-based duration
         await animate(x, screenWidth, {
@@ -201,7 +211,11 @@ export function SwipeableCarousel<T>({
           ((dragDirection === "previous" && offset > 0 && hasPreviousCard) ||
             (dragDirection === "next" && offset < 0 && hasNextCard));
         const finalOpacity = isActive ? opacity : shouldHide || hideDueToDirection ? 0 : 1;
-        const finalVisibility = isActive ? "visible" : shouldHide || hideDueToDirection ? "hidden" : "visible";
+        const finalVisibility = isActive
+          ? "visible"
+          : shouldHide || hideDueToDirection
+            ? "hidden"
+            : "visible";
         const resolvedOpacityValue = isActive ? opacity.get() : finalOpacity;
 
         const baseZIndex = isActive ? 10 : offset < 0 ? 6 : offset > 0 ? 4 : 2;
@@ -210,15 +224,15 @@ export function SwipeableCarousel<T>({
             ? offset < 0
               ? 7
               : offset > 0
-              ? 3
-              : baseZIndex
+                ? 3
+                : baseZIndex
             : dragDirection === "next"
-            ? offset > 0
-              ? 7
-              : offset < 0
-              ? 3
-              : baseZIndex
-            : baseZIndex;
+              ? offset > 0
+                ? 7
+                : offset < 0
+                  ? 3
+                  : baseZIndex
+              : baseZIndex;
 
         const canSwipeRight = !disablePrevious;
         console.log("SwipeableCarousel render card", {
@@ -234,10 +248,10 @@ export function SwipeableCarousel<T>({
         });
         // Generate a unique key from the item
         let itemKey: string;
-        if (typeof item === 'object' && item !== null) {
-          if ('id' in item && typeof item.id === 'string') {
+        if (typeof item === "object" && item !== null) {
+          if ("id" in item && typeof item.id === "string") {
             itemKey = item.id;
-          } else if ('slug' in item && typeof item.slug === 'string') {
+          } else if ("slug" in item && typeof item.slug === "string") {
             itemKey = `recipe-${item.slug}`;
           } else {
             itemKey = String(item);
@@ -245,12 +259,12 @@ export function SwipeableCarousel<T>({
         } else {
           itemKey = String(item);
         }
-        
+
         return (
           <motion.div
             key={itemKey}
             layout={false}
-            className={`h-full w-full ${isActive ? "relative z-10 shadow-2xl shadow-slate-900/20" : "absolute inset-0 z-0 pointer-events-none"}`}
+            className={`h-full w-full ${isActive ? "relative z-10 shadow-2xl shadow-slate-900/20" : "pointer-events-none absolute inset-0 z-0"}`}
             style={{
               x: isActive ? x : 0,
               y: 0,
@@ -272,12 +286,12 @@ export function SwipeableCarousel<T>({
               if (isActive) {
                 y.set(0);
                 setDragDirection(null);
-                
+
                 // Always prevent scroll container when drag starts - we'll restore if it's vertical
                 const target = event.target as HTMLElement;
-                const scrollContainer = target.closest('[data-scroll-container]') as HTMLElement;
+                const scrollContainer = target.closest("[data-scroll-container]") as HTMLElement;
                 if (scrollContainer) {
-                  scrollContainer.style.pointerEvents = 'none';
+                  scrollContainer.style.pointerEvents = "none";
                 }
               }
             }}
@@ -288,29 +302,29 @@ export function SwipeableCarousel<T>({
 
               // Lock vertical movement
               y.set(0);
-              
+
               let currentX = x.get();
-              
+
               // Check if gesture is primarily vertical (1.5x threshold)
               const isVerticalGesture = Math.abs(info.offset.y) > Math.abs(info.offset.x) * 1.5;
-              
+
               if (isVerticalGesture && Math.abs(info.offset.x) < 10) {
                 // Pure vertical gesture - cancel drag and restore scroll
                 const target = event.target as HTMLElement;
-                const scrollContainer = target.closest('[data-scroll-container]') as HTMLElement;
+                const scrollContainer = target.closest("[data-scroll-container]") as HTMLElement;
                 if (scrollContainer) {
-                  scrollContainer.style.pointerEvents = '';
+                  scrollContainer.style.pointerEvents = "";
                 }
                 x.set(0);
                 return;
               }
-              
+
               // Horizontal swipe - keep scroll disabled
               if (!canSwipeRight && currentX > 0) {
                 x.set(0);
                 currentX = 0;
               }
-              
+
               if (currentX > 0 && canSwipeRight) {
                 setDragDirection("previous");
               } else if (currentX < 0) {
@@ -324,10 +338,10 @@ export function SwipeableCarousel<T>({
                 y.set(0);
                 // Restore scroll after drag ends
                 const target = event.target as HTMLElement;
-                const scrollContainer = target.closest('[data-scroll-container]') as HTMLElement;
+                const scrollContainer = target.closest("[data-scroll-container]") as HTMLElement;
                 if (scrollContainer) {
-                  scrollContainer.style.overflow = '';
-                  scrollContainer.style.pointerEvents = '';
+                  scrollContainer.style.overflow = "";
+                  scrollContainer.style.pointerEvents = "";
                 }
                 handleDragEnd(event, info);
               }

@@ -27,12 +27,14 @@ export function NavigationProvider({ currentSlug, children }: NavigationProvider
         return forwardSlug;
       }
     }
-    
+
     // Only call API when there's no forward history
     return fetchRandomSlug(currentSlug);
   }, [currentSlug]);
 
-  return <NavigationContext.Provider value={{ getNextSlug }}>{children}</NavigationContext.Provider>;
+  return (
+    <NavigationContext.Provider value={{ getNextSlug }}>{children}</NavigationContext.Provider>
+  );
 }
 
 export function useRecipeNavigation() {

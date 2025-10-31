@@ -14,9 +14,7 @@ import {
   getNextSlugFromHistory,
 } from "@/app/recipes/[slug]/client/recipe-history";
 
-type CarouselItem = 
-  | { type: "feed"; id: "feed" }
-  | { type: "recipe"; slug: string; id: string };
+type CarouselItem = { type: "feed"; id: "feed" } | { type: "recipe"; slug: string; id: string };
 
 type CarouselSnapshot = {
   currentIndex: number;
@@ -32,7 +30,7 @@ function getInitialSnapshot(pathname: string): CarouselSnapshot {
   }
 
   const items: CarouselItem[] = [{ type: "feed", id: "feed" }];
-  
+
   // Extract slug from pathname
   const match = pathname?.match(/^\/recipes\/([^/]+)/);
   const slug = match?.[1];
@@ -62,7 +60,7 @@ export function MobileCarouselWrapper({ children }: { children: React.ReactNode 
   const pathname = usePathname();
   const router = useRouter();
   const [isMobileDevice, setIsMobileDevice] = useState(false);
-  
+
   const initialSnapshotRef = useRef<CarouselSnapshot | null>(null);
   const historySnapshotRef = useRef<RecipeHistorySnapshot | null>(null);
   const isInternalNavigationRef = useRef(false);
@@ -92,7 +90,7 @@ export function MobileCarouselWrapper({ children }: { children: React.ReactNode 
       historySnapshotRef.current = historySnapshot;
       initialSnapshotRef.current = getInitialSnapshot(pathname || "");
       lastPathnameRef.current = pathname || null;
-      
+
       // Set initial state
       const snapshot = initialSnapshotRef.current;
       setCurrentIndexState(snapshot.currentIndex);
@@ -101,33 +99,34 @@ export function MobileCarouselWrapper({ children }: { children: React.ReactNode 
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Only run once on mount
-  
+
   // Keep itemsRef in sync with items
   useEffect(() => {
     itemsRef.current = items;
   }, [items]);
 
   // Helper to set current index and update URL if needed
-  const setCurrentIndex = useCallback((newIndex: number, skipUrlUpdate = false) => {
-    setCurrentIndexState(newIndex);
-    
-    if (skipUrlUpdate) return;
-    
-    // Use ref to get latest items
-    const currentItems = itemsRef.current;
-    const newItem = currentItems[newIndex];
-    if (!newItem) return;
+  const setCurrentIndex = useCallback(
+    (newIndex: number, skipUrlUpdate = false) => {
+      setCurrentIndexState(newIndex);
 
-    const expectedPath = newItem.type === "feed" 
-      ? "/feed" 
-      : `/recipes/${newItem.slug}`;
-    
-    // Only update URL if it doesn't match
-    if (pathname !== expectedPath) {
-      isInternalNavigationRef.current = true;
-      router.push(expectedPath, { scroll: false });
-    }
-  }, [pathname, router]);
+      if (skipUrlUpdate) return;
+
+      // Use ref to get latest items
+      const currentItems = itemsRef.current;
+      const newItem = currentItems[newIndex];
+      if (!newItem) return;
+
+      const expectedPath = newItem.type === "feed" ? "/feed" : `/recipes/${newItem.slug}`;
+
+      // Only update URL if it doesn't match
+      if (pathname !== expectedPath) {
+        isInternalNavigationRef.current = true;
+        router.push(expectedPath, { scroll: false });
+      }
+    },
+    [pathname, router],
+  );
 
   // Update snapshot when pathname changes externally (user clicks link, browser back, etc.)
   useEffect(() => {
@@ -155,10 +154,8 @@ export function MobileCarouselWrapper({ children }: { children: React.ReactNode 
 
       // Update carousel items and index
       setItems((prev) => {
-        const recipeIndex = prev.findIndex(
-          (item) => item.type === "recipe" && item.slug === slug
-        );
-        
+        const recipeIndex = prev.findIndex((item) => item.type === "recipe" && item.slug === slug);
+
         if (recipeIndex !== -1) {
           // Recipe already in carousel
           setCurrentIndex(recipeIndex, true); // Skip URL update since pathname already changed
@@ -232,20 +229,21 @@ export function MobileCarouselWrapper({ children }: { children: React.ReactNode 
   const handleNavigate = useCallback(
     async (direction: "next" | "previous") => {
       const currentItem = items[currentIndex];
-      
+
       if (direction === "next") {
         // Navigate to next item
         if (currentIndex < items.length - 1) {
           // Next item already exists
           const nextIndex = currentIndex + 1;
           const nextItem = items[nextIndex];
-          
+
           // Update history if coming from a recipe
           if (currentItem?.type === "recipe" && nextItem?.type === "recipe") {
-            const snapshot = historySnapshotRef.current ?? syncHistoryWithCurrentSlug(currentItem.slug);
+            const snapshot =
+              historySnapshotRef.current ?? syncHistoryWithCurrentSlug(currentItem.slug);
             historySnapshotRef.current = pushSlugOntoHistory(snapshot, nextItem.slug);
           }
-          
+
           setCurrentIndex(nextIndex);
         } else if (currentItem?.type === "recipe") {
           // Need to load next recipe
@@ -254,13 +252,14 @@ export function MobileCarouselWrapper({ children }: { children: React.ReactNode 
             setItems((prev) => {
               // Find the newly added recipe
               const addedIndex = prev.findIndex(
-                (item) => item.type === "recipe" && item.slug === nextSlug
+                (item) => item.type === "recipe" && item.slug === nextSlug,
               );
               if (addedIndex !== -1) {
                 // Update history
-                const snapshot = historySnapshotRef.current ?? syncHistoryWithCurrentSlug(currentItem.slug);
+                const snapshot =
+                  historySnapshotRef.current ?? syncHistoryWithCurrentSlug(currentItem.slug);
                 historySnapshotRef.current = pushSlugOntoHistory(snapshot, nextSlug);
-                
+
                 setCurrentIndex(addedIndex);
               }
               return prev;
@@ -272,7 +271,7 @@ export function MobileCarouselWrapper({ children }: { children: React.ReactNode 
         if (currentIndex > 0) {
           const prevIndex = currentIndex - 1;
           const prevItem = items[prevIndex];
-          
+
           // If going back to feed (index 0), always allow it
           // Clean up carousel to only have feed when returning to it
           if (prevItem?.type === "feed") {
@@ -280,10 +279,11 @@ export function MobileCarouselWrapper({ children }: { children: React.ReactNode 
             setCurrentIndex(0);
             return;
           }
-          
+
           // If going from recipe to recipe, check history
           if (prevItem?.type === "recipe" && currentItem?.type === "recipe") {
-            const snapshot = historySnapshotRef.current ?? syncHistoryWithCurrentSlug(currentItem.slug);
+            const snapshot =
+              historySnapshotRef.current ?? syncHistoryWithCurrentSlug(currentItem.slug);
             const movedSnapshot = moveHistoryBackward(snapshot);
             if (movedSnapshot) {
               // There's history, go to previous recipe
@@ -297,14 +297,15 @@ export function MobileCarouselWrapper({ children }: { children: React.ReactNode 
               return;
             }
           }
-          
+
           // Regular navigation
           setCurrentIndex(prevIndex);
         } else if (currentItem?.type === "recipe") {
           // On first recipe, check if there's history or go to feed
-          const snapshot = historySnapshotRef.current ?? syncHistoryWithCurrentSlug(currentItem.slug);
+          const snapshot =
+            historySnapshotRef.current ?? syncHistoryWithCurrentSlug(currentItem.slug);
           const movedSnapshot = moveHistoryBackward(snapshot);
-          
+
           if (movedSnapshot) {
             // There's history - use browser back to go to previous recipe
             historySnapshotRef.current = movedSnapshot;
@@ -326,7 +327,7 @@ export function MobileCarouselWrapper({ children }: { children: React.ReactNode 
         };
       }, 0);
     },
-    [currentIndex, items, router, loadNextRecipe, setCurrentIndex]
+    [currentIndex, items, router, loadNextRecipe, setCurrentIndex],
   );
 
   // Render carousel item
@@ -361,4 +362,3 @@ export function MobileCarouselWrapper({ children }: { children: React.ReactNode 
     </div>
   );
 }
-

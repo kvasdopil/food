@@ -88,10 +88,12 @@ export async function POST(request: NextRequest) {
     const remotePath = `${slug.trim()}.${hash}.jpg`;
 
     // Upload to Supabase Storage
-    const { error: uploadError } = await supabaseAdmin.storage.from(DEFAULT_BUCKET).upload(remotePath, buffer, {
-      upsert: true,
-      contentType: file.type,
-    });
+    const { error: uploadError } = await supabaseAdmin.storage
+      .from(DEFAULT_BUCKET)
+      .upload(remotePath, buffer, {
+        upsert: true,
+        contentType: file.type,
+      });
 
     if (uploadError) {
       console.error("Upload error:", uploadError);

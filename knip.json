@@ -1,9 +1,6 @@
 {
   "$schema": "https://unpkg.com/knip@latest/schema.json",
-  "entry": [
-    "src/app/**/*.{ts,tsx}",
-    "scripts/**/*.{ts,tsx}"
-  ],
+  "entry": ["src/app/**/*.{ts,tsx}", "scripts/**/*.{ts,tsx}"],
   "ignore": [
     "next-env.d.ts",
     "next.config.ts",
@@ -12,12 +9,6 @@
     "jscpd.config.json",
     "tailwind.config.*"
   ],
-  "project": [
-    "src/**/*.tsx"
-  ],
-  "ignoreDependencies": [
-    "tailwindcss",
-    "ts-node",
-    "vercel"
-  ]
+  "project": ["src/**/*.tsx"],
+  "ignoreDependencies": ["tailwindcss", "ts-node", "vercel"]
 }
