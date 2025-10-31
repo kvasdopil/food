@@ -19,6 +19,10 @@ ingredients:
     notes: Finely diced
   - name: frozen peas
     amount: 150 g
+    notes: for filling
+  - name: frozen peas
+    amount: 150 g
+    notes: for side dish
   - name: beef broth
     amount: 250 ml
   - name: milk
@@ -50,15 +54,14 @@ instructions:
       Drain well.
   - step: 2
     action: >-
-      While potatoes cook, heat a drizzle of *olive oil* in a large oven-safe
+      While *potatoes* cook, heat a drizzle of *olive oil* in a large oven-safe
       skillet (e.g., 25 cm cast iron) over medium-high heat. Add *onion* and
       *carrots*, cook for 5-7 minutes until softened. Add *lean ground beef*,
       break it apart with a spoon, and cook until browned, about 8-10 minutes.
       Drain any excess fat. Stir in *tomato paste*, *dried thyme*, *salt*, and
-      *black pepper*. Cook for 1 minute. Sprinkle *plain flour* (or cornstarch)
-      over the mixture and stir for 1 minute. Pour in *beef broth* and
-      *Worcestershire sauce* (if using), bring to a simmer, stirring until the
-      sauce thickens. Stir in *frozen peas*. Remove from heat.
+      *black pepper*. Cook for 1 minute.       Sprinkle *plain flour* over the mixture and stir for 1 minute. Pour in *beef broth* and
+      *worcestershire sauce* (if using), bring to a simmer, stirring until the
+      sauce thickens. Stir in 150 g of *frozen peas*. Remove from heat.
   - step: 3
     action: >-
       Return drained *potatoes* to the hot pot. Add *milk* and 15 g of *butter*.
@@ -66,16 +69,15 @@ instructions:
       taste.
   - step: 4
     action: >-
-      Preheat oven to 190°C. Evenly spread the *beef and vegetable mixture* in
-      the skillet. Carefully spoon the *mashed potatoes* over the beef mixture,
+      Preheat oven to 190°C. Evenly spread the beef and vegetable mixture in
+      the skillet. Carefully spoon the mashed potatoes over the beef mixture,
       spreading it to the edges. You can create peaks with a fork for a crispier
       top. Bake for 20-25 minutes, or until the topping is golden brown and the
       filling is bubbly.
   - step: 5
     action: >-
-      Let the *skillet shepherd's pie* rest for a few minutes before serving.
-      Meanwhile, melt the remaining 15 g of *butter* and toss with additional
-      *frozen peas* (if desired for a side). Serve hot.
+      Let the skillet shepherd's pie rest for a few minutes before serving.
+      Meanwhile, melt the remaining 15 g of *butter* and toss with 150 g of *frozen peas*. Serve hot.
 tags:
   - irish
   - beef

@@ -16,11 +16,12 @@
    - `NEXT_PUBLIC_SUPABASE_URL`: Project URL from the Supabase dashboard
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: anon public key from Supabase
    - `SUPABASE_SERVICE_ROLE_KEY`: service role token (used by the CLI scripts for storage + seeding)
-   - `EDIT_TOKEN`: shared bearer token required for protected API endpoints (e.g. recipe imports)
-   - `GEMINI_API_KEY`: Google Gemini API key (for recipe text generation and prompt enhancement)
+   - `EDIT_TOKEN`: shared bearer token required for protected API endpoints (e.g. recipe generation, imports)
+   - `GEMINI_API_KEY`: Google Gemini API key (for recipe text generation and prompt enhancement - used by `/api/recipes/generate` endpoint)
    - `FIREFLY_API_TOKEN`: Adobe Firefly API bearer token (for image generation)
    - `FIREFLY_API_KEY`: Adobe Firefly API key (defaults to "clio-playground-web" if not set)
    - _(optional)_ `RECIPE_STORAGE_BUCKET`: overrides the default `recipe-images` bucket name
+   - _(optional)_ `RECIPE_API_URL`: API endpoint URL for scripts (defaults to `http://localhost:3000`)
 
 2. Install dependencies and run the dev server:
 
@@ -59,8 +60,11 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
    vercel --prod
    ```
 
-4. In the Vercel dashboard, add the `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-   environment variables under **Settings → Environment Variables**, then redeploy.
+4. In the Vercel dashboard, add the following environment variables under **Settings → Environment Variables**, then redeploy:
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - `EDIT_TOKEN` (required for recipe generation endpoint)
+   - `GEMINI_API_KEY` (required for recipe generation endpoint)
 
 ## Requirements
 
@@ -137,6 +141,7 @@ The following user stories are planned but not yet implemented:
 - Navigation history checks use `document.referrer` to ensure same-origin navigation (prevents "about:blank" issues). Previous navigation is disabled/hidden when there's no same-origin history.
 - Supabase provides recipe data via table queries; types generated in `src/types/supabase.ts`.
 - Authenticated POST to `/api/recipes` upserts recipes from JSON payloads that match the YAML schema. Requires a `Bearer` token that matches `EDIT_TOKEN`.
+- POST to `/api/recipes/generate` generates recipe content (ingredients, instructions, image prompts) using Gemini API. Does not save to database. Requires `EDIT_TOKEN` authentication and `GEMINI_API_KEY` on the server.
 
 ## Screen Structure & Navigation
 
@@ -308,7 +313,7 @@ This architecture provides stateful navigation that tracks forward and backward 
   - Search functionality
 
 - **Recipe Management**:
-  - Add new recipes via agent/API integration (with secure Vercel token authentication)
+  - ✅ Add new recipes via agent/API integration (with secure Vercel token authentication) - **Implemented**: `/api/recipes/generate` endpoint
   - Support recipe variations (e.g., vegetarian versions of existing meals)
 
 - **Performance & UX**:
@@ -331,6 +336,7 @@ This architecture provides stateful navigation that tracks forward and backward 
 - `src/components/*`: client-side interactivity (share, favorite, nav, keyboard shortcuts).
 - `src/components/recipe-feed-card.tsx`: recipe card component for feed page with image, title overlay, description, tags, and favorite button.
 - `src/app/api/recipes/route.ts`: API endpoint returning paginated recipes (20 per page) with pagination metadata. Supports `page` parameter for traditional pagination or `from={slug}` for slug-based pagination that matches feed order.
+- `src/app/api/recipes/generate/route.ts`: API endpoint for generating recipe content (ingredients, instructions, image prompts) using Gemini API. Requires `EDIT_TOKEN` authentication. Does not save to database, returns generated recipe data.
 
 ## Recipe Asset Workflow
 
@@ -338,19 +344,22 @@ This architecture provides stateful navigation that tracks forward and backward 
 
 The recipe generation process is split into two steps:
 
-1. **Generate Recipe YAML** (using Gemini API):
+1. **Generate Recipe YAML** (using `/api/recipes/generate` endpoint):
 
    ```bash
    yarn ts-node scripts/generate-recipe-yaml.ts "Meal Name" --description "..." --tags "tag1,tag2"
    ```
 
    This script:
+   - Calls the `/api/recipes/generate` endpoint (which uses Gemini API server-side)
    - Generates recipe content (ingredients, instructions) using Gemini API
    - Creates base and enhanced image prompts using Gemini API
    - Saves the recipe as YAML to `data/recipes/<slug>/<slug>.yaml`
-   - Creates/updates `metadata.json` with recipe info and prompts
 
-   **Required:** `GEMINI_API_KEY` (or `GOOGLE_API_KEY`)
+   **Required:** `EDIT_TOKEN` (for API authentication)
+   **Optional:** `--endpoint <url>` to specify API URL (defaults to `http://localhost:3000` or `RECIPE_API_URL` env var)
+   
+   The API endpoint requires `GEMINI_API_KEY` to be configured on the server (Vercel environment variables for production).
 
 2. **Generate Recipe Image** (using Firefly API):
 
@@ -386,9 +395,11 @@ The script will:
 ### Recipe Generation Scripts
 
 - **`scripts/generate-recipe-yaml.ts`**: Generates recipe YAML with image prompts
-  - Uses Gemini API for recipe text generation and prompt enhancement
-  - Creates both base and enhanced image prompts
-  - Saves YAML and metadata files
+  - Calls `/api/recipes/generate` endpoint (which uses Gemini API server-side)
+  - Generates recipe content (ingredients, instructions) and image prompts
+  - Saves YAML file to `data/recipes/<slug>/<slug>.yaml`
+  - Requires `EDIT_TOKEN` for authentication
+  - Supports `--endpoint` flag to specify API URL
 - **`scripts/generate-recipe-image.ts`**: Generates images from YAML files
   - Uses Firefly API (V5) for image generation
   - Reads image prompts from YAML file
@@ -403,8 +414,12 @@ The script will:
   - Uploads recipe via `/api/recipes` endpoint with the image URL
   - Use `--skip-image` to skip image upload and only upload the recipe (useful if image URL is already in YAML)
 - The command reads `EDIT_TOKEN` from `--token`, the environment, or `.env.local`, and falls back to `http://localhost:3000` unless `--endpoint` or `RECIPE_API_URL` is provided.
-- `POST /api/recipes` accepts normalized recipe payloads, upserting by slug. Requests must include `Authorization: Bearer <EDIT_TOKEN>`; the server rejects missing or mismatched tokens with `401`.
-- `POST /api/images` accepts image uploads with `slug` and `file` (multipart/form-data), automatically updating recipe `image_url` if the recipe exists.
+
+### API Endpoints
+
+- **`POST /api/recipes`**: Creates or updates a recipe in the database. Accepts normalized recipe payloads, upserting by slug. Requests must include `Authorization: Bearer <EDIT_TOKEN>`; the server rejects missing or mismatched tokens with `401`.
+- **`POST /api/recipes/generate`**: Generates recipe content (ingredients, instructions, image prompts) using Gemini API. Does not save to database. Requires `Authorization: Bearer <EDIT_TOKEN>` and `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) configured on the server. Returns recipe data in the same format as `POST /api/recipes`.
+- **`POST /api/images`**: Accepts image uploads with `slug` and `file` (multipart/form-data), automatically updating recipe `image_url` if the recipe exists. Requires `Authorization: Bearer <EDIT_TOKEN>`.
 
 ### Typical Workflow
 
