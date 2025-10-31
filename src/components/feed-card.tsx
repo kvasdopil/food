@@ -1,29 +1,9 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { RecipeFeedCard } from "@/components/recipe-feed-card";
 import { useTags } from "@/hooks/useTags";
-
-type RecipeListItem = {
-  slug: string;
-  name: string;
-  description: string | null;
-  tags: string[];
-  image_url: string | null;
-};
-
-type PaginationInfo = {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
-  hasMore: boolean;
-};
-
-type RecipesResponse = {
-  recipes: RecipeListItem[];
-  pagination: PaginationInfo;
-};
+import { usePaginatedRecipes } from "@/hooks/usePaginatedRecipes";
 
 const chipPalette = [
   "bg-amber-100 text-amber-700",
@@ -35,63 +15,16 @@ const chipPalette = [
 export function FeedCard() {
   const { activeTags, removeTag, clearAllTags } = useTags();
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [recipes, setRecipes] = useState<RecipeListItem[]>([]);
-  const [pagination, setPagination] = useState<PaginationInfo | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchRecipes = useCallback(async (fromSlug?: string, tags?: string[]) => {
-    try {
-      const params = new URLSearchParams();
-      if (fromSlug) {
-        params.append("from", fromSlug);
-      }
-      if (tags && tags.length > 0) {
-        params.append("tags", tags.join("+"));
-      }
-      const queryString = params.toString();
-      const url = queryString ? `/api/recipes?${queryString}` : `/api/recipes`;
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error("Failed to fetch recipes");
-      }
-      const data: RecipesResponse = await response.json();
-      return data;
-    } catch (err) {
-      throw err;
-    }
-  }, []);
-
-  const loadInitialRecipes = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const data = await fetchRecipes(undefined, activeTags);
-      setRecipes(data.recipes);
-      setPagination(data.pagination);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load recipes");
-    } finally {
-      setIsLoading(false);
-    }
-  }, [fetchRecipes, activeTags]);
-
-  const loadMore = useCallback(async () => {
-    if (!pagination || !pagination.hasMore || isLoadingMore || recipes.length === 0) return;
-
-    setIsLoadingMore(true);
-    try {
-      const lastRecipe = recipes[recipes.length - 1];
-      const data = await fetchRecipes(lastRecipe.slug, activeTags);
-      setRecipes((prev) => [...prev, ...data.recipes]);
-      setPagination(data.pagination);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load more recipes");
-    } finally {
-      setIsLoadingMore(false);
-    }
-  }, [pagination, isLoadingMore, fetchRecipes, recipes, activeTags]);
+  const {
+    recipes,
+    pagination,
+    isLoading,
+    isLoadingMore,
+    error,
+    loadInitialRecipes,
+    loadMore,
+    retry,
+  } = usePaginatedRecipes({ tags: activeTags, autoLoadInitial: false });
 
   // Load initial recipes or reload when tags change
   useEffect(() => {
@@ -113,9 +46,24 @@ export function FeedCard() {
       }
     };
 
-    container.addEventListener("scroll", handleScroll);
-    return () => container.removeEventListener("scroll", handleScroll);
-  }, [pagination, isLoadingMore, loadMore]);
+    // Throttle scroll events to avoid excessive calls
+    let timeoutId: NodeJS.Timeout | null = null;
+    const throttledHandleScroll = () => {
+      if (timeoutId) return;
+      timeoutId = setTimeout(() => {
+        handleScroll();
+        timeoutId = null;
+      }, 100);
+    };
+
+    container.addEventListener("scroll", throttledHandleScroll, { passive: true });
+    return () => {
+      container.removeEventListener("scroll", throttledHandleScroll);
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [pagination?.hasMore, isLoadingMore, loadMore]);
 
   if (isLoading) {
     return (
@@ -131,7 +79,7 @@ export function FeedCard() {
         <div className="text-center">
           <p className="text-lg text-red-600">{error}</p>
           <button
-            onClick={loadInitialRecipes}
+            onClick={retry}
             className="mt-4 rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
           >
             Retry
