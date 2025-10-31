@@ -54,6 +54,12 @@
     "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/falafel-mezze-plates.jpg"
   },
   {
+    "slug": "fried-potatoes-with-pancetta-and-mushrooms",
+    "bucket": "recipe-images",
+    "path": "fried-potatoes-with-pancetta-and-mushrooms.jpg",
+    "publicUrl": "https://vsgeynrnczcqtkepitmj.supabase.co/storage/v1/object/public/recipe-images/fried-potatoes-with-pancetta-and-mushrooms.jpg"
+  },
+  {
     "slug": "garlic-butter-shrimp-scampi",
     "bucket": "recipe-images",
     "path": "garlic-butter-shrimp-scampi.jpg",

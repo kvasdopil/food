@@ -257,33 +257,31 @@ This architecture provides stateful navigation that tracks forward and backward 
   yarn ts-node scripts/recipe-generator.ts "Meal Name" --description "..." --tags "tag1,tag2"
   ```
 
-- Upload generated JPGs to Supabase Storage:
-
-  ```bash
-  yarn ts-node scripts/upload-recipes-to-storage.ts
-  ```
-
-- Rebuild the SQL seed and upsert directly to the remote DB (ingredients are stored as JSON arrays in Supabase):
-
-  ```bash
-  yarn ts-node scripts/build-recipe-seed.ts
-  yarn ts-node scripts/seed-recipes.ts
-  ```
-
-- Upload an existing YAML recipe to a running API (defaults to `http://localhost:3000/api/recipes`):
+- Upload recipe and image together to the API (defaults to `http://localhost:3000`):
 
   ```bash
   yarn ts-node scripts/upload-recipe.ts data/recipes/creamy-mushroom-risotto/creamy-mushroom-risotto.yaml --token "$EDIT_TOKEN"
   ```
 
-- Recipe metadata lives in `data/recipes/<slug>/` (YAML + manifest). Storage uploads land in the `recipe-images` bucket by default. Ingredient entries should use `{ name, amount, notes }` with metric abbreviations (`g`, `ml`, `tsp`, etc.).
+  The script will:
+  1. Automatically find the corresponding image file (`{slug}.jpg`, `.jpeg`, `.png`, or `.webp`) in the same directory
+  2. Upload the image to Supabase Storage with hashed filename (`{slug}.{hash}.jpg`)
+  3. Upload the recipe YAML to the database with the image URL
+  4. If the recipe already exists, its image URL is automatically updated
+
+- Recipe metadata lives in `data/recipes/<slug>/` (YAML files + images). Storage uploads land in the `recipe-images` bucket by default with hashed filenames for versioning. Ingredient entries should use `{ name, amount, notes }` with metric abbreviations (`g`, `ml`, `tsp`, etc.).
 
 ### Recipe Upload CLI & API
 
-- `scripts/upload-recipe.ts` posts YAML recipe files to the recipe API, resolving image URLs from the local manifest or Supabase storage when possible.
-- The command reads `EDIT_TOKEN` from `--token`, the environment, or `.env.local`, and falls back to `http://localhost:3000/api/recipes` unless `--endpoint` or `RECIPE_API_URL` is provided.
+- `scripts/upload-recipe.ts` is a unified script that uploads both the recipe image and YAML in one command:
+  - Finds the image file automatically (looks for `{slug}.jpg`, `.jpeg`, `.png`, or `.webp` in the same directory as the YAML)
+  - Uploads image via `/api/images` endpoint (which automatically updates existing recipes)
+  - Uploads recipe via `/api/recipes` endpoint with the image URL
+  - Use `--skip-image` to skip image upload and only upload the recipe (useful if image URL is already in YAML)
+- The command reads `EDIT_TOKEN` from `--token`, the environment, or `.env.local`, and falls back to `http://localhost:3000` unless `--endpoint` or `RECIPE_API_URL` is provided.
 - `POST /api/recipes` accepts normalized recipe payloads, upserting by slug. Requests must include `Authorization: Bearer <EDIT_TOKEN>`; the server rejects missing or mismatched tokens with `401`.
-- Typical workflow: generate or edit a recipe YAML locally, verify assets are uploaded, then run the CLI to seed a local or remote deployment (e.g., `https://your-app.vercel.app/api/recipes`) with the corresponding bearer token.
+- `POST /api/images` accepts image uploads with `slug` and `file` (multipart/form-data), automatically updating recipe `image_url` if the recipe exists.
+- Typical workflow: generate a recipe, then upload it with a single command. The image and recipe are uploaded together, and existing recipes are automatically updated.
 
 ## Data Flow
 
@@ -316,7 +314,7 @@ This architecture provides stateful navigation that tracks forward and backward 
   - `slug`, `name`, `description`, `ingredients`, `instructions`, `image_url`, `tags`, timestamps
   - Slugs auto-generate from recipe names (duplicates receive `-2`, `-3`, … suffixes)
   - Row Level Security with read-only anonymous policy
-- Example content is seeded from `supabase/seed.sql` during `supabase db reset`.
+- Recipes can be uploaded via the API endpoint (see Recipe Asset Workflow section above).
 - Regenerate TypeScript types whenever the schema changes:
 
   ```bash
