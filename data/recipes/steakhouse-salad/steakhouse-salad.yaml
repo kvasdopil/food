@@ -1,0 +1,82 @@
+title: Steakhouse Salad
+summary: >-
+  Sliced sirloin over crisp greens with blue cheese and balsamic glaze, served
+  with roasted fingerling potatoes.
+servings: 2
+prepTimeMinutes: 30
+cookTimeMinutes: 20
+ingredients:
+  - name: sirloin steak
+    amount: 300 g
+    notes: 1-2 pieces, about 2.5 cm thick
+  - name: fingerling potatoes
+    amount: 500 g
+    notes: or small new potatoes
+  - name: mixed salad greens
+    amount: 150 g
+  - name: cherry tomatoes
+    amount: 200 g
+  - name: red onion
+    amount: 1 medium
+    notes: thinly sliced
+  - name: blue cheese
+    amount: 75 g
+    notes: crumbled
+  - name: balsamic vinegar
+    amount: 60 ml
+    notes: for dressing and glaze
+  - name: olive oil
+    amount: 90 ml
+    notes: plus more for cooking
+  - name: dijon mustard
+    amount: 1 tsp
+  - name: honey
+    amount: 1 tsp
+    notes: optional, for dressing
+instructions:
+  - step: 1
+    action: >-
+      Preheat oven to 200°C. Halve the *fingerling potatoes* and toss them with
+      30 ml of *olive oil*, salt, and black pepper. Spread them on a baking tray
+      and roast for 30-35 minutes, or until tender and lightly browned.
+  - step: 2
+    action: >-
+      While potatoes roast, prepare the balsamic glaze and dressing. For the
+      glaze, pour 30 ml of *balsamic vinegar* into a small saucepan and bring to
+      a simmer over medium heat. Reduce by half until slightly thickened (about
+      5-7 minutes). Set aside. For the dressing, whisk together the remaining 30
+      ml of balsamic vinegar, 60 ml of *olive oil*, *dijon mustard*, *honey*
+      (if using), salt, and black pepper in a small bowl.
+  - step: 3
+    action: >-
+      Prepare the salad components and steak. Wash the *mixed salad greens*.
+      Halve the *cherry tomatoes*. Thinly slice the *red onion*. Crumble the
+      *blue cheese*. Pat the *sirloin steak* dry with paper towels and season
+      generously with salt and black pepper.
+  - step: 4
+    action: >-
+      Heat a heavy-bottomed pan or cast-iron skillet over medium-high heat with
+      a drizzle of *olive oil*. Once hot, sear the *sirloin steak* for 3-4 minutes
+      per side for medium-rare, or longer to your desired doneness. Remove the
+      steak from the pan and let it rest on a cutting board for 5 minutes.
+  - step: 5
+    action: >-
+      Arrange the *mixed salad greens*, *cherry tomatoes*, *red onion*, *blue
+      cheese*, and warm *roasted fingerling potatoes* on individual plates.
+      Slice the rested *sirloin steak* thinly against the grain and place it
+      over the salad components. Drizzle generously with the prepared dressing
+      and the *balsamic glaze* before serving.
+tags:
+  - american
+  - beef
+  - glutenfree
+imagePrompt:
+  base: >-
+    Vibrant close-up of Steakhouse Salad, plated to showcase vivid textures and
+    color. Incorporate visual cues from this description: Sliced sirloin over
+    crisp greens with blue cheese and balsamic glaze, served with roasted
+    fingerling potatoes.. Scene: american-inspired table with soft natural
+    daylight, eye-level perspective, and shallow depth of field. Capture fresh
+    garnish, inviting lighting, and a sense of homemade comfort with no visible
+    steam or vapor. No people or branded props.
+

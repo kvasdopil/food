@@ -1,0 +1,88 @@
+title: Chipotle Chicken Quesadillas
+summary: >-
+  Smoky chicken and cheese pressed in tortillas with chipotle salsa, served with
+  guacamole.
+servings: 4
+prepTimeMinutes: 15
+cookTimeMinutes: 25
+ingredients:
+  - name: chicken breast
+    amount: '2'
+    notes: approx. 200g each, diced into 1cm pieces
+  - name: flour tortillas
+    amount: '8'
+    notes: medium-large size
+  - name: cheddar cheese
+    amount: 200g
+    notes: grated
+  - name: chipotle peppers in adobo sauce
+    amount: '2'
+    notes: peppers, plus 1 tbsp adobo sauce from the can
+  - name: red onion
+    amount: 1 small
+    notes: finely diced
+  - name: garlic
+    amount: 2 cloves
+    notes: minced
+  - name: lime
+    amount: '1'
+    notes: half for juice, half for wedges
+  - name: avocado
+    amount: '2'
+    notes: ripe, for guacamole
+  - name: fresh coriander
+    amount: 30g
+    notes: chopped, for guacamole and garnish
+instructions:
+  - step: 1
+    action: Dice the *chicken breast* into small 1cm pieces.
+  - step: 2
+    action: >-
+      Heat a drizzle of oil in a large pan over medium-high heat. Add the diced
+      chicken and cook until browned and cooked through, about 5-7 minutes.
+      Season with salt and pepper.
+  - step: 3
+    action: >-
+      While the chicken cooks, finely chop the *chipotle peppers in adobo
+      sauce*. In a small bowl, mix the chopped chipotles, the adobo sauce, the
+      *finely diced red onion*, and the *minced garlic*.
+  - step: 4
+    action: >-
+      Add the chipotle mixture to the cooked chicken in the pan. Stir well to
+      coat the chicken and cook for another 2-3 minutes, allowing the flavors to
+      meld. Remove from heat.
+  - step: 5
+    action: >-
+      Lay out a *flour tortilla*. Sprinkle a quarter of the *grated cheddar
+      cheese* on one half of the tortilla. Spoon a quarter of the chicken
+      mixture over the cheese. Fold the other half of the tortilla over to form
+      a semicircle. Repeat with the remaining tortillas, cheese, and chicken
+      mixture.
+  - step: 6
+    action: >-
+      Heat a clean pan over medium heat. Cook each assembled quesadilla for 2-3
+      minutes per side, or until the tortilla is golden brown and crispy, and
+      the cheese is melted and bubbly. You may need to cook them in batches.
+  - step: 7
+    action: >-
+      While the quesadillas cook, prepare the guacamole. Mash the *ripe avocado*
+      in a bowl. Squeeze in the juice from half the *lime*. Stir in the *chopped
+      fresh coriander* and season with salt and pepper.
+  - step: 8
+    action: >-
+      Cut each quesadilla into wedges. Serve immediately with the freshly made
+      guacamole and remaining lime wedges.
+tags:
+  - mexican
+  - chicken
+  - spicy
+imagePrompt:
+  base: >-
+    Vibrant close-up of Chipotle Chicken Quesadillas, plated to showcase vivid
+    textures and color. Incorporate visual cues from this description: Smoky
+    chicken and cheese pressed in tortillas with chipotle salsa, served with
+    guacamole.. Scene: mexican-inspired table with soft natural daylight,
+    eye-level perspective, and shallow depth of field. Capture fresh garnish,
+    inviting lighting, and a sense of homemade comfort with no visible steam or
+    vapor. No people or branded props.
+

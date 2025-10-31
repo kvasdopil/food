@@ -1,0 +1,87 @@
+title: Quick Pork Ramen
+summary: >-
+  Savory broth with sliced pork tenderloin, ramen noodles, and soft egg, served
+  with sesame spinach.
+servings: 2
+prepTimeMinutes: 15
+cookTimeMinutes: 30
+ingredients:
+  - name: pork tenderloin
+    amount: 200 g
+    notes: sliced into 0.5 cm thick rounds
+  - name: ramen noodles
+    amount: 2 blocks
+    notes: instant or fresh
+  - name: large eggs
+    amount: '2'
+  - name: baby spinach
+    amount: 150 g
+  - name: garlic
+    amount: 2 cloves
+    notes: minced
+  - name: fresh ginger
+    amount: 15 g
+    notes: grated
+  - name: chicken stock
+    amount: 700 ml
+  - name: soy sauce
+    amount: 45 ml
+  - name: mirin
+    amount: 30 ml
+  - name: sesame oil
+    amount: 15 ml
+    notes: plus extra for spinach
+  - name: green onions
+    amount: '2'
+    notes: thinly sliced for garnish
+  - name: sesame seeds
+    amount: 1 tsp
+    notes: toasted, for garnish and spinach
+instructions:
+  - step: 1
+    action: >-
+      Bring a small pot of water to a boil. Gently lower the *large eggs* into
+      the boiling water and cook for 6-7 minutes for a jammy yolk. Immediately
+      transfer eggs to an ice bath to stop cooking, then peel and halve. Slice
+      the *pork tenderloin* into thin rounds. Mince the *garlic* and grate the
+      *fresh ginger*. Thinly slice the *green onions*.
+  - step: 2
+    action: >-
+      Heat 5 ml of *sesame oil* in a large pot or deep pan over medium-high heat.
+      Add the *pork tenderloin* slices and sear for 2-3 minutes per side until
+      lightly browned and cooked through. Remove the pork from the pot and set
+      aside.
+  - step: 3
+    action: >-
+      In the same pot, add the remaining 10 ml of *sesame oil*. Add the *minced
+      garlic* and *grated fresh ginger*, and sauté for 1 minute until fragrant.
+      Pour in the *chicken stock*, *soy sauce*, and *mirin*. Bring the broth to
+      a simmer and let it cook gently for 5-7 minutes to allow the flavors to
+      meld. Taste and adjust seasoning if needed.
+  - step: 4
+    action: >-
+      While the broth simmers, bring a separate pot of water to a boil. Cook the
+      *ramen noodles* according to package instructions until al dente. Drain
+      well. In the same boiling water, quickly blanch the *baby spinach* for 30
+      seconds until wilted. Drain and squeeze out excess water. Toss the
+      blanched spinach with a drizzle of *sesame oil* and a pinch of *toasted
+      sesame seeds*.
+  - step: 5
+    action: >-
+      Divide the cooked ramen noodles among two serving bowls. Ladle the hot
+      broth over the noodles. Arrange the *seared pork*, *halved soft eggs*, and
+      *sesame spinach* on top. Garnish with *sliced green onions* and additional
+      *toasted sesame seeds*. Serve immediately.
+tags:
+  - japanese
+  - pork
+imagePrompt:
+  base: >-
+    Vibrant close-up of Quick Pork Ramen, plated to showcase vivid textures and
+    color. Incorporate visual cues from this description: Savory broth with
+    sliced pork tenderloin, ramen noodles, and soft egg, served with sesame
+    spinach.. Scene: japanese-inspired table with soft natural daylight,
+    eye-level perspective, and shallow depth of field. Capture fresh garnish,
+    inviting lighting, and a sense of homemade comfort with no visible steam or
+    vapor. No people or branded props.
+

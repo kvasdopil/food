@@ -1,0 +1,93 @@
+title: Pork Fried Rice
+summary: >-
+  Wok-tossed rice with diced pork, peas, carrots, and soy sauce, served with
+  steamed broccoli.
+servings: 4
+prepTimeMinutes: 15
+cookTimeMinutes: 25
+ingredients:
+  - name: pork loin
+    amount: 300 g
+    notes: diced into 1 cm pieces
+  - name: day-old cooked rice
+    amount: 400 g
+    notes: preferably jasmine or basmati
+  - name: frozen peas
+    amount: 100 g
+  - name: carrots
+    amount: 1 medium
+    notes: peeled and finely diced
+  - name: large eggs
+    amount: '2'
+    notes: whisked
+  - name: soy sauce
+    amount: 45 ml
+  - name: sesame oil
+    amount: 5 ml
+  - name: garlic
+    amount: 2 cloves
+    notes: minced
+  - name: fresh ginger
+    amount: 10 g
+    notes: grated
+  - name: yellow onion
+    amount: 1 small
+    notes: finely diced
+  - name: broccoli florets
+    amount: 300 g
+    notes: for steaming
+  - name: vegetable oil
+    amount: 30 ml
+    notes: for frying
+instructions:
+  - step: 1
+    action: >-
+      Heat a large wok or frying pan over medium-high heat. Add 15 ml of
+      *vegetable oil*. Once shimmering, add the diced *pork loin*. Cook for 5-7
+      minutes, stirring occasionally, until browned and cooked through. Remove
+      the pork from the wok and set aside, leaving any rendered fat.
+  - step: 2
+    action: >-
+      Add another 5 ml of *vegetable oil* to the wok if needed. Pour in the
+      whisked *large eggs*. Scramble the eggs until just set, then break them
+      into small pieces. Remove the scrambled eggs from the wok and set aside
+      with the pork.
+  - step: 3
+    action: >-
+      Add the remaining 10 ml of *vegetable oil* to the wok. Add the *finely
+      diced yellow onion*, *minced garlic*, and *grated fresh ginger*. Sauté for
+      2-3 minutes until fragrant. Add the *finely diced carrots* and cook for
+      another 3-4 minutes until slightly tender-crisp.
+  - step: 4
+    action: >-
+      Add the *day-old cooked rice* to the wok, breaking up any clumps with a
+      spatula. Stir-fry for 3-5 minutes, allowing the rice to heat through and
+      lightly crisp.
+  - step: 5
+    action: >-
+      Return the cooked *pork loin* and *scrambled large eggs* to the wok. Add
+      the *frozen peas*. Pour in the *soy sauce* and *sesame oil*. Toss
+      everything together for 2-3 minutes until well combined and heated
+      through.
+  - step: 6
+    action: >-
+      While the fried rice is cooking, steam the *broccoli florets*. Place the
+      broccoli in a steamer basket over boiling water. Cover and steam for 5-7
+      minutes, or until tender-crisp.
+  - step: 7
+    action: >-
+      Taste the fried rice and adjust seasoning if necessary. Serve the pork
+      fried rice immediately with the steamed broccoli on the side.
+tags:
+  - chinese
+  - pork
+imagePrompt:
+  base: >-
+    Vibrant close-up of Pork Fried Rice, plated to showcase vivid textures and
+    color. Incorporate visual cues from this description: Wok-tossed rice with
+    diced pork, peas, carrots, and soy sauce, served with steamed broccoli..
+    Scene: chinese-inspired table with soft natural daylight, eye-level
+    perspective, and shallow depth of field. Capture fresh garnish, inviting
+    lighting, and a sense of homemade comfort with no visible steam or vapor. No
+    people or branded props.
+

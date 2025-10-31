@@ -1,0 +1,99 @@
+title: Meatball Marinara Subs
+summary: >-
+  Toasted rolls stuffed with saucy beef meatballs and melted mozzarella,
+  accompanied by a simple Caesar salad.
+servings: 4
+prepTimeMinutes: 20
+cookTimeMinutes: 35
+ingredients:
+  - name: ground beef
+    amount: 500 g
+    notes: lean
+  - name: breadcrumbs
+    amount: 60 g
+    notes: panko or plain
+  - name: egg
+    amount: 1 large
+  - name: garlic
+    amount: 4 cloves
+    notes: minced
+  - name: onion
+    amount: 1 medium
+    notes: finely chopped
+  - name: canned crushed tomatoes
+    amount: 800 g
+  - name: dried oregano
+    amount: 1 tsp
+  - name: mozzarella cheese
+    amount: 200 g
+    notes: shredded or sliced
+  - name: sub rolls
+    amount: '4'
+    notes: or small baguettes
+  - name: romaine lettuce
+    amount: 1 large head
+    notes: washed and chopped
+  - name: parmesan cheese
+    amount: 50 g
+    notes: grated, plus extra for serving
+  - name: caesar dressing
+    amount: 100 ml
+    notes: store-bought
+instructions:
+  - step: 1
+    action: >-
+      Combine *ground beef*, *breadcrumbs*, *egg*, 2 minced *garlic* cloves, 1/2
+      tsp *dried oregano*, a pinch of salt and pepper in a bowl. Mix until just
+      combined, then form into 16-20 small meatballs (approx. 3 cm diameter).
+  - step: 2
+    action: >-
+      Heat a drizzle of olive oil in a large pan or pot over medium-high heat.
+      Add the *meatballs* and brown them on all sides, about 5-7 minutes. Remove
+      meatballs from the pan and set aside.
+  - step: 3
+    action: >-
+      Reduce heat to medium. Add the *finely chopped onion* to the same pan and
+      cook until softened, about 5 minutes. Add the remaining 2 minced *garlic*
+      cloves and cook for another minute until fragrant.
+  - step: 4
+    action: >-
+      Pour in the *canned crushed tomatoes*, the remaining 1/2 tsp *dried
+      oregano*, and a pinch of salt and pepper. Bring to a simmer, then return
+      the browned *meatballs* to the sauce. Cover and simmer gently for 15-20
+      minutes, allowing the flavors to meld and meatballs to cook through.
+  - step: 5
+    action: >-
+      While the meatballs simmer, preheat your oven to 200°C (or broiler). Slice
+      *sub rolls* lengthwise, almost all the way through, and lightly toast them
+      in the oven for 3-5 minutes until warm and slightly crisp.
+  - step: 6
+    action: >-
+      Fill each toasted *sub roll* generously with the saucy *meatballs*. Top
+      with *shredded mozzarella cheese*. Place the filled rolls back on a baking
+      tray.
+  - step: 7
+    action: >-
+      Bake for 5-7 minutes, or until the *mozzarella cheese* is melted and
+      bubbly. If desired, broil for the last minute for a golden-brown crust on
+      the cheese, watching carefully to prevent burning.
+  - step: 8
+    action: >-
+      Meanwhile, in a large bowl, combine the *chopped romaine lettuce* with
+      *caesar dressing* and half of the *grated parmesan cheese*. Toss to coat.
+  - step: 9
+    action: >-
+      Serve the hot *meatball marinara subs* immediately, accompanied by the
+      fresh *Caesar salad* and extra *parmesan cheese* for sprinkling.
+tags:
+  - italianamerican
+  - beef
+imagePrompt:
+  base: >-
+    Vibrant close-up of Meatball Marinara Subs, plated to showcase vivid
+    textures and color. Incorporate visual cues from this description: Toasted
+    rolls stuffed with saucy beef meatballs and melted mozzarella, accompanied
+    by a simple Caesar salad.. Scene: italianamerican-inspired table with soft
+    natural daylight, eye-level perspective, and shallow depth of field. Capture
+    fresh garnish, inviting lighting, and a sense of homemade comfort with no
+    visible steam or vapor. No people or branded props.
+

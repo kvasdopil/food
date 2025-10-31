@@ -1,0 +1,93 @@
+title: Chicken Burrito Bowls
+summary: >-
+  Seasoned chicken with rice, beans, corn, and salsa for DIY bowls, served with
+  crispy corn tortilla strips.
+servings: 4
+prepTimeMinutes: 20
+cookTimeMinutes: 35
+ingredients:
+  - name: chicken breast
+    amount: 450 g
+    notes: boneless, skinless, cut into 2 cm cubes
+  - name: long-grain rice
+    amount: 200 g
+  - name: black beans
+    amount: 400 g
+    notes: canned, drained and rinsed
+  - name: corn
+    amount: 200 g
+    notes: canned or frozen, drained
+  - name: salsa
+    amount: 200 g
+    notes: jarred, medium heat
+  - name: corn tortillas
+    amount: '4'
+    notes: for making crispy strips
+  - name: lime
+    amount: 1 medium
+  - name: red onion
+    amount: 1/2 medium
+    notes: finely diced
+  - name: fresh coriander
+    amount: 30 g
+    notes: chopped
+  - name: avocado
+    amount: 1 large
+    notes: diced
+  - name: chili powder
+    amount: 1 tsp
+  - name: cumin
+    amount: 1 tsp
+  - name: garlic powder
+    amount: 1/2 tsp
+  - name: smoked paprika
+    amount: 1/2 tsp
+  - name: olive oil
+    amount: 2 tbsp
+instructions:
+  - step: 1
+    action: >-
+      In a bowl, combine *chili powder*, *cumin*, *garlic powder*, *smoked
+      paprika*, a pinch of salt, and a pinch of black pepper. Add *chicken
+      breast* cubes and toss to coat evenly.
+  - step: 2
+    action: >-
+      Rinse *long-grain rice* thoroughly. In a saucepan, combine rinsed rice
+      with 400 ml water and a pinch of salt. Bring to a boil, then reduce heat
+      to low, cover, and simmer for 15 minutes, or until all water is absorbed.
+      Remove from heat and let stand, covered, for 5 minutes, then fluff with a
+      fork.
+  - step: 3
+    action: >-
+      While the rice cooks, heat 1 tbsp *olive oil* in a large frying pan over
+      medium-high heat. Add the seasoned chicken and cook for 6-8 minutes,
+      stirring occasionally, until browned and cooked through.
+  - step: 4
+    action: >-
+      Drain and rinse *black beans*. Drain *corn*. Dice *avocado*. Finely dice
+      *red onion*. Chop *fresh coriander*. Cut the *lime* into wedges.
+  - step: 5
+    action: >-
+      Stack *corn tortillas* and cut into thin strips (approx. 0.5 cm wide).
+      Heat 1 tbsp *olive oil* in a separate pan over medium heat. Add tortilla
+      strips and fry for 3-5 minutes, stirring, until golden and crispy. Drain
+      on paper towel and season with a pinch of salt.
+  - step: 6
+    action: >-
+      Divide the cooked rice among four bowls. Top with cooked chicken, *black
+      beans*, *corn*, *salsa*, *diced avocado*, *red onion*, and *fresh coriander*. Serve
+      with *crispy corn tortilla strips* and *lime wedges* for squeezing.
+tags:
+  - mexican
+  - chicken
+  - glutenfree
+imagePrompt:
+  base: >-
+    Vibrant close-up of Chicken Burrito Bowls, plated to showcase vivid textures
+    and color. Incorporate visual cues from this description: Seasoned chicken
+    with rice, beans, corn, and salsa for DIY bowls, served with crispy corn
+    tortilla strips.. Scene: mexican-inspired table with soft natural daylight,
+    eye-level perspective, and shallow depth of field. Capture fresh garnish,
+    inviting lighting, and a sense of homemade comfort with no visible steam or
+    vapor. No people or branded props.
+

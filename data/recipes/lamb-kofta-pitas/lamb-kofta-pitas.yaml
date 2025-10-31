@@ -1,0 +1,95 @@
+title: Lamb Kofta Pitas
+summary: >-
+  Spiced lamb patties with cucumber yogurt sauce in fluffy pita, served with
+  tomato-cucumber salad.
+servings: 4
+prepTimeMinutes: 20
+cookTimeMinutes: 15
+ingredients:
+  - name: ground lamb
+    amount: 500g
+  - name: onion
+    amount: 1 small
+    notes: half for kofta, quarter for salad
+  - name: garlic
+    amount: 3 cloves
+    notes: 2 for kofta, 1 for sauce
+  - name: fresh parsley
+    amount: 45g
+    notes: 30g for kofta, 15g for salad
+  - name: ground cumin
+    amount: 1 tsp
+  - name: ground coriander
+    amount: 1 tsp
+  - name: smoked paprika
+    amount: 0.5 tsp
+  - name: plain yogurt
+    amount: 200g
+  - name: cucumber
+    amount: 1 large
+    notes: half for sauce, half for salad
+  - name: lemon
+    amount: '1'
+    notes: half for sauce, half for salad
+  - name: fresh mint
+    amount: 15g
+    notes: for sauce
+  - name: tomatoes
+    amount: 2 medium
+    notes: for salad
+  - name: pita breads
+    amount: '4'
+  - name: olive oil
+    amount: a drizzle plus 1 tbsp
+    notes: for cooking and salad
+instructions:
+  - step: 1
+    action: >-
+      Finely chop half of the *small onion* and mince 2 cloves of *garlic*. Chop
+      30g of *fresh parsley*. In a large bowl, combine the 500g of *ground lamb*
+      with the chopped onion, minced garlic, chopped parsley, 1 tsp of *ground
+      cumin*, 1 tsp of *ground coriander*, and 0.5 tsp of *smoked paprika*.
+      Season generously with salt and black pepper, then mix everything
+      thoroughly with your hands until well combined.
+  - step: 2
+    action: >-
+      Divide the *lamb mixture* into 8-10 equal portions and shape them into
+      small, oblong patties (kofta). Heat a drizzle of *olive oil* in a large
+      non-stick frying pan over medium-high heat. Cook the *kofta* for 4-5
+      minutes per side, or until browned and cooked through. Set aside on a
+      plate.
+  - step: 3
+    action: >-
+      Grate half of the *cucumber* and squeeze out excess water using a paper
+      towel or clean cloth. Mince the remaining 1 clove of *garlic*. Chop 15g of
+      *fresh mint*. In a small bowl, combine 200g of *plain yogurt*, the grated
+      cucumber, minced garlic, chopped mint, and the juice of half a *lemon*.
+      Season with salt and pepper to taste and mix well.
+  - step: 4
+    action: >-
+      Dice the 2 *tomatoes* and the remaining half *cucumber*. Thinly slice the
+      remaining quarter of the *small onion*. Chop the remaining 15g of *fresh
+      parsley*. In a medium bowl, combine the diced tomatoes, cucumber, sliced
+      onion, and chopped parsley. Drizzle with 1 tbsp of *olive oil* and the
+      juice of the remaining half *lemon*. Season with salt and pepper, then
+      toss gently to combine.
+  - step: 5
+    action: >-
+      Warm the 4 *pita breads* in a dry frying pan, oven, or microwave until
+      soft and pliable. Carefully open each *pita bread* to form a pocket. Fill
+      each *pita* with a few *lamb kofta patties*, a generous spoonful of the
+      *cucumber yogurt sauce*, and some of the *tomato-cucumber salad*. Serve
+      immediately with any remaining salad on the side.
+tags:
+  - middleeastern
+  - lamb
+imagePrompt:
+  base: >-
+    Vibrant close-up of Lamb Kofta Pitas, plated to showcase vivid textures and
+    color. Incorporate visual cues from this description: Spiced lamb patties
+    with cucumber yogurt sauce in fluffy pita, served with tomato-cucumber
+    salad.. Scene: middleeastern-inspired table with soft natural daylight,
+    eye-level perspective, and shallow depth of field. Capture fresh garnish,
+    inviting lighting, and a sense of homemade comfort with no visible steam or
+    vapor. No people or branded props.
+

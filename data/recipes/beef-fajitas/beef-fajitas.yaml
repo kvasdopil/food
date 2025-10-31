@@ -1,0 +1,100 @@
+title: Beef Fajitas
+summary: >-
+  Sizzling steak strips with peppers and onions, paired with charro beans and
+  warm tortillas.
+servings: 4
+prepTimeMinutes: 20
+cookTimeMinutes: 25
+ingredients:
+  - name: flank steak
+    amount: 500g
+    notes: thinly sliced against the grain
+  - name: bell peppers
+    amount: 2 large
+    notes: mixed colours, sliced
+  - name: red onion
+    amount: 1 medium
+    notes: sliced
+  - name: lime
+    amount: '2'
+    notes: juiced
+  - name: olive oil
+    amount: 30ml
+    notes: plus extra for cooking
+  - name: chili powder
+    amount: 1 tbsp
+  - name: ground cumin
+    amount: 1 tsp
+  - name: smoked paprika
+    amount: 1 tsp
+  - name: garlic powder
+    amount: 1 tsp
+  - name: dried oregano
+    amount: 0.5 tsp
+  - name: pinto beans
+    amount: 1 can
+    notes: drained and rinsed
+  - name: bacon lardons
+    amount: 50g
+    notes: optional, for beans
+  - name: garlic
+    amount: 2 cloves
+    notes: minced, for beans
+  - name: small tomato
+    amount: '1'
+    notes: diced, for beans
+  - name: fresh coriander
+    amount: a small bunch
+    notes: chopped, for beans and garnish
+  - name: chicken stock
+    amount: 100ml
+    notes: for beans
+  - name: flour tortillas
+    amount: 8 small
+instructions:
+  - step: 1
+    action: >-
+      Combine *lime juice*, 30ml *olive oil*, *chili powder*, *ground cumin*,
+      *smoked paprika*, *garlic powder*, *dried oregano*, salt, and pepper in a
+      bowl. Add *flank steak* strips, toss to coat, and let marinate for at
+      least 15 minutes while preparing other ingredients.
+  - step: 2
+    action: Slice the *bell peppers* and *red onion* into strips.
+  - step: 3
+    action: >-
+      To make the charro beans, in a small saucepan, fry *bacon lardons* (if
+      using) until crispy. Remove lardons, leaving some fat. Add *minced garlic*
+      and cook for 30 seconds. Add *diced small tomato*, *drained pinto beans*,
+      and *chicken stock*. Simmer for 5-7 minutes until slightly thickened. Stir
+      in some chopped *fresh coriander* and the crispy lardons (if used). Keep
+      warm.
+  - step: 4
+    action: >-
+      Heat a large pan or cast-iron skillet over high heat with a drizzle of
+      olive oil. Add the marinated *flank steak* in a single layer, cooking in
+      batches if necessary, for 2-3 minutes per side until browned and cooked
+      through. Remove steak and set aside.
+  - step: 5
+    action: >-
+      Add a little more oil to the same pan. Add the *sliced bell peppers* and
+      *red onion*. Sauté for 5-7 minutes until tender-crisp and slightly
+      charred.
+  - step: 6
+    action: >-
+      Return the cooked *flank steak* to the pan with the vegetables. Toss to
+      combine and heat through. Warm *flour tortillas* according to package
+      instructions. Serve the sizzling beef fajitas immediately with the *charro
+      beans* and extra *fresh coriander*.
+tags:
+  - mexican
+  - beef
+imagePrompt:
+  base: >-
+    Vibrant close-up of Beef Fajitas, plated to showcase vivid textures and
+    color. Incorporate visual cues from this description: Sizzling steak strips
+    with peppers and onions, paired with charro beans and warm tortillas..
+    Scene: mexican-inspired table with soft natural daylight, eye-level
+    perspective, and shallow depth of field. Capture fresh garnish, inviting
+    lighting, and a sense of homemade comfort with no visible steam or vapor. No
+    people or branded props.
+

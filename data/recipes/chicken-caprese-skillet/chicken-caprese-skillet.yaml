@@ -1,0 +1,76 @@
+title: Chicken Caprese Skillet
+summary: >-
+  Seared chicken topped with tomatoes, mozzarella, and balsamic reduction,
+  served with garlic butter green beans.
+servings: 4
+prepTimeMinutes: 15
+cookTimeMinutes: 25
+ingredients:
+  - name: chicken breast
+    amount: 600g
+    notes: 4 fillets, approx. 150g each
+  - name: cherry tomatoes
+    amount: 250g
+    notes: halved
+  - name: fresh mozzarella
+    amount: 125g
+    notes: torn or sliced
+  - name: fresh basil
+    amount: 30g
+    notes: leaves
+  - name: balsamic vinegar
+    amount: 120ml
+  - name: green beans
+    amount: 400g
+    notes: trimmed
+  - name: garlic
+    amount: 2 cloves
+    notes: minced
+  - name: butter
+    amount: 30g
+  - name: olive oil
+    amount: 2 tbsp
+  - name: dried oregano
+    amount: 1 tsp
+instructions:
+  - step: 1
+    action: Season *chicken breast* with salt, pepper, and *dried oregano*.
+  - step: 2
+    action: >-
+      Heat 1 tbsp *olive oil* in a large skillet over medium-high heat. Sear the
+      *chicken breast* for 4-5 minutes per side until golden brown and cooked
+      through. Remove chicken from skillet and set aside.
+  - step: 3
+    action: >-
+      In the same skillet, add *butter* and remaining *olive oil*. Add *trimmed
+      green beans* and *minced garlic*. Sauté for 5-7 minutes until
+      tender-crisp. Season with salt and pepper. Remove beans and set aside.
+  - step: 4
+    action: >-
+      Add *balsamic vinegar* to the empty skillet. Bring to a simmer and cook
+      for 5-7 minutes, stirring occasionally, until it has thickened to a glaze
+      consistency.
+  - step: 5
+    action: >-
+      Return the seared *chicken breast* to the skillet. Arrange the *halved
+      cherry tomatoes* around and on top of the chicken. Distribute the *fresh
+      mozzarella* over the chicken and tomatoes. Cover the skillet and cook for
+      2-3 minutes, or until the mozzarella is melted and bubbly.
+  - step: 6
+    action: >-
+      Garnish with *fresh basil leaves*. Drizzle with the balsamic reduction.
+      Serve immediately with the garlic butter green beans.
+tags:
+  - italian
+  - chicken
+  - glutenfree
+imagePrompt:
+  base: >-
+    Vibrant close-up of Chicken Caprese Skillet, plated to showcase vivid
+    textures and color. Incorporate visual cues from this description: Seared
+    chicken topped with tomatoes, mozzarella, and balsamic reduction, served
+    with garlic butter green beans.. Scene: italian-inspired table with soft
+    natural daylight, eye-level perspective, and shallow depth of field. Capture
+    fresh garnish, inviting lighting, and a sense of homemade comfort with no
+    visible steam or vapor. No people or branded props.
+

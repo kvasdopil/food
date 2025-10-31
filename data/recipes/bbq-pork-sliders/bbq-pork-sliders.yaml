@@ -1,0 +1,78 @@
+title: BBQ Pork Sliders
+summary: >-
+  Shredded BBQ pork piled on slider buns with tangy slaw, served with baked
+  beans.
+servings: 4
+prepTimeMinutes: 15
+cookTimeMinutes: 15
+ingredients:
+  - name: pre-cooked shredded pork
+    amount: 400 g
+    notes: fully cooked, plain or lightly seasoned
+  - name: bbq sauce
+    amount: 200 ml
+    notes: your favorite brand
+  - name: slider buns
+    amount: '12'
+    notes: soft white or brioche
+  - name: white cabbage
+    amount: 200 g
+    notes: finely shredded
+  - name: carrot
+    amount: 1 medium
+    notes: grated
+  - name: mayonnaise
+    amount: 60 ml
+  - name: apple cider vinegar
+    amount: 15 ml
+  - name: granulated sugar
+    amount: 5 g
+  - name: canned baked beans
+    amount: 400 g
+    notes: for serving
+instructions:
+  - step: 1
+    action: >-
+      In a medium bowl, combine *finely shredded white cabbage* and *grated
+      carrot*. In a small separate bowl, whisk together *mayonnaise*, *apple
+      cider vinegar*, *granulated sugar*, a pinch of salt, and a grind of black
+      pepper until smooth. Pour the dressing over the cabbage and carrot mixture
+      and toss well to combine. Set aside to allow flavors to meld.
+  - step: 2
+    action: >-
+      In a saucepan or microwave-safe bowl, combine *pre-cooked shredded pork*
+      and *bbq sauce*. Heat over medium-low heat, stirring occasionally, until
+      the pork is heated through and well coated in the sauce, about 5-7
+      minutes. Alternatively, microwave on high for 2-3 minutes, stirring
+      halfway.
+  - step: 3
+    action: >-
+      While the pork heats, open the *canned baked beans* and transfer them to a
+      small saucepan. Heat over low heat, stirring occasionally, until warmed
+      through, about 5 minutes.
+  - step: 4
+    action: >-
+      Lightly toast the *slider buns* in a dry pan, under a grill, or in a
+      toaster oven for 1-2 minutes until lightly golden.
+  - step: 5
+    action: >-
+      Open each toasted slider bun. Pile a generous spoonful of the hot bbq pork
+      onto the bottom half of each bun. Top the pork with a spoonful of the
+      prepared slaw. Place the top bun half on.
+  - step: 6
+    action: >-
+      Arrange the finished sliders on a platter. Serve immediately with the warm
+      baked beans on the side.
+tags:
+  - american
+  - pork
+imagePrompt:
+  base: >-
+    Vibrant close-up of BBQ Pork Sliders, plated to showcase vivid textures and
+    color. Incorporate visual cues from this description: Shredded BBQ pork
+    piled on slider buns with tangy slaw, served with baked beans.. Scene:
+    american-inspired table with soft natural daylight, eye-level perspective,
+    and shallow depth of field. Capture fresh garnish, inviting lighting, and a
+    sense of homemade comfort with no visible steam or vapor. No people or
+    branded props.
+

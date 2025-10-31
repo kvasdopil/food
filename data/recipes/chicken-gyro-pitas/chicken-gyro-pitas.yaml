@@ -1,0 +1,101 @@
+title: Chicken Gyro Pitas
+summary: >-
+  Pan-seared chicken with warm spices, tomato, lettuce, and yogurt sauce,
+  accompanied by oregano fries.
+servings: 4
+prepTimeMinutes: 20
+cookTimeMinutes: 30
+ingredients:
+  - name: chicken breast
+    amount: 500 g
+    notes: boneless, skinless, cut into 1 cm strips
+  - name: olive oil
+    amount: 30 ml
+    notes: divided
+  - name: dried oregano
+    amount: 2 tsp
+    notes: divided
+  - name: ground cumin
+    amount: 1 tsp
+  - name: smoked paprika
+    amount: 1 tsp
+  - name: garlic powder
+    amount: 1 tsp
+  - name: lemon
+    amount: 1
+    notes: half juiced for chicken and sauce, half for wedges
+  - name: greek yogurt
+    amount: 200 g
+    notes: full-fat
+  - name: cucumber
+    amount: 1/2 medium
+    notes: grated
+  - name: garlic
+    amount: 1 clove
+    notes: minced for sauce
+  - name: fresh dill
+    amount: 1 tbsp
+    notes: chopped
+  - name: pita breads
+    amount: 4
+  - name: romaine lettuce
+    amount: 1/2 head
+    notes: shredded
+  - name: tomato
+    amount: 1 medium
+    notes: diced
+  - name: red onion
+    amount: 1/4 medium
+    notes: thinly sliced
+  - name: potatoes
+    amount: 400 g
+    notes: for fries, e.g., Maris Piper or Russet
+instructions:
+  - step: 1
+    action: >-
+      Cut *chicken breast* into strips. In a bowl, combine the chicken, 15 ml
+      *olive oil*, 1 tsp *dried oregano*, *ground cumin*, *smoked paprika*,
+      *garlic powder*, and juice from half a *lemon*. Mix well and set aside to
+      marinate for at least 15 minutes while preparing other components.
+  - step: 2
+    action: >-
+      Grate the *cucumber* and squeeze out excess water. In a small bowl,
+      combine *greek yogurt*, grated cucumber, *minced garlic*, *fresh dill*,
+      and juice from the remaining half lemon. Season with salt and pepper. Stir
+      well and refrigerate until serving.
+  - step: 3
+    action: >-
+      Preheat oven to 200°C. Cut *potatoes* into 1 cm thick fries. Toss the
+      fries with 15 ml *olive oil*, 1 tsp *dried oregano*, salt, and pepper on a
+      baking tray. Spread in a single layer.
+  - step: 4
+    action: >-
+      Bake the fries for 25-30 minutes, flipping halfway, until golden and
+      crispy.
+  - step: 5
+    action: >-
+      While fries are baking, heat a large non-stick pan over medium-high heat.
+      Add the marinated *chicken* in a single layer (cook in batches if
+      necessary to avoid overcrowding). Cook for 5-7 minutes, stirring
+      occasionally, until cooked through and slightly browned.
+  - step: 6
+    action: Shred *romaine lettuce*, dice *tomato*, and thinly slice *red onion*.
+  - step: 7
+    action: >-
+      Warm *pita breads* in a dry pan or microwave for 30 seconds until soft.
+      Spread a generous amount of *yogurt sauce* inside each warm pita. Fill with
+      cooked chicken, shredded lettuce, diced tomato, and sliced red onion.
+      Serve immediately with the oregano fries and lemon wedges.
+tags:
+  - greek
+  - chicken
+imagePrompt:
+  base: >-
+    Vibrant close-up of Chicken Gyro Pitas, plated to showcase vivid textures
+    and color. Incorporate visual cues from this description: Pan-seared chicken
+    with warm spices, tomato, lettuce, and yogurt sauce, accompanied by oregano
+    fries.. Scene: greek-inspired table with soft natural daylight, eye-level
+    perspective, and shallow depth of field. Capture fresh garnish, inviting
+    lighting, and a sense of homemade comfort with no visible steam or vapor. No
+    people or branded props.
+
