@@ -17,6 +17,9 @@ export const metadata: Metadata = {
   title: "The Food Database",
   description:
     "Curated weeknight-friendly dinner recipes that use accessible pantry staples and cook in under an hour.",
+  icons: {
+    icon: "/icon.png",
+  },
 };
 
 export default function RootLayout({
