@@ -291,7 +291,6 @@ The script will:
   1. Read the YAML file and extract the image prompt (uses 'enhanced' prompt if available, falls back to 'base')
   2. Generate an image using Firefly API
   3. Save the image as {slug}.jpg in the same directory as the YAML file
-  4. Update metadata.json with image generation info
 
 Options:
   -h, --help              Show this message.
@@ -352,26 +351,7 @@ async function main() {
     const imageFile = path.join(yamlDir, `${slug}.jpg`);
     await fs.writeFile(imageFile, jpegBuffer);
 
-    // Update metadata.json if it exists
-    const metadataFile = path.join(yamlDir, "metadata.json");
-    let metadata: Record<string, unknown> = {};
-    try {
-      const metadataContent = await fs.readFile(metadataFile, "utf-8");
-      metadata = JSON.parse(metadataContent) as Record<string, unknown>;
-    } catch {
-      // metadata.json doesn't exist, create new one
-    }
-
-    metadata.imageFile = path.basename(imageFile);
-    metadata.imageGeneratedAt = new Date().toISOString();
-    if (!metadata.imagePrompt) {
-      metadata.imagePrompt = recipe.imagePrompt;
-    }
-
-    await fs.writeFile(metadataFile, `${JSON.stringify(metadata, null, 2)}\n`, "utf-8");
-
     console.log(`Image saved to ${imageFile}`);
-    console.log(`Metadata updated in ${metadataFile}`);
   } catch (error) {
     console.error(`[generate-recipe-image] ${(error as Error).message}`);
     process.exitCode = 1;

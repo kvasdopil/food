@@ -1,0 +1,100 @@
+title: Tomato Basil Soup with Grilled Cheese Croutons
+summary: >-
+  Silky tomato soup paired with buttery grilled cheese bites and a side of
+  simple mixed greens.
+servings: 4
+prepTimeMinutes: 15
+cookTimeMinutes: 35
+ingredients:
+  - name: Canned Crushed Tomatoes
+    amount: 800 g
+    notes: Good quality, ripe tomatoes
+  - name: Vegetable Broth
+    amount: 500 ml
+  - name: Yellow Onion
+    amount: 1 medium
+  - name: Garlic Cloves
+    amount: "3"
+  - name: Fresh Basil
+    amount: 30 g
+    notes: Roughly chopped, plus extra for garnish
+  - name: Heavy Cream
+    amount: 100 ml
+    notes: Or milk for a lighter version
+  - name: Slices of White or Sourdough Bread
+    amount: "8"
+  - name: Slices of Cheddar or American Cheese
+    amount: "4"
+  - name: Unsalted Butter
+    amount: 30 g
+  - name: Mixed Greens
+    amount: 100 g
+    notes: For a simple side salad
+  - name: Olive Oil
+    amount: a drizzle
+  - name: Granulated Sugar
+    amount: 1/2 tsp
+    notes: Optional, to balance acidity
+  - name: Salt
+    amount: to taste
+  - name: Black Pepper
+    amount: to taste
+instructions:
+  - step: 1
+    action: >-
+      Finely chop the *yellow onion* and mince the *garlic cloves*. Roughly chop
+      the *fresh basil*, reserving a few leaves for garnish.
+  - step: 2
+    action: >-
+      Heat a drizzle of *olive oil* in a large pot or Dutch oven over medium
+      heat. Add the chopped *yellow onion* and cook until softened and
+      translucent, about 5-7 minutes. Add the minced *garlic cloves* and cook
+      for another minute until fragrant. Pour in the *canned crushed tomatoes*
+      and *vegetable broth*. Stir in the *granulated sugar* (if using), a pinch
+      of *salt*, and a grind of *black pepper*. Bring to a simmer, then reduce
+      heat to low, cover, and cook for 15-20 minutes, allowing the flavors to
+      meld.
+  - step: 3
+    action: >-
+      While the soup simmers, prepare the grilled cheese croutons. Butter one
+      side of each *slice of white or sourdough bread* with *unsalted butter*.
+      Place the *slices of cheddar or american cheese* between two slices of
+      bread, buttered sides out. Heat a large pan over medium heat and cook the
+      sandwiches for 3-4 minutes per side, until golden brown and the cheese is
+      melted and bubbly. Remove from heat and let cool slightly.
+  - step: 4
+    action: >-
+      Carefully transfer the hot soup to a blender (or use an immersion blender
+      directly in the pot) and blend until completely smooth and silky. Return
+      the soup to the pot if using a standard blender. Stir in the *heavy cream*
+      and most of the chopped *fresh basil*. Taste and adjust *salt* and *black
+      pepper* as needed.
+  - step: 5
+    action: >-
+      Cut the cooled grilled cheese sandwiches into small, bite-sized cubes to
+      create the *grilled cheese croutons*.
+  - step: 6
+    action: >-
+      Ladle the hot soup into bowls. Top each serving generously with the
+      *grilled cheese croutons*. Garnish with the reserved *fresh basil* leaves.
+      Serve immediately with a side of *mixed greens*.
+tags:
+  - american
+  - vegetarian
+imagePrompt:
+  base: >-
+    Vibrant close-up of Tomato Basil Soup with Grilled Cheese Croutons, plated
+    to showcase vivid textures and color. Incorporate visual cues from this
+    description: Silky tomato soup paired with buttery grilled cheese bites and
+    a side of simple mixed greens.. Scene: american-inspired table with soft
+    natural daylight, eye-level perspective, and shallow depth of field. Capture
+    fresh garnish, inviting lighting, and a sense of homemade comfort with no
+    visible steam or vapor. No people or branded props.
+  enhanced: >-
+    An intimate, vibrant close-up of a rustic bowl of silky tomato basil soup,
+    artfully swirled with cream and garnished with fresh basil leaves and a
+    grind of pepper. Golden-brown, buttery grilled cheese croutons float
+    invitingly atop. A small side dish of crisp mixed greens rests beside, all
+    bathed in warm, soft natural daylight on an American-inspired table.
+    Eye-level perspective with a shallow depth of field, evoking homemade
+    comfort, no visible vapor.

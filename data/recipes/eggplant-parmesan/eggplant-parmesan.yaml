@@ -1,0 +1,105 @@
+title: Eggplant Parmesan
+summary: >-
+  Breaded eggplant cutlets layered with marinara and mozzarella for a golden
+  casserole, accompanied by garlic bread slices.
+servings: 4
+prepTimeMinutes: 35
+cookTimeMinutes: 20
+ingredients:
+  - name: Eggplant
+    amount: 2 medium
+    notes: sliced into 1 cm rounds
+  - name: Marinara sauce
+    amount: 700 g
+    notes: store-bought for speed
+  - name: Mozzarella cheese
+    amount: 300 g
+    notes: shredded
+  - name: Parmesan cheese
+    amount: 50 g
+    notes: grated
+  - name: Breadcrumbs
+    amount: 150 g
+    notes: panko or regular
+  - name: Eggs
+    amount: 2 large
+    notes: beaten
+  - name: All-purpose flour
+    amount: 50 g
+  - name: Garlic
+    amount: 3 cloves
+    notes: 1 minced for eggplant, 2 minced for garlic bread
+  - name: Ciabatta or baguette
+    amount: 1 loaf
+    notes: for garlic bread
+  - name: Butter
+    amount: 50 g
+    notes: softened, for garlic bread
+  - name: Fresh basil
+    amount: a few leaves
+    notes: optional, for garnish
+instructions:
+  - step: 1
+    action: >-
+      Preheat oven to 200°C. Slice *eggplant* into 1 cm rounds. Lightly salt the
+      *eggplant* slices and let them sit for 10 minutes to draw out moisture,
+      then pat them thoroughly dry with paper towels.
+  - step: 2
+    action: >-
+      Set up a breading station with three shallow dishes: one with *all-purpose
+      flour*, one with the *beaten eggs*, and one with *breadcrumbs*. Season the
+      flour and breadcrumbs with a pinch of salt and pepper.
+  - step: 3
+    action: >-
+      Dredge each *eggplant* slice first in the *flour*, shaking off excess,
+      then dip in the *beaten eggs*, and finally coat well in the *breadcrumbs*.
+      Heat a generous drizzle of olive oil in a large pan over medium-high heat.
+      Fry the *breaded eggplant* in batches for 2-3 minutes per side until
+      golden brown. Remove and place on a wire rack lined with paper towels to
+      drain excess oil.
+  - step: 4
+    action: >-
+      Spread a thin layer of *marinara sauce* on the bottom of a 20x30 cm baking
+      dish. Arrange a single layer of *fried eggplant* slices over the sauce.
+      Top with a sprinkle of *minced garlic* (from 1 clove), a layer of
+      *shredded mozzarella*, and a sprinkle of *grated Parmesan*. Repeat layers
+      until all *eggplant* is used, finishing with a generous layer of *marinara
+      sauce*, *mozzarella*, and *Parmesan*.
+  - step: 5
+    action: >-
+      Bake the *eggplant parmesan* for 15-20 minutes, or until the cheese is
+      melted and bubbly and the top is golden brown.
+  - step: 6
+    action: >-
+      While the eggplant bakes, prepare the garlic bread. Mince the remaining
+      *garlic cloves*. In a small bowl, combine the *softened butter* with the
+      *minced garlic*. Slice the *ciabatta or baguette* lengthwise or into thick
+      slices. Spread the *garlic butter* generously on the bread.
+  - step: 7
+    action: >-
+      Place the *garlic bread* directly on the oven rack during the last 8-10
+      minutes of the eggplant's baking time, or until golden and crisp.
+  - step: 8
+    action: >-
+      Let the *eggplant parmesan* rest for a few minutes before serving. Garnish
+      with fresh *basil leaves* if desired. Serve hot with the warm *garlic
+      bread*.
+tags:
+  - italian
+  - vegetarian
+imagePrompt:
+  base: >-
+    Vibrant close-up of Eggplant Parmesan, plated to showcase vivid textures and
+    color. Incorporate visual cues from this description: Breaded eggplant
+    cutlets layered with marinara and mozzarella for a golden casserole,
+    accompanied by garlic bread slices.. Scene: italian-inspired table with soft
+    natural daylight, eye-level perspective, and shallow depth of field. Capture
+    fresh garnish, inviting lighting, and a sense of homemade comfort with no
+    visible steam or vapor. No people or branded props.
+  enhanced: >-
+    Decadent Eggplant Parmesan: A generous slice, artfully plated to showcase
+    its golden-fried, crisp eggplant layers, rich marinara, and bubbling, melted
+    mozzarella. Freshly grated Parmesan and vibrant basil leaves are delicately
+    scattered on top. Two golden-brown garlic bread slices lie invitingly
+    beside. Bathed in soft, warm natural light at a low eye-level, with a
+    shallow depth of field, capturing homemade comfort.

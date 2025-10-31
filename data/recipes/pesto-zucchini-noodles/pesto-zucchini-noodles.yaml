@@ -1,0 +1,81 @@
+title: Pesto Zucchini Noodles
+summary: >-
+  Spiralized zucchini coated in basil pesto with cherry tomatoes and toasted
+  pine nuts alongside lemony cannellini bean salad.
+servings: 2
+prepTimeMinutes: 20
+cookTimeMinutes: 10
+ingredients:
+  - name: Zucchini
+    amount: 3 medium
+    notes: for spiralizing
+  - name: Basil Pesto
+    amount: 200g
+    notes: store-bought or homemade
+  - name: Cherry Tomatoes
+    amount: 250g
+    notes: halved
+  - name: Pine Nuts
+    amount: 30g
+  - name: Cannellini Beans
+    amount: 1 x 400g can
+    notes: drained and rinsed
+  - name: Lemon
+    amount: 1 medium
+    notes: for juice
+  - name: Red Onion
+    amount: 1/4 small
+    notes: finely diced
+  - name: Fresh Parsley
+    amount: 15g
+    notes: chopped
+  - name: Garlic
+    amount: 1 clove
+    notes: minced
+instructions:
+  - step: 1
+    action: >-
+      Prepare the bean salad: Drain and rinse the *cannellini beans*. Finely
+      dice the *red onion* and chop the *fresh parsley*. In a small bowl,
+      combine the beans, red onion, and parsley. Squeeze the juice of half a
+      *lemon* over the mixture, add a drizzle of olive oil, and season with salt
+      and black pepper. Stir well and set aside.
+  - step: 2
+    action: >-
+      Prepare zucchini and tomatoes: Spiralize the *zucchini* into noodles.
+      Halve the *cherry tomatoes*.
+  - step: 3
+    action: >-
+      Toast pine nuts and sauté garlic: In a dry pan over medium heat, toast the
+      *pine nuts* for 2-3 minutes until golden and fragrant. Remove from pan and
+      set aside. Add a drizzle of olive oil to the same pan. Mince the *garlic*
+      clove and add to the pan, sautéing for about 30 seconds until fragrant.
+  - step: 4
+    action: >-
+      Combine and serve: Add the *zucchini noodles* to the pan with the garlic
+      (no need to cook extensively, just warm slightly if desired, or keep raw
+      for crunch). Remove from heat. Add the *basil pesto* and *cherry tomatoes*
+      to the pan. Toss everything gently to coat the zucchini noodles evenly
+      with the pesto. Season with salt and black pepper to taste. Serve the
+      pesto zucchini noodles immediately, topped with the toasted *pine nuts*,
+      alongside the lemony cannellini bean salad.
+tags:
+  - italian
+  - vegetarian
+  - glutenfree
+imagePrompt:
+  base: >-
+    Vibrant close-up of Pesto Zucchini Noodles, plated to showcase vivid
+    textures and color. Incorporate visual cues from this description:
+    Spiralized zucchini coated in basil pesto with cherry tomatoes and toasted
+    pine nuts alongside lemony cannellini bean salad.. Scene: italian-inspired
+    table with soft natural daylight, eye-level perspective, and shallow depth
+    of field. Capture fresh garnish, inviting lighting, and a sense of homemade
+    comfort with no visible steam or vapor. No people or branded props.
+  enhanced: >-
+    An intimate, low-angle close-up of glistening pesto zucchini noodles,
+    artfully intertwined with ruby cherry tomatoes and golden toasted pine nuts.
+    A vibrant mound of lemony cannellini bean salad, flecked with fresh parsley,
+    sits invitingly alongside. Bathed in soft, diffused natural daylight, with
+    delicate basil leaves and a bright lemon wedge as garnish, creating a
+    homemade, sun-drenched Italian comfort. Shallow depth of field.

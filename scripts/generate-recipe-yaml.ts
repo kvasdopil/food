@@ -484,20 +484,6 @@ async function main() {
       "utf-8",
     );
 
-    const metadataFile = path.join(recipeDir, "metadata.json");
-    const metadata = {
-      requestedMeal: options.mealName,
-      generatedAt: new Date().toISOString(),
-      description: options.description,
-      recipeFile: path.basename(yamlFile),
-      tagsProvided: options.tags,
-      imagePrompt: {
-        base: baseImagePrompt,
-        enhanced: enhancedImagePrompt,
-      },
-    };
-    await fs.writeFile(metadataFile, `${JSON.stringify(metadata, null, 2)}\n`, "utf-8");
-
     console.log(`Recipe YAML saved to ${yamlFile}`);
     console.log("\nIngredients:");
     recipe.ingredients.forEach((ingredient) => {
