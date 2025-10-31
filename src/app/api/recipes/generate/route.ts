@@ -134,10 +134,30 @@ async function generateRecipe(options: GenerateRequest, apiKey: string): Promise
     `Core description provided by the product team: ${options.description}`,
     "The dish must be achievable in 60 minutes or less using widely available, budget-friendly ingredients.",
     "Include a short summary sentence that captures the flavor and vibe of the meal.",
-    'Use metric measurements with abbreviated units (g, ml, °C) plus tsp/tbsp where helpful. You may use "1 medium", "2 large", etc., for whole produce where that feels natural. Never use Fahrenheit, pounds, ounces, cups, or inches.',
-    "Keep instruction references aligned with the ingredient list, with the exception of common pantry staples (salt, pepper, oil, water, basic seasonings) which can be mentioned as needed.",
-    "Describe tiny amounts (a drizzle of olive oil, a pinch of salt) naturally instead of inventing precise measurements.",
-    "In the instructions, wrap the first occurrence of each ingredient name per step in asterisks like *ingredient*, and reference ingredients using lowercase wording rather than Title Case.",
+    "",
+    "CRITICAL FORMATTING RULES (must be followed exactly):",
+    "",
+    "1. INGREDIENT NAMES:",
+    "   - All ingredient names in the ingredients array MUST be lowercase (e.g., 'chicken breast', not 'Chicken Breast')",
+    "   - Ingredient amounts must NOT contain parenthetical notes; move all contextual details to the 'notes' field",
+    "   - Example: { name: 'chicken breast', amount: '4', notes: 'approx. 150g each' } NOT { name: 'Chicken breast', amount: '4 (approx. 150g each)' }",
+    "",
+    "2. INSTRUCTIONS:",
+    "   - Wrap ONLY the FIRST occurrence of each ingredient name per step in asterisks (e.g., '*chicken breast*')",
+    "   - Subsequent mentions of the same ingredient in the same step should NOT have asterisks",
+    "   - It's okay to use descriptive phrases in instructions (e.g., '*trimmed green beans*', '*minced garlic*') for clarity",
+    "   - Keep instruction text concise and practical",
+    "",
+    "3. MEASUREMENTS:",
+    '   - Use metric measurements with abbreviated units (g, ml, °C) plus tsp/tbsp where helpful',
+    '   - You may use "1 medium", "2 large", etc., for whole produce where that feels natural',
+    '   - Never use Fahrenheit, pounds, ounces, cups, or inches',
+    "   - Describe tiny amounts (a drizzle, a pinch) naturally instead of inventing precise measurements",
+    "",
+    "4. INGREDIENT REFERENCING:",
+    "   - Instructions should reference ingredients from the ingredient list",
+    "   - Common pantry staples (salt, pepper, oil, water, basic seasonings) can be mentioned without explicit listing in ingredients",
+    "",
     "Return the recipe structured JSON matching the provided schema.",
     "If you mention a side or garnish, keep it quick to prepare.",
   ];
@@ -323,6 +343,21 @@ export async function POST(request: NextRequest) {
     recipe.title = title;
     recipe.summary = description;
     recipe.tags = [...tags];
+
+    // Normalize ingredient names to lowercase
+    recipe.ingredients = recipe.ingredients.map((ingredient) => ({
+      ...ingredient,
+      name: ingredient.name.toLowerCase().trim(),
+      // Ensure amounts don't have parenthetical notes
+      amount: ingredient.amount.split("(")[0].trim(),
+      notes: ingredient.notes
+        ? ingredient.notes.trim()
+        : ingredient.amount.includes("(")
+          ? ingredient.amount.split("(").slice(1).join("(").replace(/\)$/, "").trim()
+          : undefined,
+    })).filter(ing => ing.amount); // Remove any invalid entries
+
+    // Normalize instructions
     recipe.instructions = recipe.instructions.map((instruction, index) => ({
       step: index + 1,
       action: instruction.action.trim(),
