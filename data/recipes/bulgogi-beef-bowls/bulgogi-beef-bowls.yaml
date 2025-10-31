@@ -1,0 +1,107 @@
+title: Bulgogi Beef Bowls
+summary: >-
+  Sweet soy-marinated beef cooked quickly and served with rice, kimchi, and
+  pickled cucumbers.
+servings: 4
+prepTimeMinutes: 25
+cookTimeMinutes: 25
+ingredients:
+  - name: Beef sirloin or flank steak
+    amount: 500g
+    notes: thinly sliced against the grain
+  - name: Soy sauce
+    amount: 60ml
+  - name: Brown sugar
+    amount: 30g
+  - name: Sesame oil
+    amount: 15ml
+  - name: Garlic
+    amount: 3 cloves
+    notes: minced
+  - name: Fresh ginger
+    amount: 15g
+    notes: grated
+  - name: Yellow onion
+    amount: 1/2 medium
+    notes: grated or finely minced
+  - name: Asian pear (or apple)
+    amount: 1/2 medium
+    notes: grated (optional, for tenderizing and sweetness)
+  - name: Short-grain white rice
+    amount: 300g
+  - name: Kimchi
+    amount: 200g
+    notes: for serving
+  - name: Cucumber
+    amount: 1 large
+    notes: thinly sliced
+  - name: Rice vinegar
+    amount: 30ml
+  - name: Granulated sugar
+    amount: 5g
+  - name: Green onions
+    amount: 2 stalks
+    notes: thinly sliced, for garnish
+  - name: Toasted sesame seeds
+    amount: 5g
+    notes: for garnish
+  - name: Vegetable oil
+    amount: a drizzle
+    notes: for cooking
+instructions:
+  - step: 1
+    action: >-
+      In a large bowl, combine 60ml *soy sauce*, 30g *brown sugar*, 15ml *sesame
+      oil*, 3 cloves minced *garlic*, 15g grated *fresh ginger*, 1/2 medium
+      grated *yellow onion*, and 1/2 medium grated *Asian pear* (if using). Add
+      500g thinly sliced *beef sirloin or flank steak* to the marinade, ensuring
+      it's well coated. Let it marinate at room temperature for at least 15
+      minutes while you prepare other components, or refrigerate for up to 30
+      minutes.
+  - step: 2
+    action: >-
+      Rinse 300g *short-grain white rice* under cold water until the water runs
+      clear. Cook the rice according to package directions, typically in a
+      saucepan with a 1:1.25 ratio of rice to water, brought to a boil then
+      simmered covered for 15-20 minutes until water is absorbed. Let it rest
+      for 5 minutes off the heat before fluffing with a fork.
+  - step: 3
+    action: >-
+      While the beef marinates and rice cooks, thinly slice 1 large *cucumber*.
+      In a small bowl, whisk together 30ml *rice vinegar*, 5g *granulated
+      sugar*, and a pinch of salt until the sugar dissolves. Add the sliced
+      *cucumber* and toss to coat. Set aside to quick pickle.
+  - step: 4
+    action: >-
+      Heat a large skillet or wok over high heat and add a drizzle of *vegetable
+      oil*. Once hot, add a single layer of the marinated *beef* (do not
+      overcrowd the pan, cook in batches if necessary). Cook for 2-3 minutes per
+      side until browned and caramelized. Transfer cooked beef to a plate and
+      repeat with remaining beef.
+  - step: 5
+    action: >-
+      Divide the cooked *short-grain white rice* among four serving bowls. Top
+      each with a generous portion of the cooked *bulgogi beef*. Add a side of
+      200g *kimchi* and the *quick pickled cucumbers*. Garnish with thinly
+      sliced *green onions* and 5g *toasted sesame seeds*. Serve immediately.
+tags:
+  - korean
+  - beef
+imagePrompt:
+  base: >-
+    Vibrant close-up of Bulgogi Beef Bowls, plated to showcase vivid textures
+    and color. Incorporate visual cues from this description: Sweet
+    soy-marinated beef cooked quickly and served with rice, kimchi, and pickled
+    cucumbers.. Scene: korean-inspired table with soft natural daylight,
+    eye-level perspective, and shallow depth of field. Capture fresh garnish,
+    inviting lighting, and a sense of homemade comfort with no visible steam or
+    vapor. No people or branded props.
+  enhanced: >-
+    A vibrant, mouthwatering close-up of a Bulgogi Beef Bowl. Glistening,
+    caramelized beef is artfully piled atop fluffy white rice, with vibrant
+    crimson kimchi and crisp, translucent pickled cucumbers nestled alongside. A
+    generous sprinkle of toasted sesame seeds and thinly sliced green onions
+    adds fresh texture. Bathed in soft, directional natural daylight, the
+    shallow depth of field draws the eye to every succulent detail, evoking
+    homemade warmth.
+

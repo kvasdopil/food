@@ -4,40 +4,40 @@ Curated list of 100 weeknight-friendly dinners that use accessible pantry staple
 
 ## Vegetarian (25)
 
-1. **Margherita Pizza**  
+1. **Margherita Pizza** ✓  
    Blistered crust layered with ripe tomatoes, creamy mozzarella, and garden basil for a comforting pizzeria-style pie; serve with a peppery arugula salad dressed in lemon vinaigrette.  
    #italian #vegetarian
-2. **Creamy Mushroom Risotto**  
+2. **Creamy Mushroom Risotto** ✓  
    Arborio rice simmered with garlic, mushrooms, and parmesan until silky, paired with roasted asparagus spears for crunch.  
    #italian #vegetarian #glutenfree
-3. **Veggie Pad Thai**  
+3. **Veggie Pad Thai** ✓  
    Rice noodles tossed with tamarind sauce, tofu, and crisp vegetables, plated alongside a fresh cucumber-lime ribbon salad.  
    #thai #vegan
-4. **Lentil Bolognese**  
+4. **Lentil Bolognese** ✓  
    Hearty red lentils simmered in tomato basil sauce over pasta, finished with a side of garlicky sautéed spinach.  
    #italian #vegan
-5. **Chickpea Tikka Masala**  
+5. **Chickpea Tikka Masala** ✓  
    Creamy tomato curry with spiced chickpeas and warm garam masala, served with steamed basmati rice and cooling cucumber salad.  
    #indian #vegan #glutenfree
-6. **Caprese Stuffed Portobellos**  
+6. **Caprese Stuffed Portobellos** ✓  
    Roasted mushroom caps filled with mozzarella, cherry tomatoes, and balsamic glaze, accompanied by herb-roasted baby potatoes.  
    #italian #vegetarian #glutenfree
-7. **Spinach & Ricotta Stuffed Shells**  
+7. **Spinach & Ricotta Stuffed Shells** ✓  
    Jumbo pasta shells packed with herbed ricotta and spinach, baked in marinara and served with a crisp romaine salad.  
    #italian #vegetarian
-8. **Black Bean Enchiladas**  
+8. **Black Bean Enchiladas** ✓  
    Corn tortillas filled with spiced black beans and cheese, baked under smoky enchilada sauce and plated with cilantro-lime rice.  
    #mexican #vegetarian #glutenfree
-9. **Sweet Potato & Black Bean Tacos**  
+9. **Sweet Potato & Black Bean Tacos** ✓  
    Roasted sweet potato cubes and black beans piled into warm tortillas with lime crema, paired with charred street-corn salad.  
    #mexican #vegan #glutenfree
-10. **Mediterranean Quinoa Bowl**  
+10. **Mediterranean Quinoa Bowl** ✓  
     Herb quinoa with cucumber, tomato, olives, and lemon tahini dressing alongside lemon-herb cucumber salad.  
     #mediterranean #vegan #glutenfree
-11. **Greek Stuffed Peppers**  
+11. **Greek Stuffed Peppers** ✓  
     Bell peppers baked with herbed rice, feta, and olives, served with lemony cucumber salad.  
     #greek #vegetarian #glutenfree
-12. **Eggplant Parmesan**  
+12. **Eggplant Parmesan** ✓  
     Breaded eggplant cutlets layered with marinara and mozzarella for a golden casserole, accompanied by garlic bread slices.  
     #italian #vegetarian
 13. **Sesame Ginger Vegetable Stir-Fry**  
@@ -49,22 +49,22 @@ Curated list of 100 weeknight-friendly dinners that use accessible pantry staple
 15. **Buffalo Cauliflower Wraps**  
     Crispy cauliflower tossed in tangy buffalo sauce with crunchy slaw in soft tortillas, served with carrot and celery sticks.  
     #american #vegan #spicy
-16. **Pesto Zucchini Noodles**  
+16. **Pesto Zucchini Noodles** ✓  
     Spiralized zucchini coated in basil pesto with cherry tomatoes and toasted pine nuts alongside lemony cannellini bean salad.  
     #italian #vegetarian #glutenfree
-17. **Mushroom Stroganoff**  
+17. **Mushroom Stroganoff** ✓  
     Savory mushrooms in creamy paprika sauce over egg noodles, paired with buttery steamed green beans.  
     #russian #vegetarian
 18. **Roasted Vegetable Flatbread**  
     Crisp flatbread topped with roasted veggies, goat cheese, and balsamic drizzle, served with mixed olive tapenade.  
     #mediterranean #vegetarian
-19. **Coconut Curry Ramen**  
+19. **Coconut Curry Ramen** ✓  
     Fragrant coconut broth with ramen noodles, baby bok choy, and crispy tofu cubes, with a side of sesame cucumber salad.  
     #fusion #vegan
-20. **Tomato Basil Soup with Grilled Cheese Croutons**  
+20. **Tomato Basil Soup with Grilled Cheese Croutons** ✓  
     Silky tomato soup paired with buttery grilled cheese bites and a side of simple mixed greens.  
     #american #vegetarian
-21. **Falafel Mezze Plates**  
+21. **Falafel Mezze Plates** ✓  
     Herb chickpea patties with hummus, tabbouleh, and pickled vegetables, accompanied by warm pita triangles.  
     #middleeastern #vegan
 22. **Paneer Tikka Skewers**  
@@ -82,16 +82,16 @@ Curated list of 100 weeknight-friendly dinners that use accessible pantry staple
 
 ## Fish & Seafood (25)
 
-1. **Lemon Garlic Salmon**  
+1. **Lemon Garlic Salmon** ✓  
    Oven-baked salmon fillets with lemon butter and fresh parsley, served alongside roasted baby potatoes and green beans.  
    #american #seafood #glutenfree
-2. **Teriyaki Salmon Rice Bowl**  
+2. **Teriyaki Salmon Rice Bowl** ✓  
    Glazed salmon atop steamed rice with edamame and cucumbers, finished with a side of miso soup.  
    #japanese #seafood
 3. **Cajun Shrimp Tacos**  
    Spicy shrimp folded into warm corn tortillas with crunchy slaw and lime crema, plated with cilantro-lime rice.  
    #mexican #seafood #spicy #glutenfree
-4. **Panko-Crusted Cod**  
+4. **Panko-Crusted Cod** ✓  
    Flaky cod baked with crispy breadcrumbs and lemon zest, served with garlic mashed potatoes and steamed peas.  
    #american #seafood
 5. **Miso Glazed Salmon**  
@@ -109,19 +109,19 @@ Curated list of 100 weeknight-friendly dinners that use accessible pantry staple
 9. **Fish & Pepper Fajitas**  
    Sautéed white fish with peppers and onions for sizzling skillet fajitas, paired with black beans.  
    #mexican #seafood
-10. **Garlic Butter Shrimp Scampi**  
+10. **Garlic Butter Shrimp Scampi** ✓  
     Juicy shrimp in garlic butter with lemon and parsley over linguine, served with a mixed green salad.  
     #italian #seafood
-11. **Blackened Catfish with Corn Salsa**  
+11. **Blackened Catfish with Corn Salsa** ✓  
     Pan-seared catfish coated in Cajun spices topped with sweet corn salsa, accompanied by roasted zucchini.  
     #southern #seafood #spicy #glutenfree
-12. **Honey Mustard Salmon**  
+12. **Honey Mustard Salmon** ✓  
     Sheet-pan salmon glazed with honey mustard alongside roasted carrots and wild rice pilaf.  
     #american #seafood #glutenfree
 13. **Crispy Fish Sandwiches**  
     Lightly fried fish fillets tucked into buns with tartar sauce and lettuce, served with oven-baked fries.  
     #american #seafood
-14. **Thai Basil Shrimp Stir-Fry**  
+14. **Thai Basil Shrimp Stir-Fry** ✓  
     Shrimp stir-fried with basil, chilies, and snap peas for aromatic heat, plated with coconut rice.  
     #thai #seafood #spicy
 15. **Herb-Crusted Trout**  
@@ -160,7 +160,7 @@ Curated list of 100 weeknight-friendly dinners that use accessible pantry staple
 
 ## Chicken (25)
 
-1. **Lemon Herb Chicken Thighs**  
+1. **Lemon Herb Chicken Thighs** ✓  
    Crispy-skinned thighs roasted with garlic, lemon, and rosemary, served with roasted root vegetables.  
    #american #chicken #glutenfree
 2. **Garlic Parmesan Chicken Pasta**  
@@ -172,7 +172,7 @@ Curated list of 100 weeknight-friendly dinners that use accessible pantry staple
 4. **Skillet Chicken Fajitas**  
    Sizzling chicken strips with peppers and onions ready for tortillas, accompanied by cilantro rice.  
    #mexican #chicken
-5. **Teriyaki Chicken Bowls**  
+5. **Teriyaki Chicken Bowls** ✓  
    Sweet-savory teriyaki chicken over rice with broccoli and carrots, paired with miso soup.  
    #japanese #chicken
 6. **Chicken Tikka Masala**  
@@ -229,7 +229,7 @@ Curated list of 100 weeknight-friendly dinners that use accessible pantry staple
 23. **Chicken Tortilla Soup**  
     Zesty tomato broth with shredded chicken, corn, and crunchy corn tortilla strips, accompanied by avocado salad.  
     #mexican #chicken #glutenfree
-24. **Gochujang Glazed Chicken Thighs**  
+24. **Gochujang Glazed Chicken Thighs** ✓  
     Sweet-heat gochujang glaze on roasted chicken thighs with sesame seeds, paired with kimchi fried rice.  
     #korean #chicken #spicy
 25. **Chicken Caprese Skillet**  
@@ -238,16 +238,16 @@ Curated list of 100 weeknight-friendly dinners that use accessible pantry staple
 
 ## Meat (Beef, Pork, Lamb) (25)
 
-1. **Classic Beef Tacos**  
+1. **Classic Beef Tacos** ✓  
    Seasoned ground beef tucked into crispy corn shells with lettuce and cheddar, served alongside Mexican rice.  
    #mexican #beef #glutenfree
 2. **Spaghetti Bolognese**  
    Rich beef ragù simmered with tomatoes and herbs over spaghetti, paired with garlic bread.  
    #italian #beef
-3. **Garlic Butter Steak Bites**  
+3. **Garlic Butter Steak Bites** ✓  
    Seared steak cubes tossed in garlic butter, served with roasted potatoes and green beans.  
    #american #beef #glutenfree
-4. **Beef & Broccoli Stir-Fry**  
+4. **Beef & Broccoli Stir-Fry** ✓  
    Thin beef slices and broccoli in savory soy ginger sauce, paired with steamed jasmine rice.  
    #chinese #beef
 5. **Pork Tenderloin Medallions with Apples**  
@@ -286,7 +286,7 @@ Curated list of 100 weeknight-friendly dinners that use accessible pantry staple
 16. **Quick Pork Ramen**  
     Savory broth with sliced pork tenderloin, ramen noodles, and soft egg, served with sesame spinach.  
     #japanese #pork
-17. **Weeknight Beef Chili**  
+17. **Weeknight Beef Chili** ✓  
     Ground beef chili with beans, tomatoes, and smoky spices, paired with baked sweet potato fries.  
     #american #beef #spicy #glutenfree
 18. **Steakhouse Salad**  

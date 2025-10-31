@@ -1,0 +1,109 @@
+title: Chicken Tikka Masala
+summary: >-
+  Yogurt-marinated chicken simmered in creamy spiced tomato sauce, served with
+  basmati rice and cooling cucumber salad.
+servings: 4
+prepTimeMinutes: 20
+cookTimeMinutes: 35
+ingredients:
+  - name: boneless, skinless chicken breast or thigh
+    amount: 500 g
+    notes: cut into 2.5 cm cubes
+  - name: plain yogurt
+    amount: 120 ml
+    notes: for marinade
+  - name: ginger-garlic paste
+    amount: 2 tbsp
+    notes: divided for marinade and sauce
+  - name: lemon juice
+    amount: 1 tbsp
+  - name: ground turmeric
+    amount: 0.5 tsp
+  - name: garam masala
+    amount: 2 tsp
+    notes: divided for marinade and sauce
+  - name: chili powder
+    amount: 1 tsp
+    notes: or paprika, divided for marinade and sauce
+  - name: cumin powder
+    amount: 1.5 tsp
+    notes: divided for marinade and sauce
+  - name: olive oil or vegetable oil
+    amount: 2 tbsp
+  - name: butter
+    amount: 1 tbsp
+  - name: onion
+    amount: 1 medium
+    notes: finely chopped
+  - name: coriander powder
+    amount: 1 tsp
+  - name: crushed tomatoes
+    amount: 400 g can
+  - name: heavy cream
+    amount: 120 ml
+  - name: basmati rice
+    amount: 200 g
+  - name: cucumber
+    amount: 1 medium
+    notes: diced
+  - name: fresh coriander
+    amount: a small bunch
+    notes: chopped, for garnish
+  - name: plain yogurt
+    amount: a spoonful
+    notes: optional, for cucumber salad
+instructions:
+  - step: 1
+    action: >-
+      In a bowl, combine the *boneless, skinless chicken breast or thigh* with
+      120 ml of *plain yogurt* (for marinade), 1 tbsp of *ginger-garlic paste*,
+      *lemon juice*, *ground turmeric*, 1 tsp of *garam masala*, 0.5 tsp of
+      *chili powder*, 0.5 tsp of *cumin powder*, and 0.5 tsp salt. Mix well and
+      set aside to marinate for at least 15 minutes. Rinse *basmati rice*
+      thoroughly and cook according to package directions.
+  - step: 2
+    action: >-
+      Heat *olive oil or vegetable oil* and *butter* in a large pan or pot over
+      medium heat. Add the *onion* and cook until softened and translucent,
+      about 5-7 minutes. Stir in the remaining 1 tbsp of *ginger-garlic paste*
+      and cook for 1 minute until fragrant. Add the remaining 1 tsp of *cumin
+      powder*, *coriander powder*, the remaining 1 tsp of *garam masala*, and
+      the remaining 0.5 tsp of *chili powder*. Cook for 30 seconds, stirring
+      constantly, until aromatic.
+  - step: 3
+    action: >-
+      Pour in the *crushed tomatoes* and 120 ml water. Bring to a simmer, then
+      reduce heat to low, cover, and cook for 10-15 minutes, stirring
+      occasionally. While the sauce simmers, prepare the cucumber salad: In a
+      small bowl, combine the diced *cucumber* with a pinch of salt and a
+      spoonful of *plain yogurt* (for cucumber salad) if desired.
+  - step: 4
+    action: >-
+      Add the marinated *boneless, skinless chicken breast or thigh* to the
+      simmering sauce. Increase heat to medium-low and cook for 10-12 minutes,
+      or until the chicken is cooked through. Stir in the *heavy cream* and 1
+      tsp sugar (optional). Season with salt to taste. Simmer for another 2-3
+      minutes until heated through and slightly thickened. Garnish with chopped
+      *fresh coriander*. Serve the hot chicken tikka masala with the fluffy
+      basmati rice and the cucumber salad.
+tags:
+  - indian
+  - chicken
+  - glutenfree
+imagePrompt:
+  base: >-
+    Vibrant close-up of Chicken Tikka Masala, plated to showcase vivid textures
+    and color. Incorporate visual cues from this description: Yogurt-marinated
+    chicken simmered in creamy spiced tomato sauce, served with basmati rice and
+    cooling cucumber salad.. Scene: indian-inspired table with soft natural
+    daylight, eye-level perspective, and shallow depth of field. Capture fresh
+    garnish, inviting lighting, and a sense of homemade comfort with no visible
+    steam or vapor. No people or branded props.
+  enhanced: >-
+    Intimate, slightly elevated close-up: succulent yogurt-marinated chicken
+    nestled in a rich, creamy spiced tomato sauce. Artfully mounded basmati rice
+    and a vibrant dollop of cooling cucumber salad complete the plate. Garnish
+    with fresh cilantro and a swirl of yogurt. Bathed in soft, diffused natural
+    daylight, shallow depth of field, creating inviting warmth on an
+    Indian-inspired table. No visible steam.
+

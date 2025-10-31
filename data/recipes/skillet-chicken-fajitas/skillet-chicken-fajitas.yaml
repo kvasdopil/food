@@ -1,0 +1,99 @@
+title: Skillet Chicken Fajitas
+summary: >-
+  Sizzling chicken strips with peppers and onions ready for tortillas,
+  accompanied by cilantro rice.
+servings: 4
+prepTimeMinutes: 15
+cookTimeMinutes: 25
+ingredients:
+  - name: Chicken breast
+    amount: 500g
+    notes: sliced into thin strips
+  - name: Bell peppers
+    amount: 2 large
+    notes: e.g., 1 red, 1 green, deseeded and sliced into thin strips
+  - name: Onion
+    amount: 1 large
+    notes: sliced into thin strips
+  - name: Olive oil
+    amount: a drizzle
+    notes: for cooking
+  - name: Fajita seasoning
+    amount: 2 tbsp
+    notes: store-bought or homemade blend
+  - name: Lime
+    amount: 1 medium
+    notes: half for marinade, half for rice and garnish
+  - name: Garlic
+    amount: 2 cloves
+    notes: minced
+  - name: Cilantro
+    amount: 30g
+    notes: fresh, chopped, divided for rice and garnish
+  - name: Long-grain white rice
+    amount: 200g
+  - name: Water or chicken broth
+    amount: 400ml
+    notes: for cooking rice
+  - name: Salt
+    amount: to taste
+  - name: Black pepper
+    amount: to taste
+  - name: Small flour tortillas
+    amount: '8'
+instructions:
+  - step: 1
+    action: >-
+      Prepare the chicken marinade: In a bowl, combine the sliced *chicken
+      breast* with *fajita seasoning*, the juice of half a *lime*, minced
+      *garlic*, a pinch of *salt*, and *pepper*. Toss to coat and set aside
+      while you prepare the rice and vegetables.
+  - step: 2
+    action: >-
+      Cook the cilantro rice: Rinse the *long-grain white rice* under cold
+      water. In a small saucepan, combine the *rice* and *water or chicken
+      broth*. Bring to a boil, then reduce heat to low, cover, and simmer for 15
+      minutes. Remove from heat and let stand, covered, for 5 minutes. Fluff
+      with a fork, then stir in half the chopped *cilantro* and the juice from
+      the remaining half *lime*.
+  - step: 3
+    action: >-
+      Sear the chicken: Heat a large skillet (cast iron works best) over
+      medium-high heat with a drizzle of *olive oil*. Add the marinated *chicken
+      strips* in a single layer, ensuring not to overcrowd the pan (cook in
+      batches if necessary). Cook for 3-4 minutes per side, until browned and
+      cooked through. Remove the *chicken* from the skillet and set aside.
+  - step: 4
+    action: >-
+      Sauté the vegetables: In the same skillet, add another small drizzle of
+      *olive oil* if needed. Add the sliced *bell peppers* and *onion*. Sauté
+      for 5-7 minutes, stirring occasionally, until the vegetables are
+      tender-crisp and slightly charred.
+  - step: 5
+    action: >-
+      Combine and serve: Return the cooked *chicken* to the skillet with the
+      *peppers* and *onions*. Toss everything together to combine and heat
+      through for 1-2 minutes. Serve immediately with warm *small flour
+      tortillas*, the prepared *cilantro rice*, and the remaining fresh
+      *cilantro* for garnish.
+tags:
+  - mexican
+  - chicken
+imagePrompt:
+  base: >-
+    Vibrant close-up of Skillet Chicken Fajitas, plated to showcase vivid
+    textures and color. Incorporate visual cues from this description: Sizzling
+    chicken strips with peppers and onions ready for tortillas, accompanied by
+    cilantro rice.. Scene: mexican-inspired table with soft natural daylight,
+    eye-level perspective, and shallow depth of field. Capture fresh garnish,
+    inviting lighting, and a sense of homemade comfort with no visible steam or
+    vapor. No people or branded props.
+  enhanced: >-
+    An inviting close-up of sizzling Skillet Chicken Fajitas, piled high in a
+    rustic cast iron pan. Seared chicken strips, vibrant bell peppers, and
+    caramelized onions glisten, ready for tortillas. Alongside, a perfect scoop
+    of fluffy cilantro-lime rice. Fresh lime wedges and a generous sprinkle of
+    cilantro adorn the scene. Bathed in soft, golden natural daylight from an
+    eye-level perspective, with a shallow depth of field, conveying warmth and
+    homemade comfort. No visible vapor, no branded items.
+

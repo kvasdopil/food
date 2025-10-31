@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Hello World | Next.js Sample",
-  description: "A minimal Next.js + Tailwind starter powered by TypeScript.",
+  title: "The Food Database",
+  description: "Curated weeknight-friendly dinner recipes that use accessible pantry staples and cook in under an hour.",
 };
 
 export default function RootLayout({

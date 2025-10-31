@@ -1,0 +1,90 @@
+title: Tuna Niçoise Salad
+summary: >-
+  Seared tuna with potatoes, green beans, and olives, served alongside a crisp
+  butter lettuce salad.
+servings: 2
+prepTimeMinutes: 20
+cookTimeMinutes: 30
+ingredients:
+  - name: Fresh Tuna Steaks
+    amount: 2 (approx. 150-180g each)
+  - name: New Potatoes
+    amount: 500g
+    notes: washed, unpeeled
+  - name: Green Beans
+    amount: 200g
+    notes: trimmed
+  - name: Cherry Tomatoes
+    amount: 250g
+    notes: halved
+  - name: Black Olives
+    amount: 80g
+    notes: pitted, such as Kalamata or Niçoise
+  - name: Butter Lettuce
+    amount: 1 head
+    notes: washed and torn
+  - name: Red Onion
+    amount: 1/2 medium
+    notes: thinly sliced
+  - name: Eggs
+    amount: 2 large
+  - name: Dijon Mustard
+    amount: 1 tbsp
+  - name: Red Wine Vinegar
+    amount: 3 tbsp
+  - name: Olive Oil
+    amount: 80 ml
+    notes: plus extra for searing tuna
+  - name: Garlic
+    amount: 1 clove
+    notes: minced
+instructions:
+  - step: 1
+    action: >-
+      Boil *new potatoes* in salted water until fork-tender, about 15-20
+      minutes. Drain and let cool slightly, then halve. Bring a small pot of
+      salted water to a boil. Add *green beans* and blanch for 3-4 minutes until
+      tender-crisp. Immediately transfer to an ice bath to stop cooking, then
+      drain. Halve the *cherry tomatoes*. Thinly slice the *red onion*.
+  - step: 2
+    action: >-
+      In a separate small pot, bring water to a boil. Carefully add *eggs* and
+      boil for 7-8 minutes for medium-boiled yolks. Transfer to an ice bath,
+      then peel and quarter. Heat a drizzle of olive oil in a non-stick pan over
+      high heat. Season *tuna steaks* with salt and pepper. Sear for 1-2 minutes
+      per side for rare/medium-rare, or longer to desired doneness. Remove from
+      pan and slice thickly.
+  - step: 3
+    action: >-
+      In a small bowl, whisk together *dijon mustard*, *red wine vinegar*,
+      *minced garlic*, a pinch of salt, and a grind of black pepper. Slowly
+      drizzle in 80 ml *olive oil* while whisking continuously until emulsified.
+      Taste and adjust seasoning.
+  - step: 4
+    action: >-
+      Arrange the *butter lettuce* leaves on two plates. Artfully arrange the
+      *potatoes*, *green beans*, *cherry tomatoes*, *black olives*, *red onion*,
+      sliced *tuna steaks*, and quartered *eggs* over the lettuce. Drizzle
+      generously with the prepared *vinaigrette* just before serving.
+tags:
+  - french
+  - seafood
+  - glutenfree
+imagePrompt:
+  base: >-
+    Vibrant close-up of Tuna Niçoise Salad, plated to showcase vivid textures
+    and color. Incorporate visual cues from this description: Seared tuna with
+    potatoes, green beans, and olives, served alongside a crisp butter lettuce
+    salad.. Scene: french-inspired table with soft natural daylight, eye-level
+    perspective, and shallow depth of field. Capture fresh garnish, inviting
+    lighting, and a sense of homemade comfort with no visible steam or vapor. No
+    people or branded props.
+  enhanced: >-
+    Vibrant, close-up Tuna Niçoise Salad. Artfully composed, showcasing
+    thick-sliced rare tuna, tender green beans, halved new potatoes, and
+    quartered eggs. A crisp butter lettuce bed holds halved cherry tomatoes,
+    black olives, and thinly sliced red onion, all glistening with vinaigrette.
+    Garnish with fresh parsley. Luminous, soft natural daylight, intimate
+    eye-level perspective, and ultra-shallow depth of field create a
+    mouthwatering, homemade comfort.
+

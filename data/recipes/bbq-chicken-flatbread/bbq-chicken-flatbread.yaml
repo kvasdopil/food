@@ -1,0 +1,91 @@
+title: BBQ Chicken Flatbread
+summary: >-
+  Toasted flatbread with BBQ sauce, cheese, red onions, and cilantro, served
+  with a sweet corn salad.
+servings: 4
+prepTimeMinutes: 20
+cookTimeMinutes: 12
+ingredients:
+  - name: Flatbreads
+    amount: 4 medium
+    notes: pita, naan, or similar
+  - name: Cooked Chicken
+    amount: 250 g
+    notes: shredded (e.g., rotisserie chicken)
+  - name: BBQ Sauce
+    amount: 120 ml
+    notes: your favorite brand
+  - name: Mozzarella Cheese
+    amount: 150 g
+    notes: shredded
+  - name: Red Onion
+    amount: 1 medium
+    notes: thinly sliced
+  - name: Cilantro
+    amount: 30 g
+    notes: fresh, chopped
+  - name: Sweet Corn
+    amount: 350 g
+    notes: canned (drained) or frozen (defrosted)
+  - name: Red Bell Pepper
+    amount: 1 medium
+    notes: diced
+  - name: Lime
+    amount: 1 medium
+    notes: juiced
+  - name: Olive Oil
+    amount: a drizzle
+  - name: Salt
+    amount: to taste
+  - name: Black Pepper
+    amount: to taste
+instructions:
+  - step: 1
+    action: >-
+      Preheat your oven to 200°C. If using *flatbreads* that require pre-baking,
+      follow package instructions briefly to crisp them up before topping,
+      otherwise, proceed to the next step.
+  - step: 2
+    action: >-
+      Prepare the corn salad: In a medium bowl, combine the *sweet corn*, diced
+      *red bell pepper*, half of the thinly sliced *red onion*, and half of the
+      chopped *cilantro*. Drizzle with *olive oil*, add the juice from the
+      *lime*, and season with a pinch of *salt* and *black pepper*. Toss to
+      combine and set aside.
+  - step: 3
+    action: >-
+      Assemble the flatbreads: Spread an even layer of *bbq sauce* over each
+      *flatbread*. Distribute the shredded *cooked chicken* evenly over the
+      sauce. Sprinkle with shredded *mozzarella cheese* and the remaining thinly
+      sliced *red onion*.
+  - step: 4
+    action: >-
+      Bake the flatbreads for 8-12 minutes, or until the cheese is melted and
+      bubbly and the edges of the *flatbreads* are golden brown. Keep an eye on
+      them to prevent burning.
+  - step: 5
+    action: >-
+      Carefully remove the flatbreads from the oven. Garnish with the remaining
+      fresh *cilantro*. Slice each flatbread into desired portions and serve
+      immediately alongside the sweet corn salad.
+tags:
+  - american
+  - chicken
+imagePrompt:
+  base: >-
+    Vibrant close-up of BBQ Chicken Flatbread, plated to showcase vivid textures
+    and color. Incorporate visual cues from this description: Toasted flatbread
+    with BBQ sauce, cheese, red onions, and cilantro, served with a sweet corn
+    salad.. Scene: american-inspired table with soft natural daylight, eye-level
+    perspective, and shallow depth of field. Capture fresh garnish, inviting
+    lighting, and a sense of homemade comfort with no visible steam or vapor. No
+    people or branded props.
+  enhanced: >-
+    Capture a vibrant, slightly elevated eye-level close-up of a golden-crusted
+    BBQ Chicken Flatbread, artfully sliced and adorned with melted mozzarella,
+    crimson red onions, and fresh cilantro. A small, colorful mound of sweet
+    corn, bell pepper, and lime salad nestles beside, glistening with a light
+    dressing. Bathed in warm, soft natural daylight with a shallow depth of
+    field, highlighting the inviting textures and homemade comfort on an
+    American-inspired surface.
+

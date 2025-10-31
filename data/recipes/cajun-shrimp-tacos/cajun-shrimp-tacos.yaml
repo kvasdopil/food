@@ -1,0 +1,111 @@
+title: Cajun Shrimp Tacos
+summary: >-
+  Spicy shrimp folded into warm corn tortillas with crunchy slaw and lime crema,
+  plated with cilantro-lime rice.
+servings: 4
+prepTimeMinutes: 25
+cookTimeMinutes: 30
+ingredients:
+  - name: Shrimp
+    amount: 500g
+    notes: raw, peeled, deveined, tails removed
+  - name: Corn tortillas
+    amount: 12 small
+  - name: Red cabbage
+    amount: 300g
+    notes: finely shredded
+  - name: Carrot
+    amount: 1 medium
+    notes: grated
+  - name: Sour cream
+    amount: 120ml
+    notes: or plain Greek yogurt
+  - name: Limes
+    amount: 2 medium
+  - name: Cooked rice
+    amount: 300g
+    notes: warm, pre-cooked or freshly prepared
+  - name: Fresh cilantro
+    amount: 30g
+    notes: chopped, plus extra for garnish
+  - name: Smoked paprika
+    amount: 1 tsp
+  - name: Cayenne pepper
+    amount: 0.5 tsp
+    notes: adjust to desired spice level
+  - name: Garlic powder
+    amount: 0.5 tsp
+  - name: Onion powder
+    amount: 0.5 tsp
+  - name: Dried oregano
+    amount: 0.25 tsp
+  - name: Dried thyme
+    amount: 0.25 tsp
+  - name: Olive oil
+    amount: 2 tbsp
+  - name: Salt
+    amount: to taste
+  - name: Black pepper
+    amount: to taste
+instructions:
+  - step: 1
+    action: >-
+      Prepare the lime crema: In a small bowl, combine the *sour cream* with the
+      juice of half a *lime* and a pinch of salt. Stir well and set aside in the
+      fridge.
+  - step: 2
+    action: >-
+      Make the slaw: In a medium bowl, combine the shredded *red cabbage* and
+      grated *carrot*. Squeeze the juice of half a *lime* over the vegetables,
+      add a drizzle of olive oil, and season with salt and black pepper. Toss to
+      combine and set aside.
+  - step: 3
+    action: >-
+      Season the shrimp: In another bowl, pat the *shrimp* dry. Add the *smoked
+      paprika*, *cayenne pepper*, *garlic powder*, *onion powder*, *dried
+      oregano*, *dried thyme*, a pinch of salt, and black pepper. Toss until the
+      shrimp are evenly coated.
+  - step: 4
+    action: >-
+      Cook the shrimp: Heat 1 tbsp of *olive oil* in a large non-stick pan over
+      medium-high heat. Add the seasoned shrimp in a single layer and cook for
+      2-3 minutes per side, or until pink and opaque. Do not overcrowd the pan;
+      cook in batches if necessary. Remove from heat and set aside.
+  - step: 5
+    action: >-
+      Prepare the cilantro-lime rice: If your *cooked rice* is not already warm,
+      gently heat it. Stir in the chopped *fresh cilantro* and the juice of one
+      *lime*. Season with salt to taste.
+  - step: 6
+    action: >-
+      Warm the tortillas: Heat a dry pan or griddle over medium heat. Warm the
+      *corn tortillas* for about 30 seconds per side, until soft and pliable.
+      Keep them warm in a tortilla warmer or wrapped in a clean kitchen towel.
+  - step: 7
+    action: >-
+      Assemble the tacos: Fill each warm *corn tortilla* with a portion of the
+      cooked *shrimp*, top with the prepared *slaw*, and drizzle with *lime
+      crema*. Serve immediately with the *cilantro-lime rice* on the side,
+      garnished with extra fresh cilantro if desired.
+tags:
+  - mexican
+  - seafood
+  - spicy
+  - glutenfree
+imagePrompt:
+  base: >-
+    Vibrant close-up of Cajun Shrimp Tacos, plated to showcase vivid textures
+    and color. Incorporate visual cues from this description: Spicy shrimp
+    folded into warm corn tortillas with crunchy slaw and lime crema, plated
+    with cilantro-lime rice.. Scene: mexican-inspired table with soft natural
+    daylight, eye-level perspective, and shallow depth of field. Capture fresh
+    garnish, inviting lighting, and a sense of homemade comfort with no visible
+    steam or vapor. No people or branded props.
+  enhanced: >-
+    A vibrant close-up of Cajun Shrimp Tacos, artfully plated. One taco stands
+    slightly open, showcasing succulent spiced shrimp, crunchy red cabbage slaw,
+    and zesty lime crema nestled in a warm corn tortilla. Fresh cilantro-lime
+    rice accompanies. Garnish with bright lime wedges and delicate cilantro
+    sprigs. Bathed in soft, inviting natural daylight from an eye-level
+    perspective, with a shallow depth of field, evoking homemade comfort.
+

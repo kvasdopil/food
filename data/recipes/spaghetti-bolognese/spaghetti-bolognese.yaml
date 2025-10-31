@@ -1,0 +1,97 @@
+title: Spaghetti Bolognese
+summary: >-
+  Rich beef ragù simmered with tomatoes and herbs over spaghetti, paired with
+  garlic bread.
+servings: 4
+prepTimeMinutes: 15
+cookTimeMinutes: 40
+ingredients:
+  - name: Minced beef
+    amount: 500g
+    notes: lean
+  - name: Onion
+    amount: 1 medium
+    notes: finely chopped
+  - name: Carrots
+    amount: 2 medium
+    notes: finely chopped
+  - name: Celery stalk
+    amount: '1'
+    notes: finely chopped
+  - name: Garlic cloves
+    amount: '2'
+    notes: minced
+  - name: Canned chopped tomatoes
+    amount: 400g
+  - name: Tomato paste
+    amount: 2 tbsp
+  - name: Beef stock
+    amount: 250ml
+  - name: Dried oregano
+    amount: 1 tsp
+  - name: Spaghetti
+    amount: 300g
+  - name: Parmesan cheese
+    amount: 50g
+    notes: freshly grated, for serving
+  - name: Garlic bread
+    amount: 4 slices
+    notes: store-bought, optional
+instructions:
+  - step: 1
+    action: >-
+      Prepare your vegetables: Finely chop the *onion*, *carrots*, and *celery
+      stalk*. Mince the *garlic cloves*.
+  - step: 2
+    action: >-
+      Brown the beef: Heat a drizzle of olive oil in a large pan or pot over
+      medium-high heat. Add the *minced beef* and cook, breaking it up with a
+      spoon, until thoroughly browned. Drain any excess fat from the pan.
+  - step: 3
+    action: >-
+      Sauté aromatics: Add the chopped *onion*, *carrots*, *celery stalk*, and
+      minced *garlic cloves* to the pan with the browned beef. Sauté for 5-7
+      minutes until the vegetables have softened.
+  - step: 4
+    action: >-
+      Build the sauce: Stir in the *tomato paste* and *dried oregano*, cooking
+      for 1 minute until fragrant. Pour in the *canned chopped tomatoes* and
+      *beef stock*. Bring the mixture to a gentle simmer.
+  - step: 5
+    action: >-
+      Simmer the ragù: Reduce the heat to low, cover the pan, and let the
+      bolognese sauce gently simmer for at least 20 minutes, or up to 30
+      minutes, stirring occasionally. Season generously with salt and black
+      pepper to taste.
+  - step: 6
+    action: >-
+      Cook spaghetti: While the sauce simmers, cook the *spaghetti* according to
+      package instructions in a large pot of salted boiling water until al
+      dente. If serving, prepare the *garlic bread* as per its package
+      instructions.
+  - step: 7
+    action: >-
+      Serve: Drain the cooked spaghetti and divide among serving plates. Top
+      generously with the rich bolognese sauce. Garnish with freshly grated
+      *Parmesan cheese* and serve immediately, optionally with the *garlic
+      bread*.
+tags:
+  - italian
+  - beef
+imagePrompt:
+  base: >-
+    Vibrant close-up of Spaghetti Bolognese, plated to showcase vivid textures
+    and color. Incorporate visual cues from this description: Rich beef ragù
+    simmered with tomatoes and herbs over spaghetti, paired with garlic bread..
+    Scene: italian-inspired table with soft natural daylight, eye-level
+    perspective, and shallow depth of field. Capture fresh garnish, inviting
+    lighting, and a sense of homemade comfort with no visible steam or vapor. No
+    people or branded props.
+  enhanced: >-
+    A captivating, tight close-up of a generous swirl of spaghetti, lavishly
+    coated with a rich, deeply simmered beef ragù, showcasing its vibrant tomato
+    and herb-infused textures. Freshly torn basil leaves crown the dish.
+    Alongside, a golden-crusted slice of garlic bread, perfectly positioned.
+    Bathed in soft, warm afternoon light with a shallow focus, creating an
+    intimate, comforting homemade feel on an Italian-inspired table.
+
