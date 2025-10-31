@@ -14,15 +14,8 @@ const chipPalette = [
 
 function FeedPageContent() {
   const { activeTags, removeTag, clearAllTags } = useTags();
-  const {
-    recipes,
-    pagination,
-    isLoading,
-    isLoadingMore,
-    error,
-    loadMore,
-    retry,
-  } = usePaginatedRecipes({ tags: activeTags });
+  const { recipes, pagination, isLoading, isLoadingMore, error, loadMore, retry } =
+    usePaginatedRecipes({ tags: activeTags });
 
   // Scroll to top when tags change
   const activeTagsKey = activeTags.join(",");

@@ -41,7 +41,7 @@ type UsePaginatedRecipesResult = {
 
 /**
  * Hook for managing paginated recipe feed with request cancellation and duplicate prevention.
- * 
+ *
  * Features:
  * - Cancels in-flight requests when new ones are initiated
  * - Prevents duplicate loads with the same pagination slug
@@ -49,7 +49,7 @@ type UsePaginatedRecipesResult = {
  * - Supports tag filtering
  */
 export function usePaginatedRecipes(
-  options: UsePaginatedRecipesOptions = {}
+  options: UsePaginatedRecipesOptions = {},
 ): UsePaginatedRecipesResult {
   const { tags = [], autoLoadInitial = true } = options;
 
@@ -87,7 +87,7 @@ export function usePaginatedRecipes(
         throw err;
       }
     },
-    []
+    [],
   );
 
   const loadInitialRecipes = useCallback(async () => {

@@ -10,9 +10,9 @@
 export function parseTagsFromUrl(searchParams: URLSearchParams): string[] {
   const tagsParam = searchParams.get("tags");
   if (!tagsParam) return [];
-  
+
   // URLSearchParams automatically decodes "+" to spaces, so we check for spaces
-  // This handles both "vegetarian+italian" (decoded to "vegetarian italian") 
+  // This handles both "vegetarian+italian" (decoded to "vegetarian italian")
   // and cases where spaces are explicitly used
   if (tagsParam.includes(" ") || tagsParam.includes("+")) {
     return tagsParam
@@ -26,7 +26,7 @@ export function parseTagsFromUrl(searchParams: URLSearchParams): string[] {
       })
       .filter((tag) => tag.length > 0);
   }
-  
+
   // Single tag (might be encoded)
   try {
     return [decodeURIComponent(tagsParam.trim())].filter((tag) => tag.length > 0);
@@ -59,16 +59,16 @@ export function parseTagsFromQuery(tagsParam: string | null): string[] {
  */
 export function parseTagsFromWindowUrl(): string[] {
   if (typeof window === "undefined") return [];
-  
+
   const urlObj = new URL(window.location.href);
   if (!urlObj.search) return [];
-  
+
   const rawSearch = urlObj.search;
   const tagsMatch = rawSearch.match(/[?&]tags=([^&]*)/);
   if (!tagsMatch) return [];
-  
+
   const rawTagsValue = tagsMatch[1];
-  
+
   // Split by + in the raw value (before decoding)
   let parts: string[];
   if (rawTagsValue.includes("+")) {
@@ -87,7 +87,7 @@ export function parseTagsFromWindowUrl(): string[] {
     // Single tag or no separator
     parts = [rawTagsValue];
   }
-  
+
   // Decode each tag part and normalize to lowercase
   return parts
     .map((t) => {
@@ -150,4 +150,3 @@ export function toggleTagInUrl(tag: string): string {
 
   return buildFeedUrlWithTags(newTags);
 }
-

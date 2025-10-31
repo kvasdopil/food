@@ -377,7 +377,7 @@ The recipe generation process is split into two steps:
 
    **Required:** `EDIT_TOKEN` (for API authentication)
    **Optional:** `--endpoint <url>` to specify API URL (defaults to `http://localhost:3000` or `RECIPE_API_URL` env var)
-   
+
    The API endpoint requires `GEMINI_API_KEY` to be configured on the server (Vercel environment variables for production).
 
 2. **Generate Recipe Image** (using Firefly API):
@@ -449,31 +449,31 @@ The script will:
 ## Data Flow
 
 1. **Home Route** (`/`) → Server redirects to `/feed`
-2. **Feed Route** (`/feed`) → 
+2. **Feed Route** (`/feed`) →
    - Desktop: `FeedPageContent` component fetches paginated recipes from `/api/recipes` (supports `?tags=tag1+tag2` for filtering) → Displays in responsive grid with infinite scroll → Active tag filters shown at top → Cards link to `/recipes/[slug]`
    - Mobile: `FeedCard` component (via `mobile-carousel-wrapper`) fetches paginated recipes with same tag filtering support → Displays single-column cards → Active tag filters shown at top → Cards link to `/recipes/[slug]`
-3. **Tag Filtering**: 
+3. **Tag Filtering**:
    - User clicks tag on recipe card → `toggleTagInUrl` utility adds/removes tag from URL → `useTags` hook parses active tags → Feed reloads with filtered recipes → Active tags displayed at top with remove buttons
-3. **Recipe Route** (`/recipes/[slug]`)
+4. **Recipe Route** (`/recipes/[slug]`)
    - Page component: Generates metadata (OpenGraph, title) via server-side Supabase query
    - Layout component: Extracts slug from pathname → Uses `useRecipe` hook → Fetches recipe data via Supabase → Renders recipe components
    - Layout persists across route changes, preventing carousel remounting
-4. **Next Recipe Navigation**:
+5. **Next Recipe Navigation**:
    - Desktop: `RecipeSideNav` or keyboard right arrow → Fetches `/api/recipes?from={slug}` → Gets next in feed order → `router.push('/recipes/[slug]')`
    - Mobile: Swipe left → Carousel triggers same navigation flow
    - History: Updates session storage with new slug in stack
-5. **Previous Recipe Navigation**:
+6. **Previous Recipe Navigation**:
    - Desktop: `RecipeSideNav` or keyboard left arrow → `router.back()` (if history exists)
    - Mobile: Swipe right → Carousel moves backward in history → `router.back()`
    - History: Updates session storage index
-6. **History Management**:
+7. **History Management**:
    - On route change, layout syncs history with `document.referrer` check
    - If same-origin recipe referrer → appends to existing stack
    - If no/external referrer → resets stack
    - Forward navigation reuses history entries (no API call needed)
-7. **Back to Feed**: Button in top-left navigates to `/feed` (preserves feed scroll position via browser history)
-8. **Supabase**: Trigger `generate_recipe_slug` ensures unique slugs with `-2`, `-3`, etc. suffixes
-9. **Favorites**: Stored in browser `localStorage` (key: `recipe-favorites`) as array of slugs, persist across page reloads
+8. **Back to Feed**: Button in top-left navigates to `/feed` (preserves feed scroll position via browser history)
+9. **Supabase**: Trigger `generate_recipe_slug` ensures unique slugs with `-2`, `-3`, etc. suffixes
+10. **Favorites**: Stored in browser `localStorage` (key: `recipe-favorites`) as array of slugs, persist across page reloads
 
 ## Supabase Configuration
 

@@ -38,16 +38,28 @@ export default function RecipesLayout({ children }: RecipesLayoutProps) {
           <FiChevronLeft className="h-5 w-5 text-slate-700" />
         </button>
 
-        <div className="mx-auto flex h-full w-full max-w-5xl flex-col px-0 sm:px-6 xl:flex-row xl:items-stretch xl:gap-6">
-          <RecipeSideNav direction="previous" currentSlug={slug} />
+        {/* Mobile: Full width layout - content handled by root-level carousel (only visible below sm) */}
+        <div className="mx-auto flex h-full w-full max-w-5xl flex-col px-0 sm:hidden">
+          {/* Mobile content handled by root-level carousel */}
+        </div>
 
-          {/* Mobile: Content hidden - handled by root-level carousel */}
-          {/* Desktop: Standard Recipe Content */}
-          <div className="hidden h-full sm:block">
-            <Recipe slug={slug} />
+        {/* Medium/Desktop: Centered layout (visible on sm+) */}
+        <div className="hidden h-full sm:flex sm:justify-center">
+          <div className="relative flex h-full max-w-5xl items-stretch">
+            {/* Side navs - only visible on xl+ */}
+            <div className="absolute top-0 left-0 z-10 hidden h-full -translate-x-full items-center pr-6 xl:flex">
+              <RecipeSideNav direction="previous" currentSlug={slug} />
+            </div>
+
+            {/* Centered recipe content - visible on sm+ */}
+            <div className="h-full w-full">
+              <Recipe slug={slug} />
+            </div>
+
+            <div className="absolute top-0 right-0 z-10 hidden h-full translate-x-full items-center pl-6 xl:flex">
+              <RecipeSideNav direction="next" currentSlug={slug} />
+            </div>
           </div>
-
-          <RecipeSideNav direction="next" currentSlug={slug} />
         </div>
       </main>
     </NavigationProvider>

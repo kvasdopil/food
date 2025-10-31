@@ -333,7 +333,9 @@ async function main() {
       try {
         yaml.load(fixedContent);
       } catch (error) {
-        console.error(`  ✗ Fixed YAML is invalid: ${error instanceof Error ? error.message : String(error)}`);
+        console.error(
+          `  ✗ Fixed YAML is invalid: ${error instanceof Error ? error.message : String(error)}`,
+        );
         results.errors++;
         continue;
       }
@@ -346,7 +348,6 @@ async function main() {
       await uploadRecipe(recipe.yamlPath, editToken, endpoint);
       console.log(`  ✓ Database updated\n`);
       results.fixed++;
-
     } catch (error) {
       console.error(
         `  ✗ Error processing ${recipe.slug}: ${error instanceof Error ? error.message : String(error)}\n`,

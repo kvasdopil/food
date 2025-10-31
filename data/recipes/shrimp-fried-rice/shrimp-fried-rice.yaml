@@ -15,7 +15,7 @@ ingredients:
   - name: frozen peas
     amount: 150 g
   - name: large eggs
-    amount: '2'
+    amount: "2"
   - name: soy sauce
     amount: 60 ml
   - name: garlic
@@ -91,4 +91,3 @@ imagePrompt:
     fresh scallions and a rich soy sauce drizzle. Bathed in soft, warm natural
     daylight from an intimate eye-level perspective, with a shallow depth of
     field, evoking homemade comfort.
-

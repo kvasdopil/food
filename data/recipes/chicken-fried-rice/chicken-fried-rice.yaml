@@ -13,7 +13,7 @@ ingredients:
     amount: 500g
     notes: day-old jasmine rice works best
   - name: large eggs
-    amount: '3'
+    amount: "3"
   - name: frozen peas
     amount: 100g
   - name: carrot
@@ -30,7 +30,7 @@ ingredients:
   - name: sesame oil
     amount: 15ml
   - name: scallions
-    amount: '4'
+    amount: "4"
     notes: thinly sliced, divided for fried rice and salad
   - name: cucumber
     amount: 1 medium

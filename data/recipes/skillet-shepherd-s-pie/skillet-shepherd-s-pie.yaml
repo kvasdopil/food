@@ -12,10 +12,10 @@ ingredients:
     amount: 700 g
     notes: Peeled and quartered, e.g., Russet or Yukon Gold
   - name: medium onion
-    amount: '1'
+    amount: "1"
     notes: Finely chopped
   - name: medium carrots
-    amount: '2'
+    amount: "2"
     notes: Finely diced
   - name: frozen peas
     amount: 150 g
@@ -99,4 +99,3 @@ imagePrompt:
     of fresh chopped parsley. Bathed in warm, soft natural daylight, from an
     eye-level perspective with shallow depth of field, evoking ultimate homemade
     comfort. No steam, people, or branded items.
-

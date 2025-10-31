@@ -290,9 +290,7 @@ async function main() {
     const token = await loadEnvValue("EDIT_TOKEN");
 
     if (!token) {
-      throw new Error(
-        "Provide EDIT_TOKEN via env or .env.local before running this script.",
-      );
+      throw new Error("Provide EDIT_TOKEN via env or .env.local before running this script.");
     }
 
     const endpoint = options.endpoint || process.env.RECIPE_API_URL || "http://localhost:3000";

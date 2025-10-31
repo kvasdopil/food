@@ -12,14 +12,14 @@ ingredients:
   - name: plain flour
     amount: 60 g
   - name: large egg
-    amount: '1'
+    amount: "1"
   - name: panko breadcrumbs
     amount: 100 g
   - name: vegetable oil
     amount: 250 ml
     notes: for frying
   - name: burger buns
-    amount: '4'
+    amount: "4"
   - name: iceberg lettuce
     amount: 4 leaves
     notes: or similar crisp lettuce

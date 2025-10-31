@@ -33,10 +33,10 @@ ingredients:
   - name: dried oregano
     amount: 0.5 tsp
   - name: corn tortillas
-    amount: '6'
+    amount: "6"
     notes: cut into wedges
   - name: lime
-    amount: '1'
+    amount: "1"
     notes: half for chips, half for serving
   - name: fresh cilantro
     amount: small bunch
@@ -97,4 +97,3 @@ imagePrompt:
     lime-dusted corn tortilla chips are artfully arranged alongside. Bathed in
     soft, inviting natural daylight from a slightly elevated eye-level
     perspective with shallow depth of field, emphasizing homemade comfort.
-

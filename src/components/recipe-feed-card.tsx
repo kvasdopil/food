@@ -50,7 +50,6 @@ function toggleFavorite(slug: string): boolean {
   }
 }
 
-
 export function RecipeFeedCard({ slug, name, description, tags, imageUrl }: RecipeFeedCardProps) {
   const [isLiked, setIsLiked] = useState(false);
   const router = useRouter();
