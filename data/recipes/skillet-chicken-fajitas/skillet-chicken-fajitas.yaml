@@ -40,7 +40,7 @@ ingredients:
   - name: Black pepper
     amount: to taste
   - name: Small flour tortillas
-    amount: '8'
+    amount: "8"
 instructions:
   - step: 1
     action: >-
@@ -96,4 +96,3 @@ imagePrompt:
     cilantro adorn the scene. Bathed in soft, golden natural daylight from an
     eye-level perspective, with a shallow depth of field, conveying warmth and
     homemade comfort. No visible vapor, no branded items.
-

@@ -155,7 +155,7 @@ export function FeedCard() {
 
       {pagination && !pagination.hasMore && recipes.length > 0 && (
         <div className="flex items-center justify-center py-8">
-          <p className="text-sm text-gray-600">No more recipes to load</p>
+          <p className="text-sm text-gray-600">No more recipes</p>
         </div>
       )}
     </div>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import NextImage from "next/image";
 import { resolveRecipeImageUrl } from "@/lib/resolve-recipe-image-url";
 
@@ -15,10 +16,10 @@ type RecipeFeedCardProps = {
 
 const FAVORITES_STORAGE_KEY = "recipe-favorites";
 const chipPalette = [
-  "bg-amber-100 text-amber-700",
-  "bg-sky-100 text-sky-700",
-  "bg-emerald-100 text-emerald-700",
-  "bg-violet-100 text-violet-700",
+  "bg-amber-100 text-amber-700 hover:bg-amber-200 hover:shadow-md",
+  "bg-sky-100 text-sky-700 hover:bg-sky-200 hover:shadow-md",
+  "bg-emerald-100 text-emerald-700 hover:bg-emerald-200 hover:shadow-md",
+  "bg-violet-100 text-violet-700 hover:bg-violet-200 hover:shadow-md",
 ];
 
 function getFavoriteStatus(slug: string): boolean {
@@ -48,8 +49,36 @@ function toggleFavorite(slug: string): boolean {
   }
 }
 
+function buildTagUrl(tag: string): string {
+  if (typeof window === "undefined") {
+    return `/feed?tags=${encodeURIComponent(tag)}`;
+  }
+
+  // Get current tags from URL if we're on the feed page
+  const currentUrl = window.location.href;
+  const urlObj = new URL(currentUrl);
+  const isOnFeedPage = urlObj.pathname === "/feed";
+  const existingTagsParam = isOnFeedPage ? urlObj.searchParams.get("tags") : null;
+  const existingTags = existingTagsParam
+    ? existingTagsParam
+        .split("+")
+        .map((t) => t.trim())
+        .filter((t) => t.length > 0)
+    : [];
+
+  // Add the clicked tag if it's not already in the list
+  if (!existingTags.includes(tag)) {
+    const newTags = [...existingTags, tag];
+    return `/feed?tags=${newTags.map(encodeURIComponent).join("+")}`;
+  }
+
+  // Tag already active, return feed with current filters (or just feed if on recipe page)
+  return isOnFeedPage ? currentUrl.split("?")[0] + (urlObj.search ? urlObj.search : "") : `/feed`;
+}
+
 export function RecipeFeedCard({ slug, name, description, tags, imageUrl }: RecipeFeedCardProps) {
   const [isLiked, setIsLiked] = useState(false);
+  const router = useRouter();
   const resolvedImageUrl = resolveRecipeImageUrl(imageUrl);
 
   useEffect(() => {
@@ -60,6 +89,12 @@ export function RecipeFeedCard({ slug, name, description, tags, imageUrl }: Reci
     e.preventDefault();
     e.stopPropagation();
     setIsLiked(toggleFavorite(slug));
+  };
+
+  const handleTagClick = (e: React.MouseEvent, tag: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    router.push(buildTagUrl(tag));
   };
 
   return (
@@ -112,12 +147,14 @@ export function RecipeFeedCard({ slug, name, description, tags, imageUrl }: Reci
             </svg>
           </button>
           {tags.map((tag, index) => (
-            <span
+            <a
               key={tag}
-              className={`rounded-full px-2 py-0.5 text-xs font-medium sm:px-3 sm:py-1 sm:text-sm ${chipPalette[index % chipPalette.length]}`}
+              href={buildTagUrl(tag)}
+              onClick={(e) => handleTagClick(e, tag)}
+              className={`cursor-pointer rounded-full px-2 py-0.5 text-xs font-medium transition-all sm:px-3 sm:py-1 sm:text-sm ${chipPalette[index % chipPalette.length]}`}
             >
               {tag}
-            </span>
+            </a>
           ))}
         </div>
       </div>

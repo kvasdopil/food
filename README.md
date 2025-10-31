@@ -62,10 +62,76 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
 4. In the Vercel dashboard, add the `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`
    environment variables under **Settings → Environment Variables**, then redeploy.
 
+## Requirements
+
+### User Stories
+
+#### Navigation & Browsing
+
+- **US-1**: As a user, I want the home route (`/`) to redirect to the recipe feed so I can immediately see available recipes.
+- **US-2**: As a user, I want to browse recipes in a paginated feed with infinite scroll so I can discover recipes without clicking through pages.
+- **US-3**: As a user, I want to view recipes in a responsive grid/list layout (1 column on mobile, up to 4 columns on desktop) so the interface works well on all devices.
+- **US-4**: As a user, I want to click on a recipe card to view full recipe details so I can see ingredients and instructions.
+- **US-5**: As a user, I want to navigate to the next recipe in feed order (desktop side buttons, mobile swipe left) so I can browse through recipes sequentially.
+- **US-6**: As a user, I want to navigate to the previous recipe using browser history (desktop side buttons, mobile swipe right) so I can go back to recipes I've already viewed.
+- **US-7**: As a user, I want to use keyboard shortcuts (left/right arrows) to navigate between recipes so I can browse hands-free on desktop.
+- **US-8**: As a user, I want a back-to-feed button on recipe pages so I can easily return to browsing all recipes.
+- **US-9**: As a user, I want recipe navigation to respect my browser history so forward/backward navigation works naturally.
+
+#### Recipe Display
+
+- **US-10**: As a user, I want to see recipe images, names, and descriptions on recipe cards so I can quickly identify interesting recipes.
+- **US-11**: As a user, I want to view full recipe details including ingredients and step-by-step instructions on dedicated recipe pages.
+- **US-12**: As a user, I want each recipe to have a unique, shareable URL (`/recipes/[slug]`) so I can bookmark or share specific recipes.
+- **US-13**: As a user, I want recipes to display tags so I can see what categories or dietary restrictions apply.
+
+#### Tag Filtering
+
+- **US-14**: As a user, I want to click on tags in recipe cards to filter the feed by that tag so I can find recipes matching my preferences.
+- **US-15**: As a user, I want to combine multiple tags (e.g., `/feed?tags=vegetarian+italian`) so I can filter recipes by multiple criteria at once.
+- **US-16**: As a user, I want to see active tag filters displayed at the top of the feed so I know what filters are currently applied.
+- **US-17**: As a user, I want to remove individual tag filters or clear all filters so I can adjust my search criteria.
+- **US-18**: As a user, I want tag filters to persist in the URL so I can bookmark filtered views and share them with others.
+- **US-19**: As a user, I want tags to be clickable anchor links with visible URLs on hover so I can see where clicking will take me.
+
+#### Favorites
+
+- **US-20**: As a user, I want to favorite/unfavorite recipes using a heart button so I can save recipes I'm interested in.
+- **US-21**: As a user, I want my favorites to persist across page reloads (stored in localStorage) so my saved recipes aren't lost when I refresh.
+
+#### Sharing
+
+- **US-22**: As a user, I want to share recipes using native share functionality when available (Web Share API) so I can easily share recipes with others.
+- **US-23**: As a user, I want a fallback copy-link option when native sharing isn't available so I can share recipes on any device.
+
+#### Responsive Design
+
+- **US-24**: As a user, I want the app to be mobile-first with responsive design so it works well on phones, tablets, and desktops.
+- **US-25**: As a user, I want to swipe left/right on mobile to navigate between recipes so I can use touch gestures naturally.
+- **US-26**: As a user, I want different layouts optimized for mobile vs desktop (carousel on mobile, standard view on desktop) so the UI is appropriate for each screen size.
+
+#### Performance & UX
+
+- **US-27**: As a user, I want recipes to load quickly with pagination (20 per page) so I don't wait for all recipes to load at once.
+- **US-28**: As a user, I want infinite scroll to automatically load more recipes as I scroll so I can browse continuously without clicking "next page".
+- **US-29**: As a user, I want recipe navigation to maintain feed order so I can browse through recipes in the same order I see them in the feed.
+
+### Planned Features
+
+The following user stories are planned but not yet implemented:
+
+- **US-30**: As a user, I want to see a dedicated page listing all my favorited recipes so I can easily access my saved recipes.
+- **US-31**: As a user, I want to search for recipes by name or keywords so I can quickly find specific recipes.
+- **US-32**: As a user, I want the feed to preserve scroll position when navigating back from a recipe page so I don't lose my place while browsing.
+- **US-33**: As a user, I want to see recipe variations (e.g., vegetarian versions) so I can find alternative versions of recipes I like.
+- **US-34**: As a user, I want to see prep time and cooking time for recipes so I can plan my cooking schedule.
+- **US-35**: As a user, I want to see serving sizes and nutrition information for recipes so I can make informed dietary choices.
+
 ## Project Status
 
 - Home route `/` server-redirects to `/feed`.
 - Feed route `/feed` displays a scrollable grid/list of recipes with pagination (20 per page), infinite scroll, and favorite functionality. Desktop shows up to 4 columns in a grid with gaps and shadows; mobile shows single-column full-width cards.
+- Tag filtering: Users can click tags to filter recipes, active filters are shown at the top, tags are clickable anchor links with hover effects, and filters persist in URL (`/feed?tags=vegetarian+italian`).
 - Dynamic route `src/app/recipes/[slug]/page.tsx` handles metadata generation only; rendering is handled by the layout.
 - Layout `src/app/recipes/layout.tsx` manages the persistent carousel wrapper to prevent remounting during navigation, and includes a back-to-feed button in the top-left corner.
 - Navigation history checks use `document.referrer` to ensure same-origin navigation (prevents "about:blank" issues). Previous navigation is disabled/hidden when there's no same-origin history.

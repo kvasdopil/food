@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { RecipeFeedCard } from "@/components/recipe-feed-card";
 
 type RecipeListItem = {
@@ -24,16 +25,63 @@ type RecipesResponse = {
   pagination: PaginationInfo;
 };
 
+const chipPalette = [
+  "bg-amber-100 text-amber-700",
+  "bg-sky-100 text-sky-700",
+  "bg-emerald-100 text-emerald-700",
+  "bg-violet-100 text-violet-700",
+];
+
+function parseTagsFromUrl(searchParams: URLSearchParams): string[] {
+  const tagsParam = searchParams.get("tags");
+  if (!tagsParam) return [];
+  // Support both "vegetarian+italian" format and "tags=vegetarian&tags=italian"
+  if (tagsParam.includes("+")) {
+    return tagsParam
+      .split("+")
+      .map((tag) => tag.trim())
+      .filter((tag) => tag.length > 0);
+  }
+  return [tagsParam.trim()].filter((tag) => tag.length > 0);
+}
+
 export default function FeedPage() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const [recipes, setRecipes] = useState<RecipeListItem[]>([]);
   const [pagination, setPagination] = useState<PaginationInfo | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchRecipes = useCallback(async (fromSlug?: string) => {
+  // Memoize activeTags to prevent unnecessary re-renders
+  const activeTags = useMemo(() => parseTagsFromUrl(searchParams), [searchParams]);
+
+  const buildTagsQuery = (tags: string[]): string => {
+    if (tags.length === 0) return "";
+    return tags.join("+");
+  };
+
+  const removeTag = (tagToRemove: string) => {
+    const newTags = activeTags.filter((tag) => tag !== tagToRemove);
+    if (newTags.length === 0) {
+      router.push("/feed");
+    } else {
+      router.push(`/feed?tags=${buildTagsQuery(newTags)}`);
+    }
+  };
+
+  const fetchRecipes = useCallback(async (fromSlug?: string, tags?: string[]) => {
     try {
-      const url = fromSlug ? `/api/recipes?from=${encodeURIComponent(fromSlug)}` : `/api/recipes`; // First load: no parameters
+      const params = new URLSearchParams();
+      if (fromSlug) {
+        params.append("from", fromSlug);
+      }
+      if (tags && tags.length > 0) {
+        params.append("tags", tags.join("+"));
+      }
+      const queryString = params.toString();
+      const url = queryString ? `/api/recipes?${queryString}` : `/api/recipes`;
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error("Failed to fetch recipes");
@@ -49,7 +97,7 @@ export default function FeedPage() {
     setIsLoading(true);
     setError(null);
     try {
-      const data = await fetchRecipes(); // No slug = first page
+      const data = await fetchRecipes(undefined, activeTags);
       setRecipes(data.recipes);
       setPagination(data.pagination);
     } catch (err) {
@@ -57,7 +105,7 @@ export default function FeedPage() {
     } finally {
       setIsLoading(false);
     }
-  }, [fetchRecipes]);
+  }, [fetchRecipes, activeTags]);
 
   const loadMore = useCallback(async () => {
     if (!pagination || !pagination.hasMore || isLoadingMore || recipes.length === 0) return;
@@ -66,7 +114,7 @@ export default function FeedPage() {
     try {
       // Use the slug of the last recipe in the current list for pagination
       const lastRecipe = recipes[recipes.length - 1];
-      const data = await fetchRecipes(lastRecipe.slug);
+      const data = await fetchRecipes(lastRecipe.slug, activeTags);
       setRecipes((prev) => [...prev, ...data.recipes]);
       setPagination(data.pagination);
     } catch (err) {
@@ -74,10 +122,12 @@ export default function FeedPage() {
     } finally {
       setIsLoadingMore(false);
     }
-  }, [pagination, isLoadingMore, fetchRecipes, recipes]);
+  }, [pagination, isLoadingMore, fetchRecipes, recipes, activeTags]);
 
   useEffect(() => {
     loadInitialRecipes();
+    // Scroll to top when tags change
+    window.scrollTo(0, 0);
   }, [loadInitialRecipes]);
 
   // Infinite scroll
@@ -123,6 +173,40 @@ export default function FeedPage() {
   return (
     <div className="min-h-screen bg-white">
       <main className="mx-auto max-w-7xl sm:px-6 sm:py-6 lg:px-8">
+        {activeTags.length > 0 && (
+          <div className="mb-6 flex flex-wrap items-center gap-2 sm:mb-8">
+            <span className="text-sm font-medium text-gray-700 sm:text-base">Filtered by:</span>
+            {activeTags.map((tag, index) => (
+              <button
+                key={tag}
+                type="button"
+                onClick={() => removeTag(tag)}
+                className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-medium transition hover:opacity-80 ${chipPalette[index % chipPalette.length]}`}
+              >
+                {tag}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-4 w-4"
+                >
+                  <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+              </button>
+            ))}
+            <button
+              type="button"
+              onClick={() => router.push("/feed")}
+              className="ml-2 text-sm font-medium text-gray-600 underline transition hover:text-gray-800"
+            >
+              Clear all
+            </button>
+          </div>
+        )}
         {recipes.length === 0 ? (
           <div className="flex items-center justify-center py-32">
             <p className="text-lg text-gray-600">No recipes found</p>
@@ -151,7 +235,7 @@ export default function FeedPage() {
 
       {pagination && !pagination.hasMore && recipes.length > 0 && (
         <div className="flex items-center justify-center py-8">
-          <p className="text-sm text-gray-600">No more recipes to load</p>
+          <p className="text-sm text-gray-600">No more recipes</p>
         </div>
       )}
     </div>

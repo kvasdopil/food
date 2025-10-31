@@ -143,20 +143,39 @@ function buildInstructions(instructions: InstructionPayload[]) {
     .join("\n");
 }
 
+function parseTagsFromQuery(tagsParam: string | null): string[] {
+  if (!tagsParam) return [];
+  return tagsParam
+    .split("+")
+    .map((tag) => tag.trim().toLowerCase())
+    .filter((tag) => tag.length > 0);
+}
+
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const pageParam = searchParams.get("page");
   const fromSlug = searchParams.get("from");
+  const tagsParam = searchParams.get("tags");
+  const filterTags = parseTagsFromQuery(tagsParam);
 
   if (!supabase) {
     return NextResponse.json({ error: "Database not configured" }, { status: 500 });
   }
 
   try {
-    // Get total count
-    const { count, error: countError } = await supabase
-      .from("recipes")
-      .select("*", { count: "exact", head: true });
+    // Build base query for counting total (with tag filters if present)
+    let countQuery = supabase.from("recipes").select("*", { count: "exact", head: true });
+
+    // Apply tag filters - recipes must contain ALL specified tags
+    if (filterTags.length > 0) {
+      // Filter for recipes where tags array contains all requested tags
+      // Postgres array contains: use cs (contains) operator for each tag
+      for (const tag of filterTags) {
+        countQuery = countQuery.contains("tags", [tag]);
+      }
+    }
+
+    const { count, error: countError } = await countQuery;
 
     if (countError) {
       throw countError;
@@ -180,18 +199,27 @@ export async function GET(request: NextRequest) {
 
       if (fromError || !fromRecipe) {
         // If slug not found, return first page
-        const { data: firstPageRecipes, error: firstPageError } = await supabase
+        let firstPageQuery = supabase
           .from("recipes")
           .select("slug, name, description, tags, image_url")
           .order("created_at", { ascending: false })
           .order("slug", { ascending: true })
           .limit(ITEMS_PER_PAGE);
 
+        // Apply tag filters
+        if (filterTags.length > 0) {
+          for (const tag of filterTags) {
+            firstPageQuery = firstPageQuery.contains("tags", [tag]);
+          }
+        }
+
+        const { data: firstPageRecipes, error: firstPageError } = await firstPageQuery;
+
         if (firstPageError) {
           throw firstPageError;
         }
 
-        recipes = firstPageRecipes;
+        recipes = firstPageRecipes || [];
         hasMore = (firstPageRecipes?.length || 0) === ITEMS_PER_PAGE && total > ITEMS_PER_PAGE;
       } else {
         // Get recipes that come after the from slug in feed order
@@ -200,13 +228,22 @@ export async function GET(request: NextRequest) {
 
         // Strategy: Try to get recipes with created_at < fromRecipe.created_at first
         // Then if we need more, get recipes with same created_at but slug > fromRecipe.slug
-        const { data: olderRecipes, error: olderError } = await supabase
+        let olderQuery = supabase
           .from("recipes")
           .select("slug, name, description, tags, image_url")
           .lt("created_at", fromRecipe.created_at)
           .order("created_at", { ascending: false })
           .order("slug", { ascending: true })
           .limit(ITEMS_PER_PAGE);
+
+        // Apply tag filters
+        if (filterTags.length > 0) {
+          for (const tag of filterTags) {
+            olderQuery = olderQuery.contains("tags", [tag]);
+          }
+        }
+
+        const { data: olderRecipes, error: olderError } = await olderQuery;
 
         if (olderError) {
           throw olderError;
@@ -217,13 +254,22 @@ export async function GET(request: NextRequest) {
         // If we don't have enough recipes, get ones with same created_at but slug > fromRecipe.slug
         if (allAfterRecipes.length < ITEMS_PER_PAGE) {
           const remainingNeeded = ITEMS_PER_PAGE - allAfterRecipes.length;
-          const { data: sameTimeRecipes, error: sameTimeError } = await supabase
+          let sameTimeQuery = supabase
             .from("recipes")
             .select("slug, name, description, tags, image_url")
             .eq("created_at", fromRecipe.created_at)
             .gt("slug", fromRecipe.slug)
             .order("slug", { ascending: true })
             .limit(remainingNeeded);
+
+          // Apply tag filters
+          if (filterTags.length > 0) {
+            for (const tag of filterTags) {
+              sameTimeQuery = sameTimeQuery.contains("tags", [tag]);
+            }
+          }
+
+          const { data: sameTimeRecipes, error: sameTimeError } = await sameTimeQuery;
 
           if (sameTimeError) {
             throw sameTimeError;
@@ -238,12 +284,21 @@ export async function GET(request: NextRequest) {
 
         // Calculate approximate page number
         // Count recipes that come before the from slug
-        const { count: beforeCount } = await supabase
+        let beforeCountQuery = supabase
           .from("recipes")
           .select("*", { count: "exact", head: true })
           .or(
             `created_at.gt.${fromRecipe.created_at},and(created_at.eq.${fromRecipe.created_at},slug.lt.${fromRecipe.slug})`,
           );
+
+        // Apply tag filters to count query
+        if (filterTags.length > 0) {
+          for (const tag of filterTags) {
+            beforeCountQuery = beforeCountQuery.contains("tags", [tag]);
+          }
+        }
+
+        const { count: beforeCount } = await beforeCountQuery;
 
         currentPage = beforeCount ? Math.floor((beforeCount + 1) / ITEMS_PER_PAGE) + 1 : 1;
       }
@@ -259,18 +314,27 @@ export async function GET(request: NextRequest) {
       const offset = (page - 1) * ITEMS_PER_PAGE;
 
       // Get paginated recipes
-      const { data: pageRecipes, error: recipesError } = await supabase
+      let pageQuery = supabase
         .from("recipes")
         .select("slug, name, description, tags, image_url")
         .order("created_at", { ascending: false })
         .order("slug", { ascending: true })
         .range(offset, offset + ITEMS_PER_PAGE - 1);
 
+      // Apply tag filters
+      if (filterTags.length > 0) {
+        for (const tag of filterTags) {
+          pageQuery = pageQuery.contains("tags", [tag]);
+        }
+      }
+
+      const { data: pageRecipes, error: recipesError } = await pageQuery;
+
       if (recipesError) {
         throw recipesError;
       }
 
-      recipes = pageRecipes;
+      recipes = pageRecipes || [];
       currentPage = page;
       hasMore = page < totalPages;
     }

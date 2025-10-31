@@ -16,10 +16,10 @@ ingredients:
     amount: 2 medium
     notes: finely chopped
   - name: Celery stalk
-    amount: '1'
+    amount: "1"
     notes: finely chopped
   - name: Garlic cloves
-    amount: '2'
+    amount: "2"
     notes: minced
   - name: Canned chopped tomatoes
     amount: 400g
@@ -94,4 +94,3 @@ imagePrompt:
     Alongside, a golden-crusted slice of garlic bread, perfectly positioned.
     Bathed in soft, warm afternoon light with a shallow focus, creating an
     intimate, comforting homemade feel on an Italian-inspired table.
-
