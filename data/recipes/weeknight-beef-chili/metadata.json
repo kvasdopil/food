@@ -4,10 +4,16 @@
   "description": "Ground beef chili with beans, tomatoes, and smoky spices, paired with baked sweet potato fries.",
   "recipeFile": "weeknight-beef-chili.yaml",
   "imageFile": "weeknight-beef-chili.jpg",
-  "tagsProvided": ["american", "beef", "spicy", "glutenfree"],
+  "tagsProvided": [
+    "american",
+    "beef",
+    "spicy",
+    "glutenfree"
+  ],
   "imagePrompt": {
     "base": "Hyper-realistic close-up of Weeknight Beef Chili plated elegantly on a white plate. Pure white studio background, natural window lighting, shallow depth of field. Showcase vibrant colors, gentle steam, and fresh garnish that highlights texture.",
     "enhanced": "Hyper-realistic, eye-level close-up of hearty Weeknight Beef Chili, artfully scooped into a deep, rustic white bowl. A vibrant swirl of tender beef, beans, and tomatoes, crowned with a sprinkle of fresh cilantro and a few golden, crispy sweet potato fries. Soft, warm natural window light accentuates gentle steam and rich textures. Shallow depth of field.",
     "mimeType": "image/png"
-  }
+  },
+  "imageGeneratedAt": "2025-10-31T10:28:47.161Z"
 }

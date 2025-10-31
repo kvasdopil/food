@@ -1,7 +1,6 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import yaml from "js-yaml";
-import sharp from "sharp";
 
 type Ingredient = {
   name: string;
@@ -30,10 +29,6 @@ type GenerateContentResponse = {
     content?: {
       parts?: Array<{
         text?: string;
-        inlineData?: {
-          mimeType: string;
-          data: string;
-        };
       }>;
     };
     finishReason?: string;
@@ -54,7 +49,6 @@ type CliOptions = {
 
 const API_BASE_URL = "https://generativelanguage.googleapis.com/v1beta";
 const TEXT_MODEL = "gemini-2.5-flash";
-const IMAGE_MODEL = "gemini-2.5-flash-image";
 const OUTPUT_BASE = path.resolve(process.cwd(), "data/recipes");
 
 const recipeSchema = {
@@ -135,23 +129,6 @@ function ensureText(response: GenerateContentResponse, errorContext: string) {
   }
 
   return text;
-}
-
-function ensureInlineData(response: GenerateContentResponse, errorContext: string) {
-  if (response.promptFeedback?.blockReason) {
-    throw new Error(
-      `${errorContext} was blocked by Gemini: ${response.promptFeedback.blockReason}`,
-    );
-  }
-
-  const parts = response.candidates?.flatMap((candidate) => candidate.content?.parts ?? []) ?? [];
-  const inlinePart = parts.find((part) => part.inlineData);
-
-  if (!inlinePart?.inlineData) {
-    throw new Error(`Gemini did not return image data for: ${errorContext}`);
-  }
-
-  return inlinePart.inlineData;
 }
 
 async function generateRecipe(options: CliOptions, apiKey: string): Promise<RecipeData> {
@@ -259,28 +236,6 @@ async function enhanceImagePrompt(recipe: RecipeData, basePrompt: string, apiKey
   return ensureText(response, "Image prompt enhancement");
 }
 
-async function generateImage(prompt: string, apiKey: string) {
-  const requestBody = {
-    contents: [
-      {
-        role: "user",
-        parts: [
-          {
-            text: prompt,
-          },
-        ],
-      },
-    ],
-    generationConfig: {
-      responseModalities: ["IMAGE"],
-      temperature: 0.4,
-    },
-  };
-
-  const response = await callGemini(IMAGE_MODEL, requestBody, apiKey);
-  return ensureInlineData(response, "Image generation");
-}
-
 function parseArgs(argv: string[]): CliOptions {
   const options: Partial<CliOptions> = {
     tags: [],
@@ -331,7 +286,7 @@ function parseArgs(argv: string[]): CliOptions {
 
   if (!positional.length) {
     throw new Error(
-      'Please supply a meal name (e.g. yarn ts-node scripts/recipe-generator.ts "Margherita Pizza").',
+      'Please supply a meal name (e.g. yarn ts-node scripts/generate-recipe-yaml.ts "Margherita Pizza").',
     );
   }
 
@@ -390,7 +345,7 @@ async function loadEnvKey() {
 
 function printUsage() {
   const usageMessage = `
-Usage: ts-node scripts/recipe-generator.ts "Meal Name" [options]
+Usage: ts-node scripts/generate-recipe-yaml.ts "Meal Name" [options]
 
 Options:
   --style "<notes>"       Extra guidance for flavor, texture, or dietary goals.
@@ -508,20 +463,14 @@ async function main() {
       ? `${cuisineTag.toLowerCase()}-inspired table`
       : "rustic dining table";
 
-  const baseImagePrompt = [
-    `Vibrant close-up of ${recipe.title}, plated to showcase vivid textures and color.`,
-    `Incorporate visual cues from this description: ${recipe.summary}.`,
-    `Scene: ${tableSetting} with soft natural daylight, eye-level perspective, and shallow depth of field.`,
-    "Capture fresh garnish, inviting lighting, and a sense of homemade comfort with no visible steam or vapor. No people or branded props.",
-  ].join(" ");
+    const baseImagePrompt = [
+      `Vibrant close-up of ${recipe.title}, plated to showcase vivid textures and color.`,
+      `Incorporate visual cues from this description: ${recipe.summary}.`,
+      `Scene: ${tableSetting} with soft natural daylight, eye-level perspective, and shallow depth of field.`,
+      "Capture fresh garnish, inviting lighting, and a sense of homemade comfort with no visible steam or vapor. No people or branded props.",
+    ].join(" ");
 
     const enhancedImagePrompt = await enhanceImagePrompt(recipe, baseImagePrompt, apiKey);
-    const imageData = await generateImage(enhancedImagePrompt, apiKey);
-    const imageBuffer = Buffer.from(imageData.data, "base64");
-    const jpegBuffer = await sharp(imageBuffer).jpeg({ quality: 92 }).toBuffer();
-
-    const imageFile = path.join(recipeDir, `${slug}.jpg`);
-    await fs.writeFile(imageFile, jpegBuffer);
 
     const yamlFile = path.join(recipeDir, `${slug}.yaml`);
     await fs.writeFile(
@@ -541,18 +490,15 @@ async function main() {
       generatedAt: new Date().toISOString(),
       description: options.description,
       recipeFile: path.basename(yamlFile),
-      imageFile: path.basename(imageFile),
       tagsProvided: options.tags,
       imagePrompt: {
         base: baseImagePrompt,
         enhanced: enhancedImagePrompt,
-        mimeType: "image/jpeg",
       },
     };
     await fs.writeFile(metadataFile, `${JSON.stringify(metadata, null, 2)}\n`, "utf-8");
 
     console.log(`Recipe YAML saved to ${yamlFile}`);
-    console.log(`Image saved to ${imageFile}`);
     console.log("\nIngredients:");
     recipe.ingredients.forEach((ingredient) => {
       console.log(
@@ -564,9 +510,10 @@ async function main() {
       console.log(`${instruction.step}. ${instruction.action}`);
     });
   } catch (error) {
-    console.error(`[recipe-generator] ${(error as Error).message}`);
+    console.error(`[generate-recipe-yaml] ${(error as Error).message}`);
     process.exitCode = 1;
   }
 }
 
 void main();
+

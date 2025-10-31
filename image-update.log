@@ -1,0 +1,378 @@
+yarn run v1.22.22
+$ /Users/lexa/projects/recipe-thing/node_modules/.bin/ts-node scripts/generate-recipe-image.ts data/recipes/beef-broccoli-stir-fry/beef-broccoli-stir-fry.yaml
+(node:78795) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/lexa/projects/recipe-thing/scripts/generate-recipe-image.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/lexa/projects/recipe-thing/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Generating image for: Beef & Broccoli Stir-Fry
+Using prompt: A captivating, eye-level close-up of tender, thinly sliced beef and vibrant broccoli florets, gliste...
+Submitted image generation job: ac149f86-3a37-4ce0-a9fa-2d16c6cde2c2
+Polling for completion...
+Image generation completed, downloading...
+Downloading image from presigned URL...
+Image saved to data/recipes/beef-broccoli-stir-fry/beef-broccoli-stir-fry.jpg
+Metadata updated in data/recipes/beef-broccoli-stir-fry/metadata.json
+Done in 25.08s.
+beef-broccoli-stir-fry ok
+yarn run v1.22.22
+$ /Users/lexa/projects/recipe-thing/node_modules/.bin/ts-node scripts/generate-recipe-image.ts data/recipes/black-bean-enchiladas/black-bean-enchiladas.yaml
+(node:79203) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/lexa/projects/recipe-thing/scripts/generate-recipe-image.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/lexa/projects/recipe-thing/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Generating image for: Black Bean Enchiladas
+Using prompt: Irresistible close-up: perfectly baked enchiladas, generously coated in a rich, smoky sauce, with bu...
+Submitted image generation job: 0f3fd84b-9b69-49cb-ab79-580a54bc6822
+Polling for completion...
+Image generation completed, downloading...
+Downloading image from presigned URL...
+Image saved to data/recipes/black-bean-enchiladas/black-bean-enchiladas.jpg
+Metadata updated in data/recipes/black-bean-enchiladas/metadata.json
+Done in 24.77s.
+black-bean-enchiladas ok
+yarn run v1.22.22
+$ /Users/lexa/projects/recipe-thing/node_modules/.bin/ts-node scripts/generate-recipe-image.ts data/recipes/buffalo-cauliflower-wraps/buffalo-cauliflower-wraps.yaml
+(node:79484) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/lexa/projects/recipe-thing/scripts/generate-recipe-image.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/lexa/projects/recipe-thing/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Generating image for: Buffalo Cauliflower Wraps
+Using prompt: Hyper-realistic, slightly elevated close-up of two Buffalo Cauliflower Wraps, one artfully open to r...
+Submitted image generation job: e3a73b0b-7fc6-493e-975c-7c2a347243e1
+Polling for completion...
+Image generation completed, downloading...
+Downloading image from presigned URL...
+Image saved to data/recipes/buffalo-cauliflower-wraps/buffalo-cauliflower-wraps.jpg
+Metadata updated in data/recipes/buffalo-cauliflower-wraps/metadata.json
+Done in 19.29s.
+buffalo-cauliflower-wraps ok
+yarn run v1.22.22
+$ /Users/lexa/projects/recipe-thing/node_modules/.bin/ts-node scripts/generate-recipe-image.ts data/recipes/caprese-stuffed-portobellos/caprese-stuffed-portobellos.yaml
+(node:79764) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/lexa/projects/recipe-thing/scripts/generate-recipe-image.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/lexa/projects/recipe-thing/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Generating image for: Caprese Stuffed Portobellos
+Using prompt: Intimate close-up: a golden-roasted Caprese Stuffed Portobello, its melted mozzarella gently oozing,...
+Submitted image generation job: 28e9dc9b-263f-434d-9011-393ddc1e8514
+Polling for completion...
+Image generation completed, downloading...
+Downloading image from presigned URL...
+Image saved to data/recipes/caprese-stuffed-portobellos/caprese-stuffed-portobellos.jpg
+Metadata updated in data/recipes/caprese-stuffed-portobellos/metadata.json
+Done in 23.78s.
+caprese-stuffed-portobellos ok
+yarn run v1.22.22
+$ /Users/lexa/projects/recipe-thing/node_modules/.bin/ts-node scripts/generate-recipe-image.ts data/recipes/chickpea-tikka-masala/chickpea-tikka-masala.yaml
+(node:80026) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/lexa/projects/recipe-thing/scripts/generate-recipe-image.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/lexa/projects/recipe-thing/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Generating image for: Chickpea Tikka Masala
+Using prompt: An intimate, low-angle close-up: artfully mounded, fluffy basmati rice nestled beside a generous, gl...
+Submitted image generation job: 8cc992c6-b7e4-40d5-9013-a7fe4e246797
+Polling for completion...
+Image generation completed, downloading...
+Downloading image from presigned URL...
+Image saved to data/recipes/chickpea-tikka-masala/chickpea-tikka-masala.jpg
+Metadata updated in data/recipes/chickpea-tikka-masala/metadata.json
+Done in 25.00s.
+chickpea-tikka-masala ok
+yarn run v1.22.22
+$ /Users/lexa/projects/recipe-thing/node_modules/.bin/ts-node scripts/generate-recipe-image.ts data/recipes/classic-beef-tacos/classic-beef-tacos.yaml
+(node:80306) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/lexa/projects/recipe-thing/scripts/generate-recipe-image.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/lexa/projects/recipe-thing/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[generate-recipe-image] YAML file must contain an 'imagePrompt' field with 'base' or 'enhanced' prompt
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+classic-beef-tacos failed
+yarn run v1.22.22
+$ /Users/lexa/projects/recipe-thing/node_modules/.bin/ts-node scripts/generate-recipe-image.ts data/recipes/coconut-curry-ramen/coconut-curry-ramen.yaml
+(node:80325) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/lexa/projects/recipe-thing/scripts/generate-recipe-image.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/lexa/projects/recipe-thing/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Generating image for: Coconut Curry Ramen
+Using prompt: Hyper-realistic, slightly elevated close-up of Coconut Curry Ramen in a deep, artisanal ceramic bowl...
+Submitted image generation job: e0ed8244-7b45-443e-9622-edf4020c1999
+Polling for completion...
+Image generation completed, downloading...
+Downloading image from presigned URL...
+Image saved to data/recipes/coconut-curry-ramen/coconut-curry-ramen.jpg
+Metadata updated in data/recipes/coconut-curry-ramen/metadata.json
+Done in 18.93s.
+coconut-curry-ramen ok
+yarn run v1.22.22
+$ /Users/lexa/projects/recipe-thing/node_modules/.bin/ts-node scripts/generate-recipe-image.ts data/recipes/creamy-mushroom-risotto/creamy-mushroom-risotto.yaml
+(node:80640) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/lexa/projects/recipe-thing/scripts/generate-recipe-image.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/lexa/projects/recipe-thing/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Generating image for: Creamy Mushroom Risotto
+Using prompt: A luscious, creamy mushroom risotto, artfully mounded to reveal its velvety texture and golden parme...
+Submitted image generation job: f624150d-8efe-4670-82ea-7511f3df7ee9
+Polling for completion...
+Image generation completed, downloading...
+Downloading image from presigned URL...
+Image saved to data/recipes/creamy-mushroom-risotto/creamy-mushroom-risotto.jpg
+Metadata updated in data/recipes/creamy-mushroom-risotto/metadata.json
+Done in 24.75s.
+creamy-mushroom-risotto ok
+yarn run v1.22.22
+$ /Users/lexa/projects/recipe-thing/node_modules/.bin/ts-node scripts/generate-recipe-image.ts data/recipes/falafel-mezze-plates/falafel-mezze-plates.yaml
+(node:80984) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/lexa/projects/recipe-thing/scripts/generate-recipe-image.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/lexa/projects/recipe-thing/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Generating image for: Falafel Mezze Plates
+Using prompt: Intimate close-up: Golden-crisp falafel patties, their herb-flecked interiors peeking, nestle beside...
+Submitted image generation job: b600c403-6bee-491a-b4c3-6e2f1e1c24be
+Polling for completion...
+Image generation completed, downloading...
+Downloading image from presigned URL...
+Image saved to data/recipes/falafel-mezze-plates/falafel-mezze-plates.jpg
+Metadata updated in data/recipes/falafel-mezze-plates/metadata.json
+Done in 19.56s.
+falafel-mezze-plates ok
+yarn run v1.22.22
+$ /Users/lexa/projects/recipe-thing/node_modules/.bin/ts-node scripts/generate-recipe-image.ts data/recipes/fried-potatoes-with-pancetta-and-mushrooms/fried-potatoes-with-pancetta-and-mushrooms.yaml
+(node:81250) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/lexa/projects/recipe-thing/scripts/generate-recipe-image.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/lexa/projects/recipe-thing/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Generating image for: Fried Potatoes with Pancetta and Mushrooms
+Using prompt: An intimate close-up, slightly elevated, of golden-kissed, tender potato sticks artfully mounded on ...
+Submitted image generation job: b4f6cdc4-8561-43cc-89e6-cb28f3ba1d6b
+Polling for completion...
+Image generation completed, downloading...
+Downloading image from presigned URL...
+Image saved to data/recipes/fried-potatoes-with-pancetta-and-mushrooms/fried-potatoes-with-pancetta-and-mushrooms.jpg
+Metadata updated in data/recipes/fried-potatoes-with-pancetta-and-mushrooms/metadata.json
+Done in 19.01s.
+fried-potatoes-with-pancetta-and-mushrooms ok
+yarn run v1.22.22
+$ /Users/lexa/projects/recipe-thing/node_modules/.bin/ts-node scripts/generate-recipe-image.ts data/recipes/garlic-butter-shrimp-scampi/garlic-butter-shrimp-scampi.yaml
+(node:81450) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/lexa/projects/recipe-thing/scripts/generate-recipe-image.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/lexa/projects/recipe-thing/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Generating image for: Garlic Butter Shrimp Scampi
+Using prompt: Capture an intimate, slightly elevated close-up of glistening Garlic Butter Shrimp Scampi. Luscious ...
+Submitted image generation job: 250e0225-7115-4131-8307-85a214730184
+Polling for completion...
+Image generation completed, downloading...
+Downloading image from presigned URL...
+Image saved to data/recipes/garlic-butter-shrimp-scampi/garlic-butter-shrimp-scampi.jpg
+Metadata updated in data/recipes/garlic-butter-shrimp-scampi/metadata.json
+Done in 19.34s.
+garlic-butter-shrimp-scampi ok
+yarn run v1.22.22
+$ /Users/lexa/projects/recipe-thing/node_modules/.bin/ts-node scripts/generate-recipe-image.ts data/recipes/gochujang-glazed-chicken-thighs/gochujang-glazed-chicken-thighs.yaml
+(node:81672) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/lexa/projects/recipe-thing/scripts/generate-recipe-image.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/lexa/projects/recipe-thing/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Generating image for: Gochujang Glazed Chicken Thighs
+Using prompt: A captivating close-up: two perfectly charred Gochujang Glazed Chicken Thighs, glistening with sweet...
+Submitted image generation job: 1f218d42-3436-46c1-bc19-86ba7e18ef0b
+Polling for completion...
+Image generation completed, downloading...
+Downloading image from presigned URL...
+Image saved to data/recipes/gochujang-glazed-chicken-thighs/gochujang-glazed-chicken-thighs.jpg
+Metadata updated in data/recipes/gochujang-glazed-chicken-thighs/metadata.json
+Done in 23.62s.
+gochujang-glazed-chicken-thighs ok
+yarn run v1.22.22
+$ /Users/lexa/projects/recipe-thing/node_modules/.bin/ts-node scripts/generate-recipe-image.ts data/recipes/greek-stuffed-peppers/greek-stuffed-peppers.yaml
+(node:81937) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/lexa/projects/recipe-thing/scripts/generate-recipe-image.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/lexa/projects/recipe-thing/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Generating image for: Greek Stuffed Peppers
+Using prompt: Golden-brown Greek Stuffed Pepper halves, brimming with herbed rice, feta, and olives, elegantly res...
+Submitted image generation job: 9922dd02-9bb1-4906-bd49-2c1d5ee45fb1
+Polling for completion...
+Image generation completed, downloading...
+Downloading image from presigned URL...
+Image saved to data/recipes/greek-stuffed-peppers/greek-stuffed-peppers.jpg
+Metadata updated in data/recipes/greek-stuffed-peppers/metadata.json
+Done in 24.73s.
+greek-stuffed-peppers ok
+yarn run v1.22.22
+$ /Users/lexa/projects/recipe-thing/node_modules/.bin/ts-node scripts/generate-recipe-image.ts data/recipes/lemon-garlic-salmon/lemon-garlic-salmon.yaml
+(node:82214) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/lexa/projects/recipe-thing/scripts/generate-recipe-image.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/lexa/projects/recipe-thing/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Generating image for: Lemon Garlic Salmon
+Using prompt: Hyper-realistic, alluring close-up of a perfectly flaky Lemon Garlic Salmon fillet, glistening with ...
+Submitted image generation job: 98aac8a3-c7cd-40a1-a841-9f80b0bb8d80
+Polling for completion...
+Image generation completed, downloading...
+Downloading image from presigned URL...
+Image saved to data/recipes/lemon-garlic-salmon/lemon-garlic-salmon.jpg
+Metadata updated in data/recipes/lemon-garlic-salmon/metadata.json
+Done in 18.26s.
+lemon-garlic-salmon ok
+yarn run v1.22.22
+$ /Users/lexa/projects/recipe-thing/node_modules/.bin/ts-node scripts/generate-recipe-image.ts data/recipes/lentil-bolognese/lentil-bolognese.yaml
+(node:82411) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/lexa/projects/recipe-thing/scripts/generate-recipe-image.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/lexa/projects/recipe-thing/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Generating image for: Lentil Bolognese
+Using prompt: A generous swirl of al dente pasta cradles a rich, simmering red lentil bolognese, adorned with vibr...
+Submitted image generation job: e6f82c7f-86f0-45c3-9267-a9a06052a05b
+Polling for completion...
+Image generation completed, downloading...
+Downloading image from presigned URL...
+Image saved to data/recipes/lentil-bolognese/lentil-bolognese.jpg
+Metadata updated in data/recipes/lentil-bolognese/metadata.json
+Done in 23.72s.
+lentil-bolognese ok
+yarn run v1.22.22
+$ /Users/lexa/projects/recipe-thing/node_modules/.bin/ts-node scripts/generate-recipe-image.ts data/recipes/margherita-pizza/margherita-pizza.yaml
+(node:82691) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/lexa/projects/recipe-thing/scripts/generate-recipe-image.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/lexa/projects/recipe-thing/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Generating image for: Margherita Pizza
+Using prompt: A captivating close-up of a rustic Margherita pizza, its blistered, golden crust framing vibrant, bu...
+Submitted image generation job: 9209c3ec-e230-42ca-bc02-1bcecd35abc0
+Polling for completion...
+Image generation completed, downloading...
+Downloading image from presigned URL...
+Image saved to data/recipes/margherita-pizza/margherita-pizza.jpg
+Metadata updated in data/recipes/margherita-pizza/metadata.json
+Done in 24.76s.
+margherita-pizza ok
+yarn run v1.22.22
+$ /Users/lexa/projects/recipe-thing/node_modules/.bin/ts-node scripts/generate-recipe-image.ts data/recipes/mediterranean-quinoa-bowl/mediterranean-quinoa-bowl.yaml
+(node:82952) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/lexa/projects/recipe-thing/scripts/generate-recipe-image.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/lexa/projects/recipe-thing/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Generating image for: Mediterranean Quinoa Bowl
+Using prompt: A captivating close-up of a Mediterranean Quinoa Bowl. Fluffy herb quinoa forms a base, generously t...
+Submitted image generation job: c04a267e-df30-4781-99a7-506c53a8986e
+Polling for completion...
+Image generation completed, downloading...
+Downloading image from presigned URL...
+Image saved to data/recipes/mediterranean-quinoa-bowl/mediterranean-quinoa-bowl.jpg
+Metadata updated in data/recipes/mediterranean-quinoa-bowl/metadata.json
+Done in 25.12s.
+mediterranean-quinoa-bowl ok
+yarn run v1.22.22
+$ /Users/lexa/projects/recipe-thing/node_modules/.bin/ts-node scripts/generate-recipe-image.ts data/recipes/panko-crusted-cod/panko-crusted-cod.yaml
+(node:83214) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/lexa/projects/recipe-thing/scripts/generate-recipe-image.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/lexa/projects/recipe-thing/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Generating image for: Panko-Crusted Cod
+Using prompt: An intimate close-up of golden Panko-Crusted Cod, its crispy breading and visible lemon zest glisten...
+Submitted image generation job: f240f8bd-6d5b-46d6-8a57-0dbb16dc84dc
+Polling for completion...
+Image generation completed, downloading...
+Downloading image from presigned URL...
+Image saved to data/recipes/panko-crusted-cod/panko-crusted-cod.jpg
+Metadata updated in data/recipes/panko-crusted-cod/metadata.json
+Done in 19.34s.
+panko-crusted-cod ok
+yarn run v1.22.22
+$ /Users/lexa/projects/recipe-thing/node_modules/.bin/ts-node scripts/generate-recipe-image.ts data/recipes/roasted-red-pepper-pasta/roasted-red-pepper-pasta.yaml
+(node:83412) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/lexa/projects/recipe-thing/scripts/generate-recipe-image.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/lexa/projects/recipe-thing/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Generating image for: Roasted Red Pepper Pasta
+Using prompt: An intimate, low-angle close-up: a luscious, velvety roasted red pepper pasta, artfully swirled, gli...
+Submitted image generation job: 36fa75fe-3883-4763-b5bf-d4d3ef40ae51
+Polling for completion...
+Image generation completed, downloading...
+Downloading image from presigned URL...
+Image saved to data/recipes/roasted-red-pepper-pasta/roasted-red-pepper-pasta.jpg
+Metadata updated in data/recipes/roasted-red-pepper-pasta/metadata.json
+Done in 24.64s.
+roasted-red-pepper-pasta ok
+yarn run v1.22.22
+$ /Users/lexa/projects/recipe-thing/node_modules/.bin/ts-node scripts/generate-recipe-image.ts data/recipes/spinach-ricotta-stuffed-shells/spinach-ricotta-stuffed-shells.yaml
+(node:83662) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/lexa/projects/recipe-thing/scripts/generate-recipe-image.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/lexa/projects/recipe-thing/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Generating image for: Spinach & Ricotta Stuffed Shells
+Using prompt: Hero shot: Golden-baked jumbo shells, bursting with creamy herbed ricotta and vibrant spinach, nestl...
+Submitted image generation job: eb214575-0343-432e-99c3-ee17cfaefd9e
+Polling for completion...
+Image generation completed, downloading...
+Downloading image from presigned URL...
+Image saved to data/recipes/spinach-ricotta-stuffed-shells/spinach-ricotta-stuffed-shells.jpg
+Metadata updated in data/recipes/spinach-ricotta-stuffed-shells/metadata.json
+Done in 24.93s.
+spinach-ricotta-stuffed-shells ok
+yarn run v1.22.22
+$ /Users/lexa/projects/recipe-thing/node_modules/.bin/ts-node scripts/generate-recipe-image.ts data/recipes/sweet-potato-black-bean-tacos/sweet-potato-black-bean-tacos.yaml
+(node:83926) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/lexa/projects/recipe-thing/scripts/generate-recipe-image.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/lexa/projects/recipe-thing/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Generating image for: Sweet Potato & Black Bean Tacos
+Using prompt: A captivating close-up of two Sweet Potato & Black Bean Tacos, generously piled with golden-edged sw...
+Submitted image generation job: 5fe28b5b-c222-4d73-b95b-191b50d23c48
+Polling for completion...
+Image generation completed, downloading...
+Downloading image from presigned URL...
+Image saved to data/recipes/sweet-potato-black-bean-tacos/sweet-potato-black-bean-tacos.jpg
+Metadata updated in data/recipes/sweet-potato-black-bean-tacos/metadata.json
+Done in 19.68s.
+sweet-potato-black-bean-tacos ok
+yarn run v1.22.22
+$ /Users/lexa/projects/recipe-thing/node_modules/.bin/ts-node scripts/generate-recipe-image.ts data/recipes/teriyaki-chicken-bowls/teriyaki-chicken-bowls.yaml
+(node:84130) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/lexa/projects/recipe-thing/scripts/generate-recipe-image.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/lexa/projects/recipe-thing/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Generating image for: Teriyaki Chicken Bowls
+Using prompt: A captivating, close-up, eye-level shot of a Teriyaki Chicken Bowl. Succulent, caramelized chicken t...
+Submitted image generation job: 15dd7d87-1eb9-4504-ab1f-5528ac19bd2f
+Polling for completion...
+Image generation completed, downloading...
+Downloading image from presigned URL...
+Image saved to data/recipes/teriyaki-chicken-bowls/teriyaki-chicken-bowls.jpg
+Metadata updated in data/recipes/teriyaki-chicken-bowls/metadata.json
+Done in 24.74s.
+teriyaki-chicken-bowls ok
+yarn run v1.22.22
+$ /Users/lexa/projects/recipe-thing/node_modules/.bin/ts-node scripts/generate-recipe-image.ts data/recipes/veggie-pad-thai/veggie-pad-thai.yaml
+(node:84382) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/lexa/projects/recipe-thing/scripts/generate-recipe-image.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/lexa/projects/recipe-thing/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Generating image for: Veggie Pad Thai
+Using prompt: An intimate, slightly elevated close-up of Veggie Pad Thai, artfully mounded with glistening rice no...
+Submitted image generation job: f1ca1a80-a84e-43c8-9d4c-01ad1b32eea7
+Polling for completion...
+Image generation completed, downloading...
+Downloading image from presigned URL...
+Image saved to data/recipes/veggie-pad-thai/veggie-pad-thai.jpg
+Metadata updated in data/recipes/veggie-pad-thai/metadata.json
+Done in 19.42s.
+veggie-pad-thai ok
+yarn run v1.22.22
+$ /Users/lexa/projects/recipe-thing/node_modules/.bin/ts-node scripts/generate-recipe-image.ts data/recipes/weeknight-beef-chili/weeknight-beef-chili.yaml
+(node:84666) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/lexa/projects/recipe-thing/scripts/generate-recipe-image.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/lexa/projects/recipe-thing/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Generating image for: Weeknight Beef Chili
+Using prompt: Hyper-realistic, eye-level close-up of hearty Weeknight Beef Chili, artfully scooped into a deep, ru...
+Submitted image generation job: f328b65b-3dd8-4fb2-8378-c8b16478a9e8
+Polling for completion...
+Image generation completed, downloading...
+Downloading image from presigned URL...
+Image saved to data/recipes/weeknight-beef-chili/weeknight-beef-chili.jpg
+Metadata updated in data/recipes/weeknight-beef-chili/metadata.json
+Done in 19.28s.
+weeknight-beef-chili ok
