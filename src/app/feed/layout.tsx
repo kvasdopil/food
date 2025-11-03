@@ -3,6 +3,7 @@
 import { Suspense, useEffect, useState, useRef } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { RecipeSearchBar } from "@/components/recipe-search-bar";
+import { UserAvatar } from "@/components/user-avatar";
 import { useTags } from "@/hooks/useTags";
 import { buildFeedUrlWithTagsAndSearch, storeFeedUrl } from "@/lib/tag-utils";
 
@@ -76,13 +77,20 @@ function FeedLayoutContent({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen bg-white">
       <main className="mx-auto max-w-7xl sm:px-6 sm:py-6 lg:px-8">
         <div className="px-4 pt-4 sm:px-0 sm:pt-0">
-          <RecipeSearchBar 
-            value={searchQuery} 
-            onChange={handleSearchChange}
-            activeTags={activeTags}
-            onRemoveTag={removeTag}
-            onClearAllTags={clearAllTags}
-          />
+          <div className="flex items-start gap-3">
+            <div className="flex-1">
+              <RecipeSearchBar 
+                value={searchQuery} 
+                onChange={handleSearchChange}
+                activeTags={activeTags}
+                onRemoveTag={removeTag}
+                onClearAllTags={clearAllTags}
+              />
+            </div>
+            <div className="flex items-center h-[48px]">
+              <UserAvatar />
+            </div>
+          </div>
         </div>
         {children}
       </main>

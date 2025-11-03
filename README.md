@@ -40,6 +40,41 @@ supabase db push          # apply migrations to the linked project
 supabase db reset --yes   # optional: reset + seed (only on empty databases)
 ```
 
+## Google Authentication Setup
+
+The app supports Google authentication via Supabase. To enable Google sign-in:
+
+1. **Enable Google Provider in Supabase Dashboard:**
+   - Go to your Supabase project dashboard: https://supabase.com/dashboard/project/vsgeynrnczcqtkepitmj
+   - Navigate to **Authentication** → **Providers**
+   - Enable the **Google** provider
+   - Follow the instructions to set up Google OAuth credentials:
+     - Create a project in [Google Cloud Console](https://console.cloud.google.com/)
+     - Create OAuth 2.0 credentials (Client ID and Client Secret)
+     - Add authorized redirect URIs:
+       - **Supabase callback (REQUIRED)**: `https://vsgeynrnczcqtkepitmj.supabase.co/auth/v1/callback`
+       - For local development (optional): `http://localhost:3000/auth/callback`
+       - For production (optional): `https://recipe-thing-9wi8kpslr-alexey-guskovs-projects.vercel.app/auth/callback`
+       - For custom domain (optional): `https://food.guskov.dev/auth/callback`
+       
+     **Important**: Supabase handles OAuth redirects through its own endpoint (`{your-project}.supabase.co/auth/v1/callback`), which is the primary redirect URI you must configure. The app's `/auth/callback` route is only used after Supabase processes the OAuth flow.
+     - Copy the Client ID and Client Secret to Supabase
+
+2. **Configure Redirect URLs in Supabase:**
+   - In Supabase Dashboard → **Authentication** → **URL Configuration**
+   - Set **Site URL** to: `https://food.guskov.dev` (your custom domain)
+   - Add redirect URLs:
+     - `http://localhost:3000/auth/callback` (for local development)
+     - `https://recipe-thing-9wi8kpslr-alexey-guskovs-projects.vercel.app/auth/callback` (for Vercel default domain)
+     - `https://food.guskov.dev/auth/callback` (for custom domain)
+
+3. **User Interface:**
+   - The user avatar appears to the right of the search bar in the feed layout
+   - Click the avatar icon to sign in with Google (if not authenticated)
+   - Once authenticated, click the avatar to see a dropdown menu with logout option
+
+The authentication state is managed client-side using the `useAuth` hook, which listens to Supabase auth state changes and provides sign-in/sign-out functionality.
+
 ## Deploy to Vercel
 
 1. Install the Vercel CLI if you have not already:
