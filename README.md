@@ -3,6 +3,7 @@
 - [Next.js](https://nextjs.org) App Router + React Server Components
 - [Tailwind CSS](https://tailwindcss.com) styling
 - [Supabase](https://supabase.com) (Postgres + Auth + Storage)
+- [idb](https://github.com/jakearchibald/idb) for IndexedDB persistence
 - Ready for [Vercel](https://vercel.com) deployment
 
 ## Local Setup
@@ -138,6 +139,7 @@ The following user stories are planned but not yet implemented:
 
 - Home route `/` server-redirects to `/feed`.
 - Feed route `/feed` displays a scrollable grid/list of recipes with pagination (20 per page), infinite scroll, and favorite functionality. Desktop shows up to 4 columns in a grid with gaps and shadows; mobile uses the `FeedCard` component with single-column full-width cards.
+- **Shuffled feed order**: Recipes in the feed are shuffled deterministically based on the current date. The same date produces the same shuffle order, ensuring a stable sequence throughout the day. The shuffle order changes daily, providing variety while maintaining consistency during browsing sessions.
 - Tag filtering: Users can click tags on recipe cards to toggle filters. Active filters are displayed at the top of the feed with remove buttons. Filters persist in the URL using `+` separator (e.g., `/feed?tags=vegetarian+italian`). Tag filtering works on both desktop (`feed/page.tsx`) and mobile (`feed-card.tsx`) views.
 - Dynamic route `src/app/recipes/[slug]/page.tsx` handles metadata generation only; rendering is handled by the layout.
 - Layout `src/app/recipes/layout.tsx` manages the persistent carousel wrapper to prevent remounting during navigation, and includes a back-to-feed button in the top-left corner.
@@ -248,9 +250,10 @@ Navigation history is managed via **session storage** (`recipe-history.ts`):
 
 **API Endpoint** (`/api/recipes`)
 
+- Recipes are shuffled deterministically based on the current date (using a seeded random number generator). The same date produces the same shuffle order, ensuring a stable sequence throughout the day. The shuffle order changes daily.
 - Supports two pagination modes:
   - `?page=N` → Traditional page-based pagination (20 items per page)
-  - `?from={slug}` → Slug-based pagination matching feed order
+  - `?from={slug}` → Slug-based pagination matching shuffled feed order
 - Returns 20 recipes with pagination metadata (`hasMore`, `total`, etc.)
 
 **Infinite Scroll:**
@@ -348,8 +351,10 @@ This architecture provides stateful navigation that tracks forward and backward 
   - Support recipe variations (e.g., vegetarian versions of existing meals)
 
 - **Performance & UX**:
+  - ✅ Centralized recipe storage with IndexedDB persistence - **Implemented**: Recipe data cached locally for instant loading, offline access, and improved user experience
+  - ✅ Proper loading preview/skeleton for recipe pages - **Implemented**: Shows cached partial data immediately while loading full recipe data
+  - ✅ Feed preloader with cached data - **Implemented**: Feed shows cached recipes immediately on reload, preventing "no recipes found" flash
   - Implement SSR for better performance and SEO
-  - Add proper loading preview/skeleton for recipe pages
   - Optimize image loading and preloading
 
 - **Future Schema Extensions**:
@@ -369,8 +374,10 @@ This architecture provides stateful navigation that tracks forward and backward 
 - `src/app/recipes/[slug]/page.tsx`: server component that only handles metadata generation (OpenGraph, title, etc.). Returns `null` as layout handles all rendering.
 - `src/app/recipes/[slug]/client/recipe-swipeable-carousel.tsx`: carousel component managing swipe navigation with preloaded recipes. Maintains state across navigation using module-level snapshot.
 - `src/components/*`: client-side interactivity (share, favorite, nav, keyboard shortcuts).
-- `src/app/api/recipes/route.ts`: API endpoint returning paginated recipes (20 per page) with pagination metadata. Supports `page` parameter for traditional pagination, `from={slug}` for slug-based pagination, and `tags` parameter for filtering by tags (format: `tags=tag1+tag2`).
+- `src/app/api/recipes/route.ts`: API endpoint returning paginated recipes (20 per page) with pagination metadata. Recipes are shuffled deterministically based on the current date (same date = same order). Supports `page` parameter for traditional pagination, `from={slug}` for slug-based pagination, and `tags` parameter for filtering by tags (format: `tags=tag1+tag2`).
+- `src/lib/shuffle-utils.ts`: Utility functions for deterministic shuffling. Provides `seededShuffle()` for shuffling arrays with a seed value and `getDateSeed()` for generating a seed based on the current date.
 - `src/app/api/recipes/generate/route.ts`: API endpoint for generating recipe content (ingredients, instructions, image prompts) using Gemini API. Requires `EDIT_TOKEN` authentication. Does not save to database, returns generated recipe data.
+- `src/lib/recipe-store.ts`: Centralized recipe storage with IndexedDB persistence. Stores partial recipe data (from feed) and full recipe data (from detail pages). Automatically loads cached recipes on app initialization and persists new data as it's fetched. Provides methods to retrieve cached partial or full recipe data.
 
 ## Recipe Asset Workflow
 
@@ -491,22 +498,24 @@ The script will:
 
 1. **Home Route** (`/`) → Server redirects to `/feed`
 2. **Feed Route** (`/feed`) →
-   - Desktop: `FeedPageContent` component fetches paginated recipes from `/api/recipes` (supports `?tags=tag1+tag2` for filtering) → Displays in responsive grid with infinite scroll → Active tag filters shown at top → Cards link to `/recipes/[slug]`
-   - Mobile: `FeedCard` component (via `mobile-carousel-wrapper`) fetches paginated recipes with same tag filtering support → Displays single-column cards → Active tag filters shown at top → Cards link to `/recipes/[slug]`
+   - Desktop: `FeedPageContent` component fetches paginated recipes from `/api/recipes` (recipes are shuffled deterministically by date, supports `?tags=tag1+tag2` for filtering) → Stores partial recipe data (image, name, description, tags) in centralized cache → Displays in responsive grid with infinite scroll → Shows cached recipes immediately if available → Active tag filters shown at top → Cards link to `/recipes/[slug]`
+   - Mobile: `FeedCard` component (via `mobile-carousel-wrapper`) fetches paginated recipes with same date-based shuffle and tag filtering support → Stores partial recipe data in centralized cache → Displays single-column cards → Shows cached recipes immediately if available → Active tag filters shown at top → Cards link to `/recipes/[slug]`
 3. **Tag Filtering**:
    - User clicks tag on recipe card → `toggleTagInUrl` utility adds/removes tag from URL → `useTags` hook parses active tags → Feed reloads with filtered recipes → Active tags displayed at top with remove buttons
 4. **Recipe Route** (`/recipes/[slug]`)
    - Page component: Generates metadata (OpenGraph, title) via server-side Supabase query
-   - Layout component: Extracts slug from pathname → Uses `useRecipe` hook → Fetches recipe data via Supabase → Renders recipe components
+   - Layout component: Extracts slug from pathname → Uses `useRecipe` hook → Checks centralized cache for partial data (image, name, description, tags) → Shows cached partial data immediately if available → Fetches full recipe data via Supabase → Stores full data in centralized cache → Renders recipe components
    - Layout persists across route changes, preventing carousel remounting
+   - Loading experience: If cached partial data exists, shows image, name, description, and tags immediately while fetching ingredients and instructions (only shows skeletons for missing parts)
    - Responsive rendering:
      - **Mobile (< 640px)**: Content handled by root-level `MobileCarouselWrapper` with swipeable carousel
      - **Medium/Desktop (≥ 640px)**: Recipe content displayed centered with max-width 5xl
      - **XL+ (≥ 1280px)**: Side navigation buttons appear, floating outside centered content area
 5. **Next Recipe Navigation**:
-   - Desktop: `RecipeSideNav` or keyboard right arrow → Fetches `/api/recipes?from={slug}` → Gets next in feed order → `router.push('/recipes/[slug]')`
+   - Desktop: `RecipeSideNav` or keyboard right arrow → Fetches `/api/recipes?from={slug}` → Gets next in shuffled feed order → `router.push('/recipes/[slug]')`
    - Mobile: Swipe left → Carousel triggers same navigation flow
    - History: Updates session storage with new slug in stack
+   - Note: Feed order is shuffled based on current date, so the sequence remains stable throughout the day
 6. **Previous Recipe Navigation**:
    - Desktop: `RecipeSideNav` or keyboard left arrow → `router.back()` (if history exists)
    - Mobile: Swipe right → Carousel moves backward in history → `router.back()`
@@ -519,6 +528,13 @@ The script will:
 8. **Back to Feed**: Button in top-left navigates to `/feed` (preserves feed scroll position via browser history)
 9. **Supabase**: Trigger `generate_recipe_slug` ensures unique slugs with `-2`, `-3`, etc. suffixes
 10. **Favorites**: Stored in browser `localStorage` (key: `recipe-favorites`) as array of slugs, persist across page reloads
+11. **Recipe Caching & Persistence**:
+    - Centralized recipe store (`src/lib/recipe-store.ts`) manages both partial data (from feed) and full data (from detail pages)
+    - Partial data (image, name, description, tags) stored automatically when feed loads
+    - Full data (includes ingredients and instructions) stored when recipe detail pages load
+    - Data persists to IndexedDB for offline access and faster loading on subsequent visits
+    - Feed and recipe pages show cached data immediately while fetching fresh data
+    - Prevents "no recipes found" flash by showing cached recipes during reloads
 
 ## Supabase Configuration
 

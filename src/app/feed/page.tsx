@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, Suspense } from "react";
+import { useEffect, Suspense, useMemo } from "react";
 import { RecipeFeedCard } from "@/components/recipe-feed-card";
 import { useTags } from "@/hooks/useTags";
 import { usePaginatedRecipes } from "@/hooks/usePaginatedRecipes";
 import { FeedSkeleton } from "@/components/skeletons/feed-skeleton";
+import { recipeStore } from "@/lib/recipe-store";
 
 const chipPalette = [
   "bg-amber-100 text-amber-700",
@@ -17,6 +18,41 @@ function FeedPageContent() {
   const { activeTags, removeTag, clearAllTags } = useTags();
   const { recipes, pagination, isLoading, isLoadingMore, error, loadMore, retry } =
     usePaginatedRecipes({ tags: activeTags });
+
+  // Get all cached recipes from IndexedDB to show immediately on load
+  const allCachedRecipes = useMemo(() => {
+    // Get all cached partial recipes from store (loaded from IndexedDB)
+    const cached = recipeStore.getAllPartials();
+    if (cached.length === 0) return null;
+    
+    // Convert to RecipeListItem format
+    return cached.map((partial) => ({
+      slug: partial.slug,
+      name: partial.name,
+      description: partial.description,
+      tags: partial.tags,
+      image_url: partial.image_url,
+    }));
+  }, []); // Only compute once on mount
+
+  // When loading, try to show cached recipes from previous loads
+  const cachedRecipesForLoading = useMemo(() => {
+    // If we have cached recipes and no current recipes yet, show cached ones
+    if (isLoading && recipes.length === 0 && allCachedRecipes) {
+      return allCachedRecipes;
+    }
+
+    if (!isLoading || recipes.length === 0) return null;
+    
+    // Get cached partial data for the recipes we've already loaded
+    // This allows showing cached data while refreshing
+    return recipes
+      .map((recipe) => {
+        const cached = recipeStore.getPartial(recipe.slug);
+        return cached ? { ...recipe, ...cached } : recipe;
+      })
+      .filter(Boolean);
+  }, [isLoading, recipes, allCachedRecipes]);
 
   // Scroll to top when tags change
   const activeTagsKey = activeTags.join(",");
@@ -56,6 +92,9 @@ function FeedPageContent() {
   }, [pagination?.hasMore, isLoadingMore, loadMore]);
 
   if (isLoading) {
+    // If we have cached recipes to show, display them instead of skeletons
+    const displayRecipes = cachedRecipesForLoading || recipes;
+    
     return (
       <div className="min-h-screen bg-white">
         <main className="mx-auto max-w-7xl sm:px-6 sm:py-6 lg:px-8">
@@ -93,7 +132,22 @@ function FeedPageContent() {
               </button>
             </div>
           )}
-          <FeedSkeleton count={8} />
+          {displayRecipes.length > 0 ? (
+            <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
+              {displayRecipes.map((recipe) => (
+                <RecipeFeedCard
+                  key={recipe.slug}
+                  slug={recipe.slug}
+                  name={recipe.name}
+                  description={recipe.description}
+                  tags={recipe.tags}
+                  imageUrl={recipe.image_url}
+                />
+              ))}
+            </div>
+          ) : (
+            <FeedSkeleton count={8} />
+          )}
         </main>
       </div>
     );
@@ -152,28 +206,38 @@ function FeedPageContent() {
             </button>
           </div>
         )}
-        {recipes.length === 0 ? (
-          <div className="flex items-center justify-center py-32">
-            <p className="text-lg text-gray-600">No recipes found</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
-            {recipes.map((recipe) => (
-              <RecipeFeedCard
-                key={recipe.slug}
-                slug={recipe.slug}
-                name={recipe.name}
-                description={recipe.description}
-                tags={recipe.tags}
-                imageUrl={recipe.image_url}
-              />
-            ))}
-          </div>
-        )}
+        {/* Determine which recipes to display - use cached if no recipes loaded yet */}
+        {(() => {
+          const displayRecipes = recipes.length > 0 ? recipes : (allCachedRecipes || []);
+          
+          if (displayRecipes.length === 0 && !isLoading) {
+            return (
+              <div className="flex items-center justify-center py-32">
+                <p className="text-lg text-gray-600">No recipes found</p>
+              </div>
+            );
+          }
+          
+          return (
+            <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
+              {displayRecipes.map((recipe) => (
+                <RecipeFeedCard
+                  key={recipe.slug}
+                  slug={recipe.slug}
+                  name={recipe.name}
+                  description={recipe.description}
+                  tags={recipe.tags}
+                  imageUrl={recipe.image_url}
+                />
+              ))}
+            </div>
+          );
+        })()}
       </main>
 
       {isLoadingMore && (
         <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8">
+          {/* While loading more, show skeletons for new items */}
           <FeedSkeleton count={4} />
         </div>
       )}

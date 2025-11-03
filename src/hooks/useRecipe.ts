@@ -3,8 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { fetchRecipeData, type RecipeData } from "@/lib/fetch-recipe-data";
-
-const recipeCache = new Map<string, RecipeData>();
+import { recipeStore, type RecipeFullData } from "@/lib/recipe-store";
 
 type UseRecipeResult = {
   recipeData: RecipeData | null;
@@ -12,8 +11,26 @@ type UseRecipeResult = {
   error: string | null;
 };
 
+/**
+ * Helper to convert RecipeFullData from store to RecipeData format used by components.
+ */
+function convertToRecipeData(full: RecipeFullData): RecipeData {
+  return {
+    slug: full.slug,
+    name: full.name,
+    description: full.description,
+    ingredients: full.ingredients,
+    instructions: full.instructions,
+    imageUrl: full.imageUrl,
+    tags: full.tags,
+  };
+}
+
 export function useRecipe(slug: string): UseRecipeResult {
-  const cachedRecipe = useMemo(() => recipeCache.get(slug) ?? null, [slug]);
+  // Check centralized store for cached full data
+  const cachedFull = useMemo(() => recipeStore.getFull(slug), [slug]);
+  const cachedRecipe = useMemo(() => (cachedFull ? convertToRecipeData(cachedFull) : null), [cachedFull]);
+  
   const [recipeData, setRecipeData] = useState<RecipeData | null>(cachedRecipe);
   const [isLoading, setIsLoading] = useState<boolean>(() => !cachedRecipe);
   const [error, setError] = useState<string | null>(null);
@@ -27,8 +44,10 @@ export function useRecipe(slug: string): UseRecipeResult {
     let isActive = true;
 
     async function resolveRecipe() {
-      const existing = recipeCache.get(slug) ?? null;
-      if (existing) {
+      // Check centralized store first
+      const existingFull = recipeStore.getFull(slug);
+      if (existingFull) {
+        const existing = convertToRecipeData(existingFull);
         queueMicrotask(() => {
           if (!isActive || slugRef.current !== slug) return;
           setRecipeData(existing);
@@ -59,7 +78,18 @@ export function useRecipe(slug: string): UseRecipeResult {
           return;
         }
 
-        recipeCache.set(slug, data);
+        // Convert RecipeData to RecipeFullData and store in centralized cache
+        const fullData: RecipeFullData = {
+          slug: data.slug,
+          name: data.name,
+          description: data.description,
+          ingredients: data.ingredients,
+          instructions: data.instructions,
+          imageUrl: data.imageUrl,
+          tags: data.tags,
+        };
+        recipeStore.setFull(fullData);
+        
         setRecipeData(data);
         setIsLoading(false);
       } catch (err) {

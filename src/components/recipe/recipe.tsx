@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useMemo } from "react";
 import { Description } from "./description";
 import { RecipeImage } from "./image";
 import { Ingredients } from "./ingredients";
 import { Instructions } from "./instructions";
 import { useRecipe } from "@/hooks/useRecipe";
 import { RecipeSkeleton } from "@/components/skeletons/recipe-skeleton";
+import { recipeStore } from "@/lib/recipe-store";
 
 type RecipeProps = {
   slug: string;
@@ -15,6 +16,12 @@ type RecipeProps = {
 export function Recipe({ slug }: RecipeProps) {
   const { recipeData, isLoading, error } = useRecipe(slug);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  // Check for cached partial data when loading
+  const cachedPartial = useMemo(() => {
+    if (!isLoading) return null;
+    return recipeStore.getPartial(slug);
+  }, [isLoading, slug]);
 
   useEffect(() => {
     console.log("Recipe component mounted for slug:", slug);
@@ -28,6 +35,32 @@ export function Recipe({ slug }: RecipeProps) {
   }, [slug]);
 
   if (isLoading) {
+    // If we have cached partial data, show it with skeletons for missing parts
+    if (cachedPartial) {
+      return (
+        <div
+          ref={scrollContainerRef}
+          data-scroll-container
+          className="h-full overflow-y-auto overscroll-contain"
+          style={{ touchAction: "pan-y" }}
+        >
+          <article className="flex w-full flex-col bg-white text-base leading-relaxed text-slate-600">
+            <RecipeImage 
+              name={cachedPartial.name} 
+              imageUrl={cachedPartial.image_url} 
+              slug={cachedPartial.slug} 
+            />
+            <Description 
+              description={cachedPartial.description || null} 
+              tags={cachedPartial.tags} 
+            />
+            {/* Show skeletons for ingredients and instructions while loading */}
+            <RecipeSkeleton showOnlyIngredientsAndInstructions />
+          </article>
+        </div>
+      );
+    }
+    // No cached data, show full skeleton
     return <RecipeSkeleton />;
   }
 

@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { FiChevronLeft } from "react-icons/fi";
 import { SwipeableCarousel } from "@/components/swipeable-carousel";
 import { FeedCard } from "@/components/feed-card";
 import { Recipe } from "@/components/recipe/recipe";
@@ -350,8 +351,20 @@ export function MobileCarouselWrapper({ children }: { children: React.ReactNode 
   // 2. OR if going to a previous recipe that exists in carousel
   const disablePrevious = currentIndex === 0;
 
+  // Show back button when on a recipe (not on feed)
+  const showBackButton = currentIndex > 0;
+
   return (
     <div className="h-screen overflow-hidden sm:hidden">
+      {showBackButton && (
+        <button
+          onClick={() => router.push("/feed")}
+          className="fixed top-4 left-4 z-[100] flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md transition hover:bg-slate-50"
+          aria-label="Back to feed"
+        >
+          <FiChevronLeft className="h-5 w-5 text-slate-700" />
+        </button>
+      )}
       <SwipeableCarousel
         items={items}
         currentIndex={currentIndex}

@@ -4,10 +4,9 @@
 - add recipe via agent
   - secure token via vercel?
 - hidden tags for meals, like 'simple', 'healthy', etc. for search and llm queries
-- 
 - another variation of same meal, like vegeterian version of the same
 - ssr
-- proper loading preview for a recipe and feed
+- ✅ proper loading preview for a recipe and feed - **Implemented**: Recipe pages show cached partial data immediately, feed shows cached recipes on reload
 - preload next recipe on desktop
 - proper goback button on desktop
 - search for meals, names, components and tags

@@ -1,6 +1,58 @@
 import { Skeleton } from "./skeleton";
 
-export function RecipeSkeleton() {
+type RecipeSkeletonProps = {
+  showOnlyIngredientsAndInstructions?: boolean;
+};
+
+export function RecipeSkeleton({ showOnlyIngredientsAndInstructions = false }: RecipeSkeletonProps) {
+  // If showing only ingredients and instructions, skip the image/description skeleton
+  if (showOnlyIngredientsAndInstructions) {
+    return (
+      <>
+        {/* Ingredients section skeleton */}
+        <section className="mt-8 space-y-5 px-5 sm:px-10 lg:px-12">
+          <Skeleton className="h-7 w-32" />
+          <ul className="grid gap-4 md:grid-cols-2">
+            {Array.from({ length: 6 }).map((_, index) => (
+              <li
+                key={index}
+                className="relative flex flex-col gap-1 rounded-lg pl-2"
+              >
+                <div className="pl-6">
+                  <div className="flex items-baseline gap-2">
+                    <Skeleton className="h-4 w-12" />
+                    <Skeleton className="h-4 w-32" />
+                  </div>
+                  {/* Optional notes skeleton - show for some items */}
+                  {index % 3 === 0 && <Skeleton className="mt-1 h-3 w-24" />}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {/* Instructions section skeleton */}
+        <section className="mt-8 space-y-5 px-5 pb-12 sm:px-10 lg:px-12">
+          <Skeleton className="h-7 w-32" />
+          <ol className="space-y-3">
+            {Array.from({ length: 5 }).map((_, index) => (
+              <li key={index} className="flex items-start gap-3">
+                {/* Step number skeleton */}
+                <Skeleton className="mt-0.5 h-6 w-5 flex-shrink-0" />
+                {/* Step text skeleton - variable width */}
+                <div className="flex-1 space-y-2">
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className={index % 2 === 0 ? "h-4 w-full" : "h-4 w-5/6"} />
+                  {index % 3 === 0 && <Skeleton className="h-4 w-4/5" />}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+      </>
+    );
+  }
+
   return (
     <div className="h-full overflow-y-auto overscroll-contain">
       <article className="flex w-full flex-col bg-white text-base leading-relaxed text-slate-600">

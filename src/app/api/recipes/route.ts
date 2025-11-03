@@ -3,6 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { supabaseAdmin } from "@/lib/supabaseAdminClient";
 import { supabase } from "@/lib/supabaseClient";
 import { parseTagsFromQuery } from "@/lib/tag-utils";
+import { seededShuffle, getDateSeed } from "@/lib/shuffle-utils";
 
 const ITEMS_PER_PAGE = 20;
 
@@ -177,125 +178,57 @@ export async function GET(request: NextRequest) {
     }
 
     const total = count || 0;
+
+    // Fetch all matching recipes (with a reasonable limit to prevent memory issues)
+    // In production, you might want to set a max limit like 10,000 recipes
+    const MAX_RECIPES_TO_FETCH = 10000;
+    
+    let allRecipesQuery = supabase
+      .from("recipes")
+      .select("slug, name, description, tags, image_url")
+      .order("created_at", { ascending: false })
+      .order("slug", { ascending: true })
+      .limit(MAX_RECIPES_TO_FETCH);
+
+    // Apply tag filters
+    if (filterTags.length > 0) {
+      for (const tag of filterTags) {
+        allRecipesQuery = allRecipesQuery.contains("tags", [tag]);
+      }
+    }
+
+    const { data: allRecipesData, error: allRecipesError } = await allRecipesQuery;
+
+    if (allRecipesError) {
+      throw allRecipesError;
+    }
+
+    const allRecipes = allRecipesData || [];
+
+    // Shuffle all recipes deterministically based on current date
+    const dateSeed = getDateSeed();
+    const shuffledRecipes = seededShuffle(allRecipes, dateSeed);
+
+    // Now handle pagination from the shuffled array
     let recipes: RecipeListItem[] = [];
     let hasMore = false;
     let currentPage = 1;
 
     if (fromSlug) {
-      // Slug-based pagination: find recipes after the given slug in feed order
-      // Feed order is: created_at DESC, slug ASC (for stable sorting)
+      // Find the index of the recipe with the given slug in the shuffled array
+      const fromIndex = shuffledRecipes.findIndex((r) => r.slug === fromSlug);
 
-      // First, find the recipe with the given slug
-      const { data: fromRecipe, error: fromError } = await supabase
-        .from("recipes")
-        .select("created_at, slug")
-        .eq("slug", fromSlug)
-        .single();
-
-      if (fromError || !fromRecipe) {
-        // If slug not found, return first page
-        let firstPageQuery = supabase
-          .from("recipes")
-          .select("slug, name, description, tags, image_url")
-          .order("created_at", { ascending: false })
-          .order("slug", { ascending: true })
-          .limit(ITEMS_PER_PAGE);
-
-        // Apply tag filters
-        if (filterTags.length > 0) {
-          for (const tag of filterTags) {
-            firstPageQuery = firstPageQuery.contains("tags", [tag]);
-          }
-        }
-
-        const { data: firstPageRecipes, error: firstPageError } = await firstPageQuery;
-
-        if (firstPageError) {
-          throw firstPageError;
-        }
-
-        recipes = firstPageRecipes || [];
-        hasMore = (firstPageRecipes?.length || 0) === ITEMS_PER_PAGE && total > ITEMS_PER_PAGE;
+      if (fromIndex === -1) {
+        // Slug not found, return first page
+        recipes = shuffledRecipes.slice(0, ITEMS_PER_PAGE);
+        hasMore = shuffledRecipes.length > ITEMS_PER_PAGE;
+        currentPage = 1;
       } else {
-        // Get recipes that come after the from slug in feed order
-        // Feed order: created_at DESC, slug ASC
-        // After means: created_at < fromRecipe.created_at OR (created_at = fromRecipe.created_at AND slug > fromRecipe.slug)
-
-        // Strategy: Try to get recipes with created_at < fromRecipe.created_at first
-        // Then if we need more, get recipes with same created_at but slug > fromRecipe.slug
-        let olderQuery = supabase
-          .from("recipes")
-          .select("slug, name, description, tags, image_url")
-          .lt("created_at", fromRecipe.created_at)
-          .order("created_at", { ascending: false })
-          .order("slug", { ascending: true })
-          .limit(ITEMS_PER_PAGE);
-
-        // Apply tag filters
-        if (filterTags.length > 0) {
-          for (const tag of filterTags) {
-            olderQuery = olderQuery.contains("tags", [tag]);
-          }
-        }
-
-        const { data: olderRecipes, error: olderError } = await olderQuery;
-
-        if (olderError) {
-          throw olderError;
-        }
-
-        let allAfterRecipes = olderRecipes || [];
-
-        // If we don't have enough recipes, get ones with same created_at but slug > fromRecipe.slug
-        if (allAfterRecipes.length < ITEMS_PER_PAGE) {
-          const remainingNeeded = ITEMS_PER_PAGE - allAfterRecipes.length;
-          let sameTimeQuery = supabase
-            .from("recipes")
-            .select("slug, name, description, tags, image_url")
-            .eq("created_at", fromRecipe.created_at)
-            .gt("slug", fromRecipe.slug)
-            .order("slug", { ascending: true })
-            .limit(remainingNeeded);
-
-          // Apply tag filters
-          if (filterTags.length > 0) {
-            for (const tag of filterTags) {
-              sameTimeQuery = sameTimeQuery.contains("tags", [tag]);
-            }
-          }
-
-          const { data: sameTimeRecipes, error: sameTimeError } = await sameTimeQuery;
-
-          if (sameTimeError) {
-            throw sameTimeError;
-          }
-
-          // Combine: older recipes first, then same-time recipes
-          allAfterRecipes = [...allAfterRecipes, ...(sameTimeRecipes || [])];
-        }
-
-        recipes = allAfterRecipes.slice(0, ITEMS_PER_PAGE);
-        hasMore = allAfterRecipes.length === ITEMS_PER_PAGE;
-
-        // Calculate approximate page number
-        // Count recipes that come before the from slug
-        let beforeCountQuery = supabase
-          .from("recipes")
-          .select("*", { count: "exact", head: true })
-          .or(
-            `created_at.gt.${fromRecipe.created_at},and(created_at.eq.${fromRecipe.created_at},slug.lt.${fromRecipe.slug})`,
-          );
-
-        // Apply tag filters to count query
-        if (filterTags.length > 0) {
-          for (const tag of filterTags) {
-            beforeCountQuery = beforeCountQuery.contains("tags", [tag]);
-          }
-        }
-
-        const { count: beforeCount } = await beforeCountQuery;
-
-        currentPage = beforeCount ? Math.floor((beforeCount + 1) / ITEMS_PER_PAGE) + 1 : 1;
+        // Get recipes after the found slug
+        const startIndex = fromIndex + 1;
+        recipes = shuffledRecipes.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+        hasMore = startIndex + ITEMS_PER_PAGE < shuffledRecipes.length;
+        currentPage = Math.floor(fromIndex / ITEMS_PER_PAGE) + 1;
       }
     } else {
       // Traditional page-based pagination
@@ -305,43 +238,20 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ error: "Page must be 1 or greater" }, { status: 400 });
       }
 
-      const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
       const offset = (page - 1) * ITEMS_PER_PAGE;
-
-      // Get paginated recipes
-      let pageQuery = supabase
-        .from("recipes")
-        .select("slug, name, description, tags, image_url")
-        .order("created_at", { ascending: false })
-        .order("slug", { ascending: true })
-        .range(offset, offset + ITEMS_PER_PAGE - 1);
-
-      // Apply tag filters
-      if (filterTags.length > 0) {
-        for (const tag of filterTags) {
-          pageQuery = pageQuery.contains("tags", [tag]);
-        }
-      }
-
-      const { data: pageRecipes, error: recipesError } = await pageQuery;
-
-      if (recipesError) {
-        throw recipesError;
-      }
-
-      recipes = pageRecipes || [];
+      recipes = shuffledRecipes.slice(offset, offset + ITEMS_PER_PAGE);
       currentPage = page;
-      hasMore = page < totalPages;
+      hasMore = offset + ITEMS_PER_PAGE < shuffledRecipes.length;
     }
 
-    const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
+    const totalPages = Math.ceil(shuffledRecipes.length / ITEMS_PER_PAGE);
 
     return NextResponse.json({
       recipes: recipes || [],
       pagination: {
         page: currentPage,
         limit: ITEMS_PER_PAGE,
-        total,
+        total: shuffledRecipes.length,
         totalPages,
         hasMore,
       },

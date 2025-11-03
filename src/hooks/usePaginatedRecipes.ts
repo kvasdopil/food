@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
+import { recipeStore } from "@/lib/recipe-store";
 
 export type RecipeListItem = {
   slug: string;
@@ -108,6 +109,8 @@ export function usePaginatedRecipes(
 
       // Only update if this request wasn't aborted
       if (!abortController.signal.aborted) {
+        // Store recipes in centralized cache
+        recipeStore.setPartials(data.recipes);
         setRecipes(data.recipes);
         setPagination(data.pagination);
       }
@@ -155,6 +158,8 @@ export function usePaginatedRecipes(
 
       // Only update if this request wasn't aborted
       if (!abortController.signal.aborted) {
+        // Store new recipes in centralized cache
+        recipeStore.setPartials(data.recipes);
         setRecipes((prev) => [...prev, ...data.recipes]);
         setPagination(data.pagination);
         loadingFromSlugRef.current = null;
