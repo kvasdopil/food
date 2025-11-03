@@ -6,6 +6,7 @@ import { RecipeImage } from "./image";
 import { Ingredients } from "./ingredients";
 import { Instructions } from "./instructions";
 import { useRecipe } from "@/hooks/useRecipe";
+import { RecipeSkeleton } from "@/components/skeletons/recipe-skeleton";
 
 type RecipeProps = {
   slug: string;
@@ -27,15 +28,7 @@ export function Recipe({ slug }: RecipeProps) {
   }, [slug]);
 
   if (isLoading) {
-    return (
-      <div className="h-full overflow-y-auto overscroll-contain">
-        <div className="flex w-full flex-col bg-white pb-12 text-base leading-relaxed text-slate-600">
-          <div className="flex w-full items-center justify-center py-32">
-            <p className="text-lg text-slate-600">Loading recipe...</p>
-          </div>
-        </div>
-      </div>
-    );
+    return <RecipeSkeleton />;
   }
 
   if (error || !recipeData) {

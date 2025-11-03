@@ -3,6 +3,8 @@
 - add feed to 'recipe' view on desktop?
 - add recipe via agent
   - secure token via vercel?
+- hidden tags for meals, like 'simple', 'healthy', etc. for search and llm queries
+- 
 - another variation of same meal, like vegeterian version of the same
 - ssr
 - proper loading preview for a recipe and feed
