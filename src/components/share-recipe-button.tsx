@@ -2,31 +2,13 @@
 
 import type { SVGProps } from "react";
 import { useCallback, useMemo, useState } from "react";
+import { FaShare } from "react-icons/fa";
 
 type ShareRecipeButtonProps = {
   slug: string;
   title: string;
   variant?: "button" | "icon";
 };
-
-function ShareIcon(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.8}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      {...props}
-    >
-      <path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7" />
-      <path d="m16 6-4-4-4 4" />
-      <path d="M12 2v14" />
-    </svg>
-  );
-}
 
 function CheckIcon(props: SVGProps<SVGSVGElement>) {
   return (
@@ -85,13 +67,13 @@ export function ShareRecipeButton({ slug, title, variant = "button" }: ShareReci
 
   if (variant === "icon") {
     const icon =
-      status === "copied" ? <CheckIcon className="h-4 w-4" /> : <ShareIcon className="h-4 w-4" />;
+      status === "copied" ? <CheckIcon className="h-[1.3rem] w-[1.3rem]" /> : <FaShare className="h-[1.3rem] w-[1.3rem]" />;
 
     return (
       <button
         type="button"
         onClick={handleShare}
-        className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white/80 text-slate-900 shadow-sm ring-1 ring-white/60 transition hover:bg-white hover:text-emerald-600 dark:bg-slate-900/80 dark:text-slate-100 dark:ring-slate-700 dark:hover:text-emerald-300"
+        className="inline-flex h-10 w-10 cursor-pointer items-center justify-center text-white transition hover:opacity-80"
         aria-label="Share recipe"
       >
         {icon}

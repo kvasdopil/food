@@ -45,16 +45,16 @@ export function Recipe({ slug }: RecipeProps) {
           style={{ touchAction: "pan-y" }}
         >
           <article className="flex w-full flex-col bg-white text-base leading-relaxed text-slate-600">
-            <RecipeImage 
-              name={cachedPartial.name} 
-              imageUrl={cachedPartial.image_url} 
+            <RecipeImage
+              name={cachedPartial.name}
+              imageUrl={cachedPartial.image_url}
               slug={cachedPartial.slug}
-              prepTimeMinutes={null}
-              cookTimeMinutes={null}
+              prepTimeMinutes={cachedPartial.prep_time_minutes ?? null}
+              cookTimeMinutes={cachedPartial.cook_time_minutes ?? null}
             />
-            <Description 
-              description={cachedPartial.description || null} 
-              tags={cachedPartial.tags} 
+            <Description
+              description={cachedPartial.description || null}
+              tags={cachedPartial.tags}
             />
             {/* Show skeletons for ingredients and instructions while loading */}
             <RecipeSkeleton showOnlyIngredientsAndInstructions />
@@ -86,9 +86,9 @@ export function Recipe({ slug }: RecipeProps) {
       style={{ touchAction: "pan-y" }}
     >
       <article className="flex w-full flex-col bg-white text-base leading-relaxed text-slate-600">
-        <RecipeImage 
-          name={recipeData.name} 
-          imageUrl={recipeData.imageUrl} 
+        <RecipeImage
+          name={recipeData.name}
+          imageUrl={recipeData.imageUrl}
           slug={recipeData.slug}
           prepTimeMinutes={recipeData.prepTimeMinutes}
           cookTimeMinutes={recipeData.cookTimeMinutes}

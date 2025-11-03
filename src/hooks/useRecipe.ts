@@ -23,6 +23,8 @@ function convertToRecipeData(full: RecipeFullData): RecipeData {
     instructions: full.instructions,
     imageUrl: full.imageUrl,
     tags: full.tags,
+    prepTimeMinutes: full.prepTimeMinutes,
+    cookTimeMinutes: full.cookTimeMinutes,
   };
 }
 
@@ -87,6 +89,8 @@ export function useRecipe(slug: string): UseRecipeResult {
           instructions: data.instructions,
           imageUrl: data.imageUrl,
           tags: data.tags,
+          prepTimeMinutes: data.prepTimeMinutes,
+          cookTimeMinutes: data.cookTimeMinutes,
         };
         recipeStore.setFull(fullData);
         

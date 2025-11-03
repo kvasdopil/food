@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FiChevronLeft } from "react-icons/fi";
 import { KeyboardNav } from "@/components/keyboard-nav";
@@ -13,7 +13,6 @@ type RecipesLayoutProps = {
 };
 
 export default function RecipesLayout({ children }: RecipesLayoutProps) {
-  const router = useRouter();
   const pathname = usePathname();
   // Extract slug from pathname like /recipes/slug-name or /recipes/slug-name/...
   const match = pathname?.match(/^\/recipes\/([^/]+)/);
@@ -30,13 +29,14 @@ export default function RecipesLayout({ children }: RecipesLayoutProps) {
         <KeyboardNav currentSlug={slug} />
 
         {/* Back to feed button */}
-        <button
-          onClick={() => router.push("/feed")}
+        <Link
+          href="/feed"
           className="fixed top-4 left-4 z-[100] flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md transition hover:bg-slate-50 sm:top-6 sm:left-6"
+          style={{ cursor: "pointer" }}
           aria-label="Back to feed"
         >
           <FiChevronLeft className="h-5 w-5 text-slate-700" />
-        </button>
+        </Link>
 
         {/* Mobile: Full width layout - content handled by root-level carousel (only visible below sm) */}
         <div className="mx-auto flex h-full w-full max-w-5xl flex-col px-0 sm:hidden">

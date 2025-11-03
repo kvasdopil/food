@@ -16,6 +16,8 @@ export type RecipePartialData = {
   description: string | null;
   tags: string[];
   image_url: string | null;
+  prep_time_minutes?: number | null;
+  cook_time_minutes?: number | null;
 };
 
 export type RecipeFullData = {
@@ -26,6 +28,8 @@ export type RecipeFullData = {
   instructions: string;
   imageUrl: string | null;
   tags: string[];
+  prepTimeMinutes?: number | null;
+  cookTimeMinutes?: number | null;
 };
 
 type StoredRecipe = {
