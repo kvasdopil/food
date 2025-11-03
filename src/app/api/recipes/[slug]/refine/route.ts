@@ -8,6 +8,8 @@ import {
 import { evaluateRecipe } from "@/lib/recipe-refinement";
 import { type RecipeData, normalizeRecipe, isEvaluationPassed } from "@/lib/recipe-utils";
 import { supabaseAdmin } from "@/lib/supabaseAdminClient";
+import { logApiEndpoint } from "@/lib/analytics";
+import { authenticateRequest } from "@/lib/api-auth";
 
 type IngredientPayload = {
   name: string;
@@ -113,19 +115,37 @@ export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ slug: string }> },
 ) {
+  const { slug } = await params;
   const editToken = process.env.EDIT_TOKEN;
   if (!editToken) {
     console.error("POST /api/recipes/[slug]/refine missing EDIT_TOKEN environment variable.");
     return NextResponse.json({ error: "Server is not configured for edits" }, { status: 500 });
   }
 
+  // Try to authenticate to get user info if available
+  const auth = await authenticateRequest(request, { requireAuth: false });
   const authHeader = request.headers.get("authorization") ?? request.headers.get("Authorization");
   const tokenMatch = authHeader?.match(/^Bearer\s+(.+)$/i);
   const providedToken = tokenMatch ? tokenMatch[1].trim() : null;
 
   if (!providedToken || providedToken !== editToken) {
+    logApiEndpoint({
+      endpoint: `/api/recipes/${slug}/refine`,
+      method: "POST",
+      statusCode: 401,
+      isProtected: true,
+    });
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+
+  // Log endpoint usage
+  logApiEndpoint({
+    endpoint: `/api/recipes/${slug}/refine`,
+    method: "POST",
+    userId: auth.authorized ? auth.userId : undefined,
+    userEmail: auth.authorized ? auth.userEmail : undefined,
+    isProtected: true,
+  });
 
   const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
   if (!apiKey) {
@@ -140,8 +160,6 @@ export async function POST(
     console.error("Supabase admin client is not configured.");
     return NextResponse.json({ error: "Database not configured" }, { status: 500 });
   }
-
-  const { slug } = await params;
 
   try {
     // Fetch recipe from database
@@ -227,6 +245,14 @@ export async function POST(
       return NextResponse.json({ error: "Failed to update recipe" }, { status: 500 });
     }
 
+    logApiEndpoint({
+      endpoint: `/api/recipes/${slug}/refine`,
+      method: "POST",
+      userId: auth.authorized ? auth.userId : undefined,
+      userEmail: auth.authorized ? auth.userEmail : undefined,
+      statusCode: 200,
+      isProtected: true,
+    });
     return NextResponse.json(
       {
         message: "Recipe refined and updated successfully",
@@ -237,6 +263,14 @@ export async function POST(
     );
   } catch (error) {
     console.error("Failed to refine recipe:", error);
+    logApiEndpoint({
+      endpoint: `/api/recipes/${slug}/refine`,
+      method: "POST",
+      userId: auth.authorized ? auth.userId : undefined,
+      userEmail: auth.authorized ? auth.userEmail : undefined,
+      statusCode: 500,
+      isProtected: true,
+    });
     return NextResponse.json(
       { error: `Failed to refine recipe: ${(error as Error).message}` },
       { status: 500 },

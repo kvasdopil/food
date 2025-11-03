@@ -99,7 +99,9 @@ export function RecipeFeedCard({
             className="object-cover"
           />
         ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-emerald-200 via-slate-100 to-slate-300" />
+          <div className="absolute inset-0 overflow-hidden bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200">
+            <div className="animate-shimmer absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent bg-[length:200%_100%]" />
+          </div>
         )}
 
         <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent pt-12 pb-4 sm:pt-16 sm:pb-3">

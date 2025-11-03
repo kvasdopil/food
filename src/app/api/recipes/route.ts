@@ -4,6 +4,8 @@ import { supabaseAdmin } from "@/lib/supabaseAdminClient";
 import { supabase } from "@/lib/supabaseClient";
 import { parseTagsFromQuery } from "@/lib/tag-utils";
 import { seededShuffle, getDateSeed } from "@/lib/shuffle-utils";
+import { logApiEndpoint } from "@/lib/analytics";
+import { authenticateRequest } from "@/lib/api-auth";
 
 const ITEMS_PER_PAGE = 20;
 
@@ -184,6 +186,12 @@ export async function GET(request: NextRequest) {
   const filterTags = parseTagsFromQuery(tagsParam);
 
   if (!supabase) {
+    logApiEndpoint({
+      endpoint: "/api/recipes",
+      method: "GET",
+      statusCode: 500,
+      isProtected: false,
+    });
     return NextResponse.json({ error: "Database not configured" }, { status: 500 });
   }
 
@@ -287,6 +295,12 @@ export async function GET(request: NextRequest) {
 
     const totalPages = Math.ceil(shuffledRecipes.length / ITEMS_PER_PAGE);
 
+    logApiEndpoint({
+      endpoint: "/api/recipes",
+      method: "GET",
+      statusCode: 200,
+      isProtected: false,
+    });
     return NextResponse.json({
       recipes: recipes || [],
       pagination: {
@@ -299,24 +313,38 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error("Recipes API failure:", error);
+    logApiEndpoint({
+      endpoint: "/api/recipes",
+      method: "GET",
+      statusCode: 500,
+      isProtected: false,
+    });
     return NextResponse.json({ error: "Failed to fetch recipes" }, { status: 500 });
   }
 }
 
 export async function POST(request: NextRequest) {
-  const editToken = process.env.EDIT_TOKEN;
-  if (!editToken) {
-    console.error("POST /api/recipes missing EDIT_TOKEN environment variable.");
-    return NextResponse.json({ error: "Server is not configured for edits" }, { status: 500 });
+  // Authenticate the request - allows either EDIT_TOKEN or Supabase session
+  const auth = await authenticateRequest(request);
+
+  if (!auth.authorized) {
+    logApiEndpoint({
+      endpoint: "/api/recipes",
+      method: "POST",
+      statusCode: 401,
+      isProtected: true,
+    });
+    return NextResponse.json({ error: auth.error || "Unauthorized" }, { status: 401 });
   }
 
-  const authHeader = request.headers.get("authorization") ?? request.headers.get("Authorization");
-  const tokenMatch = authHeader?.match(/^Bearer\s+(.+)$/i);
-  const providedToken = tokenMatch ? tokenMatch[1].trim() : null;
-
-  if (!providedToken || providedToken !== editToken) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  // Log endpoint usage
+  logApiEndpoint({
+    endpoint: "/api/recipes",
+    method: "POST",
+    userId: auth.userId,
+    userEmail: auth.userEmail,
+    isProtected: true,
+  });
 
   if (!supabaseAdmin) {
     console.error("Supabase admin client is not configured.");
@@ -397,9 +425,25 @@ export async function POST(request: NextRequest) {
       throw error;
     }
 
+    logApiEndpoint({
+      endpoint: "/api/recipes",
+      method: "POST",
+      userId: auth.authorized ? auth.userId : undefined,
+      userEmail: auth.authorized ? auth.userEmail : undefined,
+      statusCode: 201,
+      isProtected: true,
+    });
     return NextResponse.json({ recipe: data }, { status: 201 });
   } catch (error) {
     console.error("Failed to upsert recipe:", error);
+    logApiEndpoint({
+      endpoint: "/api/recipes",
+      method: "POST",
+      userId: auth.authorized ? auth.userId : undefined,
+      userEmail: auth.authorized ? auth.userEmail : undefined,
+      statusCode: 500,
+      isProtected: true,
+    });
     return NextResponse.json({ error: "Failed to save recipe" }, { status: 500 });
   }
 }

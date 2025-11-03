@@ -17,8 +17,8 @@
    - `NEXT_PUBLIC_SUPABASE_URL`: Project URL from the Supabase dashboard
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: anon public key from Supabase
    - `SUPABASE_SERVICE_ROLE_KEY`: service role token (used by the CLI scripts for storage + seeding)
-   - `EDIT_TOKEN`: shared bearer token required for protected API endpoints (e.g. recipe generation, imports)
-   - `GEMINI_API_KEY`: Google Gemini API key (for recipe text generation, refinement, and prompt enhancement - used by `/api/recipes/generate`, `/api/recipes/[slug]/refine`, and `/api/recipes/[slug]/generate-image` endpoints)
+   - `EDIT_TOKEN`: shared bearer token required for protected API endpoints (e.g. recipe generation, imports). Also supports Supabase session tokens for logged-in users.
+   - `GEMINI_API_KEY` or `GOOGLE_API_KEY`: Google Gemini API key (for recipe text generation, refinement, and prompt enhancement - used by `/api/recipes/generate`, `/api/recipes/[slug]/refine`, `/api/recipes/[slug]/generate-image`, and `/api/images/generate-preview` endpoints)
    - `FIREFLY_API_TOKEN`: Adobe Firefly API bearer token (for image generation - used by `/api/recipes/[slug]/generate-image` endpoint)
    - `FIREFLY_API_KEY`: Adobe Firefly API key (defaults to "clio-playground-web" if not set, used by `/api/recipes/[slug]/generate-image` endpoint)
    - _(optional)_ `RECIPE_STORAGE_BUCKET`: overrides the default `recipe-images` bucket name
@@ -65,8 +65,8 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
    - `NEXT_PUBLIC_SUPABASE_URL`
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
    - `SUPABASE_SERVICE_ROLE_KEY` (required for storage and database operations)
-   - `EDIT_TOKEN` (required for protected API endpoints)
-   - `GEMINI_API_KEY` (required for recipe generation and image prompt enhancement)
+   - `EDIT_TOKEN` (required for protected API endpoints; also supports Supabase session tokens for logged-in users)
+   - `GEMINI_API_KEY` or `GOOGLE_API_KEY` (required for recipe generation, refinement, and image prompt enhancement)
    - `FIREFLY_API_TOKEN` (required for image generation endpoint)
    - `FIREFLY_API_KEY` (optional, defaults to "clio-playground-web")
 
@@ -114,7 +114,7 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
 
 #### Recipe Creation
 
-- **US-36**: As a logged-in user, I want to see an "Add Recipe" button on the feed page so I can create new recipes. ✅ **Implemented**: Add Recipe button appears to the left of the avatar for logged-in users, opens a modal with placeholder content (fullscreen on mobile, centered window on desktop).
+- **US-36**: As a logged-in user, I want to see an "Add Recipe" button on the feed page so I can create new recipes. ✅ **Implemented**: Add Recipe button appears to the left of the avatar for logged-in users, opens a modal (fullscreen on mobile, centered window on desktop) that allows generating recipes from natural language input. The flow: user enters meal description → AI generates recipe with name, tags, description, ingredients, and instructions → preview image is automatically generated → user can add recipe to database and navigate to the new recipe page.
 
 #### Responsive Design
 
@@ -151,10 +151,11 @@ The following user stories are planned but not yet implemented:
 - Layout `src/app/recipes/layout.tsx` manages recipe rendering and includes a back-to-feed link in the top-left corner (links to `/feed` with `cursor: pointer`). Recipes render normally on all screen sizes (no mobile carousel).
 - Navigation history checks use `document.referrer` to ensure same-origin navigation (prevents "about:blank" issues). Previous navigation is disabled/hidden when there's no same-origin history.
 - Supabase provides recipe data via table queries; types generated in `src/types/supabase.ts`.
-- Authenticated POST to `/api/recipes` upserts recipes from JSON payloads that match the YAML schema. Requires a `Bearer` token that matches `EDIT_TOKEN`.
-- POST to `/api/recipes/generate` generates recipe content (ingredients, instructions, image prompts) using Gemini API. Does not save to database. Always returns the first generated variant (no refinement). Requires `EDIT_TOKEN` authentication and `GEMINI_API_KEY` on the server.
-- POST to `/api/recipes/[slug]/refine` evaluates and refines an existing recipe in the database. Evaluates the recipe, and if issues are found, generates a refined version and updates it. Requires `EDIT_TOKEN` authentication and `GEMINI_API_KEY` on the server.
-- POST to `/api/recipes/[slug]/generate-image` generates and uploads images for existing recipes. Requires `EDIT_TOKEN`, `FIREFLY_API_TOKEN`, and `GEMINI_API_KEY` on the server. Handles prompt enrichment, Firefly image generation, storage upload, and database update.
+- Authenticated POST to `/api/recipes` upserts recipes from JSON payloads that match the YAML schema. Requires authentication via `EDIT_TOKEN` or Supabase session token (for logged-in users).
+- POST to `/api/recipes/generate` generates recipe content (ingredients, instructions, image prompts) using Gemini API from natural language user input. Does not save to database. Always returns the first generated variant (no refinement). Requires authentication via `EDIT_TOKEN` or Supabase session token, and `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) on the server. Accepts `userInput` parameter for parsing natural language descriptions.
+- POST to `/api/images/generate-preview` generates preview images for recipes using Google AI Gemini Image API (`gemini-2.5-flash-image`). Stores images in Supabase Storage as `preview.{hash}.jpg` and returns the public URL. Never updates the database. Requires authentication via `EDIT_TOKEN` or Supabase session token, and `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) on the server.
+- POST to `/api/recipes/[slug]/refine` evaluates and refines an existing recipe in the database. Evaluates the recipe, and if issues are found, generates a refined version and updates it. Requires authentication via `EDIT_TOKEN` or Supabase session token, and `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) on the server.
+- POST to `/api/recipes/[slug]/generate-image` generates and uploads images for existing recipes. Requires authentication via `EDIT_TOKEN` or Supabase session token, `FIREFLY_API_TOKEN`, and `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) on the server. Handles prompt enrichment, Firefly image generation, storage upload, and database update.
 
 ## Screen Structure & Navigation
 
@@ -181,7 +182,7 @@ The app has three main routes:
 - Contains:
   - Search bar (`RecipeSearchBar`) - searches by recipe name and tags, displays active tags inline between search icon and input field
   - Add Recipe button (`AddRecipeButton`) - appears to the left of the avatar for logged-in users, opens add recipe modal
-  - Add Recipe modal (`AddRecipeModal`) - responsive modal (fullscreen on mobile, centered window on desktop) with placeholder content
+  - Add Recipe modal (`AddRecipeModal`) - responsive modal (fullscreen on mobile, centered window on desktop) for generating recipes from natural language input
   - Wraps feed page content
 
 **Recipes Layout** (`src/app/recipes/layout.tsx`)
@@ -366,7 +367,9 @@ This architecture provides stateful navigation that tracks forward and backward 
   - Add dedicated page to list all liked/favorited meals
 
 - **Recipe Management**:
-  - ✅ Add new recipes via agent/API integration (with secure Vercel token authentication) - **Implemented**: `/api/recipes/generate` endpoint
+  - ✅ Add new recipes via modal interface (with Supabase authentication) - **Implemented**: Add Recipe modal allows logged-in users to generate recipes from natural language descriptions. Uses `/api/recipes/generate` endpoint for recipe generation, `/api/images/generate-preview` for preview images, and `/api/recipes` for saving to database. Supports Google OAuth authentication via Supabase.
+  - ✅ Recipe generation endpoint - **Implemented**: `/api/recipes/generate` endpoint accepts natural language user input and generates complete recipes with ingredients, instructions, tags, and image prompts
+  - ✅ Recipe preview image generation - **Implemented**: `/api/images/generate-preview` endpoint generates preview images using Google AI Gemini Image API (`gemini-2.5-flash-image`)
   - ✅ Recipe refinement endpoint - **Implemented**: `/api/recipes/[slug]/refine` endpoint for evaluating and improving existing recipes
   - Support recipe variations (e.g., vegetarian versions of existing meals)
 
@@ -389,7 +392,7 @@ This architecture provides stateful navigation that tracks forward and backward 
 - `src/app/feed/page.tsx`: client component displaying paginated recipe feed with infinite scroll. Reads search query and tags from URL. Responsive grid layout works on all screen sizes.
 - `src/components/recipe-search-bar.tsx`: search bar component with search icon, inline tag display (between icon and input), and clear button that clears both search and tags. Uses react-icons for icons. Tags are displayed as chips with individual remove buttons.
 - `src/components/add-recipe-button.tsx`: button component with transparent background and dark-gray plus icon. Only visible for logged-in users.
-- `src/components/add-recipe-modal.tsx`: responsive modal component for adding recipes. Fullscreen on mobile, centered window on desktop. Closes on Escape key or clicking outside. Prevents body scroll when open.
+- `src/components/add-recipe-modal.tsx`: responsive modal component for adding recipes. Fullscreen on mobile, centered window on desktop. Allows users to enter natural language descriptions of meals, generates recipes using AI (with ingredients, instructions, tags), automatically generates preview images, and saves recipes to the database. Closes on Escape key or clicking outside. Prevents body scroll when open. Uses Supabase authentication for API calls.
 - `src/components/recipe-feed-card.tsx`: recipe card component for feed page with image, title overlay, description, clickable tags (toggle filters), and favorite button.
 - `src/hooks/useTags.ts`: React hook for managing tags in feed context. Parses tags from URL, provides remove/clear functions. Preserves search query when modifying tags.
 - `src/lib/tag-utils.ts`: Utility functions for parsing tags from URLs and building tag URLs. Used by both client components and API routes.
@@ -510,11 +513,12 @@ The script will:
 
 ### API Endpoints
 
-- **`POST /api/recipes`**: Creates or updates a recipe in the database. Accepts normalized recipe payloads, upserting by slug. Supports `prepTimeMinutes` and `cookTimeMinutes` fields. Requests must include `Authorization: Bearer <EDIT_TOKEN>`; the server rejects missing or mismatched tokens with `401`.
-- **`POST /api/recipes/generate`**: Generates recipe content (ingredients, instructions, image prompts) using Gemini API. Does not save to database. Always returns the first generated variant without refinement. Requires `Authorization: Bearer <EDIT_TOKEN>` and `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) configured on the server. Returns recipe data in the same format as `POST /api/recipes`.
-- **`POST /api/recipes/[slug]/refine`**: Evaluates and refines an existing recipe in the database. Evaluates the recipe against quality standards, and if issues are found, generates a refined version and updates the database. Returns evaluation results and the updated recipe. Requires `Authorization: Bearer <EDIT_TOKEN>` and `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) configured on the server.
-- **`POST /api/recipes/[slug]/generate-image`**: Generates and uploads an image for an existing recipe. Loads recipe from database, enriches prompt using Gemini API, generates image with Firefly API, uploads to Supabase Storage, and updates recipe's `image_url` in database. Requires `Authorization: Bearer <EDIT_TOKEN>`, `FIREFLY_API_TOKEN`, `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) on server. Optional `x-firefly-key` header for Firefly API key (defaults to `FIREFLY_API_KEY` env var or "clio-playground-web").
-- **`POST /api/images`**: Accepts image uploads with `slug` and `file` (multipart/form-data), automatically updating recipe `image_url` if the recipe exists. Requires `Authorization: Bearer <EDIT_TOKEN>`.
+- **`POST /api/recipes`**: Creates or updates a recipe in the database. Accepts normalized recipe payloads, upserting by slug. Supports `prepTimeMinutes` and `cookTimeMinutes` fields. Requires authentication via `Authorization: Bearer <EDIT_TOKEN>` or `Authorization: Bearer <SUPABASE_SESSION_TOKEN>` (for logged-in users). The server rejects unauthorized requests with `401`.
+- **`POST /api/recipes/generate`**: Generates recipe content (ingredients, instructions, image prompts) using Gemini API from natural language user input. Does not save to database. Always returns the first generated variant without refinement. Accepts `userInput` parameter for parsing meal descriptions. Requires authentication via `Authorization: Bearer <EDIT_TOKEN>` or `Authorization: Bearer <SUPABASE_SESSION_TOKEN>`, and `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) configured on the server. Returns recipe data in the same format as `POST /api/recipes`.
+- **`POST /api/images/generate-preview`**: Generates preview images for recipes using Google AI Gemini Image API (`gemini-2.5-flash-image` model). Accepts `description` parameter for the image prompt. Stores images in Supabase Storage as `preview.{hash}.jpg` with 4:3 aspect ratio. Returns the public URL of the stored image. Never updates the database. Requires authentication via `Authorization: Bearer <EDIT_TOKEN>` or `Authorization: Bearer <SUPABASE_SESSION_TOKEN>`, and `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) configured on the server.
+- **`POST /api/recipes/[slug]/refine`**: Evaluates and refines an existing recipe in the database. Evaluates the recipe against quality standards, and if issues are found, generates a refined version and updates the database. Returns evaluation results and the updated recipe. Requires authentication via `Authorization: Bearer <EDIT_TOKEN>` or `Authorization: Bearer <SUPABASE_SESSION_TOKEN>`, and `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) configured on the server.
+- **`POST /api/recipes/[slug]/generate-image`**: Generates and uploads an image for an existing recipe. Loads recipe from database, enriches prompt using Gemini API, generates image with Firefly API, uploads to Supabase Storage, and updates recipe's `image_url` in database. Requires authentication via `Authorization: Bearer <EDIT_TOKEN>` or `Authorization: Bearer <SUPABASE_SESSION_TOKEN>`, `FIREFLY_API_TOKEN`, `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) on server. Optional `x-firefly-key` header for Firefly API key (defaults to `FIREFLY_API_KEY` env var or "clio-playground-web").
+- **`POST /api/images`**: Accepts image uploads with `slug` and `file` (multipart/form-data), automatically updating recipe `image_url` if the recipe exists. Requires authentication via `Authorization: Bearer <EDIT_TOKEN>` or `Authorization: Bearer <SUPABASE_SESSION_TOKEN>`.
 
 ### Typical Workflow
 

@@ -3,6 +3,8 @@ import { NextResponse, type NextRequest } from "next/server";
 import sharp from "sharp";
 
 import { supabaseAdmin } from "@/lib/supabaseAdminClient";
+import { logApiEndpoint } from "@/lib/analytics";
+import { authenticateRequest } from "@/lib/api-auth";
 
 const DEFAULT_BUCKET = process.env.RECIPE_STORAGE_BUCKET ?? "recipe-images";
 const API_BASE_URL = "https://generativelanguage.googleapis.com/v1beta";
@@ -390,6 +392,7 @@ export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ slug: string }> },
 ) {
+  const { slug } = await params;
   const editToken = process.env.EDIT_TOKEN;
   if (!editToken) {
     console.error(
@@ -398,13 +401,30 @@ export async function POST(
     return NextResponse.json({ error: "Server is not configured for edits" }, { status: 500 });
   }
 
+  // Try to authenticate to get user info if available
+  const auth = await authenticateRequest(request, { requireAuth: false });
   const authHeader = request.headers.get("authorization") ?? request.headers.get("Authorization");
   const tokenMatch = authHeader?.match(/^Bearer\s+(.+)$/i);
   const providedToken = tokenMatch ? tokenMatch[1].trim() : null;
 
   if (!providedToken || providedToken !== editToken) {
+    logApiEndpoint({
+      endpoint: `/api/recipes/${slug}/generate-image`,
+      method: "POST",
+      statusCode: 401,
+      isProtected: true,
+    });
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+
+  // Log endpoint usage
+  logApiEndpoint({
+    endpoint: `/api/recipes/${slug}/generate-image`,
+    method: "POST",
+    userId: auth.authorized ? auth.userId : undefined,
+    userEmail: auth.authorized ? auth.userEmail : undefined,
+    isProtected: true,
+  });
 
   if (!supabaseAdmin) {
     console.error("Supabase admin client is not configured.");
@@ -554,12 +574,28 @@ export async function POST(
 
     if (updateError) {
       console.error(`Failed to update recipe image_url for ${slug}:`, updateError);
+      logApiEndpoint({
+        endpoint: `/api/recipes/${slug}/generate-image`,
+        method: "POST",
+        userId: auth.authorized ? auth.userId : undefined,
+        userEmail: auth.authorized ? auth.userEmail : undefined,
+        statusCode: 500,
+        isProtected: true,
+      });
       return NextResponse.json(
         { error: `Failed to update recipe: ${updateError.message}` },
         { status: 500 },
       );
     }
 
+    logApiEndpoint({
+      endpoint: `/api/recipes/${slug}/generate-image`,
+      method: "POST",
+      userId: auth.authorized ? auth.userId : undefined,
+      userEmail: auth.authorized ? auth.userEmail : undefined,
+      statusCode: 201,
+      isProtected: true,
+    });
     return NextResponse.json(
       {
         slug,
@@ -572,6 +608,14 @@ export async function POST(
     );
   } catch (error) {
     console.error("Image generation error:", error);
+    logApiEndpoint({
+      endpoint: `/api/recipes/${slug}/generate-image`,
+      method: "POST",
+      userId: auth.authorized ? auth.userId : undefined,
+      userEmail: auth.authorized ? auth.userEmail : undefined,
+      statusCode: 500,
+      isProtected: true,
+    });
     const message = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json({ error: `Failed to generate image: ${message}` }, { status: 500 });
   }

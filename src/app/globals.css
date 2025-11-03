@@ -44,6 +44,10 @@ body {
   }
 }
 
+.animate-shimmer {
+  animation: shimmer 2s ease-in-out infinite;
+}
+
 .skeleton-shimmer {
   background: linear-gradient(
     90deg,
