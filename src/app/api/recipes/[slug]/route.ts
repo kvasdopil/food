@@ -90,6 +90,8 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
     logApiEndpoint({
       endpoint: `/api/recipes/${slug}`,
       method: "DELETE",
+      userId: auth.userId,
+      userEmail: auth.userEmail,
       statusCode: 500,
       isProtected: true,
     });
@@ -110,6 +112,8 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
       logApiEndpoint({
         endpoint: `/api/recipes/${slug}`,
         method: "DELETE",
+        userId: auth.userId,
+        userEmail: auth.userEmail,
         statusCode: 500,
         isProtected: true,
       });
@@ -120,6 +124,8 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
       logApiEndpoint({
         endpoint: `/api/recipes/${slug}`,
         method: "DELETE",
+        userId: auth.userId,
+        userEmail: auth.userEmail,
         statusCode: 404,
         isProtected: true,
       });
@@ -134,6 +140,8 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
       logApiEndpoint({
         endpoint: `/api/recipes/${slug}`,
         method: "DELETE",
+        userId: auth.userId,
+        userEmail: auth.userEmail,
         statusCode: 500,
         isProtected: true,
       });
@@ -143,6 +151,8 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
     logApiEndpoint({
       endpoint: `/api/recipes/${slug}`,
       method: "DELETE",
+      userId: auth.userId,
+      userEmail: auth.userEmail,
       statusCode: 200,
       isProtected: true,
     });
@@ -156,6 +166,8 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
     logApiEndpoint({
       endpoint: `/api/recipes/${slug}`,
       method: "DELETE",
+      userId: auth.userId,
+      userEmail: auth.userEmail,
       statusCode: 500,
       isProtected: true,
     });

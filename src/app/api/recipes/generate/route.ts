@@ -195,7 +195,7 @@ User input: "${userInput}"
 Extract and return a JSON object with the following structure:
 {
   "title": "A clear, concise recipe title",
-  "description": "A short, savoury description of the meal that captures its essence and appeal",
+  "description": "A concise, objective description focusing on features, components, and preparation method",
   "tags": ["array", "of", "relevant", "tags"],
   "userComment": "optional additional notes or requirements from the user",
   "servings": optional number,
@@ -204,7 +204,8 @@ Extract and return a JSON object with the following structure:
 
 Guidelines:
 - The title should be a clear recipe name (e.g., "Thai Chicken Curry", "Vegetarian Pasta Primavera")
-- The description must be a short, savoury description that makes the meal sound appealing and appetizing (1-2 sentences). Focus on the flavours, textures, and overall appeal of the dish.
+- CRITICAL: The title must ONLY contain the actual name of the meal. DO NOT include descriptive adjectives like "savory", "delicious", "tasty", "mouthwatering", "flavorful", "amazing", "perfect", "best", "authentic", "homemade", or any other subjective descriptors. The title should be the dish name only (e.g., "Chicken Tikka Masala" not "Delicious Savory Chicken Tikka Masala").
+- The description must be concise and objective (1-2 sentences). Focus on: key ingredients and components, cooking methods (e.g., roasted, grilled, braised, sautéed), main preparation techniques, and distinctive features of the dish. CRITICAL: Avoid ALL subjective language including "savory", "delicious", "tasty", "mouthwatering", "appealing", "flavorful", "amazing", "perfect", "best", "authentic", "homemade", or any impressions about flavor/texture. Instead, describe what the dish is and how it's made (e.g., "Tender chicken pieces simmered in a spiced tomato-based curry with coconut milk, served over basmati rice" rather than "A delicious and flavorful curry that's sure to impress" or "Savory pancakes filled with minced meat and mushrooms").
 - Tags MUST always include:
   * Main protein type: one of "seafood", "pork", "beef", "chicken", "vegetarian", or "vegan" (based on the dish, infer from ingredients even if not explicitly stated) - this is the ONLY ingredient-related tag allowed
   * Include "glutenfree" or "gluten-free" if the dish is naturally gluten-free or if explicitly mentioned

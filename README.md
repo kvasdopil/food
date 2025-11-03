@@ -4,6 +4,7 @@
 - [Tailwind CSS](https://tailwindcss.com) styling
 - [Supabase](https://supabase.com) (Postgres + Auth + Storage)
 - [idb](https://github.com/jakearchibald/idb) for IndexedDB persistence
+- [Vercel Analytics](https://vercel.com/analytics) for endpoint tracking and observability
 - Ready for [Vercel](https://vercel.com) deployment
 
 ## Local Setup
@@ -69,6 +70,12 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
    - `GEMINI_API_KEY` or `GOOGLE_API_KEY` (required for recipe generation, refinement, and image prompt enhancement)
    - `FIREFLY_API_TOKEN` (required for image generation endpoint)
    - `FIREFLY_API_KEY` (optional, defaults to "clio-playground-web")
+
+5. **Vercel Analytics** is automatically enabled and tracks:
+   - Page views (automatic via Analytics component)
+   - API endpoint usage (all endpoints are logged with method, status code, and user info for protected endpoints)
+   - View analytics in your Vercel dashboard under the **Analytics** tab
+   - View detailed API logs in the **Logs** tab (search for `"type":"api_endpoint"` to filter API calls)
 
 ## Requirements
 
@@ -522,8 +529,12 @@ The script will:
 
 - **`POST /api/recipes`**: Creates or updates a recipe in the database. Accepts normalized recipe payloads, upserting by slug. Supports `prepTimeMinutes` and `cookTimeMinutes` fields. Requires authentication via `Authorization: Bearer <EDIT_TOKEN>` or `Authorization: Bearer <SUPABASE_SESSION_TOKEN>` (for logged-in users). The server rejects unauthorized requests with `401`.
 - **`POST /api/recipes/generate`**: Generates recipe content (ingredients, instructions, image prompts) using Gemini API from natural language user input. Does not save to database. Always returns the first generated variant without refinement. Accepts `userInput` parameter for parsing meal descriptions. Requires authentication via `Authorization: Bearer <EDIT_TOKEN>` or `Authorization: Bearer <SUPABASE_SESSION_TOKEN>`, and `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) configured on the server. Returns recipe data in the same format as `POST /api/recipes`.
+  
+  **Recipe Generation Rules:**
+  - **Titles**: Must ONLY contain the actual name of the meal. Do NOT include descriptive adjectives like "savory", "delicious", "tasty", "mouthwatering", "flavorful", "amazing", "perfect", "best", "authentic", "homemade", or any other subjective descriptors. Examples: ✅ "Chicken Tikka Masala", ❌ "Delicious Savory Chicken Tikka Masala".
+  - **Descriptions**: Must be concise and objective (1-2 sentences). Focus on: key ingredients and components, cooking methods (e.g., roasted, grilled, braised, sautéed), main preparation techniques, and distinctive features of the dish. Do NOT use subjective language like "savory", "delicious", "tasty", "mouthwatering", "appealing", "flavorful", "amazing", "perfect", "best", "authentic", "homemade", or impressions about flavor/texture. Instead, describe what the dish is and how it's made. Examples: ✅ "Tender chicken pieces simmered in a spiced tomato-based curry with coconut milk, served over basmati rice", ❌ "A delicious and flavorful curry that's sure to impress" or "Savory pancakes filled with minced meat and mushrooms".
 - **`POST /api/images/generate-preview`**: Generates preview images for recipes using Google AI Gemini Image API (`gemini-2.5-flash-image` model). Accepts `description` parameter for the image prompt. Stores images in Supabase Storage as `preview.{hash}.jpg` with 4:3 aspect ratio. Returns the public URL of the stored image. Never updates the database. Requires authentication via `Authorization: Bearer <EDIT_TOKEN>` or `Authorization: Bearer <SUPABASE_SESSION_TOKEN>`, and `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) configured on the server.
-- **`POST /api/recipes/[slug]/refine`**: Evaluates and refines an existing recipe in the database. Evaluates the recipe against quality standards, and if issues are found, generates a refined version and updates the database. Returns evaluation results and the updated recipe. Requires authentication via `Authorization: Bearer <EDIT_TOKEN>` or `Authorization: Bearer <SUPABASE_SESSION_TOKEN>`, and `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) configured on the server.
+- **`POST /api/recipes/[slug]/refine`**: Evaluates and refines an existing recipe in the database. Evaluates the recipe against quality standards (including title and description rules), and if issues are found, generates a refined version and updates the database. Returns evaluation results and the updated recipe. Requires authentication via `Authorization: Bearer <EDIT_TOKEN>` or `Authorization: Bearer <SUPABASE_SESSION_TOKEN>`, and `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) configured on the server. The evaluation checks for formatting issues, metric measurements, ingredient formatting, and enforces the same title and description rules as recipe generation (no subjective descriptors in titles, objective descriptions only).
 - **`POST /api/recipes/[slug]/generate-image`**: Generates and uploads an image for an existing recipe. Loads recipe from database, enriches prompt using Gemini API, generates image with Firefly API, uploads to Supabase Storage, and updates recipe's `image_url` in database. Requires authentication via `Authorization: Bearer <EDIT_TOKEN>` or `Authorization: Bearer <SUPABASE_SESSION_TOKEN>`, `FIREFLY_API_TOKEN`, `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) on server. Optional `x-firefly-key` header for Firefly API key (defaults to `FIREFLY_API_KEY` env var or "clio-playground-web").
 - **`POST /api/images`**: Accepts image uploads with `slug` and `file` (multipart/form-data), automatically updating recipe `image_url` if the recipe exists. Requires authentication via `Authorization: Bearer <EDIT_TOKEN>` or `Authorization: Bearer <SUPABASE_SESSION_TOKEN>`.
 - **`DELETE /api/recipes/[slug]`**: Deletes a recipe from the database by slug. Returns success message with recipe name. Requires authentication via `Authorization: Bearer <EDIT_TOKEN>` or `Authorization: Bearer <SUPABASE_SESSION_TOKEN>`. Returns 404 if recipe not found, 401 if unauthorized.
@@ -576,6 +587,56 @@ The script will:
     - Data persists to IndexedDB for offline access and faster loading on subsequent visits
     - Feed and recipe pages show cached data immediately while fetching fresh data
     - Prevents "no recipes found" flash by showing cached recipes during reloads
+
+## Observability & Analytics
+
+The application uses **Vercel Analytics** to track API endpoint usage and user activity:
+
+### What's Tracked
+
+- **Page Views**: Automatically tracked via the Analytics component in the root layout
+- **API Endpoint Calls**: All API endpoints log structured data including:
+  - Endpoint path and HTTP method
+  - Status code (200, 400, 401, 404, 500, etc.)
+  - Whether the endpoint is protected
+  - User ID and email (for authenticated requests to protected endpoints)
+  - Timestamp
+
+### Tracked Endpoints
+
+**Protected Endpoints** (require authentication, track user info):
+- `POST /api/recipes/generate` - Recipe generation
+- `POST /api/recipes` - Recipe creation/updates
+- `POST /api/recipes/[slug]/refine` - Recipe refinement
+- `POST /api/recipes/[slug]/generate-image` - Image generation
+- `POST /api/images` - Image uploads
+- `POST /api/images/generate-preview` - Preview image generation
+- `DELETE /api/recipes/[slug]` - Recipe deletion
+
+**Public Endpoints** (no authentication required):
+- `GET /api/recipes` - Recipe feed listing
+- `GET /api/recipes/[slug]` - Individual recipe details
+
+### Viewing Analytics
+
+1. **Vercel Analytics Dashboard**:
+   - Navigate to your Vercel project dashboard
+   - Click on the **Analytics** tab
+   - View custom events for `api_endpoint_called`
+   - Filter by endpoint, method, status code, and user info
+
+2. **Vercel Logs Dashboard**:
+   - Navigate to your Vercel project dashboard
+   - Click on the **Logs** tab
+   - Search for `"type":"api_endpoint"` to filter API endpoint logs
+   - Each log entry includes structured JSON with endpoint details and user information
+
+### Implementation
+
+- Analytics tracking is implemented in `src/lib/analytics.ts`
+- Server-side logging uses `logApiEndpoint()` for structured logs
+- Client-side tracking uses `trackApiEndpoint()` for Vercel Analytics events
+- All protected endpoints automatically capture user information when authentication succeeds
 
 ## Supabase Configuration
 

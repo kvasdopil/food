@@ -5,6 +5,7 @@ import sharp from "sharp";
 import { supabaseAdmin } from "@/lib/supabaseAdminClient";
 import { authenticateRequest } from "@/lib/api-auth";
 import { generateImageWithGoogleAI } from "@/lib/google-image-generation";
+import { logApiEndpoint } from "@/lib/analytics";
 
 const DEFAULT_BUCKET = process.env.RECIPE_STORAGE_BUCKET ?? "recipe-images";
 
@@ -40,17 +41,48 @@ export async function POST(request: NextRequest) {
   const auth = await authenticateRequest(request);
 
   if (!auth.authorized) {
+    logApiEndpoint({
+      endpoint: "/api/images/generate-preview",
+      method: "POST",
+      statusCode: 401,
+      isProtected: true,
+    });
     return NextResponse.json({ error: auth.error || "Unauthorized" }, { status: 401 });
   }
 
+  // Log endpoint usage
+  logApiEndpoint({
+    endpoint: "/api/images/generate-preview",
+    method: "POST",
+    userId: auth.userId,
+    userEmail: auth.userEmail,
+    isProtected: true,
+  });
+
   if (!supabaseAdmin) {
     console.error("Supabase admin client is not configured.");
+    logApiEndpoint({
+      endpoint: "/api/images/generate-preview",
+      method: "POST",
+      userId: auth.userId,
+      userEmail: auth.userEmail,
+      statusCode: 500,
+      isProtected: true,
+    });
     return NextResponse.json({ error: "Database not configured" }, { status: 500 });
   }
 
   const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
   if (!apiKey) {
     console.error("POST /api/images/generate-preview missing GEMINI_API_KEY or GOOGLE_API_KEY.");
+    logApiEndpoint({
+      endpoint: "/api/images/generate-preview",
+      method: "POST",
+      userId: auth.userId,
+      userEmail: auth.userEmail,
+      statusCode: 500,
+      isProtected: true,
+    });
     return NextResponse.json(
       { error: "Server is not configured for image generation" },
       { status: 500 },
@@ -62,6 +94,14 @@ export async function POST(request: NextRequest) {
     const description = typeof json.description === "string" ? json.description.trim() : null;
 
     if (!description) {
+      logApiEndpoint({
+        endpoint: "/api/images/generate-preview",
+        method: "POST",
+        userId: auth.userId,
+        userEmail: auth.userEmail,
+        statusCode: 400,
+        isProtected: true,
+      });
       return NextResponse.json({ error: "Description parameter is required" }, { status: 400 });
     }
 
@@ -101,6 +141,14 @@ export async function POST(request: NextRequest) {
 
     if (uploadError) {
       console.error("Upload error:", uploadError);
+      logApiEndpoint({
+        endpoint: "/api/images/generate-preview",
+        method: "POST",
+        userId: auth.userId,
+        userEmail: auth.userEmail,
+        statusCode: 500,
+        isProtected: true,
+      });
       return NextResponse.json({ error: `Upload failed: ${uploadError.message}` }, { status: 500 });
     }
 
@@ -113,6 +161,14 @@ export async function POST(request: NextRequest) {
 
     // Note: This endpoint does NOT update the database as requested
 
+    logApiEndpoint({
+      endpoint: "/api/images/generate-preview",
+      method: "POST",
+      userId: auth.userId,
+      userEmail: auth.userEmail,
+      statusCode: 201,
+      isProtected: true,
+    });
     return NextResponse.json(
       {
         url: publicUrl,
@@ -123,6 +179,14 @@ export async function POST(request: NextRequest) {
     );
   } catch (error) {
     console.error("Preview image generation error:", error);
+    logApiEndpoint({
+      endpoint: "/api/images/generate-preview",
+      method: "POST",
+      userId: auth.userId,
+      userEmail: auth.userEmail,
+      statusCode: 500,
+      isProtected: true,
+    });
     const message = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
       { error: `Failed to generate preview image: ${message}` },
