@@ -17,7 +17,7 @@
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: anon public key from Supabase
    - `SUPABASE_SERVICE_ROLE_KEY`: service role token (used by the CLI scripts for storage + seeding)
    - `EDIT_TOKEN`: shared bearer token required for protected API endpoints (e.g. recipe generation, imports)
-   - `GEMINI_API_KEY`: Google Gemini API key (for recipe text generation and prompt enhancement - used by `/api/recipes/generate` and `/api/recipes/[slug]/generate-image` endpoints)
+   - `GEMINI_API_KEY`: Google Gemini API key (for recipe text generation, refinement, and prompt enhancement - used by `/api/recipes/generate`, `/api/recipes/[slug]/refine`, and `/api/recipes/[slug]/generate-image` endpoints)
    - `FIREFLY_API_TOKEN`: Adobe Firefly API bearer token (for image generation - used by `/api/recipes/[slug]/generate-image` endpoint)
    - `FIREFLY_API_KEY`: Adobe Firefly API key (defaults to "clio-playground-web" if not set, used by `/api/recipes/[slug]/generate-image` endpoint)
    - _(optional)_ `RECIPE_STORAGE_BUCKET`: overrides the default `recipe-images` bucket name
@@ -144,7 +144,8 @@ The following user stories are planned but not yet implemented:
 - Navigation history checks use `document.referrer` to ensure same-origin navigation (prevents "about:blank" issues). Previous navigation is disabled/hidden when there's no same-origin history.
 - Supabase provides recipe data via table queries; types generated in `src/types/supabase.ts`.
 - Authenticated POST to `/api/recipes` upserts recipes from JSON payloads that match the YAML schema. Requires a `Bearer` token that matches `EDIT_TOKEN`.
-- POST to `/api/recipes/generate` generates recipe content (ingredients, instructions, image prompts) using Gemini API. Does not save to database. Requires `EDIT_TOKEN` authentication and `GEMINI_API_KEY` on the server.
+- POST to `/api/recipes/generate` generates recipe content (ingredients, instructions, image prompts) using Gemini API. Does not save to database. Always returns the first generated variant (no refinement). Requires `EDIT_TOKEN` authentication and `GEMINI_API_KEY` on the server.
+- POST to `/api/recipes/[slug]/refine` evaluates and refines an existing recipe in the database. Evaluates the recipe, and if issues are found, generates a refined version and updates it. Requires `EDIT_TOKEN` authentication and `GEMINI_API_KEY` on the server.
 - POST to `/api/recipes/[slug]/generate-image` generates and uploads images for existing recipes. Requires `EDIT_TOKEN`, `FIREFLY_API_TOKEN`, and `GEMINI_API_KEY` on the server. Handles prompt enrichment, Firefly image generation, storage upload, and database update.
 
 ## Screen Structure & Navigation
@@ -343,6 +344,7 @@ This architecture provides stateful navigation that tracks forward and backward 
 
 - **Recipe Management**:
   - ✅ Add new recipes via agent/API integration (with secure Vercel token authentication) - **Implemented**: `/api/recipes/generate` endpoint
+  - ✅ Recipe refinement endpoint - **Implemented**: `/api/recipes/[slug]/refine` endpoint for evaluating and improving existing recipes
   - Support recipe variations (e.g., vegetarian versions of existing meals)
 
 - **Performance & UX**:
@@ -444,10 +446,17 @@ The script will:
 
 - **`scripts/generate-recipe-yaml.ts`**: Generates recipe YAML with image prompts
   - Calls `/api/recipes/generate` endpoint (which uses Gemini API server-side)
-  - Generates recipe content (ingredients, instructions) and image prompts
+  - Generates recipe content (ingredients, instructions) and image prompts (returns first variant, no refinement)
   - Saves YAML file to `data/recipes/<slug>/<slug>.yaml`
   - Requires `EDIT_TOKEN` for authentication
   - Supports `--endpoint` flag to specify API URL
+- **`scripts/recipe-evaluator.ts`**: Evaluates and refines recipes in the database
+  - Calls `/api/recipes/[slug]/refine` endpoint
+  - Evaluates recipe quality and automatically refines if issues are found
+  - Updates recipe in database with refined version
+  - Accepts either a recipe slug or YAML file path (extracts slug automatically)
+  - Supports `--endpoint` and `--token` flags
+  - Requires `EDIT_TOKEN` for authentication
 - **`scripts/generate-recipe-image.ts`**: Generates images for recipes in the database
   - Calls `/api/recipes/[slug]/generate-image` endpoint
   - Endpoint handles prompt enrichment, Firefly image generation, upload, and database update
@@ -466,7 +475,8 @@ The script will:
 ### API Endpoints
 
 - **`POST /api/recipes`**: Creates or updates a recipe in the database. Accepts normalized recipe payloads, upserting by slug. Requests must include `Authorization: Bearer <EDIT_TOKEN>`; the server rejects missing or mismatched tokens with `401`.
-- **`POST /api/recipes/generate`**: Generates recipe content (ingredients, instructions, image prompts) using Gemini API. Does not save to database. Requires `Authorization: Bearer <EDIT_TOKEN>` and `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) configured on the server. Returns recipe data in the same format as `POST /api/recipes`.
+- **`POST /api/recipes/generate`**: Generates recipe content (ingredients, instructions, image prompts) using Gemini API. Does not save to database. Always returns the first generated variant without refinement. Requires `Authorization: Bearer <EDIT_TOKEN>` and `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) configured on the server. Returns recipe data in the same format as `POST /api/recipes`.
+- **`POST /api/recipes/[slug]/refine`**: Evaluates and refines an existing recipe in the database. Evaluates the recipe against quality standards, and if issues are found, generates a refined version and updates the database. Returns evaluation results and the updated recipe. Requires `Authorization: Bearer <EDIT_TOKEN>` and `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) configured on the server.
 - **`POST /api/recipes/[slug]/generate-image`**: Generates and uploads an image for an existing recipe. Loads recipe from database, enriches prompt using Gemini API, generates image with Firefly API, uploads to Supabase Storage, and updates recipe's `image_url` in database. Requires `Authorization: Bearer <EDIT_TOKEN>`, `FIREFLY_API_TOKEN`, `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) on server. Optional `x-firefly-key` header for Firefly API key (defaults to `FIREFLY_API_KEY` env var or "clio-playground-web").
 - **`POST /api/images`**: Accepts image uploads with `slug` and `file` (multipart/form-data), automatically updating recipe `image_url` if the recipe exists. Requires `Authorization: Bearer <EDIT_TOKEN>`.
 
@@ -474,7 +484,8 @@ The script will:
 
 1. Generate recipe YAML: `yarn ts-node scripts/generate-recipe-yaml.ts "Meal Name" --description "..." --tags "tag1,tag2"`
 2. Upload to database: `yarn ts-node scripts/upload-recipe.ts data/recipes/<slug>/<slug>.yaml`
-3. Generate recipe image: `yarn ts-node scripts/generate-recipe-image.ts <slug>`
+3. (Optional) Refine recipe: `yarn ts-node scripts/recipe-evaluator.ts <slug>` - evaluates and automatically refines the recipe if issues are found
+4. Generate recipe image: `yarn ts-node scripts/generate-recipe-image.ts <slug>`
 
 ## Data Flow
 

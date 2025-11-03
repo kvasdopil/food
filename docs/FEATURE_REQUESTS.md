@@ -1,4 +1,6 @@
 - list liked meals
+- remove slider and 'next recipe' button, make it a simple 2-level structure on mobile and web
+- add feed to 'recipe' view on desktop?
 - add recipe via agent
   - secure token via vercel?
 - another variation of same meal, like vegeterian version of the same
@@ -7,6 +9,7 @@
 - preload next recipe on desktop
 - proper goback button on desktop
 - search for meals, names, components and tags
+- fix refine endpoint response format inconsistency (when checks pass, return database format instead of RecipeData format for consistency)
 - scenario: 
   - take a meal, generate a variation (same but vegan/vegeterian/glutenfree/with chicken)
 - scenario: 

@@ -1,0 +1,102 @@
+title: Beef Pad See Ew
+summary: >-
+  Stir-fried wide rice noodles with beef, broccoli, and sweet soy sauce, paired
+  with chili-garlic cucumber slices.
+servings: 3
+prepTimeMinutes: 20
+cookTimeMinutes: 25
+ingredients:
+  - name: beef sirloin
+    amount: 300 g
+    notes: thinly sliced against the grain
+  - name: fresh wide rice noodles
+    amount: 400 g
+    notes: or dried, prepared according to package instructions
+  - name: broccoli florets
+    amount: 200 g
+    notes: cut into bite-sized pieces
+  - name: garlic
+    amount: 4 cloves
+    notes: minced
+  - name: eggs
+    amount: '2'
+    notes: lightly beaten
+  - name: dark sweet soy sauce
+    amount: 2 tbsp
+    notes: also known as kecap manis or thick soy sauce
+  - name: light soy sauce
+    amount: 2 tbsp
+  - name: oyster sauce
+    amount: 1 tbsp
+  - name: white granulated sugar
+    amount: 1 tsp
+  - name: neutral oil
+    amount: 3 tbsp
+    notes: for stir-frying, e.g., canola, vegetable, or sunflower oil
+  - name: cucumber
+    amount: 1 medium
+    notes: sliced into thin rounds
+  - name: red bird's eye chili
+    amount: '1'
+    notes: finely sliced, adjust to taste
+  - name: white vinegar
+    amount: 1 tbsp
+instructions:
+  - step: 1
+    action: >-
+      Prepare the cucumber salad: In a small bowl, combine sliced *cucumber*,
+      *red bird's eye chili*, and *white vinegar*. Add a pinch of sugar and
+      salt, then set aside to marinate while you prepare the main dish.
+  - step: 2
+    action: >-
+      Marinate the beef: In a separate bowl, toss the sliced *beef sirloin* with
+      1 tbsp of the *light soy sauce* and 1 tbsp of the *neutral oil*. Set
+      aside. If using dried wide rice noodles, prepare them according to package
+      instructions and drain well.
+  - step: 3
+    action: >-
+      Make the stir-fry sauce: In a small bowl, whisk together the remaining 1
+      tbsp *light soy sauce*, *dark sweet soy sauce*, *oyster sauce*, and *white
+      granulated sugar*. Set aside.
+  - step: 4
+    action: >-
+      Stir-fry the beef: Heat 1 tbsp of *neutral oil* in a large wok or skillet
+      over high heat until smoking. Add the marinated beef in a single layer and
+      sear for 1-2 minutes per side until browned. Remove beef from the wok and
+      set aside.
+  - step: 5
+    action: >-
+      Cook the broccoli and garlic: Add another 1 tbsp of *neutral oil* to the
+      wok. Add the *broccoli florets* and stir-fry for 2-3 minutes until bright
+      green and slightly tender-crisp. Add the *minced garlic* and stir-fry for
+      30 seconds until fragrant.
+  - step: 6
+    action: >-
+      Combine noodles and sauce: Add the *fresh wide rice noodles* (or prepared
+      dried noodles) to the wok. Pour the prepared stir-fry sauce over the
+      noodles. Toss everything together vigorously for 1-2 minutes, ensuring the
+      noodles are evenly coated and slightly caramelized. If the noodles stick,
+      add a tiny splash of water.
+  - step: 7
+    action: >-
+      Add eggs and beef: Push the noodles and vegetables to one side of the wok.
+      Pour the *lightly beaten eggs* into the empty side and scramble until just
+      set, about 1 minute. Return the cooked beef to the wok. Toss everything
+      together to combine.
+  - step: 8
+    action: >-
+      Serve immediately: Divide the Beef Pad See Ew among serving plates. Serve
+      hot with the chili-garlic cucumber slices on the side.
+tags:
+  - thai
+  - beef
+imagePrompt:
+  base: >-
+    Vibrant close-up of Beef Pad See Ew, plated to showcase vivid textures and
+    color. Incorporate visual cues from this description: Stir-fried wide rice
+    noodles with beef, broccoli, and sweet soy sauce, paired with chili-garlic
+    cucumber slices.. Scene: thai-inspired table with soft natural daylight,
+    eye-level perspective, and shallow depth of field. Capture fresh garnish,
+    inviting lighting, and a sense of homemade comfort with no visible steam or
+    vapor. No people or branded props.
+

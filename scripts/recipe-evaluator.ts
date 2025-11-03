@@ -1,29 +1,24 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 
-type GenerateContentResponse = {
-  candidates?: Array<{
-    content?: {
-      parts?: Array<{
-        text?: string;
-      }>;
-    };
-    finishReason?: string;
-  }>;
-  promptFeedback?: {
-    blockReason?: string;
+type RefineResponse = {
+  message: string;
+  evaluation?: string;
+  recipe?: {
+    id: string;
+    slug: string;
+    name: string;
+    description: string | null;
+    tags: string[];
+    image_url: string | null;
+    created_at: string;
+    updated_at: string;
   };
 };
 
-const API_BASE_URL = "https://generativelanguage.googleapis.com/v1beta";
-const TEXT_MODEL = "gemini-2.5-flash";
-
-async function loadEnvKey(): Promise<string | undefined> {
-  if (process.env.GEMINI_API_KEY) {
-    return process.env.GEMINI_API_KEY;
-  }
-  if (process.env.GOOGLE_API_KEY) {
-    return process.env.GOOGLE_API_KEY;
+async function loadEnvValue(key: string): Promise<string | undefined> {
+  if (process.env[key]) {
+    return process.env[key];
   }
 
   const envLocalPath = path.resolve(".env.local");
@@ -31,21 +26,17 @@ async function loadEnvKey(): Promise<string | undefined> {
   try {
     const content = await fs.readFile(envLocalPath, "utf-8");
     const lines = content.split(/\r?\n/);
+
     for (const line of lines) {
       const trimmed = line.trim();
       if (!trimmed || trimmed.startsWith("#")) continue;
 
-      const [key, ...rest] = trimmed.split("=");
+      const [envKey, ...rest] = trimmed.split("=");
       const value = rest.join("=").trim();
       if (!value) continue;
 
-      if (key === "GEMINI_API_KEY") {
-        process.env.GEMINI_API_KEY = value;
-        return value;
-      }
-
-      if (key === "GOOGLE_API_KEY") {
-        process.env.GOOGLE_API_KEY = value;
+      if (envKey === key) {
+        process.env[key] = value;
         return value;
       }
     }
@@ -56,113 +47,169 @@ async function loadEnvKey(): Promise<string | undefined> {
   return undefined;
 }
 
-async function callGemini(model: string, body: Record<string, unknown>, apiKey: string) {
-  const url = `${API_BASE_URL}/models/${model}:generateContent?key=${apiKey}`;
+function extractSlugFromPath(inputPath: string): string | null {
+  // Handle both absolute and relative paths
+  const normalizedPath = path.resolve(inputPath);
+  
+  // Check if it's a YAML file in the recipes directory structure
+  // Pattern: data/recipes/<slug>/<slug>.yaml
+  const recipesDirPattern = /[\/\\]data[\/\\]recipes[\/\\]([^\/\\]+)[\/\\][^\/\\]+\.ya?ml$/i;
+  const match = normalizedPath.match(recipesDirPattern);
+  if (match && match[1]) {
+    return match[1];
+  }
+
+  // If it's just a slug (no path separators or file extension)
+  if (!inputPath.includes(path.sep) && !inputPath.includes("/") && !inputPath.includes("\\") && !inputPath.includes(".")) {
+    return inputPath;
+  }
+
+  // Try to extract from any path that might be a YAML file
+  // Extract the directory name before the file if it looks like a slug
+  const dirName = path.dirname(normalizedPath);
+  const baseName = path.basename(dirName);
+  if (baseName && baseName.match(/^[a-z0-9-]+$/)) {
+    return baseName;
+  }
+
+  return null;
+}
+
+function printUsage() {
+  const usageMessage = `
+Usage: ts-node scripts/recipe-evaluator.ts <slug|yaml-path> [options]
+
+Arguments:
+  <slug|yaml-path>    Recipe slug (e.g., "chicken-tikka-masala") or path to recipe YAML file
+
+Options:
+  --endpoint <url>     API endpoint URL (defaults to http://localhost:3000)
+  --token <token>     EDIT_TOKEN for authentication (defaults to EDIT_TOKEN env var or .env.local)
+  -h, --help          Show this message
+
+Examples:
+  ts-node scripts/recipe-evaluator.ts chicken-tikka-masala
+  ts-node scripts/recipe-evaluator.ts data/recipes/chicken-tikka-masala/chicken-tikka-masala.yaml
+  ts-node scripts/recipe-evaluator.ts chicken-tikka-masala --endpoint http://localhost:3000
+`;
+  console.log(usageMessage.trim());
+}
+
+async function refineRecipe(
+  slug: string,
+  endpoint: string,
+  token: string,
+): Promise<RefineResponse> {
+  const url = `${endpoint}/api/recipes/${slug}/refine`;
+
   const response = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(body),
   });
 
   if (!response.ok) {
     const errorText = await response.text();
     throw new Error(
-      `Gemini API request failed (${response.status} ${response.statusText}): ${errorText}`,
+      `Refine API failed (${response.status} ${response.statusText}): ${errorText}`,
     );
   }
 
-  return (await response.json()) as GenerateContentResponse;
-}
-
-function ensureText(response: GenerateContentResponse, errorContext: string) {
-  if (response.promptFeedback?.blockReason) {
-    throw new Error(
-      `${errorContext} was blocked by Gemini: ${response.promptFeedback.blockReason}`,
-    );
-  }
-
-  const text = response.candidates
-    ?.flatMap((candidate) => candidate.content?.parts ?? [])
-    .map((part) => part.text ?? "")
-    .join("")
-    .trim();
-
-  if (!text) {
-    throw new Error(`Gemini did not return text for: ${errorContext}`);
-  }
-
-  return text;
+  return (await response.json()) as RefineResponse;
 }
 
 async function main() {
-  const [inputPath] = process.argv.slice(2);
+  try {
+    const args = process.argv.slice(2);
 
-  if (!inputPath) {
-    console.error("Usage: ts-node scripts/recipe-evaluator.ts <path-to-recipe.yaml>");
+    if (args.length === 0 || args[0] === "--help" || args[0] === "-h") {
+      printUsage();
+      process.exit(0);
+    }
+
+    let slug: string | null = null;
+    let endpoint = process.env.RECIPE_API_URL ?? "http://localhost:3000";
+    let token: string | undefined;
+
+    // Parse arguments
+    for (let i = 0; i < args.length; i++) {
+      const arg = args[i];
+      if (arg === "--endpoint") {
+        endpoint = args[i + 1];
+        if (!endpoint) {
+          throw new Error("--endpoint requires a URL argument");
+        }
+        i++;
+      } else if (arg.startsWith("--endpoint=")) {
+        endpoint = arg.split("=")[1];
+      } else if (arg === "--token") {
+        token = args[i + 1];
+        if (!token) {
+          throw new Error("--token requires a token argument");
+        }
+        i++;
+      } else if (arg.startsWith("--token=")) {
+        token = arg.split("=")[1];
+      } else if (arg === "--help" || arg === "-h") {
+        printUsage();
+        process.exit(0);
+      } else if (!slug && !arg.startsWith("-")) {
+        // Try to extract slug from path, or use as slug directly
+        const extractedSlug = extractSlugFromPath(arg);
+        if (extractedSlug) {
+          slug = extractedSlug;
+        } else {
+          // Use as slug if it looks like one (no file extension, simple string)
+          slug = arg;
+        }
+      } else {
+        throw new Error(`Unknown argument: ${arg}`);
+      }
+    }
+
+    if (!slug) {
+      throw new Error("Recipe slug or YAML path is required");
+    }
+
+    // Load token if not provided
+    if (!token) {
+      token = await loadEnvValue("EDIT_TOKEN");
+    }
+
+    if (!token) {
+      throw new Error(
+        "Provide EDIT_TOKEN via --token, EDIT_TOKEN env var, or .env.local before running this script.",
+      );
+    }
+
+    console.log(`Evaluating and refining recipe: ${slug}`);
+    console.log(`Endpoint: ${endpoint}\n`);
+
+    // Call the refine endpoint
+    const result = await refineRecipe(slug, endpoint, token);
+
+    // Display results
+    console.log(result.message);
+    console.log();
+
+    if (result.evaluation) {
+      console.log("Evaluation result:");
+      console.log(result.evaluation);
+      console.log();
+    }
+
+    if (result.recipe) {
+      console.log("Updated recipe:");
+      console.log(`  Slug: ${result.recipe.slug}`);
+      console.log(`  Name: ${result.recipe.name}`);
+      console.log(`  Updated: ${new Date(result.recipe.updated_at).toLocaleString()}`);
+    }
+  } catch (error) {
+    console.error(`[recipe-evaluator] ${(error as Error).message}`);
     process.exitCode = 1;
-    return;
   }
-
-  const apiKey = await loadEnvKey();
-  if (!apiKey) {
-    throw new Error(
-      "Provide GEMINI_API_KEY (or GOOGLE_API_KEY) via env or .env.local before running this script.",
-    );
-  }
-
-  const absolutePath = path.resolve(inputPath);
-  const yamlContent = await fs.readFile(absolutePath, "utf-8");
-
-  const evaluationInstructions = [
-    "CRITICAL: Content preservation is the MOST IMPORTANT rule. Never suggest changes that would:",
-    "  - Remove ingredients, steps, or cooking instructions",
-    "  - Eliminate ingredient uses (e.g., if an ingredient appears in multiple steps, ensure all uses are preserved)",
-    "  - Change the recipe's cooking method, timing, or essential instructions",
-    "  - Remove or consolidate duplicate ingredient entries unless they are truly redundant (e.g., same ingredient with different notes/amounts for different uses should be preserved)",
-    "  - Alter the logical flow or completeness of the recipe",
-    "",
-    "Evaluate the provided recipe YAML against these production rules (formatting rules are secondary to content preservation):",
-    '- Use metric measurements with abbreviated units (g, ml, °C) plus tsp/tbsp where helpful. You may use descriptions such as "1 medium" or "2 large" for whole produce, but never revert to Fahrenheit, pounds, ounces, or cups.',
-    " - Describe tiny amounts (a drizzle, a pinch) naturally so the instructions do not invent precise measurements for them.",
-    " - Mention each ingredient in lowercase within instructions and wrap the first occurrence per step in *asterisks* (e.g., *olive oil*).",
-    " - It's acceptable to use descriptive phrases in instructions (e.g., *trimmed green beans*, *minced garlic*) for clarity - you don't need to match ingredient list names exactly.",
-    " - Ingredient amounts should not contain parenthetical notes; move contextual details into a `notes` field.",
-    " - Instructions should be concise and practical. They should reference the ingredient list, except for common pantry staples (salt, pepper, oil, water, basic seasonings) which may be mentioned without explicit listing.",
-    " - Keep ingredient names in the ingredients array lowercase so the UI can highlight them consistently.",
-    "",
-    "When suggesting fixes:",
-    "  - ONLY suggest formatting and structural changes (case, asterisks, note placement)",
-    "  - NEVER suggest removing ingredients, steps, or instruction content",
-    "  - NEVER suggest changing descriptive phrases in instructions to match ingredient list names exactly (e.g., don't change '*trimmed green beans*' to '*green beans*' or '*minced garlic*' to '*garlic*')",
-    "  - If an ingredient appears multiple times (e.g., frozen peas used in filling AND as side dish), preserve ALL uses",
-    "  - If splitting or clarifying ingredient entries, ensure the total usage matches the original",
-    "",
-    "Assess the recipe and return one of:",
-    " - If issues exist, list them as Markdown bullets detailing the required change (be specific about ingredient names, steps, or fields). Only suggest fixes that preserve all content.",
-    " - If everything already complies, respond with the sentence: `All checks passed. No changes needed.`",
-  ].join("\n");
-
-  const requestBody = {
-    contents: [
-      {
-        role: "user",
-        parts: [
-          {
-            text: `${evaluationInstructions}\n\nCurrent recipe YAML:\n${yamlContent}`,
-          },
-        ],
-      },
-    ],
-    generationConfig: {
-      temperature: 0.3,
-    },
-  };
-
-  const response = await callGemini(TEXT_MODEL, requestBody, apiKey);
-  const result = ensureText(response, "Recipe evaluation");
-  console.log(result);
 }
 
 void main();

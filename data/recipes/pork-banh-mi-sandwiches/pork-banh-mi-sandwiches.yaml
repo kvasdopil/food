@@ -1,0 +1,110 @@
+title: Pork Banh Mi Sandwiches
+summary: >-
+  Marinated pork, pickled veggies, and sriracha mayo on crusty baguette,
+  accompanied by sesame cucumber salad.
+servings: 2
+prepTimeMinutes: 25
+cookTimeMinutes: 15
+ingredients:
+  - name: pork loin
+    amount: 400 g
+    notes: thinly sliced
+  - name: crusty baguette
+    amount: '2'
+    notes: medium-sized
+  - name: carrot
+    amount: 1 medium
+    notes: julienned
+  - name: daikon radish
+    amount: 100 g
+    notes: julienned
+  - name: cucumber
+    amount: 1 large
+    notes: half sliced for banh mi, half for salad
+  - name: mayonnaise
+    amount: 80 g
+  - name: sriracha
+    amount: 15 ml
+  - name: soy sauce
+    amount: 30 ml
+  - name: fish sauce
+    amount: 15 ml
+  - name: rice vinegar for pickling
+    amount: 60 ml
+  - name: rice vinegar for cucumber salad
+    amount: 20 ml
+  - name: caster sugar for pickling
+    amount: 30 g
+  - name: caster sugar for pork marinade
+    amount: 15 g
+  - name: caster sugar for cucumber salad
+    amount: 5 g
+  - name: garlic cloves
+    amount: '2'
+    notes: minced
+  - name: fresh ginger
+    amount: 10 g
+    notes: grated
+  - name: sesame oil
+    amount: 5 ml
+  - name: sesame seeds
+    amount: 5 g
+  - name: fresh coriander
+    amount: a small bunch
+    notes: roughly chopped
+  - name: fresh red chilli
+    amount: '1'
+    notes: thinly sliced, optional
+instructions:
+  - step: 1
+    action: >-
+      In a small bowl, combine the julienned *carrot* and *daikon radish*. Pour
+      over the *rice vinegar for pickling*, the *caster sugar for pickling*, and
+      60 ml of warm water. Stir well and set aside to pickle while you prepare
+      other components.
+  - step: 2
+    action: >-
+      Thinly slice the *pork loin*. In a separate bowl, whisk together the *soy
+      sauce*, the *fish sauce*, the *caster sugar for pork marinade*, the minced
+      *garlic cloves*, and the grated *fresh ginger*. Add the pork slices to the
+      marinade, ensuring they are well coated. Let marinate for at least 10
+      minutes.
+  - step: 3
+    action: >-
+      For the sesame cucumber salad, slice half of the *cucumber* into thin
+      half-moons. In a small bowl, whisk together the *rice vinegar for cucumber salad*,
+      the *caster sugar for cucumber salad*, and the *sesame oil*. Toss the
+      cucumber slices with this dressing and sprinkle with *sesame seeds*. For
+      the sriracha mayo, simply mix the *mayonnaise* and *sriracha* in a small
+      bowl.
+  - step: 4
+    action: >-
+      Heat a drizzle of oil in a frying pan over medium-high heat. Add the
+      marinated pork slices in a single layer (cook in batches if necessary) and
+      cook for 2-3 minutes per side, until browned and cooked through. Remove
+      from heat and set aside.
+  - step: 5
+    action: >-
+      Slice the *crusty baguette* lengthwise, without cutting all the way
+      through. Lightly toast the baguette halves in a dry pan or under a grill
+      for a minute or two until slightly crispy. Spread a generous layer of
+      sriracha mayo on both sides of the baguette.
+  - step: 6
+    action: >-
+      Layer the cooked pork, drained pickled vegetables, fresh cucumber slices
+      (from the remaining half), *fresh coriander*, and *fresh red chilli*
+      slices (if using) inside the baguette. Serve immediately with the sesame
+      cucumber salad on the side.
+tags:
+  - vietnamese
+  - pork
+imagePrompt:
+  base: >-
+    Vibrant close-up of Pork Banh Mi Sandwiches, plated to showcase vivid
+    textures and color. Incorporate visual cues from this description: Marinated
+    pork, pickled veggies, and sriracha mayo on crusty baguette, accompanied by
+    sesame cucumber salad.. Scene: vietnamese-inspired table with soft natural
+    daylight, eye-level perspective, and shallow depth of field. Capture fresh
+    garnish, inviting lighting, and a sense of homemade comfort with no visible
+    steam or vapor. No people or branded props.
+
