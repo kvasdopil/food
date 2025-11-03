@@ -77,13 +77,13 @@ type FireflyJobStatus = {
   message?: string;
   error_code?: string;
   status?:
-    | "pending"
-    | "running"
-    | "succeeded"
-    | "failed"
-    | "cancel_pending"
-    | "cancelled"
-    | "timeout";
+  | "pending"
+  | "running"
+  | "succeeded"
+  | "failed"
+  | "cancel_pending"
+  | "cancelled"
+  | "timeout";
   links?: {
     result?: {
       href: string;

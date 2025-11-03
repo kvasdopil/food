@@ -500,6 +500,13 @@ The script will:
   - Updates matching recipes in the database by slug
   - Requires `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`
   - Useful for migrating existing recipes after adding time fields to the schema
+- **`scripts/delete-recipe.ts`**: Deletes a recipe from the database
+  - Accepts recipe slug as command-line argument
+  - Calls `DELETE /api/recipes/[slug]` endpoint
+  - Loads `EDIT_TOKEN` from `.env.local` or environment variables
+  - Requires `EDIT_TOKEN` for authentication
+  - Supports `NEXT_PUBLIC_API_BASE_URL` environment variable (defaults to `http://localhost:3000`)
+  - Usage: `yarn ts-node scripts/delete-recipe.ts <slug>`
 
 ### Recipe Upload CLI & API
 
@@ -519,6 +526,7 @@ The script will:
 - **`POST /api/recipes/[slug]/refine`**: Evaluates and refines an existing recipe in the database. Evaluates the recipe against quality standards, and if issues are found, generates a refined version and updates the database. Returns evaluation results and the updated recipe. Requires authentication via `Authorization: Bearer <EDIT_TOKEN>` or `Authorization: Bearer <SUPABASE_SESSION_TOKEN>`, and `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) configured on the server.
 - **`POST /api/recipes/[slug]/generate-image`**: Generates and uploads an image for an existing recipe. Loads recipe from database, enriches prompt using Gemini API, generates image with Firefly API, uploads to Supabase Storage, and updates recipe's `image_url` in database. Requires authentication via `Authorization: Bearer <EDIT_TOKEN>` or `Authorization: Bearer <SUPABASE_SESSION_TOKEN>`, `FIREFLY_API_TOKEN`, `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) on server. Optional `x-firefly-key` header for Firefly API key (defaults to `FIREFLY_API_KEY` env var or "clio-playground-web").
 - **`POST /api/images`**: Accepts image uploads with `slug` and `file` (multipart/form-data), automatically updating recipe `image_url` if the recipe exists. Requires authentication via `Authorization: Bearer <EDIT_TOKEN>` or `Authorization: Bearer <SUPABASE_SESSION_TOKEN>`.
+- **`DELETE /api/recipes/[slug]`**: Deletes a recipe from the database by slug. Returns success message with recipe name. Requires authentication via `Authorization: Bearer <EDIT_TOKEN>` or `Authorization: Bearer <SUPABASE_SESSION_TOKEN>`. Returns 404 if recipe not found, 401 if unauthorized.
 
 ### Typical Workflow
 
