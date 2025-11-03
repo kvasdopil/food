@@ -40,40 +40,6 @@ supabase db push          # apply migrations to the linked project
 supabase db reset --yes   # optional: reset + seed (only on empty databases)
 ```
 
-## Google Authentication Setup
-
-The app supports Google authentication via Supabase. To enable Google sign-in:
-
-1. **Enable Google Provider in Supabase Dashboard:**
-   - Go to your Supabase project dashboard: https://supabase.com/dashboard/project/vsgeynrnczcqtkepitmj
-   - Navigate to **Authentication** → **Providers**
-   - Enable the **Google** provider
-   - Follow the instructions to set up Google OAuth credentials:
-     - Create a project in [Google Cloud Console](https://console.cloud.google.com/)
-     - Create OAuth 2.0 credentials (Client ID and Client Secret)
-     - Add authorized redirect URIs:
-       - **Supabase callback (REQUIRED)**: `https://vsgeynrnczcqtkepitmj.supabase.co/auth/v1/callback`
-       - For local development (optional): `http://localhost:3000/auth/callback`
-       - For production (optional): `https://recipe-thing-9wi8kpslr-alexey-guskovs-projects.vercel.app/auth/callback`
-       - For custom domain (optional): `https://food.guskov.dev/auth/callback`
-     **Important**: Supabase handles OAuth redirects through its own endpoint (`{your-project}.supabase.co/auth/v1/callback`), which is the primary redirect URI you must configure. The app's `/auth/callback` route is only used after Supabase processes the OAuth flow.
-     - Copy the Client ID and Client Secret to Supabase
-
-2. **Configure Redirect URLs in Supabase:**
-   - In Supabase Dashboard → **Authentication** → **URL Configuration**
-   - Set **Site URL** to: `https://food.guskov.dev` (your custom domain)
-   - Add redirect URLs:
-     - `http://localhost:3000/auth/callback` (for local development)
-     - `https://recipe-thing-9wi8kpslr-alexey-guskovs-projects.vercel.app/auth/callback` (for Vercel default domain)
-     - `https://food.guskov.dev/auth/callback` (for custom domain)
-
-3. **User Interface:**
-   - The user avatar appears to the right of the search bar in the feed layout
-   - Click the avatar icon to sign in with Google (if not authenticated)
-   - Once authenticated, click the avatar to see a dropdown menu with logout option
-
-The authentication state is managed client-side using the `useAuth` hook, which listens to Supabase auth state changes and provides sign-in/sign-out functionality.
-
 ## Deploy to Vercel
 
 1. Install the Vercel CLI if you have not already:
@@ -146,6 +112,10 @@ The authentication state is managed client-side using the `useAuth` hook, which 
 - **US-22**: As a user, I want to share recipes using native share functionality when available (Web Share API) so I can easily share recipes with others.
 - **US-23**: As a user, I want a fallback copy-link option when native sharing isn't available so I can share recipes on any device.
 
+#### Recipe Creation
+
+- **US-36**: As a logged-in user, I want to see an "Add Recipe" button on the feed page so I can create new recipes. ✅ **Implemented**: Add Recipe button appears to the left of the avatar for logged-in users, opens a modal with placeholder content (fullscreen on mobile, centered window on desktop).
+
 #### Responsive Design
 
 - **US-24**: As a user, I want the app to be mobile-first with responsive design so it works well on phones, tablets, and desktops. ✅ **Implemented**: Mobile-first design with breakpoints at 640px (sm) and 1280px (xl).
@@ -176,7 +146,7 @@ The following user stories are planned but not yet implemented:
 - **Shuffled feed order**: Recipes in the feed are shuffled deterministically based on the current date. The same date produces the same shuffle order, ensuring a stable sequence throughout the day. The shuffle order changes daily, providing variety while maintaining consistency during browsing sessions.
 - **Search functionality**: Search bar in feed layout allows searching recipes by name or tags. Search query is debounced (300ms) and persists in URL as `q=` parameter. Can be combined with tag filters (e.g., `/feed?tags=vegetarian&q=pasta`). Search state is managed in the persistent feed layout to prevent remounting during navigation.
 - Tag filtering: Users can click tags on recipe cards to toggle filters. Active tags are displayed inline within the search bar, between the search icon and input field, with individual remove buttons on each tag. The clear button (X) removes both the search query and all active tags. Filters persist in the URL using `+` separator (e.g., `/feed?tags=vegetarian+italian`). Tag filtering works on both desktop and mobile views.
-- Feed layout `src/app/feed/layout.tsx` contains the search bar (with integrated tag display) in a persistent layout that doesn't remount during navigation, ensuring search state is preserved.
+- Feed layout `src/app/feed/layout.tsx` contains the search bar (with integrated tag display) in a persistent layout that doesn't remount during navigation, ensuring search state is preserved. Includes Add Recipe button (visible for logged-in users) that opens a responsive modal for adding recipes.
 - Dynamic route `src/app/recipes/[slug]/page.tsx` handles metadata generation only; rendering is handled by the layout.
 - Layout `src/app/recipes/layout.tsx` manages recipe rendering and includes a back-to-feed link in the top-left corner (links to `/feed` with `cursor: pointer`). Recipes render normally on all screen sizes (no mobile carousel).
 - Navigation history checks use `document.referrer` to ensure same-origin navigation (prevents "about:blank" issues). Previous navigation is disabled/hidden when there's no same-origin history.
@@ -210,6 +180,8 @@ The app has three main routes:
 - Manages search query synchronization with URL (`?q=searchterm`)
 - Contains:
   - Search bar (`RecipeSearchBar`) - searches by recipe name and tags, displays active tags inline between search icon and input field
+  - Add Recipe button (`AddRecipeButton`) - appears to the left of the avatar for logged-in users, opens add recipe modal
+  - Add Recipe modal (`AddRecipeModal`) - responsive modal (fullscreen on mobile, centered window on desktop) with placeholder content
   - Wraps feed page content
 
 **Recipes Layout** (`src/app/recipes/layout.tsx`)
@@ -309,6 +281,9 @@ Navigation history is managed via **session storage** (`recipe-history.ts`):
 Feed Layout (`/feed`)
 ├── FeedLayoutContent (persistent layout)
 │   ├── RecipeSearchBar - search by name and tags, displays active tags inline
+│   ├── AddRecipeButton - appears to left of avatar for logged-in users
+│   ├── UserAvatar - user profile/authentication button
+│   ├── AddRecipeModal - responsive modal for adding recipes (fullscreen on mobile, window on desktop)
 │   └── Feed Page Content (children)
 │       └── RecipeFeedCard grid (responsive: 1 col mobile, 2 sm, 3 lg, 4 xl)
 │           ├── Image with title overlay
@@ -410,9 +385,11 @@ This architecture provides stateful navigation that tracks forward and backward 
 ## Page Structure
 
 - `src/app/page.tsx`: server component redirecting to `/feed`.
-- `src/app/feed/layout.tsx`: client component providing persistent feed layout with search bar (tags displayed inline). Manages search query state and URL synchronization.
+- `src/app/feed/layout.tsx`: client component providing persistent feed layout with search bar (tags displayed inline). Manages search query state and URL synchronization. Includes Add Recipe button (visible for logged-in users) and Add Recipe modal.
 - `src/app/feed/page.tsx`: client component displaying paginated recipe feed with infinite scroll. Reads search query and tags from URL. Responsive grid layout works on all screen sizes.
 - `src/components/recipe-search-bar.tsx`: search bar component with search icon, inline tag display (between icon and input), and clear button that clears both search and tags. Uses react-icons for icons. Tags are displayed as chips with individual remove buttons.
+- `src/components/add-recipe-button.tsx`: button component with transparent background and dark-gray plus icon. Only visible for logged-in users.
+- `src/components/add-recipe-modal.tsx`: responsive modal component for adding recipes. Fullscreen on mobile, centered window on desktop. Closes on Escape key or clicking outside. Prevents body scroll when open.
 - `src/components/recipe-feed-card.tsx`: recipe card component for feed page with image, title overlay, description, clickable tags (toggle filters), and favorite button.
 - `src/hooks/useTags.ts`: React hook for managing tags in feed context. Parses tags from URL, provides remove/clear functions. Preserves search query when modifying tags.
 - `src/lib/tag-utils.ts`: Utility functions for parsing tags from URLs and building tag URLs. Used by both client components and API routes.

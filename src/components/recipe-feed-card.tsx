@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import NextImage from "next/image";
+import { PiHeartStraightLight, PiHeartStraightFill } from "react-icons/pi";
 import { resolveRecipeImageUrl } from "@/lib/resolve-recipe-image-url";
 import { toggleTagInUrl } from "@/lib/tag-utils";
 import { RecipeTimeDisplay } from "@/components/recipe-time-display";
@@ -135,18 +136,11 @@ export function RecipeFeedCard({
             aria-label={isLiked ? "Remove from favourites" : "Save to favourites"}
             aria-pressed={isLiked}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill={isLiked ? "#ef4444" : "none"}
-              stroke={isLiked ? "#ef4444" : "#6b7280"}
-              strokeWidth={2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="h-6 w-6 sm:h-7 sm:w-7"
-            >
-              <path d="M19 14.5 12 21l-7-6.5A4.5 4.5 0 0 1 12 6.7a4.5 4.5 0 0 1 7 7.8Z" />
-            </svg>
+            {isLiked ? (
+              <PiHeartStraightFill className="h-6 w-6 text-red-500" />
+            ) : (
+              <PiHeartStraightLight className="h-6 w-6 text-gray-600" />
+            )}
           </button>
           {tags.map((tag, index) => (
             <button

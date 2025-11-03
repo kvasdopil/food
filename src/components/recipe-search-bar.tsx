@@ -32,7 +32,7 @@ export function RecipeSearchBar({
   return (
     <div className="mb-4 sm:mb-6">
       <div className="flex items-center gap-2 rounded-lg bg-white px-3 py-3 focus-within:shadow-md focus-within:ring-2 focus-within:ring-blue-500 focus-within:outline-none hover:shadow-md">
-        <HiMagnifyingGlass className="h-5 w-5 flex-shrink-0 text-gray-400" />
+        <HiMagnifyingGlass className="h-5 w-5 flex-shrink-0 text-gray-600" />
 
         {hasTags && (
           <div className="flex flex-shrink-0 items-center gap-2">
@@ -79,10 +79,10 @@ export function RecipeSearchBar({
               onChange("");
               onClearAllTags?.();
             }}
-            className="flex-shrink-0 text-gray-400 hover:text-gray-600"
+            className="flex-shrink-0 text-gray-600 hover:text-gray-800"
             aria-label="Clear search and filters"
           >
-            <AiOutlineClose className="h-5 w-5" />
+            <AiOutlineClose className="h-5 w-5 text-gray-600" />
           </button>
         )}
       </div>

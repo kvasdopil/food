@@ -4,13 +4,18 @@ import { Suspense, useEffect, useState, useRef } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { RecipeSearchBar } from "@/components/recipe-search-bar";
 import { UserAvatar } from "@/components/user-avatar";
+import { AddRecipeButton } from "@/components/add-recipe-button";
+import { AddRecipeModal } from "@/components/add-recipe-modal";
 import { useTags } from "@/hooks/useTags";
+import { useAuth } from "@/hooks/useAuth";
 import { buildFeedUrlWithTagsAndSearch, storeFeedUrl } from "@/lib/tag-utils";
 
 function FeedLayoutContent({ children }: { children: React.ReactNode }) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const { activeTags, removeTag, clearAllTags } = useTags();
+  const { user } = useAuth();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Get search query from URL on mount only
   const urlSearchQuery = searchParams.get("q") || "";
@@ -83,13 +88,15 @@ function FeedLayoutContent({ children }: { children: React.ReactNode }) {
                 onClearAllTags={clearAllTags}
               />
             </div>
-            <div className="flex h-[48px] items-center">
+            <div className="flex h-[48px] items-center gap-2">
+              {user && <AddRecipeButton onClick={() => setIsModalOpen(true)} />}
               <UserAvatar />
             </div>
           </div>
         </div>
         {children}
       </main>
+      <AddRecipeModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 }
