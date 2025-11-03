@@ -56,7 +56,6 @@ The app supports Google authentication via Supabase. To enable Google sign-in:
        - For local development (optional): `http://localhost:3000/auth/callback`
        - For production (optional): `https://recipe-thing-9wi8kpslr-alexey-guskovs-projects.vercel.app/auth/callback`
        - For custom domain (optional): `https://food.guskov.dev/auth/callback`
-       
      **Important**: Supabase handles OAuth redirects through its own endpoint (`{your-project}.supabase.co/auth/v1/callback`), which is the primary redirect URI you must configure. The app's `/auth/callback` route is only used after Supabase processes the OAuth flow.
      - Copy the Client ID and Client Secret to Supabase
 
@@ -471,7 +470,7 @@ The recipe generation process is split into two steps:
    - Updates the recipe's `image_url` in the database
 
    **Required:** `EDIT_TOKEN` (for API authentication)
-   **Optional:** 
+   **Optional:**
    - `--endpoint <url>` to specify API URL (defaults to `http://localhost:3000` or `RECIPE_API_URL` env var)
    - `--firefly-key <key>` to pass Firefly API key via header (defaults to `FIREFLY_API_KEY` env var or "clio-playground-web")
    - `--save-to <path>` to download and save the image locally
@@ -614,4 +613,3 @@ The script will:
 
 - do not run `yarn build` unless explicitly asked by user, to check build run `yarn lint`
 - do not commit anything to git unless explicitly asked by user
- 

@@ -28,7 +28,7 @@ ingredients:
     amount: 15 g
     notes: minced
   - name: garlic cloves
-    amount: '3'
+    amount: "3"
     notes: minced
   - name: dried red chillies
     amount: 4-6
@@ -48,7 +48,7 @@ ingredients:
   - name: basmati rice
     amount: 200 g
   - name: spring onions
-    amount: '2'
+    amount: "2"
     notes: thinly sliced for garnish
   - name: sesame seeds
     amount: 1 tsp
@@ -111,4 +111,3 @@ imagePrompt:
     sliced green onions. Bathed in soft, golden hour natural light, creating
     warm, inviting shadows and a shallow depth of field, evoking homemade
     comfort.
-

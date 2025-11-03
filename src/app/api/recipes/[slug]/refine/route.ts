@@ -1,12 +1,12 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { callGemini, ensureText, TEXT_MODEL } from "@/lib/gemini";
-import { buildRecipeGenerationPrompt, recipeSchema, type GenerateRequest } from "@/lib/prompts/recipe-generation";
-import { evaluateRecipe } from "@/lib/recipe-refinement";
 import {
-  type RecipeData,
-  normalizeRecipe,
-  isEvaluationPassed,
-} from "@/lib/recipe-utils";
+  buildRecipeGenerationPrompt,
+  recipeSchema,
+  type GenerateRequest,
+} from "@/lib/prompts/recipe-generation";
+import { evaluateRecipe } from "@/lib/recipe-refinement";
+import { type RecipeData, normalizeRecipe, isEvaluationPassed } from "@/lib/recipe-utils";
 import { supabaseAdmin } from "@/lib/supabaseAdminClient";
 
 type IngredientPayload = {
@@ -243,4 +243,3 @@ export async function POST(
     );
   }
 }
-

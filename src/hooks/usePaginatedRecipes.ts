@@ -67,7 +67,12 @@ export function usePaginatedRecipes(
   const loadingFromSlugRef = useRef<string | null>(null);
 
   const fetchRecipes = useCallback(
-    async (fromSlug?: string, tagsToFetch?: string[], searchToFetch?: string, signal?: AbortSignal) => {
+    async (
+      fromSlug?: string,
+      tagsToFetch?: string[],
+      searchToFetch?: string,
+      signal?: AbortSignal,
+    ) => {
       try {
         const params = new URLSearchParams();
         if (fromSlug) {

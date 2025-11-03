@@ -35,12 +35,12 @@ ingredients:
   - name: dried oregano
     amount: 0.5 tsp
   - name: bay leaf
-    amount: '1'
+    amount: "1"
   - name: white rice
     amount: 200 g
     notes: uncooked, for serving
   - name: ripe plantains
-    amount: '2'
+    amount: "2"
     notes: for serving
 instructions:
   - step: 1
@@ -97,4 +97,3 @@ imagePrompt:
     Garnish with a sprinkle of fresh cilantro. Bathed in warm, soft natural
     daylight with a shallow depth of field, creating a mouthwatering, comforting
     tableau of vibrant textures and rich, inviting colors.
-

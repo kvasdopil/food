@@ -33,7 +33,7 @@ ingredients:
   - name: chicken stock
     amount: 100 ml
   - name: lime
-    amount: '1'
+    amount: "1"
     notes: for wedges and juice
   - name: fresh coriander
     amount: a small bunch
@@ -88,4 +88,3 @@ imagePrompt:
     a bright lime wedge. Bathed in warm, directional natural light, highlighting
     glossy textures and aromatic depth. Eye-level, shallow depth of field,
     evoking comforting warmth on a rustic, Thai-inspired surface.
-

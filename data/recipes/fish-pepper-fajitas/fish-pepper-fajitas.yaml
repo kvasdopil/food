@@ -16,13 +16,13 @@ ingredients:
     amount: 1 large
     notes: thinly sliced
   - name: limes
-    amount: '2'
+    amount: "2"
     notes: 1 for juice, 1 for wedges for serving
   - name: black beans
     amount: 1 can
     notes: 400 g, rinsed and drained
   - name: small flour tortillas
-    amount: '8'
+    amount: "8"
   - name: olive oil
     amount: 2 tbsp
     notes: plus a little extra for cooking
@@ -88,4 +88,3 @@ imagePrompt:
     bright lime wedges and fresh cilantro leaves. Bathed in soft, warm natural
     daylight with a shallow depth of field, evoking homemade comfort on a
     Mexican-inspired table. No visible steam or vapor.
-

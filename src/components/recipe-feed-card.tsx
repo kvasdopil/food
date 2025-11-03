@@ -53,7 +53,15 @@ function toggleFavorite(slug: string): boolean {
   }
 }
 
-export function RecipeFeedCard({ slug, name, description, tags, imageUrl, prepTimeMinutes, cookTimeMinutes }: RecipeFeedCardProps) {
+export function RecipeFeedCard({
+  slug,
+  name,
+  description,
+  tags,
+  imageUrl,
+  prepTimeMinutes,
+  cookTimeMinutes,
+}: RecipeFeedCardProps) {
   const [isLiked, setIsLiked] = useState(false);
   const router = useRouter();
   const resolvedImageUrl = resolveRecipeImageUrl(imageUrl);
@@ -98,7 +106,10 @@ export function RecipeFeedCard({ slug, name, description, tags, imageUrl, prepTi
             <h2 className="flex-1 pr-20 text-3xl font-semibold text-white drop-shadow-sm sm:pr-24 sm:text-base lg:text-lg">
               {name}
             </h2>
-            <RecipeTimeDisplay prepTimeMinutes={prepTimeMinutes} cookTimeMinutes={cookTimeMinutes} />
+            <RecipeTimeDisplay
+              prepTimeMinutes={prepTimeMinutes}
+              cookTimeMinutes={cookTimeMinutes}
+            />
           </div>
         </div>
       </figure>

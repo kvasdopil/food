@@ -31,11 +31,11 @@ export function RecipeSearchBar({
 
   return (
     <div className="mb-4 sm:mb-6">
-      <div className="flex items-center gap-2 hover:shadow-md rounded-lg bg-white px-3 py-3 focus-within:shadow-md focus-within:ring-2 focus-within:ring-blue-500 focus-within:outline-none">
-        <HiMagnifyingGlass className="h-5 w-5 text-gray-400 flex-shrink-0" />
+      <div className="flex items-center gap-2 rounded-lg bg-white px-3 py-3 focus-within:shadow-md focus-within:ring-2 focus-within:ring-blue-500 focus-within:outline-none hover:shadow-md">
+        <HiMagnifyingGlass className="h-5 w-5 flex-shrink-0 text-gray-400" />
 
         {hasTags && (
-          <div className="flex items-center gap-2 flex-shrink-0">
+          <div className="flex flex-shrink-0 items-center gap-2">
             {activeTags.map((tag, index) => (
               <button
                 key={tag}
@@ -89,4 +89,3 @@ export function RecipeSearchBar({
     </div>
   );
 }
-

@@ -75,12 +75,7 @@ export function normalizeRecipe(recipe: RecipeData): RecipeData {
         notes: ingredient.notes
           ? ingredient.notes.trim()
           : ingredient.amount.includes("(")
-            ? ingredient.amount
-                .split("(")
-                .slice(1)
-                .join("(")
-                .replace(/\)$/, "")
-                .trim()
+            ? ingredient.amount.split("(").slice(1).join("(").replace(/\)$/, "").trim()
             : undefined,
       }))
       .filter((ing) => ing.amount), // Remove any invalid entries
@@ -101,8 +96,5 @@ export function slugify(value: string): string {
 
 export function isEvaluationPassed(evaluationResult: string): boolean {
   const lower = evaluationResult.toLowerCase();
-  return (
-    lower.includes("all checks passed") || lower.includes("no changes needed")
-  );
+  return lower.includes("all checks passed") || lower.includes("no changes needed");
 }
-

@@ -4,7 +4,9 @@ type RecipeSkeletonProps = {
   showOnlyIngredientsAndInstructions?: boolean;
 };
 
-export function RecipeSkeleton({ showOnlyIngredientsAndInstructions = false }: RecipeSkeletonProps) {
+export function RecipeSkeleton({
+  showOnlyIngredientsAndInstructions = false,
+}: RecipeSkeletonProps) {
   // If showing only ingredients and instructions, skip the image/description skeleton
   if (showOnlyIngredientsAndInstructions) {
     return (
@@ -14,10 +16,7 @@ export function RecipeSkeleton({ showOnlyIngredientsAndInstructions = false }: R
           <Skeleton className="h-7 w-32" />
           <ul className="grid gap-4 md:grid-cols-2">
             {Array.from({ length: 6 }).map((_, index) => (
-              <li
-                key={index}
-                className="relative flex flex-col gap-1 rounded-lg pl-2"
-              >
+              <li key={index} className="relative flex flex-col gap-1 rounded-lg pl-2">
                 <div className="pl-6">
                   <div className="flex items-baseline gap-2">
                     <Skeleton className="h-4 w-12" />
@@ -92,10 +91,7 @@ export function RecipeSkeleton({ showOnlyIngredientsAndInstructions = false }: R
           <Skeleton className="h-7 w-32" />
           <ul className="grid gap-4 md:grid-cols-2">
             {Array.from({ length: 6 }).map((_, index) => (
-              <li
-                key={index}
-                className="relative flex flex-col gap-1 rounded-lg pl-2"
-              >
+              <li key={index} className="relative flex flex-col gap-1 rounded-lg pl-2">
                 <div className="pl-6">
                   <div className="flex items-baseline gap-2">
                     <Skeleton className="h-4 w-12" />
@@ -131,4 +127,3 @@ export function RecipeSkeleton({ showOnlyIngredientsAndInstructions = false }: R
     </div>
   );
 }
-

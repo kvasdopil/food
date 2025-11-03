@@ -44,4 +44,3 @@ export function FeedSkeleton({ count = 8 }: FeedSkeletonProps) {
     </div>
   );
 }
-

@@ -67,7 +67,11 @@ export function ShareRecipeButton({ slug, title, variant = "button" }: ShareReci
 
   if (variant === "icon") {
     const icon =
-      status === "copied" ? <CheckIcon className="h-[1.3rem] w-[1.3rem]" /> : <FaShare className="h-[1.3rem] w-[1.3rem]" />;
+      status === "copied" ? (
+        <CheckIcon className="h-[1.3rem] w-[1.3rem]" />
+      ) : (
+        <FaShare className="h-[1.3rem] w-[1.3rem]" />
+      );
 
     return (
       <button

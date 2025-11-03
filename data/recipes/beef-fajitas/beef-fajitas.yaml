@@ -16,7 +16,7 @@ ingredients:
     amount: 1 medium
     notes: sliced
   - name: lime
-    amount: '2'
+    amount: "2"
     notes: juiced
   - name: olive oil
     amount: 30ml
@@ -41,7 +41,7 @@ ingredients:
     amount: 2 cloves
     notes: minced, for beans
   - name: small tomato
-    amount: '1'
+    amount: "1"
     notes: diced, for beans
   - name: fresh coriander
     amount: a small bunch
@@ -97,4 +97,3 @@ imagePrompt:
     perspective, and shallow depth of field. Capture fresh garnish, inviting
     lighting, and a sense of homemade comfort with no visible steam or vapor. No
     people or branded props.
-

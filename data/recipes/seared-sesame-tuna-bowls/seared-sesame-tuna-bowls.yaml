@@ -7,7 +7,7 @@ prepTimeMinutes: 15
 cookTimeMinutes: 40
 ingredients:
   - name: tuna steaks
-    amount: '2'
+    amount: "2"
     notes: approx. 150-180g each, fresh or thawed frozen
   - name: brown rice
     amount: 150g
@@ -85,4 +85,3 @@ imagePrompt:
     field emphasizes exquisite textures. Garnish with a sprinkle of toasted
     sesame seeds and a fresh herb sprig, conveying artisanal comfort. No steam,
     no brands.
-

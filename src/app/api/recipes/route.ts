@@ -209,7 +209,7 @@ export async function GET(request: NextRequest) {
     // Fetch all matching recipes (with a reasonable limit to prevent memory issues)
     // In production, you might want to set a max limit like 10,000 recipes
     const MAX_RECIPES_TO_FETCH = 10000;
-    
+
     let allRecipesQuery = supabase
       .from("recipes")
       .select("slug, name, description, tags, image_url, prep_time_minutes, cook_time_minutes")
@@ -238,12 +238,10 @@ export async function GET(request: NextRequest) {
       allRecipes = allRecipes.filter((recipe) => {
         // Search in recipe name (case-insensitive partial match)
         const nameMatch = recipe.name?.toLowerCase().includes(searchTerm);
-        
+
         // Search in tags (case-insensitive partial match)
-        const tagMatch = recipe.tags?.some((tag) => 
-          tag.toLowerCase().includes(searchTerm)
-        );
-        
+        const tagMatch = recipe.tags?.some((tag) => tag.toLowerCase().includes(searchTerm));
+
         return nameMatch || tagMatch;
       });
     }

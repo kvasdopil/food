@@ -7,16 +7,16 @@ prepTimeMinutes: 15
 cookTimeMinutes: 25
 ingredients:
   - name: chicken breast
-    amount: '2'
+    amount: "2"
     notes: approx. 200g each, diced into 1cm pieces
   - name: flour tortillas
-    amount: '8'
+    amount: "8"
     notes: medium-large size
   - name: cheddar cheese
     amount: 200g
     notes: grated
   - name: chipotle peppers in adobo sauce
-    amount: '2'
+    amount: "2"
     notes: peppers, plus 1 tbsp adobo sauce from the can
   - name: red onion
     amount: 1 small
@@ -25,10 +25,10 @@ ingredients:
     amount: 2 cloves
     notes: minced
   - name: lime
-    amount: '1'
+    amount: "1"
     notes: half for juice, half for wedges
   - name: avocado
-    amount: '2'
+    amount: "2"
     notes: ripe, for guacamole
   - name: fresh coriander
     amount: 30g
@@ -85,4 +85,3 @@ imagePrompt:
     eye-level perspective, and shallow depth of field. Capture fresh garnish,
     inviting lighting, and a sense of homemade comfort with no visible steam or
     vapor. No people or branded props.
-

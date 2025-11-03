@@ -30,4 +30,3 @@ export const EVALUATION_PROMPT = [
 export function buildEvaluationPrompt(yamlContent: string): string {
   return `${EVALUATION_PROMPT}\n\nCurrent recipe YAML:\n${yamlContent}`;
 }
-

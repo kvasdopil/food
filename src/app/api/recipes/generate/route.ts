@@ -1,11 +1,11 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { callGemini, ensureText, TEXT_MODEL } from "@/lib/gemini";
-import { buildRecipeGenerationPrompt, recipeSchema, type GenerateRequest } from "@/lib/prompts/recipe-generation";
 import {
-  type RecipeData,
-  normalizeRecipe,
-  slugify,
-} from "@/lib/recipe-utils";
+  buildRecipeGenerationPrompt,
+  recipeSchema,
+  type GenerateRequest,
+} from "@/lib/prompts/recipe-generation";
+import { type RecipeData, normalizeRecipe, slugify } from "@/lib/recipe-utils";
 
 export async function POST(request: NextRequest) {
   const editToken = process.env.EDIT_TOKEN;
@@ -153,10 +153,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-async function generateRecipe(
-  options: GenerateRequest,
-  apiKey: string,
-): Promise<RecipeData> {
+async function generateRecipe(options: GenerateRequest, apiKey: string): Promise<RecipeData> {
   const prompt = buildRecipeGenerationPrompt(options);
 
   const requestBody = {

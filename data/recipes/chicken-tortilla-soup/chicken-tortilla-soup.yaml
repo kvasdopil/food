@@ -7,10 +7,10 @@ prepTimeMinutes: 25
 cookTimeMinutes: 25
 ingredients:
   - name: chicken breast
-    amount: '2'
+    amount: "2"
     notes: approx. 200g each
   - name: corn tortillas
-    amount: '6'
+    amount: "6"
     notes: 15 cm diameter
   - name: vegetable oil
     amount: 50 ml
@@ -31,7 +31,7 @@ ingredients:
   - name: cumin
     amount: 1 tsp
   - name: lime
-    amount: '1'
+    amount: "1"
   - name: avocados
     amount: 2 medium
   - name: coriander
@@ -92,4 +92,3 @@ imagePrompt:
     cilantro and a lime wedge. Bathed in soft, diffused natural light on a
     subtly textured, Mexican-inspired surface, with a shallow depth of field
     accentuating homemade comfort. No steam.
-

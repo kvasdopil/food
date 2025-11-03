@@ -128,15 +128,15 @@ export function buildFeedUrlWithTags(tags: string[]): string {
  */
 export function buildFeedUrlWithTagsAndSearch(tags: string[], searchQuery?: string): string {
   const params = new URLSearchParams();
-  
+
   if (tags.length > 0) {
     params.set("tags", buildTagsQuery(tags));
   }
-  
+
   if (searchQuery && searchQuery.trim()) {
     params.set("q", searchQuery.trim());
   }
-  
+
   const queryString = params.toString();
   return queryString ? `/feed?${queryString}` : "/feed";
 }
@@ -186,19 +186,19 @@ export function extractFeedQueryParams(referrerUrl: string | null): {
   searchQuery: string;
 } | null {
   if (!referrerUrl) return null;
-  
+
   try {
     // Check if it's a feed URL
     const url = new URL(referrerUrl);
     if (!url.pathname.includes("/feed")) {
       return null;
     }
-    
+
     const tagsParam = url.searchParams.get("tags");
     const searchQuery = url.searchParams.get("q") || "";
-    
+
     const tags = tagsParam ? parseTagsFromQuery(tagsParam) : [];
-    
+
     return { tags, searchQuery };
   } catch {
     return null;
@@ -213,7 +213,7 @@ const FEED_URL_STORAGE_KEY = "recipe-feed-back-url";
  */
 export function storeFeedUrl(): void {
   if (typeof window === "undefined") return;
-  
+
   try {
     const currentUrl = window.location.href;
     // Only store if we're on the feed page
@@ -231,7 +231,7 @@ export function storeFeedUrl(): void {
  */
 export function getStoredFeedUrl(): string | null {
   if (typeof window === "undefined") return null;
-  
+
   try {
     return sessionStorage.getItem(FEED_URL_STORAGE_KEY);
   } catch {
@@ -245,7 +245,7 @@ export function getStoredFeedUrl(): string | null {
  */
 export function getBackToFeedUrl(): string {
   if (typeof window === "undefined") return "/feed";
-  
+
   // First, try to get from sessionStorage (most reliable)
   const storedUrl = getStoredFeedUrl();
   if (storedUrl) {
@@ -261,12 +261,12 @@ export function getBackToFeedUrl(): string {
       // If parsing fails, fall through to referrer check
     }
   }
-  
+
   // Fallback to checking referrer
   const referrerParams = extractFeedQueryParams(document.referrer);
   if (referrerParams) {
     return buildFeedUrlWithTagsAndSearch(referrerParams.tags, referrerParams.searchQuery);
   }
-  
+
   return "/feed";
 }

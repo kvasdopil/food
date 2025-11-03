@@ -7,7 +7,7 @@ prepTimeMinutes: 10
 cookTimeMinutes: 35
 ingredients:
   - name: chicken breast
-    amount: '4'
+    amount: "4"
     notes: approx. 150g each
   - name: potatoes
     amount: 500g
@@ -77,4 +77,3 @@ imagePrompt:
     textures. Bathed in warm, directional natural light, creating inviting
     highlights. Garnish with fresh basil leaves. Shallow depth of field,
     conveying homemade comfort on an Italian-inspired table.
-

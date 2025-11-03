@@ -21,7 +21,7 @@ ingredients:
   - name: tahini
     amount: 60 ml
   - name: lemon
-    amount: '1'
+    amount: "1"
     notes: juiced
   - name: garlic
     amount: 2 cloves
@@ -100,4 +100,3 @@ imagePrompt:
     sprinkle of fresh parsley and a lemon wedge. Bathed in warm, soft natural
     light with a shallow depth of field, evoking homemade comfort. No steam,
     people, or branded props.
-

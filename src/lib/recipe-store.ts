@@ -1,10 +1,10 @@
 /**
  * Centralized storage for recipe data with IndexedDB persistence.
- * 
- * Stores both partial data (from feed: image, name, description, tags) 
+ *
+ * Stores both partial data (from feed: image, name, description, tags)
  * and full data (from detail page: includes ingredients and instructions).
  * This allows showing cached data in preloaders while fetching complete data.
- * 
+ *
  * Data is persisted to IndexedDB for offline access and faster loading on subsequent visits.
  */
 
@@ -137,7 +137,7 @@ class RecipeStore {
    */
   setPartial(recipe: RecipePartialData): void {
     const existing = this.store.get(recipe.slug);
-    
+
     const storedRecipe: StoredRecipe = existing
       ? {
           partial: recipe,
@@ -149,7 +149,7 @@ class RecipeStore {
         };
 
     this.store.set(recipe.slug, storedRecipe);
-    
+
     // Persist to IndexedDB (non-blocking)
     this.persistToDB(storedRecipe).catch(() => {
       // Error already logged in persistToDB
@@ -171,7 +171,7 @@ class RecipeStore {
    */
   setFull(recipe: RecipeFullData): void {
     const existing = this.store.get(recipe.slug);
-    
+
     // Convert full data format to partial format for consistency
     const partial: RecipePartialData = {
       slug: recipe.slug,
@@ -187,7 +187,7 @@ class RecipeStore {
     };
 
     this.store.set(recipe.slug, storedRecipe);
-    
+
     // Persist to IndexedDB (non-blocking)
     this.persistToDB(storedRecipe).catch(() => {
       // Error already logged in persistToDB
@@ -291,4 +291,3 @@ if (typeof window !== "undefined") {
     console.warn("Failed to initialize recipe store:", error);
   });
 }
-

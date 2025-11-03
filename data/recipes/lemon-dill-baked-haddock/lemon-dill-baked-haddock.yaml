@@ -7,7 +7,7 @@ prepTimeMinutes: 15
 cookTimeMinutes: 20
 ingredients:
   - name: haddock fillets
-    amount: '2'
+    amount: "2"
     notes: approx. 200-250g each
   - name: baby carrots
     amount: 500g
@@ -74,4 +74,3 @@ imagePrompt:
     Garnished with fresh dill sprigs and a sprinkle of lemon zest. An inviting
     eye-level perspective with shallow depth of field, conveying homemade
     comfort.
-

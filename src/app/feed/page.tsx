@@ -11,7 +11,7 @@ import { recipeStore } from "@/lib/recipe-store";
 function FeedPageContent() {
   const searchParams = useSearchParams();
   const { activeTags } = useTags();
-  
+
   // Get search query from URL
   const searchQuery = searchParams.get("q") || "";
 
@@ -23,7 +23,7 @@ function FeedPageContent() {
     // Get all cached partial recipes from store (loaded from IndexedDB)
     const cached = recipeStore.getAllPartials();
     if (cached.length === 0) return null;
-    
+
     // Convert to RecipeListItem format
     // Note: Cached partial data doesn't include time fields, so they'll be null
     return cached.map((partial) => ({
@@ -45,7 +45,7 @@ function FeedPageContent() {
     }
 
     if (!isLoading || recipes.length === 0) return null;
-    
+
     // Get cached partial data for the recipes we've already loaded
     // This allows showing cached data while refreshing
     return recipes
@@ -60,15 +60,15 @@ function FeedPageContent() {
   // Don't scroll on search query changes to avoid interrupting user scrolling
   const activeTagsKey = activeTags.join(",");
   const prevTagsRef = useRef(activeTagsKey);
-  
+
   useEffect(() => {
     // Only scroll to top if tags actually changed (not on initial mount)
     const tagsChanged = prevTagsRef.current !== activeTagsKey;
-    
+
     if (tagsChanged && prevTagsRef.current !== "") {
       window.scrollTo(0, 0);
     }
-    
+
     prevTagsRef.current = activeTagsKey;
   }, [activeTagsKey]);
 
@@ -106,7 +106,7 @@ function FeedPageContent() {
   if (isLoading) {
     // If we have cached recipes to show, display them instead of skeletons
     const displayRecipes = cachedRecipesForLoading || recipes;
-    
+
     return (
       <>
         {displayRecipes.length > 0 ? (
@@ -148,7 +148,7 @@ function FeedPageContent() {
   }
 
   // Determine which recipes to display - use cached if no recipes loaded yet
-  const displayRecipes = recipes.length > 0 ? recipes : (allCachedRecipes || []);
+  const displayRecipes = recipes.length > 0 ? recipes : allCachedRecipes || [];
 
   return (
     <>

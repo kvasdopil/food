@@ -28,7 +28,7 @@ ingredients:
     amount: 200 g
     notes: shredded or sliced
   - name: sub rolls
-    amount: '4'
+    amount: "4"
     notes: or small baguettes
   - name: romaine lettuce
     amount: 1 large head
@@ -96,4 +96,3 @@ imagePrompt:
     natural daylight, eye-level perspective, and shallow depth of field. Capture
     fresh garnish, inviting lighting, and a sense of homemade comfort with no
     visible steam or vapor. No people or branded props.
-

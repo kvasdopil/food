@@ -22,7 +22,7 @@ ingredients:
     amount: 30g
     notes: chopped
   - name: limes
-    amount: '2'
+    amount: "2"
     notes: juiced
   - name: basmati rice
     amount: 250g
@@ -97,4 +97,3 @@ imagePrompt:
     natural daylight from a Caribbean-inspired setting, an intimate, slightly
     elevated eye-level perspective with shallow depth of field. Garnish with
     vibrant cilantro and a fresh lime wedge, evoking homemade comfort.
-

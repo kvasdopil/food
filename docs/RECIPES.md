@@ -128,17 +128,17 @@ Curated list of 102 weeknight-friendly dinners that use accessible pantry staple
     Shrimp stir-fried with basil, chilies, and snap peas for aromatic heat, plated with coconut rice.  
     #thai #seafood #spicy
 15. **Herb-Crusted Trout** ✓  
-   Trout fillets coated in fresh herbs and breadcrumbs, served with lemony roasted broccoli.  
-   #european #seafood
+    Trout fillets coated in fresh herbs and breadcrumbs, served with lemony roasted broccoli.  
+    #european #seafood
 16. **Lemon Pepper Tilapia** ✓  
-   Quick-seared tilapia finished with lemon zest and cracked pepper, paired with garlic green beans and quinoa.  
-   #american #seafood #glutenfree
+    Quick-seared tilapia finished with lemon zest and cracked pepper, paired with garlic green beans and quinoa.  
+    #american #seafood #glutenfree
 17. **Spicy Tuna Poke Bowl** ✓  
-   Diced tuna with chili mayo over sushi rice, avocado, and cucumber, served with seaweed salad.  
-   #hawaiian #seafood #spicy
+    Diced tuna with chili mayo over sushi rice, avocado, and cucumber, served with seaweed salad.  
+    #hawaiian #seafood #spicy
 18. **Grilled Mahi Mahi with Pineapple Salsa** ✓  
-   Char-grilled mahi mahi topped with bright pineapple jalapeño salsa, accompanied by coconut rice and beans.  
-   #caribbean #seafood #glutenfree
+    Char-grilled mahi mahi topped with bright pineapple jalapeño salsa, accompanied by coconut rice and beans.  
+    #caribbean #seafood #glutenfree
 19. **Shrimp Fried Rice** ✓  
     Wok-tossed rice with shrimp, peas, eggs, and soy sauce, served alongside steamed edamame.  
     #chinese #seafood
@@ -221,8 +221,8 @@ Curated list of 102 weeknight-friendly dinners that use accessible pantry staple
     Smoky chicken and cheese pressed in tortillas with chipotle salsa, served with guacamole.  
     #mexican #chicken #spicy
 20. **Chicken Marsala** ✓  
-   Pan-seared chicken in mushroom marsala wine sauce, served with creamy mashed potatoes.  
-   #italian #chicken
+    Pan-seared chicken in mushroom marsala wine sauce, served with creamy mashed potatoes.  
+    #italian #chicken
 21. **General Tso's Chicken** ✓  
     Crispy chicken tossed in sweet, tangy sauce, paired with steamed broccoli and rice.  
     #chinese #chicken #spicy

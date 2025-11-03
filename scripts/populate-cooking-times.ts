@@ -63,10 +63,8 @@ async function getAllYamlFiles(): Promise<string[]> {
 
     const dirPath = path.join(DATA_DIR, dir.name);
     const files = await readdir(dirPath);
-    
-    const yamlFile = files.find(
-      (file) => file.endsWith(".yaml") || file.endsWith(".yml")
-    );
+
+    const yamlFile = files.find((file) => file.endsWith(".yaml") || file.endsWith(".yml"));
 
     if (yamlFile) {
       yamlFiles.push(path.join(dirPath, yamlFile));
@@ -111,7 +109,7 @@ async function main(): Promise<void> {
 
   if (!supabaseUrl || !supabaseServiceKey) {
     console.error(
-      "Missing required environment variables: NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY"
+      "Missing required environment variables: NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY",
     );
     console.error("Provide via env vars or .env.local");
     process.exit(1);
@@ -129,8 +127,7 @@ async function main(): Promise<void> {
 
   for (const yamlFile of yamlFiles) {
     try {
-      const { slug, prepTimeMinutes, cookTimeMinutes } =
-        await extractCookingTimes(yamlFile);
+      const { slug, prepTimeMinutes, cookTimeMinutes } = await extractCookingTimes(yamlFile);
 
       if (!slug) {
         console.warn(`⚠ Skipping ${yamlFile}: could not determine slug`);
@@ -212,7 +209,7 @@ async function main(): Promise<void> {
       updated++;
     } catch (error) {
       console.error(
-        `✗ Error processing ${yamlFile}: ${error instanceof Error ? error.message : String(error)}`
+        `✗ Error processing ${yamlFile}: ${error instanceof Error ? error.message : String(error)}`,
       );
       errors++;
     }
@@ -229,4 +226,3 @@ main().catch((error: unknown) => {
   console.error(`Fatal error: ${message}`);
   process.exit(1);
 });
-

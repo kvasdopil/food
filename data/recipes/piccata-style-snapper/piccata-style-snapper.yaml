@@ -5,13 +5,13 @@ prepTimeMinutes: 15
 cookTimeMinutes: 25
 ingredients:
   - name: snapper fillets
-    amount: '4'
+    amount: "4"
     notes: approx. 150-180g each, skin on or off
   - name: baby potatoes
     amount: 500 g
     notes: small, waxy variety
   - name: lemon
-    amount: '2'
+    amount: "2"
     notes: 1 for juice, 1 for slices or garnish
   - name: capers
     amount: 2 tbsp
@@ -83,4 +83,3 @@ imagePrompt:
     scattered capers provides vibrant contrast. Bathed in warm, diffused natural
     light on an Italian-inspired table with a shallow depth of field, evoking
     homemade comfort.
-

@@ -35,7 +35,7 @@ export function seededShuffle<T>(array: T[], seed: number): T[] {
 export function getDateSeed(): number {
   const today = new Date();
   const dateString = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
-  
+
   // Convert date string to a numeric seed
   // Simple hash of the date string
   let hash = 0;
@@ -46,4 +46,3 @@ export function getDateSeed(): number {
   }
   return hash;
 }
-

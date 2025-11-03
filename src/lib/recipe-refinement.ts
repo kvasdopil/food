@@ -1,14 +1,8 @@
 import { callGemini, ensureText, TEXT_MODEL } from "./gemini";
 import { buildEvaluationPrompt } from "./prompts/recipe-evaluation";
-import {
-  type RecipeData,
-  recipeToYamlString,
-} from "./recipe-utils";
+import { type RecipeData, recipeToYamlString } from "./recipe-utils";
 
-export async function evaluateRecipe(
-  recipe: RecipeData,
-  apiKey: string,
-): Promise<string> {
+export async function evaluateRecipe(recipe: RecipeData, apiKey: string): Promise<string> {
   const yamlContent = recipeToYamlString(recipe);
   const prompt = buildEvaluationPrompt(yamlContent);
 
@@ -31,5 +25,3 @@ export async function evaluateRecipe(
   const response = await callGemini(TEXT_MODEL, requestBody, apiKey);
   return ensureText(response, "Recipe evaluation");
 }
-
-

@@ -151,7 +151,7 @@ export function FeedCard() {
   }
 
   // Determine which recipes to display
-  const displayRecipes = recipes.length > 0 ? recipes : (allCachedRecipes || []);
+  const displayRecipes = recipes.length > 0 ? recipes : allCachedRecipes || [];
 
   return (
     <div ref={scrollRef} className="h-full overflow-y-auto bg-white">

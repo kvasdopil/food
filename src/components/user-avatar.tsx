@@ -26,16 +26,14 @@ export function UserAvatar() {
   }, [isMenuOpen]);
 
   if (loading) {
-    return (
-      <div className="h-10 w-10 rounded-full bg-gray-200 animate-pulse" />
-    );
+    return <div className="h-10 w-10 animate-pulse rounded-full bg-gray-200" />;
   }
 
   if (!user) {
     return (
       <button
         onClick={signInWithGoogle}
-        className="flex items-center justify-center h-10 w-10 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-colors cursor-pointer"
+        className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-blue-500 text-white transition-colors hover:bg-blue-600"
         aria-label="Sign in with Google"
       >
         <HiUserCircle className="h-6 w-6" />
@@ -50,36 +48,32 @@ export function UserAvatar() {
     <div className="relative self-center" ref={menuRef}>
       <button
         onClick={() => setIsMenuOpen(!isMenuOpen)}
-        className="flex items-center justify-center h-10 w-10 rounded-full overflow-hidden shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 hover:shadow-xl cursor-pointer"
+        className="flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full shadow-lg transition-all hover:shadow-xl focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
         aria-label="User menu"
         aria-expanded={isMenuOpen}
       >
         {avatarUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={avatarUrl}
-            alt={displayName}
-            className="h-full w-full object-cover"
-          />
+          <img src={avatarUrl} alt={displayName} className="h-full w-full object-cover" />
         ) : (
-          <div className="h-full w-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-medium">
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-blue-400 to-blue-600 font-medium text-white">
             {displayName.charAt(0).toUpperCase()}
           </div>
         )}
       </button>
 
       {isMenuOpen && (
-        <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
-          <div className="px-4 py-2 border-b border-gray-200">
-            <p className="text-sm font-medium text-gray-900 truncate">{displayName}</p>
-            <p className="text-xs text-gray-500 truncate">{user.email}</p>
+        <div className="absolute top-full right-0 z-50 mt-2 w-48 rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
+          <div className="border-b border-gray-200 px-4 py-2">
+            <p className="truncate text-sm font-medium text-gray-900">{displayName}</p>
+            <p className="truncate text-xs text-gray-500">{user.email}</p>
           </div>
           <button
             onClick={async () => {
               await signOut();
               setIsMenuOpen(false);
             }}
-            className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+            className="w-full px-4 py-2 text-left text-sm text-gray-700 transition-colors hover:bg-gray-100"
           >
             Sign out
           </button>

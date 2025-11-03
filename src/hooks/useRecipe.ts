@@ -31,8 +31,11 @@ function convertToRecipeData(full: RecipeFullData): RecipeData {
 export function useRecipe(slug: string): UseRecipeResult {
   // Check centralized store for cached full data
   const cachedFull = useMemo(() => recipeStore.getFull(slug), [slug]);
-  const cachedRecipe = useMemo(() => (cachedFull ? convertToRecipeData(cachedFull) : null), [cachedFull]);
-  
+  const cachedRecipe = useMemo(
+    () => (cachedFull ? convertToRecipeData(cachedFull) : null),
+    [cachedFull],
+  );
+
   const [recipeData, setRecipeData] = useState<RecipeData | null>(cachedRecipe);
   const [isLoading, setIsLoading] = useState<boolean>(() => !cachedRecipe);
   const [error, setError] = useState<string | null>(null);
@@ -93,7 +96,7 @@ export function useRecipe(slug: string): UseRecipeResult {
           cookTimeMinutes: data.cookTimeMinutes,
         };
         recipeStore.setFull(fullData);
-        
+
         setRecipeData(data);
         setIsLoading(false);
       } catch (err) {

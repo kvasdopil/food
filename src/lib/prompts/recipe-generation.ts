@@ -48,10 +48,7 @@ export const recipeSchema = {
   required: ["title", "ingredients", "instructions"],
 } as const;
 
-export function buildRecipeGenerationPrompt(
-  options: GenerateRequest,
-  feedback?: string,
-): string {
+export function buildRecipeGenerationPrompt(options: GenerateRequest, feedback?: string): string {
   const prompts: string[] = [
     `Develop a detailed recipe for "${options.title}".`,
     `Core description provided by the product team: ${options.description}`,
@@ -72,9 +69,9 @@ export function buildRecipeGenerationPrompt(
     "   - Keep instruction text concise and practical",
     "",
     "3. MEASUREMENTS:",
-    '   - Use metric measurements with abbreviated units (g, ml, °C) plus tsp/tbsp where helpful',
+    "   - Use metric measurements with abbreviated units (g, ml, °C) plus tsp/tbsp where helpful",
     '   - You may use "1 medium", "2 large", etc., for whole produce where that feels natural',
-    '   - Never use Fahrenheit, pounds, ounces, cups, or inches',
+    "   - Never use Fahrenheit, pounds, ounces, cups, or inches",
     "   - Describe tiny amounts (a drizzle, a pinch) naturally instead of inventing precise measurements",
     "",
     "4. INGREDIENT REFERENCING:",
@@ -114,4 +111,3 @@ export function buildRecipeGenerationPrompt(
 
   return prompts.join("\n");
 }
-

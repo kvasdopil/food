@@ -48,4 +48,3 @@ export function RecipeTimeDisplay({ prepTimeMinutes, cookTimeMinutes }: RecipeTi
     </span>
   );
 }
-

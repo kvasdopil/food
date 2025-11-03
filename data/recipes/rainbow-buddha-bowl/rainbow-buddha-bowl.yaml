@@ -35,7 +35,7 @@ ingredients:
     amount: 1 large
     notes: for juice
   - name: garlic clove
-    amount: '1'
+    amount: "1"
     notes: minced
   - name: olive oil
     amount: 60 ml
@@ -97,4 +97,3 @@ imagePrompt:
     citrus-dressed greens nestle alongside, garnished with toasted sesame seeds
     and fresh cilantro. Bathed in soft, golden natural light, highlighting rich
     textures and homemade comfort, shallow depth of field.
-

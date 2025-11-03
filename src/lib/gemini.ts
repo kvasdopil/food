@@ -39,10 +39,7 @@ export async function callGemini(
   return (await response.json()) as GenerateContentResponse;
 }
 
-export function ensureText(
-  response: GenerateContentResponse,
-  errorContext: string,
-): string {
+export function ensureText(response: GenerateContentResponse, errorContext: string): string {
   if (response.promptFeedback?.blockReason) {
     throw new Error(
       `${errorContext} was blocked by Gemini: ${response.promptFeedback.blockReason}`,
@@ -61,4 +58,3 @@ export function ensureText(
 
   return text;
 }
-

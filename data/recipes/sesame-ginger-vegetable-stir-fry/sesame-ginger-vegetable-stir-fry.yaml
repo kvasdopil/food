@@ -46,7 +46,7 @@ ingredients:
     amount: 1 medium
     notes: grated for slaw
   - name: green onions
-    amount: '2'
+    amount: "2"
     notes: thinly sliced for garnish
   - name: toasted sesame seeds
     amount: 5 g
@@ -119,4 +119,3 @@ imagePrompt:
     slaw is artfully arranged alongside. Bathed in warm, soft directional light,
     highlighting toasted sesame seeds and fresh scallion garnish. Shallow depth
     of field creates an inviting, homemade comfort, no steam.
-

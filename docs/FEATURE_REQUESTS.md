@@ -11,14 +11,14 @@
 - proper goback button on desktop
 - search for meals, names, components and tags
 - fix refine endpoint response format inconsistency (when checks pass, return database format instead of RecipeData format for consistency)
-- scenario: 
+- scenario:
   - take a meal, generate a variation (same but vegan/vegeterian/glutenfree/with chicken)
-- scenario: 
+- scenario:
   - give me 5 meals for a week, i need 1 meat, 1 fish, others random
   - check liked, suggest new for the rest
   - when done, ask for list of ingridients, go back to (2) if needed
   - export list of ingridients
-- scenario: 
+- scenario:
   - i know what i want to have, add this recipe to the db
   - user provides clarifications to generator until satisfied
   - image preview with nanobanana (quick!)

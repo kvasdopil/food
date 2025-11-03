@@ -13,13 +13,13 @@ ingredients:
     amount: 1 medium
     notes: diced into 2cm cubes
   - name: red bell pepper
-    amount: '1'
+    amount: "1"
     notes: diced
   - name: yellow bell pepper
-    amount: '1'
+    amount: "1"
     notes: diced
   - name: onion
-    amount: '1'
+    amount: "1"
     notes: chopped
   - name: garlic
     amount: 3 cloves
@@ -101,4 +101,3 @@ imagePrompt:
     lettuce salad peeks from the side. Bathed in soft, diffused natural light,
     highlighting fresh basil leaves and a delicate olive oil drizzle. Shallow
     depth of field evokes homemade comfort.
-

@@ -50,7 +50,7 @@ async function loadEnvValue(key: string): Promise<string | undefined> {
 function extractSlugFromPath(inputPath: string): string | null {
   // Handle both absolute and relative paths
   const normalizedPath = path.resolve(inputPath);
-  
+
   // Check if it's a YAML file in the recipes directory structure
   // Pattern: data/recipes/<slug>/<slug>.yaml
   const recipesDirPattern = /[\/\\]data[\/\\]recipes[\/\\]([^\/\\]+)[\/\\][^\/\\]+\.ya?ml$/i;
@@ -60,7 +60,12 @@ function extractSlugFromPath(inputPath: string): string | null {
   }
 
   // If it's just a slug (no path separators or file extension)
-  if (!inputPath.includes(path.sep) && !inputPath.includes("/") && !inputPath.includes("\\") && !inputPath.includes(".")) {
+  if (
+    !inputPath.includes(path.sep) &&
+    !inputPath.includes("/") &&
+    !inputPath.includes("\\") &&
+    !inputPath.includes(".")
+  ) {
     return inputPath;
   }
 
@@ -112,9 +117,7 @@ async function refineRecipe(
 
   if (!response.ok) {
     const errorText = await response.text();
-    throw new Error(
-      `Refine API failed (${response.status} ${response.statusText}): ${errorText}`,
-    );
+    throw new Error(`Refine API failed (${response.status} ${response.statusText}): ${errorText}`);
   }
 
   return (await response.json()) as RefineResponse;
