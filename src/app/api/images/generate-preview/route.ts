@@ -72,23 +72,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Database not configured" }, { status: 500 });
   }
 
-  const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
-  if (!apiKey) {
-    console.error("POST /api/images/generate-preview missing GEMINI_API_KEY or GOOGLE_API_KEY.");
-    logApiEndpoint({
-      endpoint: "/api/images/generate-preview",
-      method: "POST",
-      userId: auth.userId,
-      userEmail: auth.userEmail,
-      statusCode: 500,
-      isProtected: true,
-    });
-    return NextResponse.json(
-      { error: "Server is not configured for image generation" },
-      { status: 500 },
-    );
-  }
-
   try {
     const json = await request.json();
     const description = typeof json.description === "string" ? json.description.trim() : null;
@@ -107,13 +90,10 @@ export async function POST(request: NextRequest) {
 
     // Generate image using Google AI
     console.log(`Generating preview image with description: ${description.substring(0, 100)}...`);
-    const { imageData, contentType } = await generateImageWithGoogleAI(
-      {
-        description,
-        model: "gemini-2.5-flash-image", // Use gemini-2.5-flash-image model
-      },
-      apiKey,
-    );
+    const { imageData, contentType } = await generateImageWithGoogleAI({
+      description,
+      model: "gemini-2.5-flash-image", // Use gemini-2.5-flash-image model
+    });
 
     // Convert to JPEG with sharp (regardless of input format)
     // Check if already JPEG to avoid unnecessary conversion

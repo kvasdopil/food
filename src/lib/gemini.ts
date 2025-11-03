@@ -15,11 +15,30 @@ export type GenerateContentResponse = {
   };
 };
 
+/**
+ * Loads the Gemini API key from environment variables
+ * @throws Error if API key is not found
+ */
+function getGeminiApiKey(): string {
+  const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+  if (!apiKey) {
+    throw new Error("GEMINI_API_KEY or GOOGLE_API_KEY environment variable is required");
+  }
+  return apiKey;
+}
+
+/**
+ * Calls the Gemini API with the specified model and request body.
+ * The API key is automatically loaded from environment variables.
+ * @param model - The model name (e.g., "gemini-2.5-flash")
+ * @param body - The request body for the API call
+ * @returns The API response
+ */
 export async function callGemini(
   model: string,
   body: Record<string, unknown>,
-  apiKey: string,
 ): Promise<GenerateContentResponse> {
+  const apiKey = getGeminiApiKey();
   const url = `${API_BASE_URL}/models/${model}:generateContent?key=${apiKey}`;
   const response = await fetch(url, {
     method: "POST",

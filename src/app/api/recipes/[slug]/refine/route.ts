@@ -66,7 +66,6 @@ function buildInstructions(instructions: InstructionPayload[]) {
 
 async function generateRefinedRecipe(
   existingRecipe: RecipeData,
-  apiKey: string,
   feedback: string,
 ): Promise<RecipeData> {
   const generateOptions: GenerateRequest = {
@@ -95,13 +94,13 @@ async function generateRefinedRecipe(
     },
   };
 
-  const response = await callGemini(TEXT_MODEL, requestBody, apiKey);
+  const response = await callGemini(TEXT_MODEL, requestBody);
   const jsonText = ensureText(response, "Recipe refinement");
 
   try {
     const refined = JSON.parse(jsonText) as RecipeData;
     refined.title = existingRecipe.title;
-    refined.summary = existingRecipe.summary;
+    // Keep the refined summary (don't overwrite with original)
     refined.tags = existingRecipe.tags || [];
     return normalizeRecipe(refined);
   } catch (error) {
@@ -146,15 +145,6 @@ export async function POST(
     userEmail: auth.authorized ? auth.userEmail : undefined,
     isProtected: true,
   });
-
-  const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
-  if (!apiKey) {
-    console.error("POST /api/recipes/[slug]/refine missing GEMINI_API_KEY or GOOGLE_API_KEY.");
-    return NextResponse.json(
-      { error: "Server is not configured for recipe refinement" },
-      { status: 500 },
-    );
-  }
 
   if (!supabaseAdmin) {
     console.error("Supabase admin client is not configured.");
@@ -206,7 +196,7 @@ export async function POST(
     };
 
     // Evaluate the recipe
-    const evaluationResult = await evaluateRecipe(recipe, apiKey);
+    const evaluationResult = await evaluateRecipe(recipe);
 
     // Check if all checks passed
     if (isEvaluationPassed(evaluationResult)) {
@@ -217,7 +207,7 @@ export async function POST(
     }
 
     // Generate refined version with feedback
-    const refinedRecipe = await generateRefinedRecipe(recipe, apiKey, evaluationResult);
+    const refinedRecipe = await generateRefinedRecipe(recipe, evaluationResult);
 
     // Update recipe in database
     const dbPayload = {

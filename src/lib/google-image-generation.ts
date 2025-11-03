@@ -16,16 +16,28 @@ export type ImageGenerationResponse = {
 };
 
 /**
- * Generates an image using Google AI Gemini Imagen API
+ * Loads the Gemini API key from environment variables
+ * @throws Error if API key is not found
+ */
+function getGeminiApiKey(): string {
+  const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+  if (!apiKey) {
+    throw new Error("GEMINI_API_KEY or GOOGLE_API_KEY environment variable is required");
+  }
+  return apiKey;
+}
+
+/**
+ * Generates an image using Google AI Gemini Imagen API.
+ * The API key is automatically loaded from environment variables.
  * @param options - Generation options including description and model
- * @param apiKey - Google API key (GEMINI_API_KEY or GOOGLE_API_KEY)
  * @returns Buffer containing the generated image
  */
 export async function generateImageWithGoogleAI(
   options: ImageGenerationOptions,
-  apiKey: string,
 ): Promise<ImageGenerationResponse> {
   const { description, model = "gemini-2.5-flash-image" } = options;
+  const apiKey = getGeminiApiKey();
 
   if (!description || !description.trim()) {
     throw new Error("Description is required for image generation");

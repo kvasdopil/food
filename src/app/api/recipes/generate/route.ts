@@ -22,15 +22,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: auth.error || "Unauthorized" }, { status: 401 });
   }
 
-  const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
-  if (!apiKey) {
-    console.error("POST /api/recipes/generate missing GEMINI_API_KEY or GOOGLE_API_KEY.");
-    return NextResponse.json(
-      { error: "Server is not configured for recipe generation" },
-      { status: 500 },
-    );
-  }
-
   let json: unknown;
   try {
     json = await request.json();
@@ -54,7 +45,7 @@ export async function POST(request: NextRequest) {
   if (userInput) {
     // Parse user input to extract structured data
     try {
-      const parsedData = await parseUserInput(userInput, apiKey);
+      const parsedData = await parseUserInput(userInput);
       title = parsedData.title;
       description = parsedData.description;
       tags = parsedData.tags;
@@ -110,7 +101,7 @@ export async function POST(request: NextRequest) {
     };
 
     // Generate recipe (first variant only)
-    let recipe = await generateRecipe(generateOptions, apiKey);
+    let recipe = await generateRecipe(generateOptions);
     recipe.title = title;
     recipe.summary = description;
     recipe.tags = [...tags];
@@ -177,10 +168,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-async function parseUserInput(
-  userInput: string,
-  apiKey: string,
-): Promise<{
+async function parseUserInput(userInput: string): Promise<{
   title: string;
   description: string;
   tags: string[];
@@ -249,7 +237,7 @@ Guidelines:
     },
   };
 
-  const response = await callGemini(TEXT_MODEL, requestBody, apiKey);
+  const response = await callGemini(TEXT_MODEL, requestBody);
   const jsonText = ensureText(response, "User input parsing");
 
   try {
@@ -277,7 +265,7 @@ Guidelines:
   }
 }
 
-async function generateRecipe(options: GenerateRequest, apiKey: string): Promise<RecipeData> {
+async function generateRecipe(options: GenerateRequest): Promise<RecipeData> {
   const prompt = buildRecipeGenerationPrompt(options);
 
   const requestBody = {
@@ -298,7 +286,7 @@ async function generateRecipe(options: GenerateRequest, apiKey: string): Promise
     },
   };
 
-  const response = await callGemini(TEXT_MODEL, requestBody, apiKey);
+  const response = await callGemini(TEXT_MODEL, requestBody);
   const jsonText = ensureText(response, "Recipe generation");
 
   try {

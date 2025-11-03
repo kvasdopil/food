@@ -34,7 +34,7 @@ async function loadEnvValue(key: string): Promise<string | undefined> {
         return value;
       }
     }
-  } catch (error) {
+  } catch {
     // .env.local doesn't exist or can't be read - that's okay
   }
 
@@ -53,7 +53,9 @@ async function deleteRecipe() {
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
 
   if (!editToken) {
-    console.error("Error: EDIT_TOKEN is required. Set it in .env.local or as an environment variable.");
+    console.error(
+      "Error: EDIT_TOKEN is required. Set it in .env.local or as an environment variable.",
+    );
     process.exit(1);
   }
 
@@ -89,4 +91,3 @@ deleteRecipe().catch((error) => {
   console.error("Unexpected error:", error);
   process.exit(1);
 });
-

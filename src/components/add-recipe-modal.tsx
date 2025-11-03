@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AiOutlineClose } from "react-icons/ai";
-import { HiPaperAirplane } from "react-icons/hi2";
+import { HiSparkles } from "react-icons/hi2";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/lib/supabaseClient";
 import { RecipeFeedCard } from "@/components/recipe-feed-card";
@@ -310,38 +310,23 @@ export function AddRecipeModal({ isOpen, onClose }: AddRecipeModalProps) {
       {/* Modal */}
       <div
         ref={modalRef}
-        className="relative z-10 h-full w-full bg-white sm:h-auto sm:w-auto sm:max-w-lg sm:rounded-lg sm:shadow-xl"
+        className="relative z-10 h-full w-full rounded-xl bg-white sm:h-auto sm:w-auto sm:max-w-lg sm:shadow-xl"
       >
-        {/* Header */}
-        <div className="flex items-center justify-between border-b border-gray-200 p-4 sm:p-6">
-          <h2 className="text-xl font-semibold text-gray-900">Add Recipe</h2>
-          <button
-            onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-full text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            aria-label="Close modal"
-          >
-            <AiOutlineClose className="h-5 w-5 text-gray-600" />
-          </button>
-        </div>
+        {/* Close button at corner */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 z-20 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white text-gray-500 shadow-sm transition-colors hover:bg-gray-100 hover:text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          aria-label="Close modal"
+        >
+          <AiOutlineClose className="h-5 w-5 text-gray-600" />
+        </button>
 
         {/* Content */}
         <div className="max-h-[80vh] overflow-y-auto p-4 sm:p-6">
           <div className="space-y-4">
             {generatedRecipe && (
-              <div
-                id="generated-recipe-card"
-                className="relative"
-                onClick={(e) => {
-                  // Prevent navigation when clicking in modal context
-                  e.preventDefault();
-                  e.stopPropagation();
-                }}
-                onMouseDown={(e) => {
-                  // Prevent Link navigation
-                  e.preventDefault();
-                }}
-              >
-                <div onClick={(e) => e.preventDefault()} onMouseDown={(e) => e.preventDefault()}>
+              <div id="generated-recipe-card" className="pointer-events-none relative">
+                <div className="pointer-events-none">
                   <RecipeFeedCard
                     slug={generatedRecipe.slug}
                     name={generatedRecipe.name}
@@ -390,11 +375,11 @@ export function AddRecipeModal({ isOpen, onClose }: AddRecipeModalProps) {
                   </div>
                 )}
 
-                <div className="flex justify-end">
+                <div className="flex justify-center">
                   <button
                     onClick={handleSend}
                     disabled={!userInput.trim() || isLoading || !session || authLoading}
-                    className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-300 disabled:hover:bg-gray-300"
+                    className="flex cursor-pointer items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-300 disabled:hover:bg-gray-300"
                   >
                     {isLoading ? (
                       <>
@@ -403,8 +388,8 @@ export function AddRecipeModal({ isOpen, onClose }: AddRecipeModalProps) {
                       </>
                     ) : (
                       <>
-                        <HiPaperAirplane className="h-4 w-4" />
-                        <span>Send</span>
+                        <HiSparkles className="h-4 w-4" />
+                        <span>Create recipe</span>
                       </>
                     )}
                   </button>
@@ -423,7 +408,7 @@ export function AddRecipeModal({ isOpen, onClose }: AddRecipeModalProps) {
                   <button
                     onClick={handleAddRecipe}
                     disabled={isAddingRecipe}
-                    className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-400 disabled:hover:bg-gray-400"
+                    className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-400 disabled:hover:bg-gray-400"
                   >
                     {isAddingRecipe ? (
                       <>
@@ -441,7 +426,7 @@ export function AddRecipeModal({ isOpen, onClose }: AddRecipeModalProps) {
                       setError(null);
                     }}
                     disabled={isAddingRecipe}
-                    className="flex-1 rounded-lg border border-gray-300 bg-transparent px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                    className="flex-1 cursor-pointer rounded-lg border border-gray-300 bg-transparent px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     Cancel
                   </button>

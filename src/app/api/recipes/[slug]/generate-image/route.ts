@@ -5,10 +5,9 @@ import sharp from "sharp";
 import { supabaseAdmin } from "@/lib/supabaseAdminClient";
 import { logApiEndpoint } from "@/lib/analytics";
 import { authenticateRequest } from "@/lib/api-auth";
+import { callGemini, ensureText, TEXT_MODEL } from "@/lib/gemini";
 
 const DEFAULT_BUCKET = process.env.RECIPE_STORAGE_BUCKET ?? "recipe-images";
-const API_BASE_URL = "https://generativelanguage.googleapis.com/v1beta";
-const TEXT_MODEL = "gemini-2.5-flash";
 const FIREFLY_BASE_URL = "https://image-v5.ff.adobe.io";
 
 type Ingredient = {
@@ -28,20 +27,6 @@ type RecipeData = {
   ingredients: Ingredient[];
   instructions: Instruction[];
   tags?: string[];
-};
-
-type GenerateContentResponse = {
-  candidates?: Array<{
-    content?: {
-      parts?: Array<{
-        text?: string;
-      }>;
-    };
-    finishReason?: string;
-  }>;
-  promptFeedback?: {
-    blockReason?: string;
-  };
 };
 
 type FireflyJobResponse = {
@@ -77,13 +62,13 @@ type FireflyJobStatus = {
   message?: string;
   error_code?: string;
   status?:
-  | "pending"
-  | "running"
-  | "succeeded"
-  | "failed"
-  | "cancel_pending"
-  | "cancelled"
-  | "timeout";
+    | "pending"
+    | "running"
+    | "succeeded"
+    | "failed"
+    | "cancel_pending"
+    | "cancelled"
+    | "timeout";
   links?: {
     result?: {
       href: string;
@@ -154,46 +139,7 @@ function parseInstructions(raw: string): Instruction[] {
     });
 }
 
-async function callGemini(model: string, body: Record<string, unknown>, apiKey: string) {
-  const url = `${API_BASE_URL}/models/${model}:generateContent?key=${apiKey}`;
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(
-      `Gemini API request failed (${response.status} ${response.statusText}): ${errorText}`,
-    );
-  }
-
-  return (await response.json()) as GenerateContentResponse;
-}
-
-function ensureText(response: GenerateContentResponse, errorContext: string) {
-  if (response.promptFeedback?.blockReason) {
-    throw new Error(
-      `${errorContext} was blocked by Gemini: ${response.promptFeedback.blockReason}`,
-    );
-  }
-  const text = response.candidates
-    ?.flatMap((candidate) => candidate.content?.parts ?? [])
-    .map((part) => part.text ?? "")
-    .join("")
-    .trim();
-
-  if (!text) {
-    throw new Error(`Gemini did not return text for: ${errorContext}`);
-  }
-
-  return text;
-}
-
-async function enhanceImagePrompt(recipe: RecipeData, basePrompt: string, apiKey: string) {
+async function enhanceImagePrompt(recipe: RecipeData, basePrompt: string) {
   const descriptiveIngredients = recipe.ingredients
     .slice(0, 6)
     .map((item) => item.name)
@@ -231,7 +177,7 @@ async function enhanceImagePrompt(recipe: RecipeData, basePrompt: string, apiKey
     },
   };
 
-  const response = await callGemini(TEXT_MODEL, requestBody, apiKey);
+  const response = await callGemini(TEXT_MODEL, requestBody);
   return ensureText(response, "Image prompt enhancement");
 }
 
@@ -440,17 +386,6 @@ export async function POST(
     );
   }
 
-  const geminiApiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
-  if (!geminiApiKey) {
-    console.error(
-      "POST /api/recipes/[slug]/generate-image missing GEMINI_API_KEY or GOOGLE_API_KEY.",
-    );
-    return NextResponse.json(
-      { error: "Server is not configured for prompt enhancement" },
-      { status: 500 },
-    );
-  }
-
   // Get Firefly API key from header, fallback to env or default
   const fireflyApiKey =
     request.headers.get("x-firefly-key")?.trim() ||
@@ -531,7 +466,7 @@ export async function POST(
     console.log(`Base prompt: ${baseImagePrompt.substring(0, 100)}...`);
 
     // Enrich prompt using Gemini
-    const enhancedPrompt = await enhanceImagePrompt(recipe, baseImagePrompt, geminiApiKey);
+    const enhancedPrompt = await enhanceImagePrompt(recipe, baseImagePrompt);
     console.log(`Enhanced prompt: ${enhancedPrompt.substring(0, 100)}...`);
 
     // Generate image using Firefly
