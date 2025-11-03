@@ -28,6 +28,7 @@ type RecipesResponse = {
 
 type UsePaginatedRecipesOptions = {
   tags?: string[];
+  searchQuery?: string;
   autoLoadInitial?: boolean;
 };
 
@@ -54,7 +55,7 @@ type UsePaginatedRecipesResult = {
 export function usePaginatedRecipes(
   options: UsePaginatedRecipesOptions = {},
 ): UsePaginatedRecipesResult {
-  const { tags = [], autoLoadInitial = true } = options;
+  const { tags = [], searchQuery = "", autoLoadInitial = true } = options;
 
   const [recipes, setRecipes] = useState<RecipeListItem[]>([]);
   const [pagination, setPagination] = useState<PaginationInfo | null>(null);
@@ -66,7 +67,7 @@ export function usePaginatedRecipes(
   const loadingFromSlugRef = useRef<string | null>(null);
 
   const fetchRecipes = useCallback(
-    async (fromSlug?: string, tagsToFetch?: string[], signal?: AbortSignal) => {
+    async (fromSlug?: string, tagsToFetch?: string[], searchToFetch?: string, signal?: AbortSignal) => {
       try {
         const params = new URLSearchParams();
         if (fromSlug) {
@@ -74,6 +75,9 @@ export function usePaginatedRecipes(
         }
         if (tagsToFetch && tagsToFetch.length > 0) {
           params.append("tags", tagsToFetch.join("+"));
+        }
+        if (searchToFetch && searchToFetch.trim()) {
+          params.append("q", searchToFetch.trim());
         }
         const queryString = params.toString();
         const url = queryString ? `/api/recipes?${queryString}` : `/api/recipes`;
@@ -107,7 +111,7 @@ export function usePaginatedRecipes(
     setIsLoading(true);
     setError(null);
     try {
-      const data = await fetchRecipes(undefined, tags, abortController.signal);
+      const data = await fetchRecipes(undefined, tags, searchQuery, abortController.signal);
 
       // Only update if this request wasn't aborted
       if (!abortController.signal.aborted) {
@@ -130,7 +134,7 @@ export function usePaginatedRecipes(
         }
       }
     }
-  }, [fetchRecipes, tags]);
+  }, [fetchRecipes, tags, searchQuery]);
 
   const loadMore = useCallback(async () => {
     if (!pagination || !pagination.hasMore || isLoadingMore || recipes.length === 0) return;
@@ -156,7 +160,7 @@ export function usePaginatedRecipes(
 
     setIsLoadingMore(true);
     try {
-      const data = await fetchRecipes(fromSlug, tags, abortController.signal);
+      const data = await fetchRecipes(fromSlug, tags, searchQuery, abortController.signal);
 
       // Only update if this request wasn't aborted
       if (!abortController.signal.aborted) {
@@ -182,19 +186,19 @@ export function usePaginatedRecipes(
         }
       }
     }
-  }, [pagination, isLoadingMore, fetchRecipes, recipes, tags]);
+  }, [pagination, isLoadingMore, fetchRecipes, recipes, tags, searchQuery]);
 
   const retry = useCallback(async () => {
     await loadInitialRecipes();
   }, [loadInitialRecipes]);
 
-  // Auto-load initial recipes when tags change (if autoLoadInitial is true)
+  // Auto-load initial recipes when tags or search query change (if autoLoadInitial is true)
   useEffect(() => {
     if (autoLoadInitial) {
       loadInitialRecipes();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tags.join(","), autoLoadInitial]); // Only depend on tags content, not the whole array reference
+  }, [tags.join(","), searchQuery, autoLoadInitial]); // Only depend on tags content, not the whole array reference
 
   // Cleanup abort controller on unmount
   useEffect(() => {

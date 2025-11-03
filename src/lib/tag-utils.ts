@@ -121,9 +121,30 @@ export function buildFeedUrlWithTags(tags: string[]): string {
 }
 
 /**
+ * Builds a feed URL with tags and optional search query
+ * @param tags Array of tag strings
+ * @param searchQuery Optional search query string
+ * @returns URL path like "/feed?tags=beef+glutenfree&q=chicken" or "/feed?q=chicken"
+ */
+export function buildFeedUrlWithTagsAndSearch(tags: string[], searchQuery?: string): string {
+  const params = new URLSearchParams();
+  
+  if (tags.length > 0) {
+    params.set("tags", buildTagsQuery(tags));
+  }
+  
+  if (searchQuery && searchQuery.trim()) {
+    params.set("q", searchQuery.trim());
+  }
+  
+  const queryString = params.toString();
+  return queryString ? `/feed?${queryString}` : "/feed";
+}
+
+/**
  * Toggles a tag in the current URL and returns the new URL
  * @param tag The tag to toggle
- * @returns The new feed URL with updated tags
+ * @returns The new feed URL with updated tags (preserves search query)
  */
 export function toggleTagInUrl(tag: string): string {
   if (typeof window === "undefined") {
@@ -148,5 +169,9 @@ export function toggleTagInUrl(tag: string): string {
   // Remove duplicates (safety check)
   newTags = Array.from(new Set(newTags));
 
-  return buildFeedUrlWithTags(newTags);
+  // Preserve search query from URL
+  const urlObj = new URL(window.location.href);
+  const searchQuery = urlObj.searchParams.get("q") || "";
+
+  return buildFeedUrlWithTagsAndSearch(newTags, searchQuery);
 }

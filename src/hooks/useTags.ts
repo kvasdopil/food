@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { parseTagsFromUrl, buildFeedUrlWithTags } from "@/lib/tag-utils";
+import { parseTagsFromUrl, buildFeedUrlWithTagsAndSearch } from "@/lib/tag-utils";
 
 /**
  * Hook for managing tags in the feed context
@@ -18,17 +18,21 @@ export function useTags() {
 
   /**
    * Removes a tag from the active filters
+   * Preserves search query in URL
    */
   const removeTag = (tagToRemove: string) => {
     const newTags = activeTags.filter((tag) => tag !== tagToRemove);
-    router.push(buildFeedUrlWithTags(newTags));
+    const searchQuery = searchParams.get("q") || "";
+    router.push(buildFeedUrlWithTagsAndSearch(newTags, searchQuery));
   };
 
   /**
    * Removes all active tags (clears all filters)
+   * Preserves search query in URL
    */
   const clearAllTags = () => {
-    router.push("/feed");
+    const searchQuery = searchParams.get("q") || "";
+    router.push(buildFeedUrlWithTagsAndSearch([], searchQuery));
   };
 
   /**

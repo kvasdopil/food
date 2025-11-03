@@ -38,9 +38,9 @@ export default function RecipesLayout({ children }: RecipesLayoutProps) {
           <FiChevronLeft className="h-5 w-5 text-slate-700" />
         </Link>
 
-        {/* Mobile: Full width layout - content handled by root-level carousel (only visible below sm) */}
+        {/* Mobile: Full width layout with scrollable content */}
         <div className="mx-auto flex h-full w-full max-w-5xl flex-col px-0 sm:hidden">
-          {/* Mobile content handled by root-level carousel */}
+          <Recipe slug={slug} />
         </div>
 
         {/* Medium/Desktop: Centered layout (visible on sm+) */}

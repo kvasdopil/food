@@ -180,6 +180,7 @@ export async function GET(request: NextRequest) {
   const pageParam = searchParams.get("page");
   const fromSlug = searchParams.get("from");
   const tagsParam = searchParams.get("tags");
+  const searchQuery = searchParams.get("q") || searchParams.get("search") || "";
   const filterTags = parseTagsFromQuery(tagsParam);
 
   if (!supabase) {
@@ -229,7 +230,23 @@ export async function GET(request: NextRequest) {
       throw allRecipesError;
     }
 
-    const allRecipes = allRecipesData || [];
+    let allRecipes = allRecipesData || [];
+
+    // Apply search filter if search query is provided
+    if (searchQuery.trim()) {
+      const searchTerm = searchQuery.trim().toLowerCase();
+      allRecipes = allRecipes.filter((recipe) => {
+        // Search in recipe name (case-insensitive partial match)
+        const nameMatch = recipe.name?.toLowerCase().includes(searchTerm);
+        
+        // Search in tags (case-insensitive partial match)
+        const tagMatch = recipe.tags?.some((tag) => 
+          tag.toLowerCase().includes(searchTerm)
+        );
+        
+        return nameMatch || tagMatch;
+      });
+    }
 
     // Shuffle all recipes deterministically based on current date
     const dateSeed = getDateSeed();

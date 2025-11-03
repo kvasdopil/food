@@ -1,22 +1,21 @@
 "use client";
 
 import { useEffect, useRef, useMemo } from "react";
+import { useSearchParams } from "next/navigation";
 import { RecipeFeedCard } from "@/components/recipe-feed-card";
 import { useTags } from "@/hooks/useTags";
 import { usePaginatedRecipes } from "@/hooks/usePaginatedRecipes";
 import { FeedSkeleton } from "@/components/skeletons/feed-skeleton";
 import { recipeStore } from "@/lib/recipe-store";
 
-const chipPalette = [
-  "bg-amber-100 text-amber-700",
-  "bg-sky-100 text-sky-700",
-  "bg-emerald-100 text-emerald-700",
-  "bg-violet-100 text-violet-700",
-];
-
 export function FeedCard() {
-  const { activeTags, removeTag, clearAllTags } = useTags();
+  const searchParams = useSearchParams();
+  const { activeTags } = useTags();
+
+  // Get search query from URL
+  const searchQuery = searchParams.get("q") || "";
   const scrollRef = useRef<HTMLDivElement>(null);
+
   const {
     recipes,
     pagination,
@@ -26,7 +25,7 @@ export function FeedCard() {
     loadInitialRecipes,
     loadMore,
     retry,
-  } = usePaginatedRecipes({ tags: activeTags, autoLoadInitial: false });
+  } = usePaginatedRecipes({ tags: activeTags, searchQuery, autoLoadInitial: false });
 
   // Get all cached recipes from IndexedDB to show immediately on load
   const allCachedRecipes = useMemo(() => {
@@ -66,13 +65,13 @@ export function FeedCard() {
       .filter(Boolean);
   }, [isLoading, recipes, allCachedRecipes]);
 
-  // Load initial recipes or reload when tags change
+  // Load initial recipes or reload when tags or search query change
   useEffect(() => {
     if (!isLoading) {
       loadInitialRecipes();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeTags]); // Reload when tags change
+  }, [activeTags, searchQuery]); // Reload when tags or search query change
 
   // Container-based infinite scroll (for carousel)
   useEffect(() => {
@@ -112,40 +111,6 @@ export function FeedCard() {
     return (
       <div className="h-full overflow-y-auto bg-white">
         <main className="mx-auto max-w-7xl sm:px-6 sm:py-6 lg:px-8">
-          {activeTags.length > 0 && (
-            <div className="m-4 flex flex-wrap items-center gap-2 sm:mb-8">
-              <span className="text-sm font-medium text-gray-700 sm:text-base"></span>
-              {activeTags.map((tag, index) => (
-                <button
-                  key={tag}
-                  type="button"
-                  onClick={() => removeTag(tag)}
-                  className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-medium transition hover:opacity-80 ${chipPalette[index % chipPalette.length]}`}
-                >
-                  {tag}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="h-4 w-4"
-                  >
-                    <path d="M18 6L6 18M6 6l12 12" />
-                  </svg>
-                </button>
-              ))}
-              <button
-                type="button"
-                onClick={clearAllTags}
-                className="ml-2 text-sm font-medium text-gray-600 underline transition hover:text-gray-800"
-              >
-                Clear filters
-              </button>
-            </div>
-          )}
           {displayRecipes.length > 0 ? (
             <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
               {displayRecipes.map((recipe) => (
@@ -191,40 +156,6 @@ export function FeedCard() {
   return (
     <div ref={scrollRef} className="h-full overflow-y-auto bg-white">
       <main className="mx-auto max-w-7xl sm:px-6 sm:py-6 lg:px-8">
-        {activeTags.length > 0 && (
-          <div className="m-4 flex flex-wrap items-center gap-2 sm:mb-8">
-            <span className="text-sm font-medium text-gray-700 sm:text-base"></span>
-            {activeTags.map((tag, index) => (
-              <button
-                key={tag}
-                type="button"
-                onClick={() => removeTag(tag)}
-                className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-medium transition hover:opacity-80 ${chipPalette[index % chipPalette.length]}`}
-              >
-                {tag}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-4 w-4"
-                >
-                  <path d="M18 6L6 18M6 6l12 12" />
-                </svg>
-              </button>
-            ))}
-            <button
-              type="button"
-              onClick={clearAllTags}
-              className="ml-2 text-sm font-medium text-gray-600 underline transition hover:text-gray-800"
-            >
-              Clear filters
-            </button>
-          </div>
-        )}
         {displayRecipes.length === 0 && !isLoading ? (
           <div className="flex items-center justify-center py-32">
             <p className="text-lg text-gray-600">No recipes found</p>

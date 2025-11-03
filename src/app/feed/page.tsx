@@ -1,23 +1,22 @@
 "use client";
 
-import { useEffect, Suspense, useMemo } from "react";
+import { useEffect, Suspense, useMemo, useRef } from "react";
+import { useSearchParams } from "next/navigation";
 import { RecipeFeedCard } from "@/components/recipe-feed-card";
 import { useTags } from "@/hooks/useTags";
 import { usePaginatedRecipes } from "@/hooks/usePaginatedRecipes";
 import { FeedSkeleton } from "@/components/skeletons/feed-skeleton";
 import { recipeStore } from "@/lib/recipe-store";
 
-const chipPalette = [
-  "bg-amber-100 text-amber-700",
-  "bg-sky-100 text-sky-700",
-  "bg-emerald-100 text-emerald-700",
-  "bg-violet-100 text-violet-700",
-];
-
 function FeedPageContent() {
-  const { activeTags, removeTag, clearAllTags } = useTags();
+  const searchParams = useSearchParams();
+  const { activeTags } = useTags();
+  
+  // Get search query from URL
+  const searchQuery = searchParams.get("q") || "";
+
   const { recipes, pagination, isLoading, isLoadingMore, error, loadMore, retry } =
-    usePaginatedRecipes({ tags: activeTags });
+    usePaginatedRecipes({ tags: activeTags, searchQuery });
 
   // Get all cached recipes from IndexedDB to show immediately on load
   const allCachedRecipes = useMemo(() => {
@@ -57,10 +56,20 @@ function FeedPageContent() {
       .filter(Boolean);
   }, [isLoading, recipes, allCachedRecipes]);
 
-  // Scroll to top when tags change
+  // Scroll to top only when tags change (user action)
+  // Don't scroll on search query changes to avoid interrupting user scrolling
   const activeTagsKey = activeTags.join(",");
+  const prevTagsRef = useRef(activeTagsKey);
+  
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // Only scroll to top if tags actually changed (not on initial mount)
+    const tagsChanged = prevTagsRef.current !== activeTagsKey;
+    
+    if (tagsChanged && prevTagsRef.current !== "") {
+      window.scrollTo(0, 0);
+    }
+    
+    prevTagsRef.current = activeTagsKey;
   }, [activeTagsKey]);
 
   // Infinite scroll
@@ -99,68 +108,32 @@ function FeedPageContent() {
     const displayRecipes = cachedRecipesForLoading || recipes;
     
     return (
-      <div className="min-h-screen bg-white">
-        <main className="mx-auto max-w-7xl sm:px-6 sm:py-6 lg:px-8">
-          {activeTags.length > 0 && (
-            <div className="mb-6 flex flex-wrap items-center gap-2 sm:mb-8">
-              <span className="text-sm font-medium text-gray-700 sm:text-base">Filtered by:</span>
-              {activeTags.map((tag, index) => (
-                <button
-                  key={tag}
-                  type="button"
-                  onClick={() => removeTag(tag)}
-                  className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-medium transition hover:opacity-80 ${chipPalette[index % chipPalette.length]}`}
-                >
-                  {tag}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="h-4 w-4"
-                  >
-                    <path d="M18 6L6 18M6 6l12 12" />
-                  </svg>
-                </button>
-              ))}
-              <button
-                type="button"
-                onClick={clearAllTags}
-                className="ml-2 text-sm font-medium text-gray-600 underline transition hover:text-gray-800"
-              >
-                Clear all
-              </button>
-            </div>
-          )}
-          {displayRecipes.length > 0 ? (
-            <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
-              {displayRecipes.map((recipe) => (
-                <RecipeFeedCard
-                  key={recipe.slug}
-                  slug={recipe.slug}
-                  name={recipe.name}
-                  description={recipe.description}
-                  tags={recipe.tags}
-                  imageUrl={recipe.image_url}
-                  prepTimeMinutes={recipe.prep_time_minutes}
-                  cookTimeMinutes={recipe.cook_time_minutes}
-                />
-              ))}
-            </div>
-          ) : (
-            <FeedSkeleton count={8} />
-          )}
-        </main>
-      </div>
+      <>
+        {displayRecipes.length > 0 ? (
+          <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
+            {displayRecipes.map((recipe) => (
+              <RecipeFeedCard
+                key={recipe.slug}
+                slug={recipe.slug}
+                name={recipe.name}
+                description={recipe.description}
+                tags={recipe.tags}
+                imageUrl={recipe.image_url}
+                prepTimeMinutes={recipe.prep_time_minutes}
+                cookTimeMinutes={recipe.cook_time_minutes}
+              />
+            ))}
+          </div>
+        ) : (
+          <FeedSkeleton count={8} />
+        )}
+      </>
     );
   }
 
   if (error) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50">
+      <div className="flex items-center justify-center py-32">
         <div className="text-center">
           <p className="text-lg text-red-600">{error}</p>
           <button
@@ -174,77 +147,34 @@ function FeedPageContent() {
     );
   }
 
+  // Determine which recipes to display - use cached if no recipes loaded yet
+  const displayRecipes = recipes.length > 0 ? recipes : (allCachedRecipes || []);
+
   return (
-    <div className="min-h-screen bg-white">
-      <main className="mx-auto max-w-7xl sm:px-6 sm:py-6 lg:px-8">
-        {activeTags.length > 0 && (
-          <div className="mb-6 flex flex-wrap items-center gap-2 sm:mb-8">
-            <span className="text-sm font-medium text-gray-700 sm:text-base">Filtered by:</span>
-            {activeTags.map((tag, index) => (
-              <button
-                key={tag}
-                type="button"
-                onClick={() => removeTag(tag)}
-                className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-medium transition hover:opacity-80 ${chipPalette[index % chipPalette.length]}`}
-              >
-                {tag}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-4 w-4"
-                >
-                  <path d="M18 6L6 18M6 6l12 12" />
-                </svg>
-              </button>
-            ))}
-            <button
-              type="button"
-              onClick={clearAllTags}
-              className="ml-2 text-sm font-medium text-gray-600 underline transition hover:text-gray-800"
-            >
-              Clear all
-            </button>
-          </div>
-        )}
-        {/* Determine which recipes to display - use cached if no recipes loaded yet */}
-        {(() => {
-          const displayRecipes = recipes.length > 0 ? recipes : (allCachedRecipes || []);
-          
-          if (displayRecipes.length === 0 && !isLoading) {
-            return (
-              <div className="flex items-center justify-center py-32">
-                <p className="text-lg text-gray-600">No recipes found</p>
-              </div>
-            );
-          }
-          
-          return (
-            <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
-              {displayRecipes.map((recipe) => (
-                <RecipeFeedCard
-                  key={recipe.slug}
-                  slug={recipe.slug}
-                  name={recipe.name}
-                  description={recipe.description}
-                  tags={recipe.tags}
-                  imageUrl={recipe.image_url}
-                  prepTimeMinutes={recipe.prep_time_minutes}
-                  cookTimeMinutes={recipe.cook_time_minutes}
-                />
-              ))}
-            </div>
-          );
-        })()}
-      </main>
+    <>
+      {displayRecipes.length === 0 && !isLoading ? (
+        <div className="flex items-center justify-center py-32">
+          <p className="text-lg text-gray-600">No recipes found</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
+          {displayRecipes.map((recipe) => (
+            <RecipeFeedCard
+              key={recipe.slug}
+              slug={recipe.slug}
+              name={recipe.name}
+              description={recipe.description}
+              tags={recipe.tags}
+              imageUrl={recipe.image_url}
+              prepTimeMinutes={recipe.prep_time_minutes}
+              cookTimeMinutes={recipe.cook_time_minutes}
+            />
+          ))}
+        </div>
+      )}
 
       {isLoadingMore && (
-        <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8">
-          {/* While loading more, show skeletons for new items */}
+        <div className="mt-6">
           <FeedSkeleton count={4} />
         </div>
       )}
@@ -254,7 +184,7 @@ function FeedPageContent() {
           <p className="text-sm text-gray-600">No more recipes</p>
         </div>
       )}
-    </div>
+    </>
   );
 }
 
