@@ -46,7 +46,7 @@ const STORE_NAME = "recipes";
 
 class RecipeStore {
   private store = new Map<string, StoredRecipe>();
-  private dbPromise: Promise<IDBPDatabase<RecipeStoreDB>> | null = null;
+  private dbPromise: Promise<IDBPDatabase<RecipeStoreDB> | null> | null = null;
   private initialized = false;
 
   /**

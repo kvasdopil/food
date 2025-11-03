@@ -24,6 +24,8 @@ type RecipePayload = {
   instructions: Instruction[];
   tags: string[];
   imageUrl?: string;
+  prepTimeMinutes?: number | null;
+  cookTimeMinutes?: number | null;
 };
 
 type RecipeResponse = {
@@ -51,6 +53,8 @@ type RecipeYaml = {
   imageUrl?: unknown;
   image_url?: unknown;
   image?: unknown;
+  prepTimeMinutes?: number;
+  cookTimeMinutes?: number;
 };
 
 function usage(): never {
@@ -312,6 +316,15 @@ async function buildPayload(inputPath: string): Promise<RecipePayload> {
 
   if (imageUrlCandidate) {
     payload.imageUrl = imageUrlCandidate;
+  }
+
+  // Extract time fields from YAML
+  if (typeof data.prepTimeMinutes === "number" && Number.isFinite(data.prepTimeMinutes)) {
+    payload.prepTimeMinutes = Math.max(0, Math.trunc(data.prepTimeMinutes));
+  }
+
+  if (typeof data.cookTimeMinutes === "number" && Number.isFinite(data.cookTimeMinutes)) {
+    payload.cookTimeMinutes = Math.max(0, Math.trunc(data.cookTimeMinutes));
   }
 
   return payload;

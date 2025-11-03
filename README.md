@@ -132,7 +132,7 @@ The following user stories are planned but not yet implemented:
 - **US-31**: As a user, I want to search for recipes by name or keywords so I can quickly find specific recipes.
 - **US-32**: As a user, I want the feed to preserve scroll position when navigating back from a recipe page so I don't lose my place while browsing.
 - **US-33**: As a user, I want to see recipe variations (e.g., vegetarian versions) so I can find alternative versions of recipes I like.
-- **US-34**: As a user, I want to see prep time and cooking time for recipes so I can plan my cooking schedule.
+- **US-34**: As a user, I want to see prep time and cooking time for recipes so I can plan my cooking schedule. ✅ **Implemented**: Database schema includes `prep_time_minutes` and `cook_time_minutes` fields, populated from YAML files.
 - **US-35**: As a user, I want to see serving sizes and nutrition information for recipes so I can make informed dietary choices.
 
 ## Project Status
@@ -358,7 +358,7 @@ This architecture provides stateful navigation that tracks forward and backward 
   - Optimize image loading and preloading
 
 - **Future Schema Extensions**:
-  - Prep time and cooking time fields
+  - ✅ Prep time and cooking time fields - **Implemented**: Added `prep_time_minutes` and `cook_time_minutes` columns to recipes table
   - Servings/nutrition information
   - User authentication and recipe contributions
 
@@ -469,19 +469,26 @@ The script will:
   - Endpoint handles prompt enrichment, Firefly image generation, upload, and database update
   - Requires recipe to exist in database first
   - Supports `--endpoint`, `--firefly-key`, and `--save-to` options
+- **`scripts/populate-cooking-times.ts`**: Populates cooking time fields from YAML files
+  - Scans all YAML files in `data/recipes/` directory
+  - Extracts `prepTimeMinutes` and `cookTimeMinutes` from each YAML file
+  - Updates matching recipes in the database by slug
+  - Requires `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`
+  - Useful for migrating existing recipes after adding time fields to the schema
 
 ### Recipe Upload CLI & API
 
 - `scripts/upload-recipe.ts` is a unified script that uploads both the recipe image and YAML in one command:
   - Finds the image file automatically (looks for `{slug}.jpg`, `.jpeg`, `.png`, or `.webp` in the same directory as the YAML)
+  - Extracts `prepTimeMinutes` and `cookTimeMinutes` from YAML if present
   - Uploads image via `/api/images` endpoint (which automatically updates existing recipes)
-  - Uploads recipe via `/api/recipes` endpoint with the image URL
+  - Uploads recipe via `/api/recipes` endpoint with the image URL and time fields
   - Use `--skip-image` to skip image upload and only upload the recipe (useful if image URL is already in YAML)
 - The command reads `EDIT_TOKEN` from `--token`, the environment, or `.env.local`, and falls back to `http://localhost:3000` unless `--endpoint` or `RECIPE_API_URL` is provided.
 
 ### API Endpoints
 
-- **`POST /api/recipes`**: Creates or updates a recipe in the database. Accepts normalized recipe payloads, upserting by slug. Requests must include `Authorization: Bearer <EDIT_TOKEN>`; the server rejects missing or mismatched tokens with `401`.
+- **`POST /api/recipes`**: Creates or updates a recipe in the database. Accepts normalized recipe payloads, upserting by slug. Supports `prepTimeMinutes` and `cookTimeMinutes` fields. Requests must include `Authorization: Bearer <EDIT_TOKEN>`; the server rejects missing or mismatched tokens with `401`.
 - **`POST /api/recipes/generate`**: Generates recipe content (ingredients, instructions, image prompts) using Gemini API. Does not save to database. Always returns the first generated variant without refinement. Requires `Authorization: Bearer <EDIT_TOKEN>` and `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) configured on the server. Returns recipe data in the same format as `POST /api/recipes`.
 - **`POST /api/recipes/[slug]/refine`**: Evaluates and refines an existing recipe in the database. Evaluates the recipe against quality standards, and if issues are found, generates a refined version and updates the database. Returns evaluation results and the updated recipe. Requires `Authorization: Bearer <EDIT_TOKEN>` and `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) configured on the server.
 - **`POST /api/recipes/[slug]/generate-image`**: Generates and uploads an image for an existing recipe. Loads recipe from database, enriches prompt using Gemini API, generates image with Firefly API, uploads to Supabase Storage, and updates recipe's `image_url` in database. Requires `Authorization: Bearer <EDIT_TOKEN>`, `FIREFLY_API_TOKEN`, `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) on server. Optional `x-firefly-key` header for Firefly API key (defaults to `FIREFLY_API_KEY` env var or "clio-playground-web").
@@ -539,7 +546,7 @@ The script will:
 ## Supabase Configuration
 
 - Schema is defined in `supabase/migrations/*create_recipes_table.sql` and includes:
-  - `slug`, `name`, `description`, `ingredients`, `instructions`, `image_url`, `tags`, timestamps
+  - `slug`, `name`, `description`, `ingredients`, `instructions`, `image_url`, `tags`, `prep_time_minutes`, `cook_time_minutes`, timestamps
   - Slugs auto-generate from recipe names (duplicates receive `-2`, `-3`, … suffixes)
   - Row Level Security with read-only anonymous policy
 - Recipes can be uploaded via the API endpoint (see Recipe Asset Workflow section above).
@@ -549,7 +556,7 @@ The script will:
   supabase gen types typescript --project-id <project-ref> --schema public > src/types/supabase.ts
   ```
 
-- Extend the schema (prep time, servings, user auth) in new migrations as requirements grow.
+- Extend the schema (servings, nutrition, user auth) in new migrations as requirements grow.
 
 ## Useful Links
 

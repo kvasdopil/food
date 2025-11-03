@@ -26,6 +26,8 @@ type RecipePayload = {
   instructions: InstructionPayload[];
   tags: string[];
   imageUrl?: string | null | undefined; // undefined = not provided, null = explicitly cleared
+  prepTimeMinutes?: number | null;
+  cookTimeMinutes?: number | null;
 };
 
 type RecipeListItem = {
@@ -135,7 +137,31 @@ function normalizeRecipePayload(payload: unknown): RecipePayload | null {
           ? null
           : undefined; // undefined means not provided, null means explicitly cleared
 
-  return { slug: slugFromPayload, title, summary, ingredients, instructions, tags, imageUrl };
+  const prepTimeMinutes =
+    typeof payload.prepTimeMinutes === "number" && Number.isFinite(payload.prepTimeMinutes)
+      ? Math.max(0, Math.trunc(payload.prepTimeMinutes))
+      : payload.prepTimeMinutes === null
+        ? null
+        : undefined;
+
+  const cookTimeMinutes =
+    typeof payload.cookTimeMinutes === "number" && Number.isFinite(payload.cookTimeMinutes)
+      ? Math.max(0, Math.trunc(payload.cookTimeMinutes))
+      : payload.cookTimeMinutes === null
+        ? null
+        : undefined;
+
+  return {
+    slug: slugFromPayload,
+    title,
+    summary,
+    ingredients,
+    instructions,
+    tags,
+    imageUrl,
+    prepTimeMinutes,
+    cookTimeMinutes,
+  };
 }
 
 function buildInstructions(instructions: InstructionPayload[]) {
@@ -171,13 +197,11 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    const { count, error: countError } = await countQuery;
+    const { error: countError } = await countQuery;
 
     if (countError) {
       throw countError;
     }
-
-    const total = count || 0;
 
     // Fetch all matching recipes (with a reasonable limit to prevent memory issues)
     // In production, you might want to set a max limit like 10,000 recipes
@@ -318,6 +342,8 @@ export async function POST(request: NextRequest) {
     instructions: string;
     image_url?: string | null;
     tags: string[];
+    prep_time_minutes?: number | null;
+    cook_time_minutes?: number | null;
   } = {
     slug,
     name: payload.title,
@@ -326,6 +352,14 @@ export async function POST(request: NextRequest) {
     instructions: buildInstructions(payload.instructions),
     tags: payload.tags,
   };
+
+  // Include time fields if provided
+  if (payload.prepTimeMinutes !== undefined) {
+    dbPayload.prep_time_minutes = payload.prepTimeMinutes;
+  }
+  if (payload.cookTimeMinutes !== undefined) {
+    dbPayload.cook_time_minutes = payload.cookTimeMinutes;
+  }
 
   // Only include image_url if explicitly provided, otherwise preserve existing
   if (payload.imageUrl !== undefined) {
