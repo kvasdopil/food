@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FiChevronLeft } from "react-icons/fi";
@@ -7,6 +8,7 @@ import { KeyboardNav } from "@/components/keyboard-nav";
 import { RecipeSideNav } from "@/components/recipe-side-nav";
 import { NavigationProvider } from "./[slug]/client/navigation-provider";
 import { Recipe } from "@/components/recipe/recipe";
+import { getBackToFeedUrl } from "@/lib/tag-utils";
 
 type RecipesLayoutProps = {
   children: React.ReactNode;
@@ -17,6 +19,11 @@ export default function RecipesLayout({ children }: RecipesLayoutProps) {
   // Extract slug from pathname like /recipes/slug-name or /recipes/slug-name/...
   const match = pathname?.match(/^\/recipes\/([^/]+)/);
   const slug = match?.[1] || "";
+
+  // Get back-to-feed URL with preserved query parameters from sessionStorage or referrer
+  const backToFeedUrl = useMemo(() => {
+    return getBackToFeedUrl();
+  }, []);
 
   // If no slug (e.g., on /recipes route), just render children
   if (!slug) {
@@ -30,7 +37,7 @@ export default function RecipesLayout({ children }: RecipesLayoutProps) {
 
         {/* Back to feed button */}
         <Link
-          href="/feed"
+          href={backToFeedUrl}
           className="fixed top-4 left-4 z-[100] flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md transition hover:bg-slate-50 sm:top-6 sm:left-6"
           style={{ cursor: "pointer" }}
           aria-label="Back to feed"

@@ -97,8 +97,8 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
 
 - **US-14**: As a user, I want to click on tags in recipe cards to filter the feed by that tag so I can find recipes matching my preferences. ✅ **Implemented**: Tags toggle on click (add if not present, remove if already filtered).
 - **US-15**: As a user, I want to combine multiple tags (e.g., `/feed?tags=vegetarian+italian`) so I can filter recipes by multiple criteria at once. ✅ **Implemented**: Multiple tags are separated by `+` in the URL.
-- **US-16**: As a user, I want to see active tag filters displayed at the top of the feed so I know what filters are currently applied. ✅ **Implemented**: Filter section shows active tags with remove buttons on both desktop and mobile.
-- **US-17**: As a user, I want to remove individual tag filters or clear all filters so I can adjust my search criteria. ✅ **Implemented**: Individual tags can be removed via X button; "Clear filters" button removes all active filters.
+- **US-16**: As a user, I want to see active tag filters displayed at the top of the feed so I know what filters are currently applied. ✅ **Implemented**: Active tags are displayed inline within the search bar, between the search icon and input field, with individual remove buttons.
+- **US-17**: As a user, I want to remove individual tag filters or clear all filters so I can adjust my search criteria. ✅ **Implemented**: Individual tags can be removed via X button on each tag; the clear button in the search bar removes both search query and all active tags.
 - **US-18**: As a user, I want tag filters to persist in the URL so I can bookmark filtered views and share them with others. ✅ **Implemented**: Tag filters are stored in URL query parameters.
 - **US-19**: As a user, I want tags to be clickable buttons so I can easily filter recipes. ✅ **Implemented**: Tags are clickable buttons that toggle filters.
 
@@ -141,8 +141,8 @@ The following user stories are planned but not yet implemented:
 - Feed route `/feed` displays a scrollable grid/list of recipes with pagination (20 per page), infinite scroll, and favorite functionality. Responsive grid layout: single column on mobile, up to 4 columns on desktop (1 column mobile, 2 columns sm, 3 columns lg, 4 columns xl).
 - **Shuffled feed order**: Recipes in the feed are shuffled deterministically based on the current date. The same date produces the same shuffle order, ensuring a stable sequence throughout the day. The shuffle order changes daily, providing variety while maintaining consistency during browsing sessions.
 - **Search functionality**: Search bar in feed layout allows searching recipes by name or tags. Search query is debounced (300ms) and persists in URL as `q=` parameter. Can be combined with tag filters (e.g., `/feed?tags=vegetarian&q=pasta`). Search state is managed in the persistent feed layout to prevent remounting during navigation.
-- Tag filtering: Users can click tags on recipe cards to toggle filters. Active filters are displayed at the top of the feed with remove buttons. Filters persist in the URL using `+` separator (e.g., `/feed?tags=vegetarian+italian`). Tag filtering works on both desktop and mobile views.
-- Feed layout `src/app/feed/layout.tsx` contains the search bar and tags filter panel in a persistent layout that doesn't remount during navigation, ensuring search state is preserved.
+- Tag filtering: Users can click tags on recipe cards to toggle filters. Active tags are displayed inline within the search bar, between the search icon and input field, with individual remove buttons on each tag. The clear button (X) removes both the search query and all active tags. Filters persist in the URL using `+` separator (e.g., `/feed?tags=vegetarian+italian`). Tag filtering works on both desktop and mobile views.
+- Feed layout `src/app/feed/layout.tsx` contains the search bar (with integrated tag display) in a persistent layout that doesn't remount during navigation, ensuring search state is preserved.
 - Dynamic route `src/app/recipes/[slug]/page.tsx` handles metadata generation only; rendering is handled by the layout.
 - Layout `src/app/recipes/layout.tsx` manages recipe rendering and includes a back-to-feed link in the top-left corner (links to `/feed` with `cursor: pointer`). Recipes render normally on all screen sizes (no mobile carousel).
 - Navigation history checks use `document.referrer` to ensure same-origin navigation (prevents "about:blank" issues). Previous navigation is disabled/hidden when there's no same-origin history.
@@ -171,12 +171,11 @@ The app has three main routes:
 
 **Feed Layout** (`src/app/feed/layout.tsx`)
 
-- **Persistent layout** that contains search bar and tags filter panel
+- **Persistent layout** that contains search bar with integrated tag display
 - Prevents remounting during navigation, ensuring search state is preserved
 - Manages search query synchronization with URL (`?q=searchterm`)
 - Contains:
-  - Search bar (`RecipeSearchBar`) - searches by recipe name and tags
-  - Active tags filter section (when tags are active)
+  - Search bar (`RecipeSearchBar`) - searches by recipe name and tags, displays active tags inline between search icon and input field
   - Wraps feed page content
 
 **Recipes Layout** (`src/app/recipes/layout.tsx`)
@@ -275,8 +274,7 @@ Navigation history is managed via **session storage** (`recipe-history.ts`):
 ```
 Feed Layout (`/feed`)
 ├── FeedLayoutContent (persistent layout)
-│   ├── RecipeSearchBar - search by name and tags
-│   ├── Active Tags Filter Section (when tags are active)
+│   ├── RecipeSearchBar - search by name and tags, displays active tags inline
 │   └── Feed Page Content (children)
 │       └── RecipeFeedCard grid (responsive: 1 col mobile, 2 sm, 3 lg, 4 xl)
 │           ├── Image with title overlay
@@ -378,9 +376,9 @@ This architecture provides stateful navigation that tracks forward and backward 
 ## Page Structure
 
 - `src/app/page.tsx`: server component redirecting to `/feed`.
-- `src/app/feed/layout.tsx`: client component providing persistent feed layout with search bar and tags filter panel. Manages search query state and URL synchronization.
+- `src/app/feed/layout.tsx`: client component providing persistent feed layout with search bar (tags displayed inline). Manages search query state and URL synchronization.
 - `src/app/feed/page.tsx`: client component displaying paginated recipe feed with infinite scroll. Reads search query and tags from URL. Responsive grid layout works on all screen sizes.
-- `src/components/recipe-search-bar.tsx`: search bar component with search icon and clear button. Uses react-icons for icons.
+- `src/components/recipe-search-bar.tsx`: search bar component with search icon, inline tag display (between icon and input), and clear button that clears both search and tags. Uses react-icons for icons. Tags are displayed as chips with individual remove buttons.
 - `src/components/recipe-feed-card.tsx`: recipe card component for feed page with image, title overlay, description, clickable tags (toggle filters), and favorite button.
 - `src/hooks/useTags.ts`: React hook for managing tags in feed context. Parses tags from URL, provides remove/clear functions. Preserves search query when modifying tags.
 - `src/lib/tag-utils.ts`: Utility functions for parsing tags from URLs and building tag URLs. Used by both client components and API routes.
@@ -518,10 +516,10 @@ The script will:
 
 1. **Home Route** (`/`) → Server redirects to `/feed`
 2. **Feed Route** (`/feed`) →
-   - Feed layout contains persistent search bar and tags filter panel → Page content (`FeedPageContent`) fetches paginated recipes from `/api/recipes` (recipes are shuffled deterministically by date, supports `?tags=tag1+tag2` and `?q=searchterm` for filtering) → Stores partial recipe data (image, name, description, tags) in centralized cache → Displays in responsive grid (1 col mobile, 2 sm, 3 lg, 4 xl) with infinite scroll → Shows cached recipes immediately if available → Search bar and active tag filters shown at top in persistent layout → Cards link to `/recipes/[slug]`
+   - Feed layout contains persistent search bar with integrated tag display → Page content (`FeedPageContent`) fetches paginated recipes from `/api/recipes` (recipes are shuffled deterministically by date, supports `?tags=tag1+tag2` and `?q=searchterm` for filtering) → Stores partial recipe data (image, name, description, tags) in centralized cache → Displays in responsive grid (1 col mobile, 2 sm, 3 lg, 4 xl) with infinite scroll → Shows cached recipes immediately if available → Search bar displays active tags inline between search icon and input → Cards link to `/recipes/[slug]`
 3. **Search & Tag Filtering**:
    - User types in search bar → search query debounced (300ms) → URL updated with `?q=searchterm` → Feed reloads with filtered recipes → Search query persists in URL
-   - User clicks tag on recipe card → `toggleTagInUrl` utility adds/removes tag from URL (preserves search query) → `useTags` hook parses active tags → Feed reloads with filtered recipes → Active tags displayed at top with remove buttons
+   - User clicks tag on recipe card → `toggleTagInUrl` utility adds/removes tag from URL (preserves search query) → `useTags` hook parses active tags → Feed reloads with filtered recipes → Active tags displayed inline in search bar with individual remove buttons → Clear button (X) removes both search query and all active tags
 4. **Recipe Route** (`/recipes/[slug]`)
    - Page component: Generates metadata (OpenGraph, title) via server-side Supabase query
    - Layout component: Extracts slug from pathname → Uses `useRecipe` hook → Checks centralized cache for partial data (image, name, description, tags) → Shows cached partial data immediately if available → Fetches full recipe data via Supabase → Stores full data in centralized cache → Renders recipe components

@@ -4,14 +4,7 @@ import { Suspense, useEffect, useState, useRef } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { RecipeSearchBar } from "@/components/recipe-search-bar";
 import { useTags } from "@/hooks/useTags";
-import { buildFeedUrlWithTagsAndSearch } from "@/lib/tag-utils";
-
-const chipPalette = [
-  "bg-amber-100 text-amber-700",
-  "bg-sky-100 text-sky-700",
-  "bg-emerald-100 text-emerald-700",
-  "bg-violet-100 text-violet-700",
-];
+import { buildFeedUrlWithTagsAndSearch, storeFeedUrl } from "@/lib/tag-utils";
 
 function FeedLayoutContent({ children }: { children: React.ReactNode }) {
   const searchParams = useSearchParams();
@@ -74,46 +67,23 @@ function FeedLayoutContent({ children }: { children: React.ReactNode }) {
     return () => clearTimeout(timer);
   }, [searchQuery, activeTags, router, searchParams]);
 
+  // Store current feed URL in sessionStorage to preserve filters when navigating to recipes
+  useEffect(() => {
+    storeFeedUrl();
+  }, [searchParams]); // Update whenever URL params change
+
   return (
     <div className="min-h-screen bg-white">
       <main className="mx-auto max-w-7xl sm:px-6 sm:py-6 lg:px-8">
         <div className="px-4 pt-4 sm:px-0 sm:pt-0">
-          <RecipeSearchBar value={searchQuery} onChange={handleSearchChange} />
+          <RecipeSearchBar 
+            value={searchQuery} 
+            onChange={handleSearchChange}
+            activeTags={activeTags}
+            onRemoveTag={removeTag}
+            onClearAllTags={clearAllTags}
+          />
         </div>
-        {activeTags.length > 0 && (
-          <div className="mb-6 flex flex-wrap items-center gap-2 px-4 sm:mb-8 sm:px-0">
-            <span className="text-sm font-medium text-gray-700 sm:text-base">Filtered by:</span>
-            {activeTags.map((tag, index) => (
-              <button
-                key={tag}
-                type="button"
-                onClick={() => removeTag(tag)}
-                className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-medium transition hover:opacity-80 ${chipPalette[index % chipPalette.length]}`}
-              >
-                {tag}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-4 w-4"
-                >
-                  <path d="M18 6L6 18M6 6l12 12" />
-                </svg>
-              </button>
-            ))}
-            <button
-              type="button"
-              onClick={clearAllTags}
-              className="ml-2 text-sm font-medium text-gray-600 underline transition hover:text-gray-800"
-            >
-              Clear all
-            </button>
-          </div>
-        )}
         {children}
       </main>
     </div>

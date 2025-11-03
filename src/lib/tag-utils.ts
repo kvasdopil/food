@@ -175,3 +175,98 @@ export function toggleTagInUrl(tag: string): string {
 
   return buildFeedUrlWithTagsAndSearch(newTags, searchQuery);
 }
+
+/**
+ * Extracts query parameters (tags and search query) from a referrer URL
+ * @param referrerUrl The referrer URL (from document.referrer)
+ * @returns Object with tags array and search query, or null if not a feed URL
+ */
+export function extractFeedQueryParams(referrerUrl: string | null): {
+  tags: string[];
+  searchQuery: string;
+} | null {
+  if (!referrerUrl) return null;
+  
+  try {
+    // Check if it's a feed URL
+    const url = new URL(referrerUrl);
+    if (!url.pathname.includes("/feed")) {
+      return null;
+    }
+    
+    const tagsParam = url.searchParams.get("tags");
+    const searchQuery = url.searchParams.get("q") || "";
+    
+    const tags = tagsParam ? parseTagsFromQuery(tagsParam) : [];
+    
+    return { tags, searchQuery };
+  } catch {
+    return null;
+  }
+}
+
+const FEED_URL_STORAGE_KEY = "recipe-feed-back-url";
+
+/**
+ * Stores the current feed URL in sessionStorage for back navigation
+ * Call this when on the feed page to preserve filters when navigating to recipes
+ */
+export function storeFeedUrl(): void {
+  if (typeof window === "undefined") return;
+  
+  try {
+    const currentUrl = window.location.href;
+    // Only store if we're on the feed page
+    if (currentUrl.includes("/feed")) {
+      sessionStorage.setItem(FEED_URL_STORAGE_KEY, currentUrl);
+    }
+  } catch {
+    // Ignore storage errors
+  }
+}
+
+/**
+ * Gets the stored feed URL from sessionStorage
+ * @returns The feed URL with query parameters, or null if not found
+ */
+export function getStoredFeedUrl(): string | null {
+  if (typeof window === "undefined") return null;
+  
+  try {
+    return sessionStorage.getItem(FEED_URL_STORAGE_KEY);
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Gets the back-to-feed URL, extracting query params from stored URL or referrer
+ * @returns Feed URL with preserved query parameters, or "/feed" as fallback
+ */
+export function getBackToFeedUrl(): string {
+  if (typeof window === "undefined") return "/feed";
+  
+  // First, try to get from sessionStorage (most reliable)
+  const storedUrl = getStoredFeedUrl();
+  if (storedUrl) {
+    try {
+      const url = new URL(storedUrl);
+      if (url.pathname.includes("/feed")) {
+        const tagsParam = url.searchParams.get("tags");
+        const searchQuery = url.searchParams.get("q") || "";
+        const tags = tagsParam ? parseTagsFromQuery(tagsParam) : [];
+        return buildFeedUrlWithTagsAndSearch(tags, searchQuery);
+      }
+    } catch {
+      // If parsing fails, fall through to referrer check
+    }
+  }
+  
+  // Fallback to checking referrer
+  const referrerParams = extractFeedQueryParams(document.referrer);
+  if (referrerParams) {
+    return buildFeedUrlWithTagsAndSearch(referrerParams.tags, referrerParams.searchQuery);
+  }
+  
+  return "/feed";
+}

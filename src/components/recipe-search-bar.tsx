@@ -7,26 +7,80 @@ interface RecipeSearchBarProps {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
+  activeTags?: string[];
+  onRemoveTag?: (tag: string) => void;
+  onClearAllTags?: () => void;
 }
 
-export function RecipeSearchBar({ value, onChange, placeholder = "Search recipes by name or tags..." }: RecipeSearchBarProps) {
+const chipPalette = [
+  "bg-amber-100 text-amber-700",
+  "bg-sky-100 text-sky-700",
+  "bg-emerald-100 text-emerald-700",
+  "bg-violet-100 text-violet-700",
+];
+
+export function RecipeSearchBar({
+  value,
+  onChange,
+  placeholder = "Search recipes by name or tags...",
+  activeTags = [],
+  onRemoveTag,
+  onClearAllTags,
+}: RecipeSearchBarProps) {
+  const hasTags = activeTags.length > 0;
+
   return (
     <div className="mb-4 sm:mb-6">
-      <div className="relative hover:shadow-md rounded-lg">
+      <div className="flex items-center gap-2 hover:shadow-md rounded-lg bg-white px-3 py-3 focus-within:shadow-md focus-within:ring-2 focus-within:ring-blue-500 focus-within:outline-none">
+        <HiMagnifyingGlass className="h-5 w-5 text-gray-400 flex-shrink-0" />
+
+        {hasTags && (
+          <div className="flex items-center gap-2 flex-shrink-0">
+            {activeTags.map((tag, index) => (
+              <button
+                key={tag}
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onRemoveTag?.(tag);
+                }}
+                className={`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-xs font-medium transition hover:opacity-80 ${chipPalette[index % chipPalette.length]}`}
+              >
+                {tag}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-3 w-3"
+                >
+                  <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+              </button>
+            ))}
+          </div>
+        )}
+
         <input
           type="text"
           placeholder={placeholder}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full rounded-lg bg-white px-4 py-3 pl-10 text-base text-gray-900 placeholder-gray-500 focus:shadow-md focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:text-sm"
+          className="flex-1 text-base text-gray-900 placeholder-gray-500 focus:outline-none sm:text-sm"
         />
-        <HiMagnifyingGlass className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
-        {value && (
+
+        {(value || hasTags) && (
           <button
             type="button"
-            onClick={() => onChange("")}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-            aria-label="Clear search"
+            onClick={() => {
+              onChange("");
+              onClearAllTags?.();
+            }}
+            className="flex-shrink-0 text-gray-400 hover:text-gray-600"
+            aria-label="Clear search and filters"
           >
             <AiOutlineClose className="h-5 w-5" />
           </button>
