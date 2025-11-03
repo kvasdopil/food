@@ -563,3 +563,9 @@ The script will:
 - [Next.js Docs](https://nextjs.org/docs)
 - [Supabase Next.js Quickstart](https://supabase.com/docs/guides/getting-started/quickstarts/nextjs)
 - [Vercel CLI Reference](https://vercel.com/docs/cli)
+
+# General instructions
+
+- do not run `yarn build` unless explicitly asked by user, to check build run `yarn lint`
+- do not commit anything to git unless explicitly asked by user
+ 

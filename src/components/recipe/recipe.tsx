@@ -48,7 +48,9 @@ export function Recipe({ slug }: RecipeProps) {
             <RecipeImage 
               name={cachedPartial.name} 
               imageUrl={cachedPartial.image_url} 
-              slug={cachedPartial.slug} 
+              slug={cachedPartial.slug}
+              prepTimeMinutes={null}
+              cookTimeMinutes={null}
             />
             <Description 
               description={cachedPartial.description || null} 
@@ -84,7 +86,13 @@ export function Recipe({ slug }: RecipeProps) {
       style={{ touchAction: "pan-y" }}
     >
       <article className="flex w-full flex-col bg-white text-base leading-relaxed text-slate-600">
-        <RecipeImage name={recipeData.name} imageUrl={recipeData.imageUrl} slug={recipeData.slug} />
+        <RecipeImage 
+          name={recipeData.name} 
+          imageUrl={recipeData.imageUrl} 
+          slug={recipeData.slug}
+          prepTimeMinutes={recipeData.prepTimeMinutes}
+          cookTimeMinutes={recipeData.cookTimeMinutes}
+        />
         <Description description={recipeData.description || null} tags={recipeData.tags} />
         <Ingredients ingredients={recipeData.ingredients} />
         <Instructions instructions={recipeData.instructions} />

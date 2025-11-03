@@ -36,6 +36,8 @@ type RecipeListItem = {
   description: string | null;
   tags: string[];
   image_url: string | null;
+  prep_time_minutes: number | null;
+  cook_time_minutes: number | null;
 };
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -209,7 +211,7 @@ export async function GET(request: NextRequest) {
     
     let allRecipesQuery = supabase
       .from("recipes")
-      .select("slug, name, description, tags, image_url")
+      .select("slug, name, description, tags, image_url, prep_time_minutes, cook_time_minutes")
       .order("created_at", { ascending: false })
       .order("slug", { ascending: true })
       .limit(MAX_RECIPES_TO_FETCH);

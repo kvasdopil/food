@@ -35,12 +35,15 @@ export function FeedCard() {
     if (cached.length === 0) return null;
 
     // Convert to RecipeListItem format
+    // Note: Cached partial data doesn't include time fields, so they'll be null
     return cached.map((partial) => ({
       slug: partial.slug,
       name: partial.name,
       description: partial.description,
       tags: partial.tags,
       image_url: partial.image_url,
+      prep_time_minutes: null,
+      cook_time_minutes: null,
     }));
   }, []); // Only compute once on mount
 
@@ -153,6 +156,8 @@ export function FeedCard() {
                   description={recipe.description}
                   tags={recipe.tags}
                   imageUrl={recipe.image_url}
+                  prepTimeMinutes={recipe.prep_time_minutes}
+                  cookTimeMinutes={recipe.cook_time_minutes}
                 />
               ))}
             </div>

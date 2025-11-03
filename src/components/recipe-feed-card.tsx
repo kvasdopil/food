@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import NextImage from "next/image";
 import { resolveRecipeImageUrl } from "@/lib/resolve-recipe-image-url";
 import { toggleTagInUrl } from "@/lib/tag-utils";
+import { RecipeTimeDisplay } from "@/components/recipe-time-display";
 
 type RecipeFeedCardProps = {
   slug: string;
@@ -13,6 +14,8 @@ type RecipeFeedCardProps = {
   description: string | null;
   tags: string[];
   imageUrl: string | null;
+  prepTimeMinutes?: number | null;
+  cookTimeMinutes?: number | null;
 };
 
 const FAVORITES_STORAGE_KEY = "recipe-favorites";
@@ -50,7 +53,7 @@ function toggleFavorite(slug: string): boolean {
   }
 }
 
-export function RecipeFeedCard({ slug, name, description, tags, imageUrl }: RecipeFeedCardProps) {
+export function RecipeFeedCard({ slug, name, description, tags, imageUrl, prepTimeMinutes, cookTimeMinutes }: RecipeFeedCardProps) {
   const [isLiked, setIsLiked] = useState(false);
   const router = useRouter();
   const resolvedImageUrl = resolveRecipeImageUrl(imageUrl);
@@ -90,10 +93,13 @@ export function RecipeFeedCard({ slug, name, description, tags, imageUrl }: Reci
           <div className="absolute inset-0 bg-gradient-to-br from-emerald-200 via-slate-100 to-slate-300" />
         )}
 
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent px-4 pt-12 pb-4 sm:px-5 sm:pt-16 sm:pb-3">
-          <h2 className="text-3xl font-semibold text-white drop-shadow-sm sm:text-base lg:text-lg">
-            {name}
-          </h2>
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent pt-12 pb-4 sm:pt-16 sm:pb-3">
+          <div className="relative flex items-center gap-2 px-4 sm:px-5">
+            <h2 className="flex-1 pr-20 text-3xl font-semibold text-white drop-shadow-sm sm:pr-24 sm:text-base lg:text-lg">
+              {name}
+            </h2>
+            <RecipeTimeDisplay prepTimeMinutes={prepTimeMinutes} cookTimeMinutes={cookTimeMinutes} />
+          </div>
         </div>
       </figure>
 

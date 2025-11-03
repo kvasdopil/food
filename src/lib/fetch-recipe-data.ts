@@ -6,6 +6,8 @@ export type RecipeData = {
   instructions: string;
   imageUrl: string | null;
   tags: string[];
+  prepTimeMinutes?: number | null;
+  cookTimeMinutes?: number | null;
 };
 
 export async function fetchRecipeData(slug: string): Promise<RecipeData | null> {

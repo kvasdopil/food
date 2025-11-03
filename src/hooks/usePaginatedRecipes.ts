@@ -9,6 +9,8 @@ export type RecipeListItem = {
   description: string | null;
   tags: string[];
   image_url: string | null;
+  prep_time_minutes: number | null;
+  cook_time_minutes: number | null;
 };
 
 export type PaginationInfo = {
