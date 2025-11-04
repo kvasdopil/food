@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 
 type UseRecipeImageOptions = {
   onSuccess?: (imageUrl: string) => void;
@@ -13,6 +13,12 @@ type UseRecipeImageOptions = {
 export function useRecipeImage(options: UseRecipeImageOptions = {}) {
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const optionsRef = useRef(options);
+
+  // Keep options ref up to date without causing callback recreation
+  useEffect(() => {
+    optionsRef.current = options;
+  }, [options]);
 
   const generateImage = useCallback(
     async (imagePrompt: string, accessToken: string): Promise<string | null> => {
@@ -38,7 +44,7 @@ export function useRecipeImage(options: UseRecipeImageOptions = {}) {
 
         const data = await response.json();
         setIsGenerating(false);
-        options.onSuccess?.(data.url);
+        optionsRef.current.onSuccess?.(data.url);
         return data.url;
       } catch (err) {
         const errorMessage =
@@ -50,7 +56,7 @@ export function useRecipeImage(options: UseRecipeImageOptions = {}) {
         return null;
       }
     },
-    [options],
+    [], // Empty dependency array - options accessed via ref
   );
 
   return {

@@ -2,6 +2,7 @@
 
 - [Next.js](https://nextjs.org) App Router + React Server Components
 - [Tailwind CSS](https://tailwindcss.com) styling
+- [shadcn/ui](https://ui.shadcn.com) component library (Button, Dialog, Input, Badge, Card, Alert)
 - [Supabase](https://supabase.com) (Postgres + Auth + Storage)
 - [idb](https://github.com/jakearchibald/idb) for IndexedDB persistence
 - [Vercel Analytics](https://vercel.com/analytics) for endpoint tracking and observability
@@ -397,12 +398,21 @@ This architecture provides stateful navigation that tracks forward and backward 
 - `src/app/page.tsx`: server component redirecting to `/feed`.
 - `src/app/feed/layout.tsx`: client component providing persistent feed layout with search bar (tags displayed inline). Manages search query state and URL synchronization. Includes Add Recipe button (visible for logged-in users) and Add Recipe modal.
 - `src/app/feed/page.tsx`: client component displaying paginated recipe feed with infinite scroll. Reads search query and tags from URL. Responsive grid layout works on all screen sizes.
-- `src/components/recipe-search-bar.tsx`: search bar component with search icon, inline tag display (between icon and input), and clear button that clears both search and tags. Uses react-icons for icons. Tags are displayed as chips with individual remove buttons.
-- `src/components/add-recipe-button.tsx`: button component with transparent background and dark-gray plus icon. Only visible for logged-in users.
-- `src/components/add-recipe-modal.tsx`: responsive modal component for adding recipes. Fullscreen on mobile, centered window on desktop. Allows users to enter natural language descriptions of meals, generates recipes using AI (with ingredients, instructions, tags), automatically generates preview images, and saves recipes to the database. Closes on Escape key or clicking outside. Prevents body scroll when open. Uses Supabase authentication for API calls.
-- `src/components/recipe-feed-card.tsx`: recipe card component for feed page with image, title overlay, description, clickable tags (toggle filters), and favorite button.
+- `src/components/recipe-search-bar.tsx`: search bar component with search icon, inline tag display (between icon and input), and clear button that clears both search and tags. Uses shadcn Input and Button components. Tags are displayed as chips with individual remove buttons.
+- `src/components/add-recipe-button.tsx`: button component using shadcn Button with ghost variant. Transparent background and dark-gray plus icon. Only visible for logged-in users.
+- `src/components/add-recipe-modal.tsx`: responsive modal component using shadcn Dialog for adding recipes. Fullscreen on mobile, centered window on desktop. Allows users to enter natural language descriptions of meals, generates recipes using AI (with ingredients, instructions, tags), automatically generates preview images, and saves recipes to the database. Uses shadcn Button and Alert components. Closes on Escape key or clicking outside. Uses Supabase authentication for API calls.
+- `src/components/recipe-feed-card.tsx`: recipe card component for feed page using shadcn Card and CardContent. Displays image, title overlay, description, clickable tags (toggle filters), and favorite button.
+- `src/components/tag-chip.tsx`: tag chip component using shadcn Badge with custom color palettes. Supports static, clickable, and removable variants.
+- `src/components/favorite-button.tsx`: favorite button component using shadcn Button. Used on recipe feed cards and recipe detail pages.
+- `src/components/share-recipe-button.tsx`: share button component using shadcn Button with icon and button variants.
+- `src/components/error-state.tsx`: error state component using shadcn Button for retry functionality.
+- `src/components/recipe-input-form.tsx`: recipe input form component using shadcn Button and Alert components for form submission and error/auth warnings.
+- `src/components/ui/*`: shadcn/ui components (Button, Dialog, Input, Badge, Card, Alert) installed and configured for the project. Components are customized where needed (e.g., Badge supports `asChild` prop, Button includes `cursor-pointer` by default).
+- `src/lib/utils.ts`: utility function `cn()` for merging Tailwind CSS classes (used by shadcn components).
 - `src/hooks/useTags.ts`: React hook for managing tags in feed context. Parses tags from URL, provides remove/clear functions. Preserves search query when modifying tags.
 - `src/lib/tag-utils.ts`: Utility functions for parsing tags from URLs and building tag URLs. Used by both client components and API routes.
+- `src/lib/recipe-utils.ts`: Core recipe utility functions including `parseIngredients()`, `parseInstructions()`, `buildInstructions()`, `normalizeRecipe()`, `slugify()`, and recipe data types. Used by API routes and scripts for parsing and formatting recipe data.
+- `src/lib/image-storage-utils.ts`: Utility functions for image storage operations including `calculateFileHash()` for generating SHA-256 hashes and `ensureBucket()` for ensuring Supabase storage buckets exist. Used by image-related API endpoints.
 - `src/app/recipes/layout.tsx`: client layout component that manages recipe rendering and navigation. Includes back-to-feed link (links to `/feed` with `cursor: pointer`). Recipes render normally on all screen sizes (no mobile carousel).
 - `src/app/recipes/[slug]/page.tsx`: server component that only handles metadata generation (OpenGraph, title, etc.). Returns `null` as layout handles all rendering.
 - `src/components/*`: client-side interactivity (share, favorite, nav, keyboard shortcuts).
@@ -410,6 +420,8 @@ This architecture provides stateful navigation that tracks forward and backward 
 - `src/lib/shuffle-utils.ts`: Utility functions for deterministic shuffling. Provides `seededShuffle()` for shuffling arrays with a seed value and `getDateSeed()` for generating a seed based on the current date.
 - `src/app/api/recipes/generate/route.ts`: API endpoint for generating recipe content (ingredients, instructions, image prompts) using Gemini API. Requires `EDIT_TOKEN` authentication. Does not save to database, returns generated recipe data.
 - `src/lib/recipe-store.ts`: Centralized recipe storage with IndexedDB persistence. Stores partial recipe data (from feed) and full recipe data (from detail pages). Automatically loads cached recipes on app initialization and persists new data as it's fetched. Provides methods to retrieve cached partial or full recipe data.
+- `src/lib/recipe-utils.ts`: Shared recipe parsing and formatting utilities used across API routes. Provides `parseIngredients()` and `parseInstructions()` for parsing database-stored recipe data, and `buildInstructions()` for formatting instructions as numbered steps. Also includes `normalizeRecipe()`, `slugify()`, and recipe data types.
+- `src/lib/image-storage-utils.ts`: Shared image storage utilities used by image-related API endpoints. Provides `calculateFileHash()` for generating SHA-256 file hashes and `ensureBucket()` for ensuring Supabase storage buckets exist.
 
 ## Recipe Asset Workflow
 
@@ -649,6 +661,47 @@ The application uses **Vercel Analytics** to track API endpoint usage and user a
   ```
 
 - Extend the schema (servings, nutrition, user auth) in new migrations as requirements grow.
+
+## Code Quality & Maintenance
+
+The project includes code quality tools configured for maintaining clean, maintainable code:
+
+- **ESLint**: TypeScript and React linting with Next.js configuration
+- **Prettier**: Code formatting with Tailwind CSS plugin
+- **Knip**: Dead code detection for unused dependencies and exports
+- **jscpd**: Code duplication detection (threshold: 8% for code files, excludes recipe data YAML files)
+
+### Running Quality Checks
+
+```bash
+yarn lint              # TypeScript type checking + ESLint
+yarn lint:prettier     # Check Prettier formatting
+yarn lint:knip         # Check for unused code/dependencies
+yarn lint:jscpd        # Check for code duplication
+yarn lint:full         # Run all quality checks
+```
+
+### Shared Utilities
+
+To reduce code duplication and improve maintainability, common functions are extracted into shared utilities:
+
+- **`src/lib/recipe-utils.ts`**: Recipe parsing and formatting (`parseIngredients`, `parseInstructions`, `buildInstructions`)
+- **`src/lib/image-storage-utils.ts`**: Image storage operations (`calculateFileHash`, `ensureBucket`)
+
+These utilities are used across API routes to ensure consistent behavior and reduce duplication.
+
+### Component Library (shadcn/ui)
+
+The project uses [shadcn/ui](https://ui.shadcn.com) for consistent, accessible UI components. Components are installed via the CLI and can be customized directly in the codebase:
+
+- **Button**: Customized to include `cursor-pointer` by default. SVG icons are sized with `[&_svg]:size-4` by default, but can be overridden per component (e.g., `[&_svg]:!size-6` for larger icons).
+- **Badge**: Extended to support `asChild` prop for flexible composition (used in `tag-chip.tsx`).
+- **Dialog**: Used for modals with responsive behavior (fullscreen on mobile, centered on desktop).
+- **Input**: Used in search bar with borders/outlines removed for seamless integration.
+- **Card**: Used for recipe feed cards with border removed (`border-0`).
+- **Alert**: Used for error messages and auth warnings.
+
+All shadcn components can be customized by editing the files in `src/components/ui/`. Configuration is managed via `components.json`.
 
 ## Useful Links
 

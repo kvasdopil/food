@@ -49,7 +49,7 @@ export function RecipeFeedCard({
 
   return (
     <Link href={`/recipes/${slug}`} className="block">
-      <Card className="relative h-full w-full cursor-pointer overflow-hidden transition-opacity hover:opacity-95 sm:rounded-lg sm:shadow-md lg:shadow-lg">
+      <Card className="relative h-full w-full cursor-pointer overflow-hidden border-0 rounded-none transition-opacity hover:opacity-95 sm:rounded-lg sm:shadow-md lg:shadow-lg">
         <figure className="relative aspect-[4/3] w-full overflow-hidden">
           {resolvedImageUrl ? (
             <NextImage

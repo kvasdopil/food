@@ -26,8 +26,8 @@ export function RecipeSearchBar({
   const hasTags = activeTags.length > 0;
 
   return (
-    <div className="mb-4 sm:mb-6">
-      <div className="flex items-center gap-2 rounded-lg bg-white px-3 py-3 focus-within:shadow-md focus-within:ring-2 focus-within:ring-blue-500 focus-within:outline-none hover:shadow-md">
+    <div className="mb-4 sm:mb-0">
+      <div className="flex items-center gap-2 rounded-lg bg-white px-3 py-3 hover:shadow-md">
         <HiMagnifyingGlass className="h-5 w-5 flex-shrink-0 text-gray-600" />
 
         {hasTags && (
@@ -52,7 +52,7 @@ export function RecipeSearchBar({
           placeholder={placeholder}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="flex-1 border-0 bg-transparent text-base shadow-none placeholder:text-gray-500 focus-visible:ring-0 sm:text-sm"
+          className="flex-1 border-0 bg-transparent text-base shadow-none outline-none ring-0 placeholder:text-gray-500 focus-visible:border-0 focus-visible:ring-0 focus-visible:ring-offset-0 sm:text-sm"
         />
 
         {(value || hasTags) && (

@@ -13,7 +13,7 @@ export function AddRecipeButton({ onClick }: AddRecipeButtonProps) {
       onClick={onClick}
       variant="ghost"
       size="icon"
-      className="rounded-full"
+      className="rounded-full [&_svg]:!size-5"
       aria-label="Add recipe"
     >
       <HiPlus className="h-5 w-5 text-gray-600" />

@@ -15,10 +15,9 @@ export function FavoriteButton({ slug }: FavoriteButtonProps) {
     <Button
       type="button"
       variant="ghost"
-      size="icon"
       aria-pressed={isFavorite}
       onClick={() => toggleFavorite()}
-      className="h-auto w-auto p-0 pb-0.5 transition hover:opacity-80"
+      className="h-auto w-auto p-0 pb-0.5 transition hover:opacity-80 [&_svg]:!size-6"
       aria-label={isFavorite ? "Remove from favourites" : "Save to favourites"}
     >
       {isFavorite ? (

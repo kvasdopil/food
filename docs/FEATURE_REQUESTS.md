@@ -8,9 +8,16 @@
 - ssr
 - ✅ proper loading preview for a recipe and feed - **Implemented**: Recipe pages show cached partial data immediately, feed shows cached recipes on reload
 - preload next recipe on desktop
-- proper goback button on desktop
-- search for meals, names, components and tags
+- search for meal components
+- more refined filtering, with llm (vector?)
 - fix refine endpoint response format inconsistency (when checks pass, return database format instead of RecipeData format for consistency)
+- propose meal ideas in generate window
+- make generate window a generate page
+- stream llm generation output and populate generate result
+- scenario:
+  - generate 3 variations of the same meal
+- scenario:
+  - generate, then refine generated meal
 - scenario:
   - take a meal, generate a variation (same but vegan/vegeterian/glutenfree/with chicken)
 - scenario:

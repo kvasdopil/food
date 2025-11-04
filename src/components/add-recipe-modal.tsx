@@ -114,7 +114,7 @@ export function AddRecipeModal({ isOpen, onClose }: AddRecipeModalProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="h-full max-h-[80vh] w-full overflow-y-auto rounded-none border-0 p-4 sm:h-auto sm:max-w-lg sm:rounded-lg sm:border sm:p-6">
+      <DialogContent className="flex h-full max-h-[100vh] w-full max-w-full flex-col justify-center overflow-y-auto rounded-none border-0 p-4 top-0 left-0 right-0 bottom-0 translate-x-0 translate-y-0 sm:h-auto sm:max-w-lg sm:rounded-lg sm:border sm:p-6 sm:top-[50%] sm:left-[50%] sm:right-auto sm:bottom-auto sm:translate-x-[-50%] sm:translate-y-[-50%] sm:justify-start">
         <div className="space-y-4">
           {generatedRecipe && <RecipePreviewCard recipe={generatedRecipe} />}
 
