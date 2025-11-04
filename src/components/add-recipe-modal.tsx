@@ -1,14 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AiOutlineClose } from "react-icons/ai";
 import { useAuth } from "@/hooks/useAuth";
 import { useSessionToken } from "@/hooks/useSessionToken";
 import { useRecipeGeneration } from "@/hooks/useRecipeGeneration";
 import { useRecipeImage } from "@/hooks/useRecipeImage";
-import { useModal } from "@/hooks/useModal";
 import { RecipeInputForm } from "@/components/recipe-input-form";
 import { RecipePreviewCard } from "@/components/recipe-preview-card";
+import {
+  Dialog,
+  DialogContent,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface AddRecipeModalProps {
   isOpen: boolean;
@@ -33,13 +37,6 @@ export function AddRecipeModal({ isOpen, onClose }: AddRecipeModalProps) {
   } = useRecipeGeneration();
 
   const { generateImage } = useRecipeImage();
-
-  const modalRef = useModal(isOpen, onClose, {
-    closeOnEscape: true,
-    closeOnOutsideClick: true,
-    preventBodyScroll: true,
-    autoFocus: false, // We'll handle focus in RecipeInputForm
-  });
 
   // Reset state when modal closes
   useEffect(() => {
@@ -118,80 +115,60 @@ export function AddRecipeModal({ isOpen, onClose }: AddRecipeModalProps) {
     setUserInput("");
   };
 
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/50" />
+    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      <DialogContent className="h-full max-h-[80vh] w-full overflow-y-auto rounded-none border-0 p-4 sm:h-auto sm:max-w-lg sm:rounded-lg sm:border sm:p-6">
+        <div className="space-y-4">
+          {generatedRecipe && <RecipePreviewCard recipe={generatedRecipe} />}
 
-      {/* Modal */}
-      <div
-        ref={modalRef}
-        className="relative z-10 h-full w-full rounded-xl bg-white sm:h-auto sm:w-auto sm:max-w-lg sm:shadow-xl"
-      >
-        {/* Close button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 z-20 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white text-gray-500 shadow-sm transition-colors hover:bg-gray-100 hover:text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-          aria-label="Close modal"
-        >
-          <AiOutlineClose className="h-5 w-5 text-gray-600" />
-        </button>
+          {!generatedRecipe && (
+            <RecipeInputForm
+              value={userInput}
+              onChange={setUserInput}
+              onSubmit={handleSend}
+              isLoading={isGenerating}
+              isDisabled={!userInput.trim()}
+              error={error}
+              requiresAuth={!session}
+              authLoading={authLoading}
+            />
+          )}
 
-        {/* Content */}
-        <div className="max-h-[80vh] overflow-y-auto p-4 sm:p-6">
-          <div className="space-y-4">
-            {generatedRecipe && <RecipePreviewCard recipe={generatedRecipe} />}
-
-            {!generatedRecipe && (
-              <RecipeInputForm
-                value={userInput}
-                onChange={setUserInput}
-                onSubmit={handleSend}
-                isLoading={isGenerating}
-                isDisabled={!userInput.trim()}
-                error={error}
-                requiresAuth={!session}
-                authLoading={authLoading}
-              />
-            )}
-
-            {generatedRecipe && (
-              <>
-                {error && (
-                  <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3">
-                    <p className="text-sm text-red-800">{error}</p>
-                  </div>
-                )}
-                <div className="flex gap-3">
-                  <button
-                    onClick={handleAddRecipe}
-                    disabled={isAdding}
-                    className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-400 disabled:hover:bg-gray-400"
-                  >
-                    {isAdding ? (
-                      <>
-                        <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                        <span>Adding...</span>
-                      </>
-                    ) : (
-                      "Add recipe"
-                    )}
-                  </button>
-                  <button
-                    onClick={handleCancel}
-                    disabled={isAdding}
-                    className="flex-1 cursor-pointer rounded-lg border border-gray-300 bg-transparent px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </>
-            )}
-          </div>
+          {generatedRecipe && (
+            <>
+              {error && (
+                <Alert variant="destructive" className="border-red-200 bg-red-50">
+                  <AlertDescription className="text-red-800">{error}</AlertDescription>
+                </Alert>
+              )}
+              <div className="flex gap-3">
+                <Button
+                  onClick={handleAddRecipe}
+                  disabled={isAdding}
+                  className="flex flex-1 items-center gap-2 bg-green-600 hover:bg-green-700"
+                >
+                  {isAdding ? (
+                    <>
+                      <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                      <span>Adding...</span>
+                    </>
+                  ) : (
+                    "Add recipe"
+                  )}
+                </Button>
+                <Button
+                  onClick={handleCancel}
+                  disabled={isAdding}
+                  variant="outline"
+                  className="flex-1"
+                >
+                  Cancel
+                </Button>
+              </div>
+            </>
+          )}
         </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 }

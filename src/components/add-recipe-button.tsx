@@ -1,6 +1,7 @@
 "use client";
 
 import { HiPlus } from "react-icons/hi2";
+import { Button } from "@/components/ui/button";
 
 interface AddRecipeButtonProps {
   onClick: () => void;
@@ -8,12 +9,14 @@ interface AddRecipeButtonProps {
 
 export function AddRecipeButton({ onClick }: AddRecipeButtonProps) {
   return (
-    <button
+    <Button
       onClick={onClick}
-      className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-transparent transition-colors hover:bg-gray-50 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:outline-none"
+      variant="ghost"
+      size="icon"
+      className="rounded-full"
       aria-label="Add recipe"
     >
       <HiPlus className="h-5 w-5 text-gray-600" />
-    </button>
+    </Button>
   );
 }

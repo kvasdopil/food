@@ -1,6 +1,8 @@
 "use client";
 
 import { TAG_CHIP_PALETTE, TAG_CHIP_PALETTE_INTERACTIVE } from "@/lib/ui-constants";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 type TagChipProps = {
   tag: string;
@@ -32,55 +34,68 @@ export function TagChip({
 
   if (variant === "static") {
     return (
-      <span className={`rounded-full px-3 py-1 text-sm font-medium ${colorClass} ${className}`}>
+      <Badge
+        variant="outline"
+        className={cn("rounded-full px-3 py-1 text-sm font-medium border-0", colorClass, className)}
+      >
         {tag}
-      </span>
+      </Badge>
     );
   }
 
   if (variant === "removable") {
     return (
-      <button
-        type="button"
-        onClick={(e) => {
-          e.stopPropagation();
-          onRemove?.(e, tag);
-        }}
-        className={`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-xs font-medium transition hover:opacity-80 ${colorClass} ${className}`}
-        aria-label={ariaLabel || `Remove ${tag} filter`}
+      <Badge
+        asChild
+        variant="outline"
+        className={cn("inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-xs font-medium transition hover:opacity-80 border-0", colorClass, className)}
       >
-        {tag}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="h-3 w-3"
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onRemove?.(e, tag);
+          }}
+          aria-label={ariaLabel || `Remove ${tag} filter`}
         >
-          <path d="M18 6L6 18M6 6l12 12" />
-        </svg>
-      </button>
+          {tag}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="h-3 w-3"
+          >
+            <path d="M18 6L6 18M6 6l12 12" />
+          </svg>
+        </button>
+      </Badge>
     );
   }
 
   // clickable variant
   return (
-    <button
-      type="button"
-      onClick={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        onClick?.(e, tag);
-      }}
-      className={`relative z-10 cursor-pointer rounded-full px-2 py-0.5 text-xs font-medium transition-all sm:px-3 sm:py-1 sm:text-sm ${colorClass} ${className}`}
-      style={{ touchAction: "manipulation" }}
-      aria-label={ariaLabel || `Filter by ${tag}`}
+    <Badge
+      asChild
+      variant="outline"
+      className={cn("relative z-10 cursor-pointer rounded-full px-2 py-0.5 text-xs font-medium transition-all sm:px-3 sm:py-1 sm:text-sm border-0", colorClass, className)}
     >
-      {tag}
-    </button>
+      <button
+        type="button"
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          onClick?.(e, tag);
+        }}
+        style={{ touchAction: "manipulation" }}
+        aria-label={ariaLabel || `Filter by ${tag}`}
+      >
+        {tag}
+      </button>
+    </Badge>
   );
 }
 

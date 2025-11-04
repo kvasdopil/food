@@ -6,6 +6,7 @@ import { parseTagsFromQuery } from "@/lib/tag-utils";
 import { seededShuffle, getDateSeed } from "@/lib/shuffle-utils";
 import { logApiEndpoint } from "@/lib/analytics";
 import { authenticateRequest } from "@/lib/api-auth";
+import { buildInstructions } from "@/lib/recipe-utils";
 
 const ITEMS_PER_PAGE = 20;
 
@@ -166,15 +167,6 @@ function normalizeRecipePayload(payload: unknown): RecipePayload | null {
     prepTimeMinutes,
     cookTimeMinutes,
   };
-}
-
-function buildInstructions(instructions: InstructionPayload[]) {
-  return instructions
-    .map((entry, index) => {
-      const stepNumber = entry.step ?? index + 1;
-      return `${stepNumber}. ${entry.action}`;
-    })
-    .join("\n");
 }
 
 export async function GET(request: NextRequest) {

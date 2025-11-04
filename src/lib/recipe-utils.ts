@@ -98,3 +98,60 @@ export function isEvaluationPassed(evaluationResult: string): boolean {
   const lower = evaluationResult.toLowerCase();
   return lower.includes("all checks passed") || lower.includes("no changes needed");
 }
+
+/**
+ * Parse ingredients from JSON string format stored in database.
+ * Handles both array format and fallback parsing.
+ */
+export function parseIngredients(raw: string): Ingredient[] {
+  try {
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed)) {
+      return parsed
+        .map((item) => ({
+          name: String(item.name ?? "").trim(),
+          amount: String(item.amount ?? "").trim(),
+          notes: item.notes ? String(item.notes).trim() : undefined,
+        }))
+        .filter((item) => item.name.length > 0);
+    }
+  } catch {
+    // fallback - try to parse as string format
+  }
+  return [];
+}
+
+/**
+ * Parse instructions from string format stored in database.
+ * Handles numbered steps and removes leading numbers.
+ */
+export function parseInstructions(raw: string): Instruction[] {
+  return raw
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((step, index) => {
+      // Remove leading number if present (e.g., "1. Action" -> "Action")
+      const action = step.replace(/^\d+\.\s*/, "").trim();
+      return {
+        step: index + 1,
+        action,
+      };
+    });
+}
+
+/**
+ * Build instructions string from instruction array.
+ * Formats as numbered steps.
+ * Accepts instructions with optional step numbers.
+ */
+export function buildInstructions(
+  instructions: Array<{ step?: number; action: string }>,
+): string {
+  return instructions
+    .map((entry, index) => {
+      const stepNumber = entry.step ?? index + 1;
+      return `${stepNumber}. ${entry.action}`;
+    })
+    .join("\n");
+}

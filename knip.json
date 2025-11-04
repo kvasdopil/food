@@ -10,5 +10,5 @@
     "tailwind.config.*"
   ],
   "project": ["src/**/*.tsx"],
-  "ignoreDependencies": ["tailwindcss", "ts-node", "vercel"]
+  "ignoreDependencies": ["tailwindcss", "ts-node", "vercel", "@supabase/supabase-js", "idb"]
 }

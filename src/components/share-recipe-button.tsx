@@ -3,6 +3,7 @@
 import type { SVGProps } from "react";
 import { useCallback, useMemo, useState } from "react";
 import { FaShare } from "react-icons/fa";
+import { Button } from "@/components/ui/button";
 
 type ShareRecipeButtonProps = {
   slug: string;
@@ -74,24 +75,27 @@ export function ShareRecipeButton({ slug, title, variant = "button" }: ShareReci
       );
 
     return (
-      <button
+      <Button
         type="button"
+        variant="ghost"
+        size="icon"
         onClick={handleShare}
-        className="inline-flex h-10 w-10 cursor-pointer items-center justify-center text-white transition hover:opacity-80"
+        className="h-10 w-10 text-white transition hover:opacity-80"
         aria-label="Share recipe"
       >
         {icon}
-      </button>
+      </Button>
     );
   }
 
   return (
-    <button
+    <Button
       type="button"
+      variant="outline"
       onClick={handleShare}
-      className="inline-flex cursor-pointer items-center justify-center rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-700 transition-colors hover:bg-emerald-500/20 dark:border-emerald-400/40 dark:bg-emerald-400/10 dark:text-emerald-200 dark:hover:bg-emerald-400/20"
+      className="border-emerald-500/40 bg-emerald-500/10 text-emerald-700 hover:bg-emerald-500/20 dark:border-emerald-400/40 dark:bg-emerald-400/10 dark:text-emerald-200 dark:hover:bg-emerald-400/20"
     >
       {status === "copied" ? "Link copied!" : status === "error" ? "Share failed" : "Share recipe"}
-    </button>
+    </Button>
   );
 }

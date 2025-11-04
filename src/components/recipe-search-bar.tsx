@@ -3,6 +3,8 @@
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import { AiOutlineClose } from "react-icons/ai";
 import { TagChip } from "@/components/tag-chip";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 interface RecipeSearchBarProps {
   value: string;
@@ -45,26 +47,28 @@ export function RecipeSearchBar({
           </div>
         )}
 
-        <input
+        <Input
           type="text"
           placeholder={placeholder}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="flex-1 text-base text-gray-900 placeholder-gray-500 focus:outline-none sm:text-sm"
+          className="flex-1 border-0 bg-transparent text-base shadow-none focus-visible:ring-0 placeholder:text-gray-500 sm:text-sm"
         />
 
         {(value || hasTags) && (
-          <button
+          <Button
             type="button"
+            variant="ghost"
+            size="icon"
             onClick={() => {
               onChange("");
               onClearAllTags?.();
             }}
-            className="flex-shrink-0 text-gray-600 hover:text-gray-800"
+            className="h-auto w-auto flex-shrink-0 p-0 text-gray-600 hover:text-gray-800"
             aria-label="Clear search and filters"
           >
-            <AiOutlineClose className="h-5 w-5 text-gray-600" />
-          </button>
+            <AiOutlineClose className="h-5 w-5" />
+          </Button>
         )}
       </div>
     </div>

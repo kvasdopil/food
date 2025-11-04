@@ -1,38 +1,11 @@
-import { createHash } from "node:crypto";
 import { NextResponse, type NextRequest } from "next/server";
 
 import { supabaseAdmin } from "@/lib/supabaseAdminClient";
 import { logApiEndpoint } from "@/lib/analytics";
 import { authenticateRequest } from "@/lib/api-auth";
+import { calculateFileHash, ensureBucket } from "@/lib/image-storage-utils";
 
 const DEFAULT_BUCKET = process.env.RECIPE_STORAGE_BUCKET ?? "recipe-images";
-
-function calculateFileHash(buffer: Buffer): string {
-  return createHash("sha256").update(buffer).digest("hex").slice(0, 12);
-}
-
-async function ensureBucket(bucket: string) {
-  if (!supabaseAdmin) {
-    throw new Error("Supabase admin client is not configured");
-  }
-
-  const { data: buckets, error } = await supabaseAdmin.storage.listBuckets();
-  if (error) {
-    throw new Error(`Failed listing buckets: ${error.message}`);
-  }
-
-  const exists = buckets?.some((candidate) => candidate.name === bucket);
-  if (exists) return;
-
-  const { error: createError } = await supabaseAdmin.storage.createBucket(bucket, {
-    public: true,
-    fileSizeLimit: "20MB",
-    allowedMimeTypes: ["image/jpeg", "image/png", "image/webp"],
-  });
-  if (createError) {
-    throw new Error(`Failed creating bucket ${bucket}: ${createError.message}`);
-  }
-}
 
 export async function POST(request: NextRequest) {
   const editToken = process.env.EDIT_TOKEN;

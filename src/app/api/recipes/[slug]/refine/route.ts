@@ -6,63 +6,17 @@ import {
   type GenerateRequest,
 } from "@/lib/prompts/recipe-generation";
 import { evaluateRecipe } from "@/lib/recipe-refinement";
-import { type RecipeData, normalizeRecipe, isEvaluationPassed } from "@/lib/recipe-utils";
+import {
+  type RecipeData,
+  normalizeRecipe,
+  isEvaluationPassed,
+  parseIngredients,
+  parseInstructions,
+  buildInstructions,
+} from "@/lib/recipe-utils";
 import { supabaseAdmin } from "@/lib/supabaseAdminClient";
 import { logApiEndpoint } from "@/lib/analytics";
 import { authenticateRequest } from "@/lib/api-auth";
-
-type IngredientPayload = {
-  name: string;
-  amount: string;
-  notes?: string;
-};
-
-type InstructionPayload = {
-  step?: number;
-  action: string;
-};
-
-function parseIngredients(raw: string): IngredientPayload[] {
-  try {
-    const parsed = JSON.parse(raw);
-    if (Array.isArray(parsed)) {
-      return parsed
-        .map((item) => ({
-          name: String(item.name ?? "").trim(),
-          amount: String(item.amount ?? "").trim(),
-          notes: item.notes ? String(item.notes).trim() : undefined,
-        }))
-        .filter((item) => item.name.length > 0);
-    }
-  } catch {
-    // fallback - try to parse as string format
-  }
-  return [];
-}
-
-function parseInstructions(raw: string): InstructionPayload[] {
-  return raw
-    .split("\n")
-    .map((line) => line.trim())
-    .filter(Boolean)
-    .map((step, index) => {
-      // Remove leading number if present (e.g., "1. Action" -> "Action")
-      const action = step.replace(/^\d+\.\s*/, "").trim();
-      return {
-        step: index + 1,
-        action,
-      };
-    });
-}
-
-function buildInstructions(instructions: InstructionPayload[]) {
-  return instructions
-    .map((entry, index) => {
-      const stepNumber = entry.step ?? index + 1;
-      return `${stepNumber}. ${entry.action}`;
-    })
-    .join("\n");
-}
 
 async function generateRefinedRecipe(
   existingRecipe: RecipeData,

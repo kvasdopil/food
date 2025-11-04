@@ -2,6 +2,8 @@
 
 import { useRef, useEffect } from "react";
 import { HiSparkles } from "react-icons/hi2";
+import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 type RecipeInputFormProps = {
   value: string;
@@ -62,24 +64,24 @@ export function RecipeInputForm({
       </div>
 
       {requiresAuth && !authLoading && (
-        <div className="rounded-lg border border-yellow-200 bg-yellow-50 px-4 py-3">
-          <p className="text-sm text-yellow-800">
+        <Alert className="border-yellow-200 bg-yellow-50">
+          <AlertDescription className="text-yellow-800">
             You need to be logged in to generate recipes. Please sign in first.
-          </p>
-        </div>
+          </AlertDescription>
+        </Alert>
       )}
 
       {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3">
-          <p className="text-sm text-red-800">{error}</p>
-        </div>
+        <Alert variant="destructive" className="border-red-200 bg-red-50">
+          <AlertDescription className="text-red-800">{error}</AlertDescription>
+        </Alert>
       )}
 
       <div className="flex justify-center">
-        <button
+        <Button
           onClick={onSubmit}
           disabled={isDisabled || isLoading || requiresAuth || authLoading}
-          className="flex cursor-pointer items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-300 disabled:hover:bg-gray-300"
+          className="flex items-center gap-2"
         >
           {isLoading ? (
             <>
@@ -92,7 +94,7 @@ export function RecipeInputForm({
               <span>Create recipe</span>
             </>
           )}
-        </button>
+        </Button>
       </div>
     </>
   );

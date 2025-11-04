@@ -1,4 +1,3 @@
-import { createHash } from "node:crypto";
 import { NextResponse, type NextRequest } from "next/server";
 import sharp from "sharp";
 
@@ -6,20 +5,11 @@ import { supabaseAdmin } from "@/lib/supabaseAdminClient";
 import { logApiEndpoint } from "@/lib/analytics";
 import { authenticateRequest } from "@/lib/api-auth";
 import { callGemini, ensureText, TEXT_MODEL } from "@/lib/gemini";
+import { parseIngredients, parseInstructions, type Ingredient, type Instruction } from "@/lib/recipe-utils";
+import { calculateFileHash, ensureBucket } from "@/lib/image-storage-utils";
 
 const DEFAULT_BUCKET = process.env.RECIPE_STORAGE_BUCKET ?? "recipe-images";
 const FIREFLY_BASE_URL = "https://image-v5.ff.adobe.io";
-
-type Ingredient = {
-  name: string;
-  amount: string;
-  notes?: string;
-};
-
-type Instruction = {
-  step: number;
-  action: string;
-};
 
 type RecipeData = {
   title: string;
@@ -78,66 +68,6 @@ type FireflyJobStatus = {
     };
   };
 };
-
-function calculateFileHash(buffer: Buffer): string {
-  return createHash("sha256").update(buffer).digest("hex").slice(0, 12);
-}
-
-async function ensureBucket(bucket: string) {
-  if (!supabaseAdmin) {
-    throw new Error("Supabase admin client is not configured");
-  }
-
-  const { data: buckets, error } = await supabaseAdmin.storage.listBuckets();
-  if (error) {
-    throw new Error(`Failed listing buckets: ${error.message}`);
-  }
-
-  const exists = buckets?.some((candidate) => candidate.name === bucket);
-  if (exists) return;
-
-  const { error: createError } = await supabaseAdmin.storage.createBucket(bucket, {
-    public: true,
-    fileSizeLimit: "20MB",
-    allowedMimeTypes: ["image/jpeg", "image/png", "image/webp"],
-  });
-  if (createError) {
-    throw new Error(`Failed creating bucket ${bucket}: ${createError.message}`);
-  }
-}
-
-function parseIngredients(raw: string): Ingredient[] {
-  try {
-    const parsed = JSON.parse(raw);
-    if (Array.isArray(parsed)) {
-      return parsed
-        .map((item) => ({
-          name: String(item.name ?? "").trim(),
-          amount: String(item.amount ?? "").trim(),
-          notes: item.notes ? String(item.notes).trim() : undefined,
-        }))
-        .filter((item) => item.name.length > 0);
-    }
-  } catch {
-    // fallback - try to parse as string format
-  }
-  return [];
-}
-
-function parseInstructions(raw: string): Instruction[] {
-  return raw
-    .split("\n")
-    .map((line) => line.trim())
-    .filter(Boolean)
-    .map((step, index) => {
-      // Remove leading number if present (e.g., "1. Action" -> "Action")
-      const action = step.replace(/^\d+\.\s*/, "").trim();
-      return {
-        step: index + 1,
-        action,
-      };
-    });
-}
 
 async function enhanceImagePrompt(recipe: RecipeData, basePrompt: string) {
   const descriptiveIngredients = recipe.ingredients
