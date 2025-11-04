@@ -3,7 +3,7 @@
  */
 
 import type { RecipePartialData } from "@/lib/recipe-store";
-import type { RecipeListItem } from "@/hooks/usePaginatedRecipes";
+import type { RecipeListItem } from "@/types/recipes";
 
 /**
  * Convert a single RecipePartialData to RecipeListItem format

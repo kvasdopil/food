@@ -2,7 +2,7 @@
 
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import { AiOutlineClose } from "react-icons/ai";
-import { TAG_CHIP_PALETTE } from "@/lib/ui-constants";
+import { TagChip } from "@/components/tag-chip";
 
 interface RecipeSearchBarProps {
   value: string;
@@ -31,29 +31,16 @@ export function RecipeSearchBar({
         {hasTags && (
           <div className="flex flex-shrink-0 items-center gap-2">
             {activeTags.map((tag, index) => (
-              <button
+              <TagChip
                 key={tag}
-                type="button"
-                onClick={(e) => {
+                tag={tag}
+                variant="removable"
+                index={index}
+                onRemove={(e, tag) => {
                   e.stopPropagation();
                   onRemoveTag?.(tag);
                 }}
-                className={`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-xs font-medium transition hover:opacity-80 ${TAG_CHIP_PALETTE[index % TAG_CHIP_PALETTE.length]}`}
-              >
-                {tag}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-3 w-3"
-                >
-                  <path d="M18 6L6 18M6 6l12 12" />
-                </svg>
-              </button>
+              />
             ))}
           </div>
         )}

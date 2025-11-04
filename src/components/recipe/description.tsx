@@ -1,5 +1,5 @@
 import { FavoriteButton } from "@/components/favorite-button";
-import { TAG_CHIP_PALETTE } from "@/lib/ui-constants";
+import { TagChip } from "@/components/tag-chip";
 
 type DescriptionProps = {
   slug: string;
@@ -19,12 +19,7 @@ export function Description({ slug, description, tags }: DescriptionProps) {
       <div className="flex flex-wrap items-center gap-2">
         <FavoriteButton slug={slug} />
         {tags.map((tag, index) => (
-          <span
-            key={tag}
-            className={`rounded-full px-3 py-1 text-sm font-medium ${TAG_CHIP_PALETTE[index % TAG_CHIP_PALETTE.length]}`}
-          >
-            {tag}
-          </span>
+          <TagChip key={tag} tag={tag} variant="static" index={index} />
         ))}
       </div>
     </section>

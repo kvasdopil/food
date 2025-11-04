@@ -2,13 +2,13 @@
 
 import { useEffect, Suspense, useRef } from "react";
 import { useSearchParams } from "next/navigation";
-import { RecipeFeedCard } from "@/components/recipe-feed-card";
+import { RecipeGrid } from "@/components/recipe-grid";
 import { useTags } from "@/hooks/useTags";
 import { usePaginatedRecipes } from "@/hooks/usePaginatedRecipes";
 import { useCachedRecipes } from "@/hooks/useCachedRecipes";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { FeedSkeleton } from "@/components/skeletons/feed-skeleton";
-import { RECIPE_GRID_CLASSES } from "@/lib/ui-constants";
+import { FeedErrorState, FeedEmptyState, FeedLoadingMore, FeedEndState } from "@/components/feed-states";
 
 function FeedPageContent() {
   const searchParams = useSearchParams();
@@ -48,84 +48,23 @@ function FeedPageContent() {
     throttleMs: 100,
   });
 
-  if (isLoading) {
-    // If we have cached recipes to show, display them instead of skeletons
-    const displayRecipes = cachedRecipesForLoading || recipes;
+  // Determine what recipes to display
+  const recipesToDisplay = isLoading ? cachedRecipesForLoading || recipes : displayRecipes;
+  const hasRecipes = recipesToDisplay.length > 0;
 
-    return (
-      <>
-        {displayRecipes.length > 0 ? (
-          <div className={RECIPE_GRID_CLASSES}>
-            {displayRecipes.map((recipe) => (
-              <RecipeFeedCard
-                key={recipe.slug}
-                slug={recipe.slug}
-                name={recipe.name}
-                description={recipe.description}
-                tags={recipe.tags}
-                imageUrl={recipe.image_url}
-                prepTimeMinutes={recipe.prep_time_minutes}
-                cookTimeMinutes={recipe.cook_time_minutes}
-              />
-            ))}
-          </div>
-        ) : (
-          <FeedSkeleton count={8} />
-        )}
-      </>
-    );
+  if (isLoading) {
+    return hasRecipes ? <RecipeGrid recipes={recipesToDisplay} /> : <FeedSkeleton count={8} />;
   }
 
   if (error) {
-    return (
-      <div className="flex items-center justify-center py-32">
-        <div className="text-center">
-          <p className="text-lg text-red-600">{error}</p>
-          <button
-            onClick={retry}
-            className="mt-4 rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
-          >
-            Retry
-          </button>
-        </div>
-      </div>
-    );
+    return <FeedErrorState error={error} onRetry={retry} />;
   }
 
   return (
     <>
-      {displayRecipes.length === 0 && !isLoading ? (
-        <div className="flex items-center justify-center py-32">
-          <p className="text-lg text-gray-600">No recipes found</p>
-        </div>
-      ) : (
-        <div className={RECIPE_GRID_CLASSES}>
-          {displayRecipes.map((recipe) => (
-            <RecipeFeedCard
-              key={recipe.slug}
-              slug={recipe.slug}
-              name={recipe.name}
-              description={recipe.description}
-              tags={recipe.tags}
-              imageUrl={recipe.image_url}
-              prepTimeMinutes={recipe.prep_time_minutes}
-              cookTimeMinutes={recipe.cook_time_minutes}
-            />
-          ))}
-        </div>
-      )}
-
-      {isLoadingMore && (
-        <div className="mt-6">
-          <FeedSkeleton count={4} />
-        </div>
-      )}
-
-      {pagination && !pagination.hasMore && recipes.length > 0 && (
-        <div className="flex items-center justify-center py-8">
-          <p className="text-sm text-gray-600">No more recipes</p>
-        </div>
-      )}
+      {hasRecipes ? <RecipeGrid recipes={recipesToDisplay} /> : <FeedEmptyState />}
+      {isLoadingMore && <FeedLoadingMore />}
+      {pagination && !pagination.hasMore && recipes.length > 0 && <FeedEndState />}
     </>
   );
 }

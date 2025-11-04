@@ -1,73 +1,22 @@
 "use client";
 
-import { Suspense, useEffect, useState, useRef } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { RecipeSearchBar } from "@/components/recipe-search-bar";
 import { UserAvatar } from "@/components/user-avatar";
 import { AddRecipeButton } from "@/components/add-recipe-button";
 import { AddRecipeModal } from "@/components/add-recipe-modal";
 import { useTags } from "@/hooks/useTags";
 import { useAuth } from "@/hooks/useAuth";
-import { buildFeedUrlWithTagsAndSearch, storeFeedUrl } from "@/lib/tag-utils";
+import { useSearchQuery } from "@/hooks/useSearchQuery";
+import { storeFeedUrl } from "@/lib/tag-utils";
 
 function FeedLayoutContent({ children }: { children: React.ReactNode }) {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const { activeTags, removeTag, clearAllTags } = useTags();
   const { user } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // Get search query from URL on mount only
-  const urlSearchQuery = searchParams.get("q") || "";
-  const [searchQuery, setSearchQuery] = useState(urlSearchQuery);
-  const lastUserInputRef = useRef<number>(0); // Track when user last typed
-  const previousSearchParamsRef = useRef(urlSearchQuery);
-
-  // Sync from URL only when URL changes externally (browser back/forward, external link, etc.)
-  // but not when user is actively typing (within 500ms of last input)
-  useEffect(() => {
-    const urlQuery = searchParams.get("q") || "";
-    const previousQuery = previousSearchParamsRef.current;
-    const timeSinceLastInput = Date.now() - lastUserInputRef.current;
-
-    // Only sync if:
-    // 1. URL changed externally (different from previous)
-    // 2. URL is different from current state
-    // 3. User hasn't typed recently (more than 500ms ago)
-    if (urlQuery !== previousQuery && urlQuery !== searchQuery && timeSinceLastInput > 500) {
-      // Use setTimeout to avoid synchronous setState in effect
-      const timeoutId = setTimeout(() => {
-        setSearchQuery(urlQuery);
-      }, 0);
-
-      return () => clearTimeout(timeoutId);
-    }
-
-    previousSearchParamsRef.current = urlQuery;
-  }, [searchParams, searchQuery]);
-
-  // Track when user types
-  const handleSearchChange = (value: string) => {
-    lastUserInputRef.current = Date.now();
-    setSearchQuery(value);
-  };
-
-  // Debounce search query and update URL
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const urlQuery = searchParams.get("q") || "";
-
-      // Only update URL if search query actually changed
-      if (searchQuery !== urlQuery) {
-        // Update URL with search query (preserving tags)
-        // Use replace instead of push to avoid creating history entries for every keystroke
-        const newUrl = buildFeedUrlWithTagsAndSearch(activeTags, searchQuery);
-        router.replace(newUrl);
-      }
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, [searchQuery, activeTags, router, searchParams]);
+  const { query, setQuery } = useSearchQuery({ tags: activeTags });
 
   // Store current feed URL in sessionStorage to preserve filters when navigating to recipes
   useEffect(() => {
@@ -81,8 +30,8 @@ function FeedLayoutContent({ children }: { children: React.ReactNode }) {
           <div className="flex items-start gap-3">
             <div className="flex-1">
               <RecipeSearchBar
-                value={searchQuery}
-                onChange={handleSearchChange}
+                value={query}
+                onChange={setQuery}
                 activeTags={activeTags}
                 onRemoveTag={removeTag}
                 onClearAllTags={clearAllTags}

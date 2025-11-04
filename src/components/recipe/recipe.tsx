@@ -8,6 +8,7 @@ import { Instructions } from "./instructions";
 import { useRecipe } from "@/hooks/useRecipe";
 import { RecipeSkeleton } from "@/components/skeletons/recipe-skeleton";
 import { recipeStore } from "@/lib/recipe-store";
+import { ErrorState } from "@/components/error-state";
 
 type RecipeProps = {
   slug: string;
@@ -71,9 +72,7 @@ export function Recipe({ slug }: RecipeProps) {
     return (
       <div className="h-full overflow-y-auto overscroll-contain">
         <div className="flex w-full flex-col bg-white pb-12 text-base leading-relaxed text-slate-600">
-          <div className="flex w-full items-center justify-center py-32">
-            <p className="text-lg text-red-600">{error || "Recipe not found"}</p>
-          </div>
+          <ErrorState error={error || "Recipe not found"} />
         </div>
       </div>
     );

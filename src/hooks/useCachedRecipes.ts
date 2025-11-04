@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { recipeStore } from "@/lib/recipe-store";
 import { convertPartialsToRecipeListItems, mergeCachedWithRecipes } from "@/lib/recipe-transformers";
-import type { RecipeListItem } from "@/hooks/usePaginatedRecipes";
+import type { RecipeListItem } from "@/types/recipes";
 
 type UseCachedRecipesResult = {
   /**

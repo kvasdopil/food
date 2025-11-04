@@ -7,8 +7,8 @@ import { PiHeartStraightLight, PiHeartStraightFill } from "react-icons/pi";
 import { resolveRecipeImageUrl } from "@/lib/resolve-recipe-image-url";
 import { toggleTagInUrl } from "@/lib/tag-utils";
 import { RecipeTimeDisplay } from "@/components/recipe-time-display";
-import { TAG_CHIP_PALETTE_INTERACTIVE } from "@/lib/ui-constants";
 import { useFavorites } from "@/hooks/useFavorites";
+import { TagChip } from "@/components/tag-chip";
 
 type RecipeFeedCardProps = {
   slug: string;
@@ -107,16 +107,13 @@ export function RecipeFeedCard({
             )}
           </button>
           {tags.map((tag, index) => (
-            <button
+            <TagChip
               key={tag}
-              type="button"
-              onClick={(e) => handleTagClick(e, tag)}
-              className={`relative z-10 cursor-pointer rounded-full px-2 py-0.5 text-xs font-medium transition-all sm:px-3 sm:py-1 sm:text-sm ${TAG_CHIP_PALETTE_INTERACTIVE[index % TAG_CHIP_PALETTE_INTERACTIVE.length]}`}
-              style={{ touchAction: "manipulation" }}
-              aria-label={`Filter by ${tag}`}
-            >
-              {tag}
-            </button>
+              tag={tag}
+              variant="clickable"
+              index={index}
+              onClick={(e, tag) => handleTagClick(e, tag)}
+            />
           ))}
         </div>
       </div>

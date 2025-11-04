@@ -2,16 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { recipeStore } from "@/lib/recipe-store";
-
-export type RecipeListItem = {
-  slug: string;
-  name: string;
-  description: string | null;
-  tags: string[];
-  image_url: string | null;
-  prep_time_minutes: number | null;
-  cook_time_minutes: number | null;
-};
+import type { RecipeListItem } from "@/types/recipes";
 
 export type PaginationInfo = {
   page: number;
