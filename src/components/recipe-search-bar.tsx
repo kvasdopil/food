@@ -2,6 +2,7 @@
 
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import { AiOutlineClose } from "react-icons/ai";
+import { TAG_CHIP_PALETTE } from "@/lib/ui-constants";
 
 interface RecipeSearchBarProps {
   value: string;
@@ -11,13 +12,6 @@ interface RecipeSearchBarProps {
   onRemoveTag?: (tag: string) => void;
   onClearAllTags?: () => void;
 }
-
-const chipPalette = [
-  "bg-amber-100 text-amber-700",
-  "bg-sky-100 text-sky-700",
-  "bg-emerald-100 text-emerald-700",
-  "bg-violet-100 text-violet-700",
-];
 
 export function RecipeSearchBar({
   value,
@@ -44,7 +38,7 @@ export function RecipeSearchBar({
                   e.stopPropagation();
                   onRemoveTag?.(tag);
                 }}
-                className={`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-xs font-medium transition hover:opacity-80 ${chipPalette[index % chipPalette.length]}`}
+                className={`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-xs font-medium transition hover:opacity-80 ${TAG_CHIP_PALETTE[index % TAG_CHIP_PALETTE.length]}`}
               >
                 {tag}
                 <svg

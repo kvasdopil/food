@@ -1,20 +1,24 @@
 "use client";
 
-import { useState } from "react";
 import { PiHeartStraightLight, PiHeartStraightFill } from "react-icons/pi";
+import { useFavorites } from "@/hooks/useFavorites";
 
-export function FavoriteButton() {
-  const [liked, setLiked] = useState(false);
+type FavoriteButtonProps = {
+  slug: string;
+};
+
+export function FavoriteButton({ slug }: FavoriteButtonProps) {
+  const { isFavorite, toggleFavorite } = useFavorites(slug);
 
   return (
     <button
       type="button"
-      aria-pressed={liked}
-      onClick={() => setLiked((prev) => !prev)}
+      aria-pressed={isFavorite}
+      onClick={() => toggleFavorite()}
       className="inline-flex cursor-pointer items-center justify-center pb-0.5 transition hover:opacity-80"
-      aria-label={liked ? "Remove from favourites" : "Save to favourites"}
+      aria-label={isFavorite ? "Remove from favourites" : "Save to favourites"}
     >
-      {liked ? (
+      {isFavorite ? (
         <PiHeartStraightFill className="h-6 w-6 text-red-500" />
       ) : (
         <PiHeartStraightLight className="h-6 w-6 text-gray-600" />

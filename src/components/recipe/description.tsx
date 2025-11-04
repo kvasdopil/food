@@ -1,18 +1,13 @@
 import { FavoriteButton } from "@/components/favorite-button";
-
-const chipPalette = [
-  "bg-amber-100 text-amber-700",
-  "bg-sky-100 text-sky-700",
-  "bg-emerald-100 text-emerald-700",
-  "bg-violet-100 text-violet-700",
-];
+import { TAG_CHIP_PALETTE } from "@/lib/ui-constants";
 
 type DescriptionProps = {
+  slug: string;
   description: string | null;
   tags: string[];
 };
 
-export function Description({ description, tags }: DescriptionProps) {
+export function Description({ slug, description, tags }: DescriptionProps) {
   if (!description && tags.length === 0) {
     return null;
   }
@@ -22,11 +17,11 @@ export function Description({ description, tags }: DescriptionProps) {
       {description ? <p className="text-base text-slate-600">{description}</p> : null}
 
       <div className="flex flex-wrap items-center gap-2">
-        <FavoriteButton />
+        <FavoriteButton slug={slug} />
         {tags.map((tag, index) => (
           <span
             key={tag}
-            className={`rounded-full px-3 py-1 text-sm font-medium ${chipPalette[index % chipPalette.length]}`}
+            className={`rounded-full px-3 py-1 text-sm font-medium ${TAG_CHIP_PALETTE[index % TAG_CHIP_PALETTE.length]}`}
           >
             {tag}
           </span>

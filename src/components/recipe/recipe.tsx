@@ -53,6 +53,7 @@ export function Recipe({ slug }: RecipeProps) {
               cookTimeMinutes={cachedPartial.cook_time_minutes ?? null}
             />
             <Description
+              slug={cachedPartial.slug}
               description={cachedPartial.description || null}
               tags={cachedPartial.tags}
             />
@@ -93,7 +94,7 @@ export function Recipe({ slug }: RecipeProps) {
           prepTimeMinutes={recipeData.prepTimeMinutes}
           cookTimeMinutes={recipeData.cookTimeMinutes}
         />
-        <Description description={recipeData.description || null} tags={recipeData.tags} />
+        <Description slug={recipeData.slug} description={recipeData.description || null} tags={recipeData.tags} />
         <Ingredients ingredients={recipeData.ingredients} />
         <Instructions instructions={recipeData.instructions} />
       </article>

@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import NextImage from "next/image";
@@ -8,6 +7,8 @@ import { PiHeartStraightLight, PiHeartStraightFill } from "react-icons/pi";
 import { resolveRecipeImageUrl } from "@/lib/resolve-recipe-image-url";
 import { toggleTagInUrl } from "@/lib/tag-utils";
 import { RecipeTimeDisplay } from "@/components/recipe-time-display";
+import { TAG_CHIP_PALETTE_INTERACTIVE } from "@/lib/ui-constants";
+import { useFavorites } from "@/hooks/useFavorites";
 
 type RecipeFeedCardProps = {
   slug: string;
@@ -19,41 +20,6 @@ type RecipeFeedCardProps = {
   cookTimeMinutes?: number | null;
 };
 
-const FAVORITES_STORAGE_KEY = "recipe-favorites";
-const chipPalette = [
-  "bg-amber-100 text-amber-700 hover:bg-amber-200 hover:shadow-md",
-  "bg-sky-100 text-sky-700 hover:bg-sky-200 hover:shadow-md",
-  "bg-emerald-100 text-emerald-700 hover:bg-emerald-200 hover:shadow-md",
-  "bg-violet-100 text-violet-700 hover:bg-violet-200 hover:shadow-md",
-];
-
-function getFavoriteStatus(slug: string): boolean {
-  if (typeof window === "undefined") return false;
-  try {
-    const favorites = JSON.parse(localStorage.getItem(FAVORITES_STORAGE_KEY) || "[]");
-    return favorites.includes(slug);
-  } catch {
-    return false;
-  }
-}
-
-function toggleFavorite(slug: string): boolean {
-  if (typeof window === "undefined") return false;
-  try {
-    const favorites = JSON.parse(localStorage.getItem(FAVORITES_STORAGE_KEY) || "[]");
-    const index = favorites.indexOf(slug);
-    if (index > -1) {
-      favorites.splice(index, 1);
-    } else {
-      favorites.push(slug);
-    }
-    localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(favorites));
-    return favorites.includes(slug);
-  } catch {
-    return false;
-  }
-}
-
 export function RecipeFeedCard({
   slug,
   name,
@@ -63,18 +29,14 @@ export function RecipeFeedCard({
   prepTimeMinutes,
   cookTimeMinutes,
 }: RecipeFeedCardProps) {
-  const [isLiked, setIsLiked] = useState(false);
+  const { isFavorite, toggleFavorite } = useFavorites(slug);
   const router = useRouter();
   const resolvedImageUrl = resolveRecipeImageUrl(imageUrl);
-
-  useEffect(() => {
-    setIsLiked(getFavoriteStatus(slug));
-  }, [slug]);
 
   const handleLikeClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsLiked(toggleFavorite(slug));
+    toggleFavorite();
   };
 
   const handleTagClick = (e: React.MouseEvent<HTMLButtonElement>, tag: string) => {
@@ -135,10 +97,10 @@ export function RecipeFeedCard({
             type="button"
             onClick={handleLikeClick}
             className="inline-flex cursor-pointer items-center justify-center pb-0.5 transition hover:opacity-80"
-            aria-label={isLiked ? "Remove from favourites" : "Save to favourites"}
-            aria-pressed={isLiked}
+            aria-label={isFavorite ? "Remove from favourites" : "Save to favourites"}
+            aria-pressed={isFavorite}
           >
-            {isLiked ? (
+            {isFavorite ? (
               <PiHeartStraightFill className="h-6 w-6 text-red-500" />
             ) : (
               <PiHeartStraightLight className="h-6 w-6 text-gray-600" />
@@ -149,7 +111,7 @@ export function RecipeFeedCard({
               key={tag}
               type="button"
               onClick={(e) => handleTagClick(e, tag)}
-              className={`relative z-10 cursor-pointer rounded-full px-2 py-0.5 text-xs font-medium transition-all sm:px-3 sm:py-1 sm:text-sm ${chipPalette[index % chipPalette.length]}`}
+              className={`relative z-10 cursor-pointer rounded-full px-2 py-0.5 text-xs font-medium transition-all sm:px-3 sm:py-1 sm:text-sm ${TAG_CHIP_PALETTE_INTERACTIVE[index % TAG_CHIP_PALETTE_INTERACTIVE.length]}`}
               style={{ touchAction: "manipulation" }}
               aria-label={`Filter by ${tag}`}
             >

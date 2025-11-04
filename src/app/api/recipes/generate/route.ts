@@ -5,10 +5,16 @@ import {
   recipeSchema,
   type GenerateRequest,
 } from "@/lib/prompts/recipe-generation";
+import {
+  buildUserInputParsingPrompt,
+  userInputParsingSchema,
+  type ParsedUserInput,
+} from "@/lib/prompts/user-input-parsing";
 import { type RecipeData, normalizeRecipe, slugify } from "@/lib/recipe-utils";
 import { authenticateRequest } from "@/lib/api-auth";
 
 export async function POST(request: NextRequest) {
+  const endpointStartTime = Date.now();
   // Authenticate the request - allows either EDIT_TOKEN or Supabase session
   // Optionally restrict to specific users by uncommenting and configuring:
   // const auth = await authenticateRequest(request, {
@@ -45,7 +51,14 @@ export async function POST(request: NextRequest) {
   if (userInput) {
     // Parse user input to extract structured data
     try {
+      const parseStartTime = Date.now();
       const parsedData = await parseUserInput(userInput);
+      const parseDuration = Date.now() - parseStartTime;
+      console.log(`[LLM] User input parsing completed in ${parseDuration}ms`, {
+        operation: "parseUserInput",
+        durationMs: parseDuration,
+        userInputLength: userInput.length,
+      });
       title = parsedData.title;
       description = parsedData.description;
       tags = parsedData.tags;
@@ -91,6 +104,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
+    const recipeGenerationStartTime = Date.now();
     const generateOptions: GenerateRequest = {
       title,
       description,
@@ -101,7 +115,15 @@ export async function POST(request: NextRequest) {
     };
 
     // Generate recipe (first variant only)
+    const generationStartTime = Date.now();
     let recipe = await generateRecipe(generateOptions);
+    const generationDuration = Date.now() - generationStartTime;
+    console.log(`[LLM] Recipe generation completed in ${generationDuration}ms`, {
+      operation: "generateRecipe",
+      durationMs: generationDuration,
+      title,
+      tags,
+    });
     recipe.title = title;
     recipe.summary = description;
     recipe.tags = [...tags];
@@ -158,6 +180,22 @@ export async function POST(request: NextRequest) {
       },
     };
 
+    const recipeGenerationDuration = Date.now() - recipeGenerationStartTime;
+    console.log(`[Recipe Generation] Total recipe generation completed in ${recipeGenerationDuration}ms`, {
+      operation: "generateRecipeEndpoint",
+      durationMs: recipeGenerationDuration,
+      title,
+      slug,
+    });
+
+    const totalEndpointDuration = Date.now() - endpointStartTime;
+    console.log(`[API] POST /api/recipes/generate completed in ${totalEndpointDuration}ms`, {
+      operation: "generateRecipeEndpoint",
+      totalDurationMs: totalEndpointDuration,
+      title,
+      slug,
+    });
+
     return NextResponse.json({ recipe: recipeResponse }, { status: 200 });
   } catch (error) {
     console.error("Failed to generate recipe:", error);
@@ -168,42 +206,8 @@ export async function POST(request: NextRequest) {
   }
 }
 
-async function parseUserInput(userInput: string): Promise<{
-  title: string;
-  description: string;
-  tags: string[];
-  userComment?: string;
-  servings?: number;
-  cuisine?: string;
-}> {
-  const parsePrompt = `Parse the following user input about a recipe request and extract structured information.
-
-User input: "${userInput}"
-
-Extract and return a JSON object with the following structure:
-{
-  "title": "A clear, concise recipe title",
-  "description": "A concise, objective description focusing on features, components, and preparation method",
-  "tags": ["array", "of", "relevant", "tags"],
-  "userComment": "optional additional notes or requirements from the user",
-  "servings": optional number,
-  "cuisine": "optional cuisine type if mentioned"
-}
-
-Guidelines:
-- The title should be a clear recipe name (e.g., "Thai Chicken Curry", "Vegetarian Pasta Primavera")
-- CRITICAL: The title must ONLY contain the actual name of the meal. DO NOT include descriptive adjectives like "savory", "delicious", "tasty", "mouthwatering", "flavorful", "amazing", "perfect", "best", "authentic", "homemade", or any other subjective descriptors. The title should be the dish name only (e.g., "Chicken Tikka Masala" not "Delicious Savory Chicken Tikka Masala").
-- The description must be concise and objective (1-2 sentences). Focus on: key ingredients and components, cooking methods (e.g., roasted, grilled, braised, sautéed), main preparation techniques, and distinctive features of the dish. CRITICAL: Avoid ALL subjective language including "savory", "delicious", "tasty", "mouthwatering", "appealing", "flavorful", "amazing", "perfect", "best", "authentic", "homemade", or any impressions about flavor/texture. Instead, describe what the dish is and how it's made (e.g., "Tender chicken pieces simmered in a spiced tomato-based curry with coconut milk, served over basmati rice" rather than "A delicious and flavorful curry that's sure to impress" or "Savory pancakes filled with minced meat and mushrooms").
-- Tags MUST always include:
-  * Main protein type: one of "seafood", "pork", "beef", "chicken", "vegetarian", or "vegan" (based on the dish, infer from ingredients even if not explicitly stated) - this is the ONLY ingredient-related tag allowed
-  * Include "glutenfree" or "gluten-free" if the dish is naturally gluten-free or if explicitly mentioned
-  * Country or region of origin: infer the cuisine style and add appropriate tags like "italian", "mediterranean", "thai", "indian", "mexican", "chinese", "japanese", "french", etc. (even if not explicitly mentioned, infer from dish characteristics)
-- Additional tags: include any other relevant tags mentioned (spicy, dairy, legumes, tofu, plant-based, etc.) but DO NOT include individual ingredient names like "garlic", "onion", "tomato", "cheese", "herbs", etc.
-- DO NOT include usecase or situational tags like "comfort food", "weeknight dinner", "party food", "quick meal", "family-friendly", etc. - only include dietary preferences, cuisine styles, and dish characteristics
-- Include any specific requirements or preferences in userComment
-- Extract servings and cuisine only if explicitly mentioned
-- IMPORTANT: Always generate tags even if the user didn't explicitly mention them - infer them from the dish description and ingredients
-- Return only valid JSON, no additional text`;
+async function parseUserInput(userInput: string): Promise<ParsedUserInput> {
+  const parsePrompt = buildUserInputParsingPrompt(userInput);
 
   const requestBody = {
     contents: [
@@ -218,37 +222,30 @@ Guidelines:
     ],
     generationConfig: {
       responseMimeType: "application/json",
-      responseSchema: {
-        type: "object",
-        properties: {
-          title: { type: "string" },
-          description: { type: "string" },
-          tags: {
-            type: "array",
-            items: { type: "string" },
-          },
-          userComment: { type: "string" },
-          servings: { type: "integer" },
-          cuisine: { type: "string" },
-        },
-        required: ["title", "description", "tags"],
-      },
+      responseSchema: userInputParsingSchema,
       temperature: 0.3,
     },
   };
 
+  const llmStartTime = Date.now();
+  console.log(`[LLM] Starting user input parsing`, {
+    operation: "callGemini",
+    model: TEXT_MODEL,
+    promptLength: parsePrompt.length,
+    userInputLength: userInput.length,
+  });
   const response = await callGemini(TEXT_MODEL, requestBody);
+  const llmDuration = Date.now() - llmStartTime;
+  console.log(`[LLM] Gemini API call completed in ${llmDuration}ms`, {
+    operation: "callGemini",
+    model: TEXT_MODEL,
+    durationMs: llmDuration,
+    context: "parseUserInput",
+  });
   const jsonText = ensureText(response, "User input parsing");
 
   try {
-    const parsed = JSON.parse(jsonText) as {
-      title: string;
-      description: string;
-      tags: string[];
-      userComment?: string;
-      servings?: number;
-      cuisine?: string;
-    };
+    const parsed = JSON.parse(jsonText) as ParsedUserInput;
 
     // Normalize tags
     parsed.tags = parsed.tags.map((tag) => tag.trim().toLowerCase()).filter(Boolean);
@@ -286,7 +283,21 @@ async function generateRecipe(options: GenerateRequest): Promise<RecipeData> {
     },
   };
 
+  const llmStartTime = Date.now();
+  console.log(`[LLM] Starting recipe generation`, {
+    operation: "callGemini",
+    model: TEXT_MODEL,
+    promptLength: prompt.length,
+    title: options.title,
+  });
   const response = await callGemini(TEXT_MODEL, requestBody);
+  const llmDuration = Date.now() - llmStartTime;
+  console.log(`[LLM] Gemini API call completed in ${llmDuration}ms`, {
+    operation: "callGemini",
+    model: TEXT_MODEL,
+    durationMs: llmDuration,
+    context: "generateRecipe",
+  });
   const jsonText = ensureText(response, "Recipe generation");
 
   try {

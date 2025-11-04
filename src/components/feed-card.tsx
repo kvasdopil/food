@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useMemo } from "react";
+import { useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { RecipeFeedCard } from "@/components/recipe-feed-card";
 import { useTags } from "@/hooks/useTags";
 import { usePaginatedRecipes } from "@/hooks/usePaginatedRecipes";
+import { useCachedRecipes } from "@/hooks/useCachedRecipes";
+import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { FeedSkeleton } from "@/components/skeletons/feed-skeleton";
-import { recipeStore } from "@/lib/recipe-store";
+import { RECIPE_GRID_CLASSES } from "@/lib/ui-constants";
 
 export function FeedCard() {
   const searchParams = useSearchParams();
@@ -27,43 +29,8 @@ export function FeedCard() {
     retry,
   } = usePaginatedRecipes({ tags: activeTags, searchQuery, autoLoadInitial: false });
 
-  // Get all cached recipes from IndexedDB to show immediately on load
-  const allCachedRecipes = useMemo(() => {
-    // Get all cached partial recipes from store (loaded from IndexedDB)
-    const cached = recipeStore.getAllPartials();
-    if (cached.length === 0) return null;
-
-    // Convert to RecipeListItem format
-    // Note: Cached partial data doesn't include time fields, so they'll be null
-    return cached.map((partial) => ({
-      slug: partial.slug,
-      name: partial.name,
-      description: partial.description,
-      tags: partial.tags,
-      image_url: partial.image_url,
-      prep_time_minutes: null,
-      cook_time_minutes: null,
-    }));
-  }, []); // Only compute once on mount
-
-  // When loading, try to show cached recipes from previous loads
-  const cachedRecipesForLoading = useMemo(() => {
-    // If we have cached recipes and no current recipes yet, show cached ones
-    if (isLoading && recipes.length === 0 && allCachedRecipes) {
-      return allCachedRecipes;
-    }
-
-    if (!isLoading || recipes.length === 0) return null;
-
-    // Get cached partial data for the recipes we've already loaded
-    // This allows showing cached data while refreshing
-    return recipes
-      .map((recipe) => {
-        const cached = recipeStore.getPartial(recipe.slug);
-        return cached ? { ...recipe, ...cached } : recipe;
-      })
-      .filter(Boolean);
-  }, [isLoading, recipes, allCachedRecipes]);
+  // Get cached recipes and determine what to display
+  const { cachedRecipesForLoading, displayRecipes } = useCachedRecipes(isLoading, recipes);
 
   // Load initial recipes or reload when tags or search query change
   useEffect(() => {
@@ -74,35 +41,14 @@ export function FeedCard() {
   }, [activeTags, searchQuery]); // Reload when tags or search query change
 
   // Container-based infinite scroll (for carousel)
-  useEffect(() => {
-    const container = scrollRef.current;
-    if (!container) return;
-
-    const handleScroll = () => {
-      const { scrollTop, scrollHeight, clientHeight } = container;
-      if (scrollHeight - scrollTop - clientHeight < 1000 && pagination?.hasMore && !isLoadingMore) {
-        loadMore();
-      }
-    };
-
-    // Throttle scroll events to avoid excessive calls
-    let timeoutId: NodeJS.Timeout | null = null;
-    const throttledHandleScroll = () => {
-      if (timeoutId) return;
-      timeoutId = setTimeout(() => {
-        handleScroll();
-        timeoutId = null;
-      }, 100);
-    };
-
-    container.addEventListener("scroll", throttledHandleScroll, { passive: true });
-    return () => {
-      container.removeEventListener("scroll", throttledHandleScroll);
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
-  }, [pagination?.hasMore, isLoadingMore, loadMore]);
+  useInfiniteScroll({
+    containerRef: scrollRef,
+    hasMore: pagination?.hasMore ?? false,
+    isLoading: isLoadingMore,
+    onLoadMore: loadMore,
+    threshold: 1000,
+    throttleMs: 100,
+  });
 
   if (isLoading) {
     // If we have cached recipes to show, display them instead of skeletons
@@ -112,7 +58,7 @@ export function FeedCard() {
       <div className="h-full overflow-y-auto bg-white">
         <main className="mx-auto max-w-7xl sm:px-6 sm:py-6 lg:px-8">
           {displayRecipes.length > 0 ? (
-            <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
+            <div className={RECIPE_GRID_CLASSES}>
               {displayRecipes.map((recipe) => (
                 <RecipeFeedCard
                   key={recipe.slug}
@@ -150,9 +96,6 @@ export function FeedCard() {
     );
   }
 
-  // Determine which recipes to display
-  const displayRecipes = recipes.length > 0 ? recipes : allCachedRecipes || [];
-
   return (
     <div ref={scrollRef} className="h-full overflow-y-auto bg-white">
       <main className="mx-auto max-w-7xl sm:px-6 sm:py-6 lg:px-8">
@@ -161,7 +104,7 @@ export function FeedCard() {
             <p className="text-lg text-gray-600">No recipes found</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
+          <div className={RECIPE_GRID_CLASSES}>
             {displayRecipes.map((recipe) => (
               <RecipeFeedCard
                 key={recipe.slug}
