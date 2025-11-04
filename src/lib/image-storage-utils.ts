@@ -33,4 +33,3 @@ export async function ensureBucket(bucket: string): Promise<void> {
     throw new Error(`Failed creating bucket ${bucket}: ${createError.message}`);
   }
 }
-

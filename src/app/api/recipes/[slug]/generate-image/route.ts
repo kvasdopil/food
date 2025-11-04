@@ -5,7 +5,12 @@ import { supabaseAdmin } from "@/lib/supabaseAdminClient";
 import { logApiEndpoint } from "@/lib/analytics";
 import { authenticateRequest } from "@/lib/api-auth";
 import { callGemini, ensureText, TEXT_MODEL } from "@/lib/gemini";
-import { parseIngredients, parseInstructions, type Ingredient, type Instruction } from "@/lib/recipe-utils";
+import {
+  parseIngredients,
+  parseInstructions,
+  type Ingredient,
+  type Instruction,
+} from "@/lib/recipe-utils";
 import { calculateFileHash, ensureBucket } from "@/lib/image-storage-utils";
 
 const DEFAULT_BUCKET = process.env.RECIPE_STORAGE_BUCKET ?? "recipe-images";
@@ -52,13 +57,13 @@ type FireflyJobStatus = {
   message?: string;
   error_code?: string;
   status?:
-  | "pending"
-  | "running"
-  | "succeeded"
-  | "failed"
-  | "cancel_pending"
-  | "cancelled"
-  | "timeout";
+    | "pending"
+    | "running"
+    | "succeeded"
+    | "failed"
+    | "cancel_pending"
+    | "cancelled"
+    | "timeout";
   links?: {
     result?: {
       href: string;

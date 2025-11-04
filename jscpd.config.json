@@ -2,6 +2,13 @@
   "threshold": 8,
   "mode": "strict",
   "reporters": ["console"],
-  "ignore": ["**/node_modules/**", "**/.next/**", "**/out/**", "**/dist/**", "**/.yarn/**", "**/data/recipes/**/*.yaml"],
+  "ignore": [
+    "**/node_modules/**",
+    "**/.next/**",
+    "**/out/**",
+    "**/dist/**",
+    "**/.yarn/**",
+    "**/data/recipes/**/*.yaml"
+  ],
   "patterns": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.mjs", "**/*.cjs"]
 }

@@ -29,4 +29,3 @@ export function RecipeGrid({ recipes }: RecipeGridProps) {
     </div>
   );
 }
-

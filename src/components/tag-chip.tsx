@@ -36,7 +36,7 @@ export function TagChip({
     return (
       <Badge
         variant="outline"
-        className={cn("rounded-full px-3 py-1 text-sm font-medium border-0", colorClass, className)}
+        className={cn("rounded-full border-0 px-3 py-1 text-sm font-medium", colorClass, className)}
       >
         {tag}
       </Badge>
@@ -48,7 +48,11 @@ export function TagChip({
       <Badge
         asChild
         variant="outline"
-        className={cn("inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-xs font-medium transition hover:opacity-80 border-0", colorClass, className)}
+        className={cn(
+          "inline-flex items-center gap-1.5 rounded-full border-0 px-2 py-0.5 text-xs font-medium transition hover:opacity-80",
+          colorClass,
+          className,
+        )}
       >
         <button
           type="button"
@@ -81,7 +85,11 @@ export function TagChip({
     <Badge
       asChild
       variant="outline"
-      className={cn("relative z-10 cursor-pointer rounded-full px-2 py-0.5 text-xs font-medium transition-all sm:px-3 sm:py-1 sm:text-sm border-0", colorClass, className)}
+      className={cn(
+        "relative z-10 cursor-pointer rounded-full border-0 px-2 py-0.5 text-xs font-medium transition-all sm:px-3 sm:py-1 sm:text-sm",
+        colorClass,
+        className,
+      )}
     >
       <button
         type="button"
@@ -98,4 +106,3 @@ export function TagChip({
     </Badge>
   );
 }
-

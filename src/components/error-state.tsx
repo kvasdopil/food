@@ -25,4 +25,3 @@ export function ErrorState({ error, onRetry, className = "" }: ErrorStateProps) 
     </div>
   );
 }
-

@@ -52,7 +52,7 @@ export function RecipeSearchBar({
           placeholder={placeholder}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="flex-1 border-0 bg-transparent text-base shadow-none focus-visible:ring-0 placeholder:text-gray-500 sm:text-sm"
+          className="flex-1 border-0 bg-transparent text-base shadow-none placeholder:text-gray-500 focus-visible:ring-0 sm:text-sm"
         />
 
         {(value || hasTags) && (

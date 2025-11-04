@@ -27,4 +27,3 @@ export function RecipePreviewCard({ recipe }: RecipePreviewCardProps) {
     </div>
   );
 }
-

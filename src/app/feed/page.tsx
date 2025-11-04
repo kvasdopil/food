@@ -8,7 +8,12 @@ import { usePaginatedRecipes } from "@/hooks/usePaginatedRecipes";
 import { useCachedRecipes } from "@/hooks/useCachedRecipes";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { FeedSkeleton } from "@/components/skeletons/feed-skeleton";
-import { FeedErrorState, FeedEmptyState, FeedLoadingMore, FeedEndState } from "@/components/feed-states";
+import {
+  FeedErrorState,
+  FeedEmptyState,
+  FeedLoadingMore,
+  FeedEndState,
+} from "@/components/feed-states";
 
 function FeedPageContent() {
   const searchParams = useSearchParams();

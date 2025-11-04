@@ -56,13 +56,10 @@ export function useSearchQuery(options: UseSearchQueryOptions = {}) {
   }, [searchParams, query, syncThresholdMs]);
 
   // Track when user types
-  const handleQueryChange = useCallback(
-    (value: string) => {
-      lastUserInputRef.current = Date.now();
-      setQuery(value);
-    },
-    [],
-  );
+  const handleQueryChange = useCallback((value: string) => {
+    lastUserInputRef.current = Date.now();
+    setQuery(value);
+  }, []);
 
   // Debounce search query and update URL
   useEffect(() => {
@@ -87,4 +84,3 @@ export function useSearchQuery(options: UseSearchQueryOptions = {}) {
     urlQuery,
   };
 }
-

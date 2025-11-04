@@ -108,4 +108,3 @@ Example 3:
    - Extract servings and cuisine only if explicitly mentioned
    - Return only valid JSON, no additional text`;
 }
-

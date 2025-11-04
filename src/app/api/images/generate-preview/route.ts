@@ -64,8 +64,8 @@ export async function POST(request: NextRequest) {
     // Generate image using Google AI
     console.log(`Generating preview image with description: ${description.substring(0, 100)}...`);
     const { imageData, contentType } = await generateImageWithGoogleAI({
-        description,
-        model: "gemini-2.5-flash-image", // Use gemini-2.5-flash-image model
+      description,
+      model: "gemini-2.5-flash-image", // Use gemini-2.5-flash-image model
     });
 
     // Convert to JPEG with sharp (regardless of input format)

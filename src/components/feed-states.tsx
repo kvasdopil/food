@@ -58,14 +58,10 @@ type FeedEndStateProps = {
 /**
  * FeedEndState component for displaying end-of-feed message
  */
-export function FeedEndState({
-  message = "No more recipes",
-  className = "",
-}: FeedEndStateProps) {
+export function FeedEndState({ message = "No more recipes", className = "" }: FeedEndStateProps) {
   return (
     <div className={`flex items-center justify-center py-8 ${className}`}>
       <p className="text-sm text-gray-600">{message}</p>
     </div>
   );
 }
-

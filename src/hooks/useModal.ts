@@ -81,4 +81,3 @@ export function useModal(
 
   return modalRef;
 }
-

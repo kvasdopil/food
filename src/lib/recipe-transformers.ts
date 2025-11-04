@@ -24,9 +24,7 @@ export function partialToListItem(partial: RecipePartialData): RecipeListItem {
 /**
  * Convert an array of RecipePartialData to RecipeListItem[] format
  */
-export function convertPartialsToRecipeListItems(
-  partials: RecipePartialData[],
-): RecipeListItem[] {
+export function convertPartialsToRecipeListItems(partials: RecipePartialData[]): RecipeListItem[] {
   return partials.map(partialToListItem);
 }
 
@@ -55,4 +53,3 @@ export function mergeCachedWithRecipes(
     })
     .filter(Boolean);
 }
-

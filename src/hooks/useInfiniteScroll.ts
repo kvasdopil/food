@@ -115,4 +115,3 @@ export function useInfiniteScroll({
     };
   }, [containerRef, hasMore, isLoading, onLoadMore, threshold, throttleMs]);
 }
-

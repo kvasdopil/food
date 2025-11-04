@@ -93,7 +93,11 @@ export function Recipe({ slug }: RecipeProps) {
           prepTimeMinutes={recipeData.prepTimeMinutes}
           cookTimeMinutes={recipeData.cookTimeMinutes}
         />
-        <Description slug={recipeData.slug} description={recipeData.description || null} tags={recipeData.tags} />
+        <Description
+          slug={recipeData.slug}
+          description={recipeData.description || null}
+          tags={recipeData.tags}
+        />
         <Ingredients ingredients={recipeData.ingredients} />
         <Instructions instructions={recipeData.instructions} />
       </article>

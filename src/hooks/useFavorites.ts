@@ -25,4 +25,3 @@ export function useFavorites(slug: string) {
 
   return { isFavorite, toggleFavorite };
 }
-

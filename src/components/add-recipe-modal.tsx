@@ -7,10 +7,7 @@ import { useRecipeGeneration } from "@/hooks/useRecipeGeneration";
 import { useRecipeImage } from "@/hooks/useRecipeImage";
 import { RecipeInputForm } from "@/components/recipe-input-form";
 import { RecipePreviewCard } from "@/components/recipe-preview-card";
-import {
-  Dialog,
-  DialogContent,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 

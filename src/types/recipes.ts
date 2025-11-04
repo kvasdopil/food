@@ -40,4 +40,3 @@ export type RecipeListItem = {
   prep_time_minutes: number | null;
   cook_time_minutes: number | null;
 };
-

@@ -181,12 +181,15 @@ export async function POST(request: NextRequest) {
     };
 
     const recipeGenerationDuration = Date.now() - recipeGenerationStartTime;
-    console.log(`[Recipe Generation] Total recipe generation completed in ${recipeGenerationDuration}ms`, {
-      operation: "generateRecipeEndpoint",
-      durationMs: recipeGenerationDuration,
-      title,
-      slug,
-    });
+    console.log(
+      `[Recipe Generation] Total recipe generation completed in ${recipeGenerationDuration}ms`,
+      {
+        operation: "generateRecipeEndpoint",
+        durationMs: recipeGenerationDuration,
+        title,
+        slug,
+      },
+    );
 
     const totalEndpointDuration = Date.now() - endpointStartTime;
     console.log(`[API] POST /api/recipes/generate completed in ${totalEndpointDuration}ms`, {

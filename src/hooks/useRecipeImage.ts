@@ -59,4 +59,3 @@ export function useRecipeImage(options: UseRecipeImageOptions = {}) {
     generateImage,
   };
 }
-

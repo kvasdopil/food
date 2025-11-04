@@ -27,7 +27,7 @@ export function toggleFavoriteStorage(slug: string): boolean {
     const favorites = JSON.parse(localStorage.getItem(FAVORITES_STORAGE_KEY) || "[]");
     const favoriteList = Array.isArray(favorites) ? favorites : [];
     const index = favoriteList.indexOf(slug);
-    
+
     if (index > -1) {
       // Remove from favorites
       favoriteList.splice(index, 1);
@@ -35,7 +35,7 @@ export function toggleFavoriteStorage(slug: string): boolean {
       // Add to favorites
       favoriteList.push(slug);
     }
-    
+
     localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(favoriteList));
     return favoriteList.includes(slug);
   } catch {
@@ -55,4 +55,3 @@ export function getAllFavorites(): string[] {
     return [];
   }
 }
-

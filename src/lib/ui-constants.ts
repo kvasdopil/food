@@ -27,4 +27,3 @@ export const TAG_CHIP_PALETTE_INTERACTIVE = [
  */
 export const RECIPE_GRID_CLASSES =
   "grid grid-cols-1 gap-0 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4";
-

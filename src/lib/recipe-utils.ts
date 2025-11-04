@@ -145,9 +145,7 @@ export function parseInstructions(raw: string): Instruction[] {
  * Formats as numbered steps.
  * Accepts instructions with optional step numbers.
  */
-export function buildInstructions(
-  instructions: Array<{ step?: number; action: string }>,
-): string {
+export function buildInstructions(instructions: Array<{ step?: number; action: string }>): string {
   return instructions
     .map((entry, index) => {
       const stepNumber = entry.step ?? index + 1;
