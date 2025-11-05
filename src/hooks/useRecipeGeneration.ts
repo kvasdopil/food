@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import type { GeneratedRecipe } from "@/types/recipes";
 import { slugify } from "@/lib/recipe-utils";
+import { useRecipeImage } from "@/hooks/useRecipeImage";
 
 type UseRecipeGenerationOptions = {
   onSuccess?: (recipe: GeneratedRecipe) => void;
@@ -21,6 +22,16 @@ export function useRecipeGeneration(options: UseRecipeGenerationOptions = {}) {
   const [error, setError] = useState<string | null>(null);
   const [generatedRecipe, setGeneratedRecipe] = useState<GeneratedRecipe | null>(null);
   const recipeRef = useRef<GeneratedRecipe | null>(null);
+  const imageGenerationStartedRef = useRef(false);
+  const currentAccessTokenRef = useRef<string | null>(null);
+  const updateRecipeImageRef = useRef<((imageUrl: string) => void) | null>(null);
+  
+  // Use recipe image hook for generating images
+  const { generateImage } = useRecipeImage({
+    onSuccess: (imageUrl) => {
+      updateRecipeImageRef.current?.(imageUrl);
+    },
+  });
 
   // Helper function to stream updates from an endpoint
   const streamUpdates = async (
@@ -123,6 +134,9 @@ export function useRecipeGeneration(options: UseRecipeGenerationOptions = {}) {
       setIsParsing(true);
       setIsGenerating(false);
       setError(null);
+      imageGenerationStartedRef.current = false;
+      currentAccessTokenRef.current = accessToken;
+      
       // Initialize with empty recipe so card appears immediately
       const emptyRecipe: GeneratedRecipe = {
         slug: "",
@@ -181,6 +195,16 @@ export function useRecipeGeneration(options: UseRecipeGenerationOptions = {}) {
                 recipeRef.current = updated;
                 return updated;
               });
+              
+              // Generate image as soon as we have description
+              if (!imageGenerationStartedRef.current && typeof value === "string" && value.trim() && currentAccessTokenRef.current) {
+                imageGenerationStartedRef.current = true;
+                // Start image generation in background (don't await)
+                generateImage(value.trim(), currentAccessTokenRef.current).catch((err) => {
+                  console.error("Failed to generate image:", err);
+                  // Don't show error to user - image generation is not critical
+                });
+              }
             } else if (field === "tags") {
               parsedData.tags = (value as string[]) || [];
               setGeneratedRecipe((prev) => {
@@ -267,7 +291,7 @@ export function useRecipeGeneration(options: UseRecipeGenerationOptions = {}) {
         options.onError?.(errorMessage);
       }
     },
-    [isParsing, isGenerating, options],
+    [isParsing, isGenerating, options, generateImage],
   );
 
   const addRecipe = useCallback(
@@ -325,12 +349,19 @@ export function useRecipeGeneration(options: UseRecipeGenerationOptions = {}) {
   const updateRecipeImage = useCallback((imageUrl: string) => {
     setGeneratedRecipe((prev) => {
       if (!prev) return prev;
-      return {
+      const updated = {
         ...prev,
         image_url: imageUrl,
       };
+      recipeRef.current = updated;
+      return updated;
     });
   }, []);
+  
+  // Keep ref updated so it can be used in the hook callback
+  useEffect(() => {
+    updateRecipeImageRef.current = updateRecipeImage;
+  }, [updateRecipeImage]);
 
   const reset = useCallback(() => {
     setGeneratedRecipe(null);
@@ -338,6 +369,9 @@ export function useRecipeGeneration(options: UseRecipeGenerationOptions = {}) {
     setIsParsing(false);
     setIsGenerating(false);
     setIsAdding(false);
+    imageGenerationStartedRef.current = false;
+    currentAccessTokenRef.current = null;
+    recipeRef.current = null;
   }, []);
 
   return {

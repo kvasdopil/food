@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useSessionToken } from "@/hooks/useSessionToken";
 import { useRecipeGeneration } from "@/hooks/useRecipeGeneration";
-import { useRecipeImage } from "@/hooks/useRecipeImage";
 import { RecipeInputForm } from "@/components/recipe-input-form";
 import { RecipePreviewCard } from "@/components/recipe-preview-card";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
@@ -34,8 +33,6 @@ export function AddRecipeModal({ isOpen, onClose }: AddRecipeModalProps) {
     setError,
   } = useRecipeGeneration();
 
-  const { generateImage } = useRecipeImage();
-
   // Reset state when modal closes
   useEffect(() => {
     if (!isOpen) {
@@ -47,7 +44,7 @@ export function AddRecipeModal({ isOpen, onClose }: AddRecipeModalProps) {
     }
   }, [isOpen, reset]);
 
-  // Scroll to recipe card when it's generated and generate preview image
+  // Scroll to recipe card when it's generated
   useEffect(() => {
     if (generatedRecipe) {
       // Scroll to recipe card
@@ -57,23 +54,9 @@ export function AddRecipeModal({ isOpen, onClose }: AddRecipeModalProps) {
           cardElement.scrollIntoView({ behavior: "smooth", block: "nearest" });
         }
       }, 100);
-
-      // Generate preview image if imagePrompt is available
-      const generateImageIfNeeded = async () => {
-        if (generatedRecipe.imagePrompt?.base && !generatedRecipe.image_url) {
-          const accessToken = await fetchToken();
-          if (accessToken) {
-            const imageUrl = await generateImage(generatedRecipe.imagePrompt.base, accessToken);
-            if (imageUrl) {
-              updateRecipeImage(imageUrl);
-            }
-          }
-        }
-      };
-
-      generateImageIfNeeded();
+      // Image generation is now handled automatically in useRecipeGeneration hook
     }
-  }, [generatedRecipe, fetchToken, generateImage, updateRecipeImage]);
+  }, [generatedRecipe]);
 
   const handleSend = async () => {
     if (!userInput.trim() || isGenerating || !session) {
