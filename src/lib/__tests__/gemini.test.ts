@@ -1,30 +1,33 @@
-import { streamGemini, callGemini, TEXT_MODEL } from '../gemini';
+import { streamGemini, callGemini, TEXT_MODEL } from "../gemini";
 
 // Mock fetch globally
 global.fetch = jest.fn();
 
-describe('streamGemini', () => {
+describe("streamGemini", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    process.env.GEMINI_API_KEY = 'test-api-key';
+    process.env.GEMINI_API_KEY = "test-api-key";
   });
 
-  it('should return an async generator', async () => {
+  it("should return an async generator", async () => {
     const mockResponse = {
       ok: true,
       body: {
         getReader: jest.fn(() => ({
-          read: jest.fn().mockResolvedValueOnce({
-            done: false,
-            value: new TextEncoder().encode(
-              JSON.stringify({
-                candidates: [{ content: { parts: [{ text: '{"title": "Chicken"}' }] } }],
-              }) + '\n',
-            ),
-          }).mockResolvedValueOnce({
-            done: true,
-            value: undefined,
-          }),
+          read: jest
+            .fn()
+            .mockResolvedValueOnce({
+              done: false,
+              value: new TextEncoder().encode(
+                JSON.stringify({
+                  candidates: [{ content: { parts: [{ text: '{"title": "Chicken"}' }] } }],
+                }) + "\n",
+              ),
+            })
+            .mockResolvedValueOnce({
+              done: true,
+              value: undefined,
+            }),
           releaseLock: jest.fn(),
         })),
       },
@@ -35,11 +38,11 @@ describe('streamGemini', () => {
     const generator = streamGemini(TEXT_MODEL, { contents: [] });
 
     expect(generator).toBeDefined();
-    expect(typeof generator[Symbol.asyncIterator]).toBe('function');
+    expect(typeof generator[Symbol.asyncIterator]).toBe("function");
   });
 
-  it('should yield text chunks from Gemini API', async () => {
-    const chunks = ['{"title": "Chicken', ' Tikka', ' Masala"}'];
+  it("should yield text chunks from Gemini API", async () => {
+    const chunks = ['{"title": "Chicken', " Tikka", ' Masala"}'];
     let chunkIndex = 0;
 
     const mockReader = {
@@ -51,7 +54,7 @@ describe('streamGemini', () => {
             value: new TextEncoder().encode(
               JSON.stringify({
                 candidates: [{ content: { parts: [{ text: chunkText }] } }],
-              }) + '\n',
+              }) + "\n",
             ),
           });
         }
@@ -80,15 +83,15 @@ describe('streamGemini', () => {
     }
 
     expect(receivedChunks.length).toBeGreaterThan(0);
-    expect(receivedChunks[0]).toContain('Chicken');
+    expect(receivedChunks[0]).toContain("Chicken");
   });
 
-  it('should handle API errors', async () => {
+  it("should handle API errors", async () => {
     const mockResponse = {
       ok: false,
       status: 400,
-      statusText: 'Bad Request',
-      text: jest.fn().mockResolvedValue('Invalid request'),
+      statusText: "Bad Request",
+      text: jest.fn().mockResolvedValue("Invalid request"),
     };
 
     (global.fetch as jest.Mock).mockResolvedValue(mockResponse);
@@ -103,7 +106,7 @@ describe('streamGemini', () => {
     }).rejects.toThrow();
   });
 
-  it('should construct correct API URL', async () => {
+  it("should construct correct API URL", async () => {
     const mockResponse = {
       ok: true,
       body: {
@@ -121,13 +124,13 @@ describe('streamGemini', () => {
     expect(global.fetch).toHaveBeenCalledWith(
       expect.stringContaining(`/models/${TEXT_MODEL}:streamGenerateContent`),
       expect.objectContaining({
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
       }),
     );
   });
 
-  it('should handle null response body', async () => {
+  it("should handle null response body", async () => {
     const mockResponse = {
       ok: true,
       body: null,
@@ -142,10 +145,10 @@ describe('streamGemini', () => {
       for await (const _ of generator) {
         // Should throw
       }
-    }).rejects.toThrow('Response body is null or undefined');
+    }).rejects.toThrow("Response body is null or undefined");
   });
 
-  it('should handle incomplete JSON lines in buffer', async () => {
+  it("should handle incomplete JSON lines in buffer", async () => {
     const mockReader = {
       read: jest
         .fn()
@@ -153,7 +156,7 @@ describe('streamGemini', () => {
           done: false,
           value: new TextEncoder().encode(
             JSON.stringify({
-              candidates: [{ content: { parts: [{ text: 'Chunk1' }] } }],
+              candidates: [{ content: { parts: [{ text: "Chunk1" }] } }],
             }) + '\n{"incomplete',
           ),
         })
@@ -162,9 +165,9 @@ describe('streamGemini', () => {
           value: new TextEncoder().encode(
             ' json": "complete"}\n' +
               JSON.stringify({
-                candidates: [{ content: { parts: [{ text: 'Chunk2' }] } }],
+                candidates: [{ content: { parts: [{ text: "Chunk2" }] } }],
               }) +
-              '\n',
+              "\n",
           ),
         })
         .mockResolvedValueOnce({ done: true }),
@@ -190,7 +193,7 @@ describe('streamGemini', () => {
     expect(chunks.length).toBeGreaterThan(0);
   });
 
-  it('should handle empty text in candidates', async () => {
+  it("should handle empty text in candidates", async () => {
     const mockReader = {
       read: jest
         .fn()
@@ -198,16 +201,16 @@ describe('streamGemini', () => {
           done: false,
           value: new TextEncoder().encode(
             JSON.stringify({
-              candidates: [{ content: { parts: [{ text: '' }] } }],
-            }) + '\n',
+              candidates: [{ content: { parts: [{ text: "" }] } }],
+            }) + "\n",
           ),
         })
         .mockResolvedValueOnce({
           done: false,
           value: new TextEncoder().encode(
             JSON.stringify({
-              candidates: [{ content: { parts: [{ text: 'Valid text' }] } }],
-            }) + '\n',
+              candidates: [{ content: { parts: [{ text: "Valid text" }] } }],
+            }) + "\n",
           ),
         })
         .mockResolvedValueOnce({ done: true }),
@@ -231,21 +234,21 @@ describe('streamGemini', () => {
     }
 
     // Should only yield non-empty text
-    expect(chunks).toEqual(['Valid text']);
+    expect(chunks).toEqual(["Valid text"]);
   });
 });
 
-describe('callGemini (regression)', () => {
+describe("callGemini (regression)", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    process.env.GEMINI_API_KEY = 'test-api-key';
+    process.env.GEMINI_API_KEY = "test-api-key";
   });
 
-  it('should still work with non-streaming endpoint', async () => {
+  it("should still work with non-streaming endpoint", async () => {
     const mockResponse = {
       ok: true,
       json: jest.fn().mockResolvedValue({
-        candidates: [{ content: { parts: [{ text: 'test' }] } }],
+        candidates: [{ content: { parts: [{ text: "test" }] } }],
       }),
     };
 
@@ -257,4 +260,3 @@ describe('callGemini (regression)', () => {
     expect(result.candidates).toBeDefined();
   });
 });
-

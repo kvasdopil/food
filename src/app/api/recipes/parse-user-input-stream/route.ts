@@ -3,9 +3,8 @@ import { streamGemini, TEXT_MODEL } from "@/lib/gemini";
 import {
   buildUserInputParsingPrompt,
   userInputParsingSchema,
-  type ParsedUserInput,
 } from "@/lib/prompts/user-input-parsing";
-import { PartialJsonParser, type StreamUpdate } from "@/lib/partial-json-parser";
+import { PartialJsonParser } from "@/lib/partial-json-parser";
 import { authenticateRequest } from "@/lib/api-auth";
 
 export async function POST(request: NextRequest) {
@@ -84,9 +83,12 @@ export async function POST(request: NextRequest) {
           for await (const chunk of geminiStream) {
             chunkCount++;
             totalChunkLength += chunk.length;
-            console.log(`[Parse Stream] Received chunk ${chunkCount}, length: ${chunk.length}, total: ${totalChunkLength}`, {
-              chunkPreview: chunk.substring(0, 100),
-            });
+            console.log(
+              `[Parse Stream] Received chunk ${chunkCount}, length: ${chunk.length}, total: ${totalChunkLength}`,
+              {
+                chunkPreview: chunk.substring(0, 100),
+              },
+            );
 
             // Parse the chunk and extract complete fields
             const updates = parser.processChunk(chunk);
@@ -101,7 +103,9 @@ export async function POST(request: NextRequest) {
             }
           }
 
-          console.log(`[Parse Stream] Finished processing ${chunkCount} chunks, total length: ${totalChunkLength}`);
+          console.log(
+            `[Parse Stream] Finished processing ${chunkCount} chunks, total length: ${totalChunkLength}`,
+          );
 
           // Finalize parser and send any remaining field updates, followed by completion signal
           const finalUpdates = parser.finalize();
@@ -123,11 +127,14 @@ export async function POST(request: NextRequest) {
           });
 
           const parseDuration = Date.now() - parseStartTime;
-          console.log(`[User Input Parsing] Total streaming parsing completed in ${parseDuration}ms`, {
-            operation: "parseUserInputStreamEndpoint",
-            durationMs: parseDuration,
-            userInputLength: userInput.length,
-          });
+          console.log(
+            `[User Input Parsing] Total streaming parsing completed in ${parseDuration}ms`,
+            {
+              operation: "parseUserInputStreamEndpoint",
+              durationMs: parseDuration,
+              userInputLength: userInput.length,
+            },
+          );
 
           const totalEndpointDuration = Date.now() - endpointStartTime;
           console.log(
@@ -144,7 +151,9 @@ export async function POST(request: NextRequest) {
           console.error("Failed to stream user input parsing:", error);
           try {
             const errorMessage = `Failed to stream user input parsing: ${(error as Error).message}`;
-            controller.enqueue(encoder.encode(JSON.stringify({ type: "error", error: errorMessage }) + "\n"));
+            controller.enqueue(
+              encoder.encode(JSON.stringify({ type: "error", error: errorMessage }) + "\n"),
+            );
           } catch (enqueueError) {
             // Ignore errors during error handling
             console.error("Failed to enqueue error message:", enqueueError);
@@ -169,4 +178,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-

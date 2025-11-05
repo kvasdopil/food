@@ -102,7 +102,11 @@ export function useRecipeGeneration(options: UseRecipeGenerationOptions = {}) {
             throw new Error(update.error);
           }
         } catch (parseError) {
-          if (parseError instanceof Error && parseError.message && !(parseError instanceof SyntaxError)) {
+          if (
+            parseError instanceof Error &&
+            parseError.message &&
+            !(parseError instanceof SyntaxError)
+          ) {
             throw parseError;
           }
           // Skip malformed JSON lines
@@ -197,7 +201,12 @@ export function useRecipeGeneration(options: UseRecipeGenerationOptions = {}) {
               });
 
               // Generate image as soon as we have description
-              if (!imageGenerationStartedRef.current && typeof value === "string" && value.trim() && currentAccessTokenRef.current) {
+              if (
+                !imageGenerationStartedRef.current &&
+                typeof value === "string" &&
+                value.trim() &&
+                currentAccessTokenRef.current
+              ) {
                 imageGenerationStartedRef.current = true;
                 // Start image generation in background (don't await)
                 generateImage(value.trim(), currentAccessTokenRef.current).catch((err) => {
@@ -228,7 +237,12 @@ export function useRecipeGeneration(options: UseRecipeGenerationOptions = {}) {
         setIsParsing(false);
 
         // Validate parsed data
-        if (!parsedData.title || !parsedData.description || !parsedData.tags || parsedData.tags.length === 0) {
+        if (
+          !parsedData.title ||
+          !parsedData.description ||
+          !parsedData.tags ||
+          parsedData.tags.length === 0
+        ) {
           throw new Error("Failed to parse user input: missing required fields");
         }
 

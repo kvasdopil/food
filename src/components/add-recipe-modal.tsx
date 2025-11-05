@@ -28,7 +28,6 @@ export function AddRecipeModal({ isOpen, onClose }: AddRecipeModalProps) {
     error,
     generateRecipe,
     addRecipe,
-    updateRecipeImage,
     reset,
     setError,
   } = useRecipeGeneration();

@@ -5,16 +5,19 @@ This guide explains where to find app usage per logged-in user and which users c
 ## Quick Answer: What UI is Available?
 
 ✅ **Vercel Analytics Dashboard** - Yes, there's a UI for viewing app usage:
+
 - Navigate to: Vercel Dashboard → Your Project → **Analytics** tab
 - Shows custom events (`api_endpoint_called`) with user information
 - Can filter by `user_id` or `user_email` to see per-user activity
 
 ✅ **Vercel Logs Dashboard** - Yes, there's a UI for viewing server logs:
+
 - Navigate to: Vercel Dashboard → Your Project → **Logs** tab
 - Shows structured JSON logs with user info
 - Can search logs by `user_email` or `user_id`
 
 ❌ **Recipe Authorship** - No UI in Vercel for this:
+
 - Recipe authorship data is stored in Supabase (not Vercel)
 - Use **Supabase Dashboard** → Table Editor → `recipes` table
 - Or use the SQL Editor in Supabase to query recipes by author
@@ -81,6 +84,7 @@ Server-side logs include detailed user information:
 ### 3. Query Analytics Data via API (Advanced)
 
 If you need to programmatically access analytics data, you can use Vercel's Analytics API:
+
 - Documentation: https://vercel.com/docs/analytics/api
 
 ## Which Users Created Which Recipes
@@ -107,15 +111,16 @@ Your recipes are stored in Supabase with author attribution:
 3. **Query Recipes by Author (SQL Editor UI):**
    - Go to **"SQL Editor"** tab in Supabase
    - Run queries like:
+
    ```sql
    -- All recipes by a specific user
    SELECT slug, name, author_name, author_email, created_at
    FROM recipes
    WHERE author_email = 'user@example.com'
    ORDER BY created_at DESC;
-   
+
    -- Count recipes per user
-   SELECT 
+   SELECT
      author_email,
      author_name,
      COUNT(*) as recipe_count
@@ -123,7 +128,7 @@ Your recipes are stored in Supabase with author attribution:
    WHERE author_email IS NOT NULL
    GROUP BY author_email, author_name
    ORDER BY recipe_count DESC;
-   
+
    -- All recipes with authors
    SELECT slug, name, author_name, author_email, created_at
    FROM recipes
@@ -159,22 +164,32 @@ async function queryUserRecipes() {
   }
 
   // Group by user
-  const recipesByUser = recipes.reduce((acc, recipe) => {
-    const email = recipe.author_email!;
-    if (!acc[email]) {
-      acc[email] = {
-        email,
-        name: recipe.author_name || email.split("@")[0],
-        recipes: [],
-      };
-    }
-    acc[email].recipes.push({
-      slug: recipe.slug,
-      name: recipe.name,
-      created_at: recipe.created_at,
-    });
-    return acc;
-  }, {} as Record<string, { email: string; name: string; recipes: Array<{ slug: string; name: string; created_at: string }> }>);
+  const recipesByUser = recipes.reduce(
+    (acc, recipe) => {
+      const email = recipe.author_email!;
+      if (!acc[email]) {
+        acc[email] = {
+          email,
+          name: recipe.author_name || email.split("@")[0],
+          recipes: [],
+        };
+      }
+      acc[email].recipes.push({
+        slug: recipe.slug,
+        name: recipe.name,
+        created_at: recipe.created_at,
+      });
+      return acc;
+    },
+    {} as Record<
+      string,
+      {
+        email: string;
+        name: string;
+        recipes: Array<{ slug: string; name: string; created_at: string }>;
+      }
+    >,
+  );
 
   // Print summary
   console.log("\n=== Recipes by User ===\n");
@@ -198,6 +213,7 @@ queryUserRecipes();
 ```
 
 Run it with:
+
 ```bash
 npx tsx scripts/query-user-recipes.ts
 ```
@@ -218,7 +234,7 @@ User engagement is also tracked via the `recipe_likes` table:
 
 ```sql
 -- See which users liked which recipes
-SELECT 
+SELECT
   rl.user_id,
   rl.recipe_slug,
   r.name as recipe_name,
@@ -232,7 +248,7 @@ ORDER BY rl.user_id, r.created_at DESC;
 
 ```sql
 -- Comprehensive user activity summary
-SELECT 
+SELECT
   u.email,
   COUNT(DISTINCT r.slug) as recipes_created,
   COUNT(DISTINCT rl.recipe_slug) as recipes_liked,
@@ -251,4 +267,3 @@ ORDER BY recipes_created DESC;
 - **Author Attribution**: Only recipes created by logged-in users (via Supabase auth) have author fields populated. Scripted recipes (using EDIT_TOKEN) have `null` author fields
 - **Indexing**: The `author_email` column is indexed (`recipes_author_email_idx`) for fast queries
 - **Analytics**: Custom events are tracked client-side via `trackApiEndpoint()` and server-side via `logApiEndpoint()`
-

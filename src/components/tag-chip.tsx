@@ -75,7 +75,7 @@ export function TagChip({
         asChild
         variant="outline"
         className={cn(
-          "inline-flex items-center gap-1.5 rounded-full border-0 px-2 py-0.5 text-xs font-medium cursor-pointer transition hover:opacity-80",
+          "inline-flex cursor-pointer items-center gap-1.5 rounded-full border-0 px-2 py-0.5 text-xs font-medium transition hover:opacity-80",
           colorClass,
           className,
         )}

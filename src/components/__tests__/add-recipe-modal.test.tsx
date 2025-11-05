@@ -1,31 +1,31 @@
-import { render, screen } from '@testing-library/react';
-import { AddRecipeModal } from '../add-recipe-modal';
-import { useRecipeGeneration } from '@/hooks/useRecipeGeneration';
-import { useAuth } from '@/hooks/useAuth';
-import { useSessionToken } from '@/hooks/useSessionToken';
-import { useRecipeImage } from '@/hooks/useRecipeImage';
+import { render, screen } from "@testing-library/react";
+import { AddRecipeModal } from "../add-recipe-modal";
+import { useRecipeGeneration } from "@/hooks/useRecipeGeneration";
+import { useAuth } from "@/hooks/useAuth";
+import { useSessionToken } from "@/hooks/useSessionToken";
+import { useRecipeImage } from "@/hooks/useRecipeImage";
 
 // Mock hooks
-jest.mock('@/hooks/useRecipeGeneration');
-jest.mock('@/hooks/useAuth');
-jest.mock('@/hooks/useSessionToken');
-jest.mock('@/hooks/useRecipeImage');
+jest.mock("@/hooks/useRecipeGeneration");
+jest.mock("@/hooks/useAuth");
+jest.mock("@/hooks/useSessionToken");
+jest.mock("@/hooks/useRecipeImage");
 
 // Mock hooks used by RecipeFeedCard (used in RecipePreviewCard)
-jest.mock('next/navigation', () => ({
+jest.mock("next/navigation", () => ({
   useRouter: jest.fn(() => ({
     push: jest.fn(),
   })),
 }));
 
-jest.mock('@/hooks/useFavorites', () => ({
+jest.mock("@/hooks/useFavorites", () => ({
   useFavorites: jest.fn(() => ({
     isFavorite: false,
     toggleFavorite: jest.fn(),
   })),
 }));
 
-describe('AddRecipeModal - Streaming', () => {
+describe("AddRecipeModal - Streaming", () => {
   const mockGenerateRecipe = jest.fn();
   const mockReset = jest.fn();
   const mockSetError = jest.fn();
@@ -37,7 +37,7 @@ describe('AddRecipeModal - Streaming', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     (useAuth as jest.Mock).mockReturnValue({
-      session: { user: { id: 'test-user' } },
+      session: { user: { id: "test-user" } },
       loading: false,
     });
     (useSessionToken as jest.Mock).mockReturnValue({
@@ -59,14 +59,14 @@ describe('AddRecipeModal - Streaming', () => {
     });
   });
 
-  it('should show recipe card when title is received', () => {
+  it("should show recipe card when title is received", () => {
     (useRecipeGeneration as jest.Mock).mockReturnValue({
       generatedRecipe: {
-        slug: 'test',
-        name: 'Test Recipe',
+        slug: "test",
+        name: "Test Recipe",
         description: null,
         tags: [],
-        title: 'Test Recipe',
+        title: "Test Recipe",
         summary: null,
         ingredients: [],
         instructions: [],
@@ -87,15 +87,15 @@ describe('AddRecipeModal - Streaming', () => {
 
     render(<AddRecipeModal isOpen={true} onClose={jest.fn()} />);
 
-    expect(screen.getByText('Test Recipe')).toBeInTheDocument();
+    expect(screen.getByText("Test Recipe")).toBeInTheDocument();
   });
 
   it('should disable "Add recipe" button until complete', () => {
     (useRecipeGeneration as jest.Mock).mockReturnValue({
       generatedRecipe: {
-        slug: 'test',
-        name: 'Test Recipe',
-        title: 'Test Recipe',
+        slug: "test",
+        name: "Test Recipe",
+        title: "Test Recipe",
         description: null,
         tags: [],
         ingredients: [],
@@ -117,19 +117,19 @@ describe('AddRecipeModal - Streaming', () => {
 
     render(<AddRecipeModal isOpen={true} onClose={jest.fn()} />);
 
-    const addButton = screen.getByRole('button', { name: /add recipe|generating/i });
+    const addButton = screen.getByRole("button", { name: /add recipe|generating/i });
     expect(addButton).toBeDisabled();
   });
 
   it('should enable "Add recipe" button when complete', () => {
     (useRecipeGeneration as jest.Mock).mockReturnValue({
       generatedRecipe: {
-        slug: 'test',
-        name: 'Test Recipe',
-        title: 'Test Recipe',
-        summary: 'A test',
-        description: 'A test',
-        tags: ['test'],
+        slug: "test",
+        name: "Test Recipe",
+        title: "Test Recipe",
+        summary: "A test",
+        description: "A test",
+        tags: ["test"],
         ingredients: [],
         instructions: [],
         image_url: null,
@@ -149,11 +149,11 @@ describe('AddRecipeModal - Streaming', () => {
 
     render(<AddRecipeModal isOpen={true} onClose={jest.fn()} />);
 
-    const addButton = screen.getByRole('button', { name: /add recipe/i });
+    const addButton = screen.getByRole("button", { name: /add recipe/i });
     expect(addButton).not.toBeDisabled();
   });
 
-  it('should show loading indicator during generation', () => {
+  it("should show loading indicator during generation", () => {
     (useRecipeGeneration as jest.Mock).mockReturnValue({
       generatedRecipe: null,
       isGenerating: true,
@@ -169,11 +169,11 @@ describe('AddRecipeModal - Streaming', () => {
     render(<AddRecipeModal isOpen={true} onClose={jest.fn()} />);
 
     // Check for loading state in form
-    const generateButton = screen.getByRole('button', { name: /generating/i });
+    const generateButton = screen.getByRole("button", { name: /generating/i });
     expect(generateButton).toBeDisabled();
   });
 
-  it('should show input form when no recipe data', () => {
+  it("should show input form when no recipe data", () => {
     (useRecipeGeneration as jest.Mock).mockReturnValue({
       generatedRecipe: null,
       isGenerating: false,
@@ -192,12 +192,12 @@ describe('AddRecipeModal - Streaming', () => {
     expect(screen.queryByText(/test recipe/i)).not.toBeInTheDocument();
   });
 
-  it('should show streaming overlay when generating with recipe data', () => {
+  it("should show streaming overlay when generating with recipe data", () => {
     (useRecipeGeneration as jest.Mock).mockReturnValue({
       generatedRecipe: {
-        slug: 'test',
-        name: 'Test Recipe',
-        title: 'Test Recipe',
+        slug: "test",
+        name: "Test Recipe",
+        title: "Test Recipe",
         description: null,
         tags: [],
         ingredients: [],
@@ -220,15 +220,15 @@ describe('AddRecipeModal - Streaming', () => {
     render(<AddRecipeModal isOpen={true} onClose={jest.fn()} />);
 
     // When recipe has data, it shows "Streaming..." not "Generating recipe..."
-    expect(screen.getByText('Streaming...')).toBeInTheDocument();
+    expect(screen.getByText("Streaming...")).toBeInTheDocument();
   });
 
   it('should show "Generating..." text on button when streaming', () => {
     (useRecipeGeneration as jest.Mock).mockReturnValue({
       generatedRecipe: {
-        slug: 'test',
-        name: 'Test Recipe',
-        title: 'Test Recipe',
+        slug: "test",
+        name: "Test Recipe",
+        title: "Test Recipe",
         description: null,
         tags: [],
         ingredients: [],
@@ -250,9 +250,8 @@ describe('AddRecipeModal - Streaming', () => {
 
     render(<AddRecipeModal isOpen={true} onClose={jest.fn()} />);
 
-    const button = screen.getByRole('button', { name: /generating/i });
+    const button = screen.getByRole("button", { name: /generating/i });
     expect(button).toBeInTheDocument();
     expect(button).toBeDisabled();
   });
 });
-

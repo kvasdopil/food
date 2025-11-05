@@ -53,7 +53,7 @@ export async function generateImageWithGoogleAI(
 Style: Professional restaurant quality, vibrant colors, sharp focus, natural lighting, appetizing presentation, top-down or eye-level angle, shallow depth of field, fresh ingredients visible, well-composed plating, commercial food photography aesthetic, no people, no text, no steam or vapor effects.
 
 Quality: Ultra-high resolution, crisp details, vivid textures, professional lighting, magazine-quality food photography.`;
-  
+
   const requestBody = {
     contents: [
       {

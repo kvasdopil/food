@@ -1,6 +1,7 @@
 # Streaming Recipe Generation Implementation Plan
 
 ## Overview
+
 Implement streaming for the `/api/recipes/generate` endpoint to enable progressive rendering of recipe data (title, description, tags) as it becomes available from the Gemini API.
 
 ## Implementation Status
@@ -18,6 +19,7 @@ Implement streaming for the `/api/recipes/generate` endpoint to enable progressi
 **Current State:** The streaming recipe generation feature is fully functional and in use. Users can see recipe cards appear progressively as fields stream in from the Gemini API. All core functionality is implemented and tested.
 
 **Key Files Created/Modified:**
+
 - `src/lib/gemini.ts` - Added `streamGemini()` function
 - `src/lib/partial-json-parser.ts` - New partial JSON parsing utility
 - `src/app/api/recipes/generate-stream/route.ts` - New streaming endpoint
@@ -30,6 +32,7 @@ Implement streaming for the `/api/recipes/generate` endpoint to enable progressi
 ## Architecture
 
 ### Current Flow
+
 1. Client sends request to `/api/recipes/generate`
 2. API calls Gemini `generateContent` (non-streaming)
 3. API waits for complete JSON response
@@ -37,6 +40,7 @@ Implement streaming for the `/api/recipes/generate` endpoint to enable progressi
 5. Client renders complete recipe card
 
 ### New Streaming Flow
+
 1. Client sends request to `/api/recipes/generate`
 2. API calls Gemini `streamGenerateContent` (streaming)
 3. API streams partial JSON chunks as they arrive
@@ -55,6 +59,7 @@ Implement streaming for the `/api/recipes/generate` endpoint to enable progressi
 - Handle streaming response format from Gemini API
 
 **Key considerations:**
+
 - Gemini streaming endpoint: `/models/{model}:streamGenerateContent`
 - Response format: Server-Sent Events (SSE) or streaming JSON
 - Need to extract text chunks from streaming candidates
@@ -69,7 +74,9 @@ Implement streaming for the `/api/recipes/generate` endpoint to enable progressi
 - Format chunks as newline-delimited JSON (NDJSON) or SSE format
 
 **Stream format options:**
+
 - **Option A: NDJSON** - Each line is a JSON object with partial recipe data
+
   ```json
   {"type": "partial", "field": "title", "value": "Chicken"}
   {"type": "partial", "field": "title", "value": "Chicken Tikka"}
@@ -78,6 +85,7 @@ Implement streaming for the `/api/recipes/generate` endpoint to enable progressi
   ```
 
 - **Option B: Raw JSON chunks** - Stream raw JSON text and let client parse
+
   ```
   {"title": "Chicken
   {"title": "Chicken Tikka
@@ -102,6 +110,7 @@ Implement streaming for the `/api/recipes/generate` endpoint to enable progressi
 - Extract complete top-level fields as they become available
 
 **Strategy:**
+
 - Accumulate text chunks in a buffer
 - Try to parse complete JSON objects incrementally
 - For partial JSON, extract what we can:
@@ -119,6 +128,7 @@ Implement streaming for the `/api/recipes/generate` endpoint to enable progressi
 - Update state progressively as fields arrive
 
 **Implementation:**
+
 ```typescript
 const response = await fetch("/api/recipes/generate", {
   method: "POST",
@@ -133,11 +143,11 @@ let buffer = "";
 while (true) {
   const { done, value } = await reader.read();
   if (done) break;
-  
+
   buffer += decoder.decode(value, { stream: true });
   const lines = buffer.split("\n");
   buffer = lines.pop() || ""; // Keep incomplete line in buffer
-  
+
   for (const line of lines) {
     if (!line.trim()) continue;
     const update = JSON.parse(line);
@@ -168,19 +178,20 @@ while (true) {
   - Other fields → update as they arrive
 
 **State structure:**
+
 ```typescript
 const [partialRecipe, setPartialRecipe] = useState<Partial<GeneratedRecipe>>({});
 const [streamingComplete, setStreamingComplete] = useState(false);
 
 // Update function
 const handlePartialUpdate = (update: PartialRecipeUpdate) => {
-  setPartialRecipe(prev => ({
+  setPartialRecipe((prev) => ({
     ...prev,
     [update.field]: update.value,
   }));
-  
+
   // Mark complete when we have title, summary, tags
-  if (update.field === 'tags' && Array.isArray(update.value)) {
+  if (update.field === "tags" && Array.isArray(update.value)) {
     setStreamingComplete(true);
   }
 };
@@ -208,6 +219,7 @@ const handlePartialUpdate = (update: PartialRecipeUpdate) => {
 ### Challenge: Parsing Partial JSON
 
 When streaming JSON, we receive incomplete text like:
+
 ```
 {"title": "Chicken Tikka Masala", "summary": "A classic Indian
 ```
@@ -253,21 +265,21 @@ class PartialJsonParser {
     let i = 0;
     while (i < this.buffer.length) {
       const char = this.buffer[i];
-      
+
       // Track string boundaries
       if (char === '"' && !this.escapeNext) {
         this.inString = !this.inString;
       }
-      
-      this.escapeNext = char === '\\' && this.inString;
+
+      this.escapeNext = char === "\\" && this.inString;
 
       // Track object depth
       if (!this.inString) {
-        if (char === '{') {
+        if (char === "{") {
           this.depth++;
-        } else if (char === '}') {
+        } else if (char === "}") {
           this.depth--;
-          
+
           // When we close an object, try to parse what we have
           if (this.depth === 0) {
             const jsonText = this.buffer.substring(0, i + 1);
@@ -275,8 +287,10 @@ class PartialJsonParser {
             if (parsed) {
               // Extract new or updated fields
               for (const [key, value] of Object.entries(parsed)) {
-                if (!this.extractedFields.has(key) || 
-                    JSON.stringify(this.extractedFields.get(key)) !== JSON.stringify(value)) {
+                if (
+                  !this.extractedFields.has(key) ||
+                  JSON.stringify(this.extractedFields.get(key)) !== JSON.stringify(value)
+                ) {
                   this.extractedFields.set(key, value);
                   updates.push({ type: "field", field: key, value });
                 }
@@ -287,7 +301,7 @@ class PartialJsonParser {
           }
         }
       }
-      
+
       i++;
     }
 
@@ -328,7 +342,7 @@ For a simpler approach, use regex to extract complete key-value pairs:
 ```typescript
 function extractCompleteFields(jsonText: string): Map<string, unknown> {
   const fields = new Map<string, unknown>();
-  
+
   // Match complete string values: "key": "complete value"
   const stringValueRegex = /"([^"]+)":\s*"([^"]*)"(?=\s*[,}])/g;
   let match;
@@ -336,7 +350,7 @@ function extractCompleteFields(jsonText: string): Map<string, unknown> {
     const [, key, value] = match;
     fields.set(key, value);
   }
-  
+
   // Match complete arrays: "key": [complete array]
   const arrayValueRegex = /"([^"]+)":\s*(\[[^\]]*\])/g;
   while ((match = arrayValueRegex.exec(jsonText)) !== null) {
@@ -347,7 +361,7 @@ function extractCompleteFields(jsonText: string): Map<string, unknown> {
       // Array is incomplete, skip
     }
   }
-  
+
   return fields;
 }
 ```
@@ -355,6 +369,7 @@ function extractCompleteFields(jsonText: string): Map<string, unknown> {
 #### Recommended Implementation Flow
 
 1. **Server receives streaming chunks from Gemini**
+
    ```
    Chunk 1: {"title": "Chicken
    Chunk 2: Tikka Masala", "summary": "A classic
@@ -374,6 +389,7 @@ function extractCompleteFields(jsonText: string): Map<string, unknown> {
 ### Stream Format
 
 **NDJSON Format (recommended):**
+
 ```json
 {"type": "field", "field": "title", "value": "Chicken Tikka Masala"}
 {"type": "field", "field": "summary", "value": "A classic Indian dish..."}
@@ -383,6 +399,7 @@ function extractCompleteFields(jsonText: string): Map<string, unknown> {
 ```
 
 **Benefits:**
+
 - Clean separation of concerns
 - Easy to parse on client (one JSON.parse per line)
 - Server handles complexity of partial JSON parsing
@@ -399,10 +416,12 @@ Each phase is independently testable and can be deployed separately. Build incre
 **Objective:** Add streaming support to Gemini client without breaking existing functionality.
 
 **Files to Create/Modify:**
+
 - `src/lib/gemini.ts` - Add `streamGemini()` function
 - `src/lib/__tests__/gemini.test.ts` - New test file
 
 **Implementation:**
+
 - Add `streamGemini()` that calls `streamGenerateContent` endpoint
 - Return async generator yielding text chunks
 - Keep existing `callGemini()` unchanged
@@ -412,29 +431,32 @@ Each phase is independently testable and can be deployed separately. Build incre
 **File: `src/lib/__tests__/gemini.test.ts`**
 
 ```typescript
-import { streamGemini, callGemini, TEXT_MODEL } from '../gemini';
+import { streamGemini, callGemini, TEXT_MODEL } from "../gemini";
 
 // Mock fetch globally
 global.fetch = jest.fn();
 
-describe('streamGemini', () => {
+describe("streamGemini", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    process.env.GEMINI_API_KEY = 'test-api-key';
+    process.env.GEMINI_API_KEY = "test-api-key";
   });
 
-  it('should return an async generator', async () => {
+  it("should return an async generator", async () => {
     const mockResponse = {
       ok: true,
       body: {
         getReader: jest.fn(() => ({
-          read: jest.fn().mockResolvedValueOnce({
-            done: false,
-            value: new TextEncoder().encode('{"title": "Chicken"}'),
-          }).mockResolvedValueOnce({
-            done: true,
-            value: undefined,
-          }),
+          read: jest
+            .fn()
+            .mockResolvedValueOnce({
+              done: false,
+              value: new TextEncoder().encode('{"title": "Chicken"}'),
+            })
+            .mockResolvedValueOnce({
+              done: true,
+              value: undefined,
+            }),
         })),
       },
     };
@@ -442,13 +464,13 @@ describe('streamGemini', () => {
     (global.fetch as jest.Mock).mockResolvedValue(mockResponse);
 
     const generator = streamGemini(TEXT_MODEL, { contents: [] });
-    
+
     expect(generator).toBeDefined();
-    expect(typeof generator[Symbol.asyncIterator]).toBe('function');
+    expect(typeof generator[Symbol.asyncIterator]).toBe("function");
   });
 
-  it('should yield text chunks from Gemini API', async () => {
-    const chunks = ['{"title": "Chicken', ' Tikka', ' Masala"}'];
+  it("should yield text chunks from Gemini API", async () => {
+    const chunks = ['{"title": "Chicken', " Tikka", ' Masala"}'];
     let chunkIndex = 0;
 
     const mockReader = {
@@ -482,12 +504,12 @@ describe('streamGemini', () => {
     expect(receivedChunks).toEqual(chunks);
   });
 
-  it('should handle API errors', async () => {
+  it("should handle API errors", async () => {
     const mockResponse = {
       ok: false,
       status: 400,
-      statusText: 'Bad Request',
-      text: jest.fn().mockResolvedValue('Invalid request'),
+      statusText: "Bad Request",
+      text: jest.fn().mockResolvedValue("Invalid request"),
     };
 
     (global.fetch as jest.Mock).mockResolvedValue(mockResponse);
@@ -501,7 +523,7 @@ describe('streamGemini', () => {
     }).rejects.toThrow();
   });
 
-  it('should construct correct API URL', async () => {
+  it("should construct correct API URL", async () => {
     const mockResponse = {
       ok: true,
       body: {
@@ -518,19 +540,19 @@ describe('streamGemini', () => {
     expect(global.fetch).toHaveBeenCalledWith(
       expect.stringContaining(`/models/${TEXT_MODEL}:streamGenerateContent`),
       expect.objectContaining({
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-      })
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      }),
     );
   });
 });
 
-describe('callGemini (regression)', () => {
-  it('should still work with non-streaming endpoint', async () => {
+describe("callGemini (regression)", () => {
+  it("should still work with non-streaming endpoint", async () => {
     const mockResponse = {
       ok: true,
       json: jest.fn().mockResolvedValue({
-        candidates: [{ content: { parts: [{ text: 'test' }] } }],
+        candidates: [{ content: { parts: [{ text: "test" }] } }],
       }),
     };
 
@@ -545,6 +567,7 @@ describe('callGemini (regression)', () => {
 ```
 
 **Testing:**
+
 - ✅ Unit test: `streamGemini()` returns async generator
 - ✅ Unit test: Generator yields text chunks from Gemini API
 - ✅ Unit test: Handles API errors correctly
@@ -552,11 +575,13 @@ describe('callGemini (regression)', () => {
 - ✅ Regression test: Existing `callGemini()` still works
 
 **Run Tests:**
+
 ```bash
 yarn test src/lib/__tests__/gemini.test.ts
 ```
 
 **Success Criteria:**
+
 - All Jest tests pass
 - Can stream text from Gemini API
 - Non-streaming endpoint still works
@@ -571,10 +596,12 @@ yarn test src/lib/__tests__/gemini.test.ts
 **Objective:** Create parser that extracts complete fields from partial JSON.
 
 **Files to Create:**
+
 - `src/lib/partial-json-parser.ts` - New file with parser implementation
 - `src/lib/__tests__/partial-json-parser.test.ts` - New test file
 
 **Implementation:**
+
 - Implement `PartialJsonParser` class
 - Add methods: `processChunk()`, `finalize()`
 - Handle incomplete JSON gracefully
@@ -584,47 +611,47 @@ yarn test src/lib/__tests__/gemini.test.ts
 **File: `src/lib/__tests__/partial-json-parser.test.ts`**
 
 ```typescript
-import { PartialJsonParser, type StreamUpdate } from '../partial-json-parser';
+import { PartialJsonParser, type StreamUpdate } from "../partial-json-parser";
 
-describe('PartialJsonParser', () => {
+describe("PartialJsonParser", () => {
   let parser: PartialJsonParser;
 
   beforeEach(() => {
     parser = new PartialJsonParser();
   });
 
-  describe('processChunk', () => {
-    it('should parse complete JSON object', () => {
+  describe("processChunk", () => {
+    it("should parse complete JSON object", () => {
       const json = '{"title": "Chicken Tikka Masala", "summary": "A classic dish"}';
       const updates = parser.processChunk(json);
 
       expect(updates).toHaveLength(2);
       expect(updates[0]).toEqual({
-        type: 'field',
-        field: 'title',
-        value: 'Chicken Tikka Masala',
+        type: "field",
+        field: "title",
+        value: "Chicken Tikka Masala",
       });
       expect(updates[1]).toEqual({
-        type: 'field',
-        field: 'summary',
-        value: 'A classic dish',
+        type: "field",
+        field: "summary",
+        value: "A classic dish",
       });
     });
 
-    it('should extract complete fields from partial JSON', () => {
+    it("should extract complete fields from partial JSON", () => {
       const partialJson = '{"title": "Chicken Tikka Masala", "summary": "A classic';
       const updates = parser.processChunk(partialJson);
 
       // Should extract title (complete) but not summary (incomplete)
       expect(updates).toHaveLength(1);
       expect(updates[0]).toEqual({
-        type: 'field',
-        field: 'title',
-        value: 'Chicken Tikka Masala',
+        type: "field",
+        field: "title",
+        value: "Chicken Tikka Masala",
       });
     });
 
-    it('should handle incomplete strings', () => {
+    it("should handle incomplete strings", () => {
       const chunk1 = '{"title": "Chicken';
       const chunk2 = ' Tikka Masala"}';
 
@@ -633,38 +660,38 @@ describe('PartialJsonParser', () => {
 
       const updates2 = parser.processChunk(chunk2);
       expect(updates2).toHaveLength(1);
-      expect(updates2[0].value).toBe('Chicken Tikka Masala');
+      expect(updates2[0].value).toBe("Chicken Tikka Masala");
     });
 
-    it('should handle incomplete arrays', () => {
+    it("should handle incomplete arrays", () => {
       const partialArray = '{"tags": ["indian", "chicken';
       const updates = parser.processChunk(partialArray);
 
       expect(updates).toHaveLength(0); // Array not complete
     });
 
-    it('should handle complete arrays', () => {
+    it("should handle complete arrays", () => {
       const completeArray = '{"tags": ["indian", "chicken", "spicy"]}';
       const updates = parser.processChunk(completeArray);
 
       expect(updates).toHaveLength(1);
       expect(updates[0]).toEqual({
-        type: 'field',
-        field: 'tags',
-        value: ['indian', 'chicken', 'spicy'],
+        type: "field",
+        field: "tags",
+        value: ["indian", "chicken", "spicy"],
       });
     });
 
-    it('should handle nested objects', () => {
+    it("should handle nested objects", () => {
       const nested = '{"ingredients": [{"name": "chicken", "amount": "500g"}]}';
       const updates = parser.processChunk(nested);
 
       expect(updates).toHaveLength(1);
-      expect(updates[0].field).toBe('ingredients');
+      expect(updates[0].field).toBe("ingredients");
       expect(Array.isArray(updates[0].value)).toBe(true);
     });
 
-    it('should not duplicate field updates', () => {
+    it("should not duplicate field updates", () => {
       const json1 = '{"title": "Chicken Tikka"}';
       const json2 = '{"title": "Chicken Tikka", "summary": "A dish"}';
 
@@ -673,12 +700,12 @@ describe('PartialJsonParser', () => {
 
       // Title should only appear once
       const titleUpdates = [...updates1, ...updates2].filter(
-        (u) => u.type === 'field' && u.field === 'title'
+        (u) => u.type === "field" && u.field === "title",
       );
       expect(titleUpdates.length).toBeLessThanOrEqual(1);
     });
 
-    it('should handle escaped quotes in strings', () => {
+    it("should handle escaped quotes in strings", () => {
       const withEscaped = '{"title": "Chicken \\"Tikka\\" Masala"}';
       const updates = parser.processChunk(withEscaped);
 
@@ -686,16 +713,16 @@ describe('PartialJsonParser', () => {
       expect(updates[0].value).toBe('Chicken "Tikka" Masala');
     });
 
-    it('should handle incremental updates', () => {
+    it("should handle incremental updates", () => {
       parser.processChunk('{"title": "Chicken"}');
       const updates = parser.processChunk('{"title": "Chicken Tikka Masala"}');
 
       // Should only return the updated value
       expect(updates).toHaveLength(1);
-      expect(updates[0].value).toBe('Chicken Tikka Masala');
+      expect(updates[0].value).toBe("Chicken Tikka Masala");
     });
 
-    it('should handle multiple fields in chunks', () => {
+    it("should handle multiple fields in chunks", () => {
       const chunk1 = '{"title": "Chicken Tikka Masala"';
       const chunk2 = ', "summary": "A classic dish"}';
 
@@ -704,20 +731,20 @@ describe('PartialJsonParser', () => {
 
       expect(updates.length).toBeGreaterThanOrEqual(1);
       const fields = updates
-        .filter((u): u is Extract<StreamUpdate, { type: 'field' }> => u.type === 'field')
+        .filter((u): u is Extract<StreamUpdate, { type: "field" }> => u.type === "field")
         .map((u) => u.field);
-      expect(fields).toContain('summary');
+      expect(fields).toContain("summary");
     });
   });
 
-  describe('finalize', () => {
-    it('should return complete signal', () => {
+  describe("finalize", () => {
+    it("should return complete signal", () => {
       const result = parser.finalize();
 
-      expect(result).toEqual({ type: 'complete' });
+      expect(result).toEqual({ type: "complete" });
     });
 
-    it('should process remaining buffer on finalize', () => {
+    it("should process remaining buffer on finalize", () => {
       parser.processChunk('{"title": "Chicken');
       const updates: StreamUpdate[] = [];
 
@@ -736,18 +763,18 @@ describe('PartialJsonParser', () => {
     });
   });
 
-  describe('edge cases', () => {
-    it('should handle empty chunks', () => {
-      const updates = parser.processChunk('');
+  describe("edge cases", () => {
+    it("should handle empty chunks", () => {
+      const updates = parser.processChunk("");
       expect(updates).toHaveLength(0);
     });
 
-    it('should handle whitespace-only chunks', () => {
-      const updates = parser.processChunk('   \n\t  ');
+    it("should handle whitespace-only chunks", () => {
+      const updates = parser.processChunk("   \n\t  ");
       expect(updates).toHaveLength(0);
     });
 
-    it('should handle malformed JSON gracefully', () => {
+    it("should handle malformed JSON gracefully", () => {
       const malformed = '{"title": "Chicken" invalid}';
       const updates = parser.processChunk(malformed);
 
@@ -759,6 +786,7 @@ describe('PartialJsonParser', () => {
 ```
 
 **Testing:**
+
 - ✅ Unit test: Parse complete JSON object
 - ✅ Unit test: Parse partial JSON and extract complete fields
 - ✅ Unit test: Handle incomplete strings
@@ -769,11 +797,13 @@ describe('PartialJsonParser', () => {
 - ✅ Unit test: Handle edge cases (empty chunks, malformed JSON)
 
 **Run Tests:**
+
 ```bash
 yarn test src/lib/__tests__/partial-json-parser.test.ts
 ```
 
 **Success Criteria:**
+
 - All Jest tests pass
 - Extracts complete fields from partial JSON
 - Handles edge cases (escaped quotes, nested objects, arrays)
@@ -788,16 +818,19 @@ yarn test src/lib/__tests__/partial-json-parser.test.ts
 **Objective:** Add streaming endpoint alongside existing endpoint.
 
 **Files to Modify:**
+
 - `src/app/api/recipes/generate/route.ts` - Add streaming route handler
 
 **Implementation Options:**
 
 **Option A: New endpoint (safer)**
+
 - Create `/api/recipes/generate-stream` endpoint
 - Keep existing endpoint unchanged
 - Test new endpoint independently
 
 **Option B: Modify existing endpoint**
+
 - Add query param: `?stream=true`
 - Stream when param present, return JSON otherwise
 - More risky but cleaner API
@@ -805,6 +838,7 @@ yarn test src/lib/__tests__/partial-json-parser.test.ts
 **Recommended: Option A** for safer incremental rollout
 
 **Implementation:**
+
 - Use Next.js streaming response with `ReadableStream`
 - Call `streamGemini()` from Phase 0
 - Use `PartialJsonParser` from Phase 1
@@ -815,24 +849,24 @@ yarn test src/lib/__tests__/partial-json-parser.test.ts
 **File: `src/app/api/recipes/__tests__/generate-stream.test.ts`**
 
 ```typescript
-import { POST } from '../generate-stream/route';
-import { NextRequest } from 'next/server';
-import { streamGemini } from '@/lib/gemini';
-import { PartialJsonParser } from '@/lib/partial-json-parser';
+import { POST } from "../generate-stream/route";
+import { NextRequest } from "next/server";
+import { streamGemini } from "@/lib/gemini";
+import { PartialJsonParser } from "@/lib/partial-json-parser";
 
 // Mock dependencies
-jest.mock('@/lib/gemini');
-jest.mock('@/lib/partial-json-parser');
-jest.mock('@/lib/api-auth', () => ({
+jest.mock("@/lib/gemini");
+jest.mock("@/lib/partial-json-parser");
+jest.mock("@/lib/api-auth", () => ({
   authenticateRequest: jest.fn().mockResolvedValue({ authorized: true }),
 }));
 
-describe('POST /api/recipes/generate-stream', () => {
+describe("POST /api/recipes/generate-stream", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should return streaming response', async () => {
+  it("should return streaming response", async () => {
     // Mock streamGemini to return async generator
     const mockStream = async function* () {
       yield '{"title": "Chicken Tikka Masala"}';
@@ -842,50 +876,49 @@ describe('POST /api/recipes/generate-stream', () => {
 
     // Mock PartialJsonParser
     const mockParser = {
-      processChunk: jest.fn()
-        .mockReturnValueOnce([{ type: 'field', field: 'title', value: 'Chicken Tikka Masala' }])
+      processChunk: jest
+        .fn()
+        .mockReturnValueOnce([{ type: "field", field: "title", value: "Chicken Tikka Masala" }])
         .mockReturnValueOnce([
-          { type: 'field', field: 'title', value: 'Chicken Tikka Masala' },
-          { type: 'field', field: 'summary', value: 'A classic dish' },
+          { type: "field", field: "title", value: "Chicken Tikka Masala" },
+          { type: "field", field: "summary", value: "A classic dish" },
         ]),
-      finalize: jest.fn().mockReturnValue({ type: 'complete' }),
+      finalize: jest.fn().mockReturnValue({ type: "complete" }),
     };
     (PartialJsonParser as jest.Mock).mockImplementation(() => mockParser);
 
-    const request = new NextRequest('http://localhost/api/recipes/generate-stream', {
-      method: 'POST',
-      body: JSON.stringify({ userInput: 'Make chicken tikka masala' }),
+    const request = new NextRequest("http://localhost/api/recipes/generate-stream", {
+      method: "POST",
+      body: JSON.stringify({ userInput: "Make chicken tikka masala" }),
     });
 
     const response = await POST(request);
 
     expect(response).toBeInstanceOf(Response);
-    expect(response.headers.get('content-type')).toContain('application/x-ndjson');
+    expect(response.headers.get("content-type")).toContain("application/x-ndjson");
   });
 
-  it('should send NDJSON lines', async () => {
+  it("should send NDJSON lines", async () => {
     const mockStream = async function* () {
       yield '{"title": "Test"}';
     };
     (streamGemini as jest.Mock).mockResolvedValue(mockStream());
 
     const mockParser = {
-      processChunk: jest.fn().mockReturnValue([
-        { type: 'field', field: 'title', value: 'Test' },
-      ]),
-      finalize: jest.fn().mockReturnValue({ type: 'complete' }),
+      processChunk: jest.fn().mockReturnValue([{ type: "field", field: "title", value: "Test" }]),
+      finalize: jest.fn().mockReturnValue({ type: "complete" }),
     };
     (PartialJsonParser as jest.Mock).mockImplementation(() => mockParser);
 
-    const request = new NextRequest('http://localhost/api/recipes/generate-stream', {
-      method: 'POST',
-      body: JSON.stringify({ userInput: 'test' }),
+    const request = new NextRequest("http://localhost/api/recipes/generate-stream", {
+      method: "POST",
+      body: JSON.stringify({ userInput: "test" }),
     });
 
     const response = await POST(request);
     const reader = response.body?.getReader();
     const decoder = new TextDecoder();
-    let buffer = '';
+    let buffer = "";
 
     if (reader) {
       while (true) {
@@ -895,16 +928,16 @@ describe('POST /api/recipes/generate-stream', () => {
       }
     }
 
-    const lines = buffer.trim().split('\n').filter(Boolean);
+    const lines = buffer.trim().split("\n").filter(Boolean);
     expect(lines.length).toBeGreaterThan(0);
-    
+
     // Parse first line
     const firstLine = JSON.parse(lines[0]);
-    expect(firstLine).toHaveProperty('type', 'field');
-    expect(firstLine).toHaveProperty('field', 'title');
+    expect(firstLine).toHaveProperty("type", "field");
+    expect(firstLine).toHaveProperty("field", "title");
   });
 
-  it('should include complete signal at end', async () => {
+  it("should include complete signal at end", async () => {
     const mockStream = async function* () {
       yield '{"title": "Test"}';
     };
@@ -912,19 +945,19 @@ describe('POST /api/recipes/generate-stream', () => {
 
     const mockParser = {
       processChunk: jest.fn().mockReturnValue([]),
-      finalize: jest.fn().mockReturnValue({ type: 'complete' }),
+      finalize: jest.fn().mockReturnValue({ type: "complete" }),
     };
     (PartialJsonParser as jest.Mock).mockImplementation(() => mockParser);
 
-    const request = new NextRequest('http://localhost/api/recipes/generate-stream', {
-      method: 'POST',
-      body: JSON.stringify({ userInput: 'test' }),
+    const request = new NextRequest("http://localhost/api/recipes/generate-stream", {
+      method: "POST",
+      body: JSON.stringify({ userInput: "test" }),
     });
 
     const response = await POST(request);
     const reader = response.body?.getReader();
     const decoder = new TextDecoder();
-    let buffer = '';
+    let buffer = "";
 
     if (reader) {
       while (true) {
@@ -934,46 +967,47 @@ describe('POST /api/recipes/generate-stream', () => {
       }
     }
 
-    const lines = buffer.trim().split('\n').filter(Boolean);
+    const lines = buffer.trim().split("\n").filter(Boolean);
     const lastLine = JSON.parse(lines[lines.length - 1]);
-    expect(lastLine).toEqual({ type: 'complete' });
+    expect(lastLine).toEqual({ type: "complete" });
   });
 
-  it('should handle Gemini API errors gracefully', async () => {
-    (streamGemini as jest.Mock).mockRejectedValue(new Error('API Error'));
+  it("should handle Gemini API errors gracefully", async () => {
+    (streamGemini as jest.Mock).mockRejectedValue(new Error("API Error"));
 
-    const request = new NextRequest('http://localhost/api/recipes/generate-stream', {
-      method: 'POST',
-      body: JSON.stringify({ userInput: 'test' }),
+    const request = new NextRequest("http://localhost/api/recipes/generate-stream", {
+      method: "POST",
+      body: JSON.stringify({ userInput: "test" }),
     });
 
     const response = await POST(request);
-    
+
     expect(response.status).toBe(500);
     const data = await response.json();
-    expect(data).toHaveProperty('error');
+    expect(data).toHaveProperty("error");
   });
 
-  it('should require authentication', async () => {
-    const { authenticateRequest } = require('@/lib/api-auth');
+  it("should require authentication", async () => {
+    const { authenticateRequest } = require("@/lib/api-auth");
     (authenticateRequest as jest.Mock).mockResolvedValue({
       authorized: false,
-      error: 'Unauthorized',
+      error: "Unauthorized",
     });
 
-    const request = new NextRequest('http://localhost/api/recipes/generate-stream', {
-      method: 'POST',
-      body: JSON.stringify({ userInput: 'test' }),
+    const request = new NextRequest("http://localhost/api/recipes/generate-stream", {
+      method: "POST",
+      body: JSON.stringify({ userInput: "test" }),
     });
 
     const response = await POST(request);
-    
+
     expect(response.status).toBe(401);
   });
 });
 ```
 
 **Testing:**
+
 - ✅ Unit test: Endpoint returns streaming response
 - ✅ Unit test: Stream sends NDJSON lines
 - ✅ Unit test: Stream includes `{"type": "complete"}` at end
@@ -983,6 +1017,7 @@ describe('POST /api/recipes/generate-stream', () => {
 - ✅ Regression test: Non-streaming endpoint still works (if Option B)
 
 **Run Tests:**
+
 ```bash
 yarn test src/app/api/recipes/__tests__/generate-stream.test.ts
 ```
@@ -990,12 +1025,14 @@ yarn test src/app/api/recipes/__tests__/generate-stream.test.ts
 **Note:** For full E2E testing, consider using `@testing-library/react` and a test server, or use Next.js's built-in test utilities.
 
 **Success Criteria:**
+
 - Streaming endpoint returns NDJSON stream
 - Stream format matches specification
 - Errors handled gracefully
 - Existing functionality unchanged
 
-**Rollback:** 
+**Rollback:**
+
 - Option A: Delete new endpoint
 - Option B: Remove query param handling, revert to original
 
@@ -1006,9 +1043,11 @@ yarn test src/app/api/recipes/__tests__/generate-stream.test.ts
 **Objective:** Update hook to handle streaming responses.
 
 **Files to Modify:**
+
 - `src/hooks/useRecipeGeneration.ts` - Add streaming support
 
 **Implementation:**
+
 - Add `generateRecipeStream()` function
 - Use `response.body.getReader()` to read stream
 - Parse NDJSON lines
@@ -1019,18 +1058,18 @@ yarn test src/app/api/recipes/__tests__/generate-stream.test.ts
 **File: `src/hooks/__tests__/useRecipeGeneration.test.ts`**
 
 ```typescript
-import { renderHook, act, waitFor } from '@testing-library/react';
-import { useRecipeGeneration } from '../useRecipeGeneration';
+import { renderHook, act, waitFor } from "@testing-library/react";
+import { useRecipeGeneration } from "../useRecipeGeneration";
 
 // Mock fetch
 global.fetch = jest.fn();
 
-describe('useRecipeGeneration - Streaming', () => {
+describe("useRecipeGeneration - Streaming", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should parse NDJSON lines correctly', async () => {
+  it("should parse NDJSON lines correctly", async () => {
     const mockReader = {
       read: jest
         .fn()
@@ -1057,16 +1096,16 @@ describe('useRecipeGeneration - Streaming', () => {
     const { result } = renderHook(() => useRecipeGeneration());
 
     await act(async () => {
-      await result.current.generateRecipe('test recipe', 'token');
+      await result.current.generateRecipe("test recipe", "token");
     });
 
     await waitFor(() => {
       expect(result.current.generatedRecipe).toBeDefined();
-      expect(result.current.generatedRecipe?.title).toBe('Test');
+      expect(result.current.generatedRecipe?.title).toBe("Test");
     });
   });
 
-  it('should handle incomplete lines (buffer management)', async () => {
+  it("should handle incomplete lines (buffer management)", async () => {
     const mockReader = {
       read: jest
         .fn()
@@ -1097,15 +1136,15 @@ describe('useRecipeGeneration - Streaming', () => {
     const { result } = renderHook(() => useRecipeGeneration());
 
     await act(async () => {
-      await result.current.generateRecipe('test', 'token');
+      await result.current.generateRecipe("test", "token");
     });
 
     await waitFor(() => {
-      expect(result.current.generatedRecipe?.title).toBe('Test');
+      expect(result.current.generatedRecipe?.title).toBe("Test");
     });
   });
 
-  it('should update state incrementally on field updates', async () => {
+  it("should update state incrementally on field updates", async () => {
     const updates: Array<{ type: string; field?: string; value?: unknown }> = [];
 
     const mockReader = {
@@ -1113,11 +1152,15 @@ describe('useRecipeGeneration - Streaming', () => {
         .fn()
         .mockResolvedValueOnce({
           done: false,
-          value: new TextEncoder().encode('{"type": "field", "field": "title", "value": "Chicken"}\n'),
+          value: new TextEncoder().encode(
+            '{"type": "field", "field": "title", "value": "Chicken"}\n',
+          ),
         })
         .mockResolvedValueOnce({
           done: false,
-          value: new TextEncoder().encode('{"type": "field", "field": "summary", "value": "A dish"}\n'),
+          value: new TextEncoder().encode(
+            '{"type": "field", "field": "summary", "value": "A dish"}\n',
+          ),
         })
         .mockResolvedValueOnce({
           done: false,
@@ -1138,16 +1181,16 @@ describe('useRecipeGeneration - Streaming', () => {
     const { result } = renderHook(() => useRecipeGeneration());
 
     await act(async () => {
-      await result.current.generateRecipe('test', 'token');
+      await result.current.generateRecipe("test", "token");
     });
 
     await waitFor(() => {
-      expect(result.current.generatedRecipe?.title).toBe('Chicken');
-      expect(result.current.generatedRecipe?.summary).toBe('A dish');
+      expect(result.current.generatedRecipe?.title).toBe("Chicken");
+      expect(result.current.generatedRecipe?.summary).toBe("A dish");
     });
   });
 
-  it('should handle completion signal', async () => {
+  it("should handle completion signal", async () => {
     const mockReader = {
       read: jest
         .fn()
@@ -1174,7 +1217,7 @@ describe('useRecipeGeneration - Streaming', () => {
     const { result } = renderHook(() => useRecipeGeneration());
 
     await act(async () => {
-      await result.current.generateRecipe('test', 'token');
+      await result.current.generateRecipe("test", "token");
     });
 
     await waitFor(() => {
@@ -1182,9 +1225,9 @@ describe('useRecipeGeneration - Streaming', () => {
     });
   });
 
-  it('should handle stream errors', async () => {
+  it("should handle stream errors", async () => {
     const mockReader = {
-      read: jest.fn().mockRejectedValue(new Error('Stream error')),
+      read: jest.fn().mockRejectedValue(new Error("Stream error")),
     };
 
     const mockResponse = {
@@ -1199,7 +1242,7 @@ describe('useRecipeGeneration - Streaming', () => {
     const { result } = renderHook(() => useRecipeGeneration());
 
     await act(async () => {
-      await result.current.generateRecipe('test', 'token');
+      await result.current.generateRecipe("test", "token");
     });
 
     await waitFor(() => {
@@ -1208,11 +1251,11 @@ describe('useRecipeGeneration - Streaming', () => {
     });
   });
 
-  it('should handle HTTP errors', async () => {
+  it("should handle HTTP errors", async () => {
     const mockResponse = {
       ok: false,
       status: 500,
-      json: jest.fn().mockResolvedValue({ error: 'Server error' }),
+      json: jest.fn().mockResolvedValue({ error: "Server error" }),
     };
 
     (global.fetch as jest.Mock).mockResolvedValue(mockResponse);
@@ -1220,11 +1263,11 @@ describe('useRecipeGeneration - Streaming', () => {
     const { result } = renderHook(() => useRecipeGeneration());
 
     await act(async () => {
-      await result.current.generateRecipe('test', 'token');
+      await result.current.generateRecipe("test", "token");
     });
 
     await waitFor(() => {
-      expect(result.current.error).toContain('Server error');
+      expect(result.current.error).toContain("Server error");
       expect(result.current.isGenerating).toBe(false);
     });
   });
@@ -1232,6 +1275,7 @@ describe('useRecipeGeneration - Streaming', () => {
 ```
 
 **Testing:**
+
 - ✅ Unit test: Parse NDJSON lines correctly
 - ✅ Unit test: Handle incomplete lines (buffer management)
 - ✅ Unit test: Update state incrementally on field updates
@@ -1242,11 +1286,13 @@ describe('useRecipeGeneration - Streaming', () => {
 - ✅ E2E test: Full flow from UI → endpoint → state update
 
 **Run Tests:**
+
 ```bash
 yarn test src/hooks/__tests__/useRecipeGeneration.test.ts
 ```
 
 **Success Criteria:**
+
 - Can read and parse streaming response
 - State updates incrementally as fields arrive
 - Handles errors and completion correctly
@@ -1261,10 +1307,12 @@ yarn test src/hooks/__tests__/useRecipeGeneration.test.ts
 **Objective:** Update UI to show recipe card during streaming.
 
 **Files to Modify:**
+
 - `src/components/recipe-preview-card.tsx` - Support partial data
 - `src/components/add-recipe-modal.tsx` - Show card during streaming
 
 **Implementation:**
+
 - Modify `RecipePreviewCard` to handle partial/missing fields
 - Show loading skeletons for missing fields
 - Update `AddRecipeModal` to use streaming generation
@@ -1464,6 +1512,7 @@ describe('AddRecipeModal - Streaming', () => {
 ```
 
 **Testing:**
+
 - ✅ Unit test: Card renders title when available
 - ✅ Unit test: Card renders description when available
 - ✅ Unit test: Card renders tags when available
@@ -1475,12 +1524,14 @@ describe('AddRecipeModal - Streaming', () => {
 - ✅ E2E test: Full user flow (submit → see progressive updates → add recipe)
 
 **Run Tests:**
+
 ```bash
 yarn test src/components/__tests__/recipe-preview-card.test.tsx
 yarn test src/components/__tests__/add-recipe-modal.test.tsx
 ```
 
 **Success Criteria:**
+
 - Recipe card renders progressively
 - Missing fields show appropriate loading states
 - UX feels responsive and smooth
@@ -1495,11 +1546,13 @@ yarn test src/components/__tests__/add-recipe-modal.test.tsx
 **Objective:** Full integration, error handling, and optimizations.
 
 **Files to Modify:**
+
 - All previous files - Add error handling, optimizations
 - `src/components/add-recipe-modal.tsx` - Error states
 - `src/hooks/useRecipeGeneration.ts` - Fallback logic
 
 **Implementation:**
+
 - Add fallback to non-streaming if streaming fails
 - Add error boundaries and retry logic
 - Optimize rendering (debounce rapid updates if needed)
@@ -1511,22 +1564,22 @@ yarn test src/components/__tests__/add-recipe-modal.test.tsx
 **File: `src/hooks/__tests__/useRecipeGeneration-fallback.test.ts`**
 
 ```typescript
-import { renderHook, act, waitFor } from '@testing-library/react';
-import { useRecipeGeneration } from '../useRecipeGeneration';
+import { renderHook, act, waitFor } from "@testing-library/react";
+import { useRecipeGeneration } from "../useRecipeGeneration";
 
 global.fetch = jest.fn();
 
-describe('useRecipeGeneration - Fallback Behavior', () => {
+describe("useRecipeGeneration - Fallback Behavior", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should fallback to non-streaming if streaming fails', async () => {
+  it("should fallback to non-streaming if streaming fails", async () => {
     // Mock streaming endpoint failure
     const mockStreamError = {
       ok: false,
       status: 500,
-      json: jest.fn().mockResolvedValue({ error: 'Streaming unavailable' }),
+      json: jest.fn().mockResolvedValue({ error: "Streaming unavailable" }),
     };
 
     // Mock non-streaming endpoint success
@@ -1534,11 +1587,11 @@ describe('useRecipeGeneration - Fallback Behavior', () => {
       ok: true,
       json: jest.fn().mockResolvedValue({
         recipe: {
-          slug: 'test',
-          name: 'Test Recipe',
-          title: 'Test Recipe',
-          summary: 'A test',
-          tags: ['test'],
+          slug: "test",
+          name: "Test Recipe",
+          title: "Test Recipe",
+          summary: "A test",
+          tags: ["test"],
           ingredients: [],
           instructions: [],
         },
@@ -1552,16 +1605,16 @@ describe('useRecipeGeneration - Fallback Behavior', () => {
     const { result } = renderHook(() => useRecipeGeneration());
 
     await act(async () => {
-      await result.current.generateRecipe('test', 'token');
+      await result.current.generateRecipe("test", "token");
     });
 
     await waitFor(() => {
       expect(result.current.generatedRecipe).toBeDefined();
-      expect(result.current.generatedRecipe?.title).toBe('Test Recipe');
+      expect(result.current.generatedRecipe?.title).toBe("Test Recipe");
     });
   });
 
-  it('should handle network interruption gracefully', async () => {
+  it("should handle network interruption gracefully", async () => {
     const mockReader = {
       read: jest
         .fn()
@@ -1569,7 +1622,7 @@ describe('useRecipeGeneration - Fallback Behavior', () => {
           done: false,
           value: new TextEncoder().encode('{"type": "field", "field": "title", "value": "Test"}\n'),
         })
-        .mockRejectedValueOnce(new Error('Network error')),
+        .mockRejectedValueOnce(new Error("Network error")),
     };
 
     const mockResponse = {
@@ -1584,7 +1637,7 @@ describe('useRecipeGeneration - Fallback Behavior', () => {
     const { result } = renderHook(() => useRecipeGeneration());
 
     await act(async () => {
-      await result.current.generateRecipe('test', 'token');
+      await result.current.generateRecipe("test", "token");
     });
 
     await waitFor(() => {
@@ -1593,7 +1646,7 @@ describe('useRecipeGeneration - Fallback Behavior', () => {
     });
   });
 
-  it('should handle malformed JSON gracefully', async () => {
+  it("should handle malformed JSON gracefully", async () => {
     const mockReader = {
       read: jest
         .fn()
@@ -1620,7 +1673,7 @@ describe('useRecipeGeneration - Fallback Behavior', () => {
     const { result } = renderHook(() => useRecipeGeneration());
 
     await act(async () => {
-      await result.current.generateRecipe('test', 'token');
+      await result.current.generateRecipe("test", "token");
     });
 
     // Should handle error or skip malformed line
@@ -1636,17 +1689,17 @@ describe('useRecipeGeneration - Fallback Behavior', () => {
 **File: `src/lib/__tests__/partial-json-parser.performance.test.ts`**
 
 ```typescript
-import { PartialJsonParser } from '../partial-json-parser';
+import { PartialJsonParser } from "../partial-json-parser";
 
-describe('PartialJsonParser - Performance', () => {
-  it('should handle large JSON efficiently', () => {
+describe("PartialJsonParser - Performance", () => {
+  it("should handle large JSON efficiently", () => {
     const parser = new PartialJsonParser();
     const largeJson = JSON.stringify({
-      title: 'Test',
-      summary: 'A'.repeat(10000), // Large string
+      title: "Test",
+      summary: "A".repeat(10000), // Large string
       ingredients: Array.from({ length: 100 }, (_, i) => ({
         name: `ingredient-${i}`,
-        amount: '1 cup',
+        amount: "1 cup",
       })),
     });
 
@@ -1658,13 +1711,9 @@ describe('PartialJsonParser - Performance', () => {
     expect(end - start).toBeLessThan(100);
   });
 
-  it('should handle rapid incremental updates', () => {
+  it("should handle rapid incremental updates", () => {
     const parser = new PartialJsonParser();
-    const chunks = [
-      '{"title": "Chicken',
-      ' Tikka',
-      ' Masala"}',
-    ];
+    const chunks = ['{"title": "Chicken', " Tikka", ' Masala"}'];
 
     const start = performance.now();
     chunks.forEach((chunk) => parser.processChunk(chunk));
@@ -1677,6 +1726,7 @@ describe('PartialJsonParser - Performance', () => {
 ```
 
 **Testing:**
+
 - ✅ Unit test: Streaming fails → falls back to non-streaming
 - ✅ Unit test: Network interruption handled gracefully
 - ✅ Unit test: Malformed JSON handled gracefully
@@ -1686,12 +1736,14 @@ describe('PartialJsonParser - Performance', () => {
 - ✅ E2E test: All user flows work correctly
 
 **Run Tests:**
+
 ```bash
 yarn test src/hooks/__tests__/useRecipeGeneration-fallback.test.ts
 yarn test src/lib/__tests__/partial-json-parser.performance.test.ts
 ```
 
 **Success Criteria:**
+
 - Robust error handling
 - Graceful degradation
 - Good UX with clear feedback
@@ -1706,21 +1758,25 @@ yarn test src/lib/__tests__/partial-json-parser.performance.test.ts
 **Objective:** Migrate fully to streaming, remove old code.
 
 **Files to Modify:**
+
 - `src/hooks/useRecipeGeneration.ts` - Remove non-streaming code
 - `src/app/api/recipes/generate/route.ts` - Remove non-streaming endpoint (if Option A)
 
 **Implementation:**
+
 - Replace `generateRecipe()` with streaming version
 - Remove duplicate code
 - Update all call sites
 - Remove old endpoints if using Option A
 
 **Testing:**
+
 - ✅ Regression test: All existing tests pass
 - ✅ E2E test: All user flows work
 - ✅ Performance test: No regressions
 
 **Success Criteria:**
+
 - Codebase simplified
 - All functionality preserved
 - No breaking changes for users
@@ -1750,6 +1806,7 @@ Phase 2 (Endpoint) ─────┼──→ Phase 3 (Client Handler)
 ### Jest Test Structure
 
 **Test File Organization:**
+
 ```
 src/
   lib/
@@ -1773,6 +1830,7 @@ src/
 ```
 
 ### Unit Tests (Jest)
+
 - Test individual functions/components in isolation
 - Mock dependencies (Gemini API, stream readers, fetch)
 - Test edge cases and error conditions
@@ -1780,12 +1838,14 @@ src/
 - Use `jest.fn()` and `jest.mock()` for mocking
 
 ### Integration Tests (Jest)
+
 - Test components working together
 - Mock API endpoints with `fetch` mocks
 - Verify data flow between layers
 - Use `waitFor` for async state updates
 
 ### E2E Tests (Manual + Jest)
+
 - Manual testing for visual validation
 - Jest tests for critical user flows
 - Use real endpoints or comprehensive mocks
@@ -1801,7 +1861,7 @@ src/
  */
 export function createMockStream(chunks: string[]): ReadableStream<Uint8Array> {
   let index = 0;
-  
+
   return new ReadableStream({
     async pull(controller) {
       if (index < chunks.length) {
@@ -1820,13 +1880,13 @@ export async function readStream(stream: ReadableStream<Uint8Array>): Promise<st
   const reader = stream.getReader();
   const decoder = new TextDecoder();
   const chunks: string[] = [];
-  
+
   while (true) {
     const { done, value } = await reader.read();
     if (done) break;
     chunks.push(decoder.decode(value, { stream: true }));
   }
-  
+
   return chunks;
 }
 ```
@@ -1851,6 +1911,7 @@ yarn test --testNamePattern="streaming"
 ```
 
 ### Manual Testing Checklist
+
 - [ ] Stream works on fast network
 - [ ] Stream works on slow network (throttle in DevTools)
 - [ ] Stream handles connection drops
@@ -1862,15 +1923,15 @@ yarn test --testNamePattern="streaming"
 
 ## Quick Phase Reference
 
-| Phase | Name | Testability | Risk | Duration Estimate |
-|-------|------|-------------|------|-------------------|
-| 0 | Gemini Client | High (isolated) | Low | 2-4 hours |
-| 1 | JSON Parser | High (pure function) | Low | 4-6 hours |
-| 2 | Endpoint | Medium (needs Phase 0+1) | Medium | 4-6 hours |
-| 3 | Client Handler | Medium (needs Phase 2) | Medium | 3-5 hours |
-| 4 | UI Rendering | High (visual validation) | Low | 3-4 hours |
-| 5 | Polish | Medium (integration) | Low | 4-6 hours |
-| 6 | Cleanup | High (refactor only) | Low | 2-3 hours |
+| Phase | Name           | Testability              | Risk   | Duration Estimate |
+| ----- | -------------- | ------------------------ | ------ | ----------------- |
+| 0     | Gemini Client  | High (isolated)          | Low    | 2-4 hours         |
+| 1     | JSON Parser    | High (pure function)     | Low    | 4-6 hours         |
+| 2     | Endpoint       | Medium (needs Phase 0+1) | Medium | 4-6 hours         |
+| 3     | Client Handler | Medium (needs Phase 2)   | Medium | 3-5 hours         |
+| 4     | UI Rendering   | High (visual validation) | Low    | 3-4 hours         |
+| 5     | Polish         | Medium (integration)     | Low    | 4-6 hours         |
+| 6     | Cleanup        | High (refactor only)     | Low    | 2-3 hours         |
 
 **Total Estimated Time:** 22-32 hours
 
@@ -1887,6 +1948,7 @@ yarn test --testNamePattern="streaming"
 ### Deployment Strategy
 
 **Recommended:** Deploy phases incrementally
+
 - Phase 0-1: Deploy together (foundation)
 - Phase 2: Deploy behind feature flag or new endpoint
 - Phase 3-4: Deploy together (full streaming capability)
@@ -1894,6 +1956,7 @@ yarn test --testNamePattern="streaming"
 - Phase 6: Deploy cleanup when confident
 
 **Feature Flag Approach:**
+
 ```typescript
 // Enable streaming via environment variable or config
 const USE_STREAMING = process.env.ENABLE_RECIPE_STREAMING === 'true';
@@ -1908,16 +1971,19 @@ if (USE_STREAMING) {
 ## Technical Considerations
 
 ### Error Handling
+
 - Handle incomplete JSON gracefully
 - Handle network errors during streaming
 - Provide fallback to non-streaming mode if streaming fails
 
 ### Performance
+
 - Streaming reduces perceived latency
 - Progressive rendering improves UX
 - Consider debouncing rapid updates
 
 ### Testing
+
 - Test with slow network conditions
 - Test with partial JSON chunks
 - Test error scenarios (connection drops, malformed JSON)
@@ -1925,6 +1991,7 @@ if (USE_STREAMING) {
 ## Example Stream Format
 
 **Server sends (NDJSON):**
+
 ```json
 {"type": "field", "field": "title", "value": "Chicken Tikka Masala"}
 {"type": "field", "field": "summary", "value": "A classic Indian dish..."}
@@ -1934,6 +2001,7 @@ if (USE_STREAMING) {
 ```
 
 **Client receives and updates:**
+
 - Receives title → renders title immediately
 - Receives summary → renders description
 - Receives tags → renders tags
@@ -1942,10 +2010,12 @@ if (USE_STREAMING) {
 ## Files to Modify/Create
 
 ### New Files:
+
 - `src/lib/partial-json-parser.ts` - Server-side partial JSON parsing
 - `src/lib/streaming-json-parser.ts` - Client-side streaming JSON parser (if needed)
 
 ### Modified Files:
+
 - `src/lib/gemini.ts` - Add `streamGemini()` function
 - `src/app/api/recipes/generate/route.ts` - Add streaming endpoint
 - `src/hooks/useRecipeGeneration.ts` - Handle streaming responses
@@ -1957,12 +2027,14 @@ if (USE_STREAMING) {
 ### Step-by-Step Execution
 
 **1. User submits recipe request:**
+
 ```typescript
 // Client: add-recipe-modal.tsx
 await generateRecipe("Make me chicken tikka masala", accessToken);
 ```
 
 **2. Client initiates streaming request:**
+
 ```typescript
 // Client: useRecipeGeneration.ts
 const response = await fetch("/api/recipes/generate", {
@@ -1982,11 +2054,11 @@ let buffer = "";
 while (true) {
   const { done, value } = await reader.read();
   if (done) break;
-  
+
   buffer += decoder.decode(value, { stream: true });
   const lines = buffer.split("\n");
   buffer = lines.pop() || "";
-  
+
   for (const line of lines) {
     if (!line.trim()) continue;
     const update = JSON.parse(line);
@@ -1996,54 +2068,56 @@ while (true) {
 ```
 
 **3. Server receives request and starts streaming:**
+
 ```typescript
 // Server: route.ts
 export async function POST(request: NextRequest) {
   // ... auth, validation ...
-  
+
   const stream = new ReadableStream({
     async start(controller) {
       const encoder = new TextEncoder();
-      
+
       // Start streaming from Gemini
       const geminiStream = await streamGemini(TEXT_MODEL, requestBody);
       const parser = new PartialJsonParser();
-      
+
       for await (const chunk of geminiStream) {
         const updates = parser.processChunk(chunk);
-        
+
         for (const update of updates) {
           const line = JSON.stringify(update) + "\n";
           controller.enqueue(encoder.encode(line));
         }
       }
-      
+
       // Send completion signal
       controller.enqueue(encoder.encode(JSON.stringify({ type: "complete" }) + "\n"));
       controller.close();
     },
   });
-  
+
   return new Response(stream, {
     headers: {
       "Content-Type": "application/x-ndjson",
       "Cache-Control": "no-cache",
-      "Connection": "keep-alive",
+      Connection: "keep-alive",
     },
   });
 }
 ```
 
 **4. Client receives and processes updates:**
+
 ```typescript
 // Client: useRecipeGeneration.ts
 function handleStreamUpdate(update: StreamUpdate) {
   if (update.type === "field") {
-    setPartialRecipe(prev => ({
+    setPartialRecipe((prev) => ({
       ...prev,
       [update.field]: update.value,
     }));
-    
+
     // Show card as soon as we have title
     if (update.field === "title" && !generatedRecipe) {
       setGeneratedRecipe({
@@ -2062,16 +2136,17 @@ function handleStreamUpdate(update: StreamUpdate) {
 ```
 
 **5. UI updates progressively:**
+
 ```typescript
 // Client: add-recipe-modal.tsx
 {partialRecipe && (
-  <RecipePreviewCard 
+  <RecipePreviewCard
     recipe={{
       ...partialRecipe,
       // Merge with defaults for missing fields
       description: partialRecipe.description || null,
       tags: partialRecipe.tags || [],
-    }} 
+    }}
   />
 )}
 ```
@@ -2086,15 +2161,16 @@ UI:      [Loading...] → [Title] → [Title + Description] → [Title + Desc + 
 ```
 
 **Example timing:**
+
 - T+0ms: Request sent
 - T+200ms: Title received → UI shows title
-- T+500ms: Summary received → UI shows title + description  
+- T+500ms: Summary received → UI shows title + description
 - T+800ms: Tags received → UI shows title + description + tags
 - T+2000ms: Complete → All fields available, "Add recipe" enabled
 
 ## References
+
 - Gemini API Streaming: https://ai.google.dev/gemini-api/docs/streaming
 - Next.js Streaming: https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming
 - Fetch API Streaming: https://developer.mozilla.org/en-US/docs/Web/API/Streams_API
 - NDJSON Format: https://github.com/ndjson/ndjson-spec
-

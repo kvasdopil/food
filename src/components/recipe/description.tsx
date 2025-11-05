@@ -25,15 +25,7 @@ export function Description({ slug, description, tags, authorName }: Description
         <FavoriteButton slug={slug} />
         {tags.map((tag, index) => {
           const href = buildFeedUrlWithTagsAndSearch([tag.toLowerCase()]);
-          return (
-            <TagChip
-              key={tag}
-              tag={tag}
-              variant="link"
-              href={href}
-              index={index}
-            />
-          );
+          return <TagChip key={tag} tag={tag} variant="link" href={href} index={index} />;
         })}
       </div>
     </section>

@@ -1,11 +1,11 @@
 export interface FieldUpdate {
-  type: 'field';
+  type: "field";
   field: string;
   value: unknown;
 }
 
 export interface CompleteUpdate {
-  type: 'complete';
+  type: "complete";
 }
 
 export type StreamUpdate = FieldUpdate | CompleteUpdate;
@@ -15,7 +15,7 @@ export type StreamUpdate = FieldUpdate | CompleteUpdate;
  * Handles incomplete JSON gracefully by buffering and parsing incrementally.
  */
 export class PartialJsonParser {
-  private buffer = '';
+  private buffer = "";
   private extractedFields = new Map<string, unknown>();
 
   /**
@@ -43,13 +43,12 @@ export class PartialJsonParser {
         for (const [key, value] of Object.entries(parsed)) {
           const currentValue = this.extractedFields.get(key);
           const valueChanged =
-            currentValue === undefined ||
-            JSON.stringify(currentValue) !== JSON.stringify(value);
+            currentValue === undefined || JSON.stringify(currentValue) !== JSON.stringify(value);
 
           if (valueChanged) {
             this.extractedFields.set(key, value);
             updates.push({
-              type: 'field',
+              type: "field",
               field: key,
               value,
             });
@@ -71,13 +70,12 @@ export class PartialJsonParser {
     for (const { key, value } of completeFields) {
       const currentValue = this.extractedFields.get(key);
       const valueChanged =
-        currentValue === undefined ||
-        JSON.stringify(currentValue) !== JSON.stringify(value);
+        currentValue === undefined || JSON.stringify(currentValue) !== JSON.stringify(value);
 
       if (valueChanged) {
         this.extractedFields.set(key, value);
         updates.push({
-          type: 'field',
+          type: "field",
           field: key,
           value,
         });
@@ -94,33 +92,33 @@ export class PartialJsonParser {
    */
   private extractCompleteFields(buffer: string): Array<{ key: string; value: unknown }> {
     const fields: Array<{ key: string; value: unknown }> = [];
-    
+
     // Try to extract complete key-value pairs by finding patterns like "key": value
     // We'll try to parse each potential pair to ensure it's valid JSON
-    
+
     // Match pattern: "key": followed by a value (string, number, boolean, null, or array)
     // Look for the pattern ending with comma or closing brace (but don't consume it)
     const keyValuePattern = /"((?:[^"\\]|\\.)*)"\s*:\s*/g;
     let match;
     const processed = new Set<string>(); // Track processed keys to avoid duplicates
-    
+
     while ((match = keyValuePattern.exec(buffer)) !== null) {
       const keyEnd = match.index + match[0].length;
       const key = JSON.parse(`"${match[1]}"`); // Properly unescape key
-      
+
       // Skip if we've already processed this key
       if (processed.has(key)) {
         continue;
       }
-      
+
       // Try to extract the value starting after the colon
       const valueStart = keyEnd;
       const remaining = buffer.substring(valueStart);
-      
+
       // Try to parse different value types
       let value: unknown = undefined;
       let valueLength = 0;
-      
+
       // Try string value - handle both complete and potentially incomplete strings
       // First try complete string (ends with " followed by comma or })
       const completeStringMatch = remaining.match(/^"((?:[^"\\]|\\.)*)"(?=\s*[,}])/);
@@ -132,15 +130,12 @@ export class PartialJsonParser {
           // Invalid string, skip
         }
       }
-      
+
       // If no complete string, try to detect if we're in the middle of a string
       // This handles cases like "title": "Pho Bo where the string isn't closed yet
-      if (value === undefined) {
-        const incompleteStringMatch = remaining.match(/^"((?:[^"\\]|\\.)*)$/);
-        // Don't extract incomplete strings - wait for them to complete
-        // This prevents partial updates that would be overwritten immediately
-      }
-      
+      // Don't extract incomplete strings - wait for them to complete
+      // This prevents partial updates that would be overwritten immediately
+
       // Try number value
       if (value === undefined) {
         const numberMatch = remaining.match(/^(-?\d+\.?\d*)(?=\s*[,}])/);
@@ -152,16 +147,16 @@ export class PartialJsonParser {
           }
         }
       }
-      
+
       // Try boolean value
       if (value === undefined) {
         const boolMatch = remaining.match(/^(true|false)(?=\s*[,}])/);
         if (boolMatch) {
-          value = boolMatch[1] === 'true';
+          value = boolMatch[1] === "true";
           valueLength = boolMatch[0].length;
         }
       }
-      
+
       // Try null value
       if (value === undefined) {
         const nullMatch = remaining.match(/^(null)(?=\s*[,}])/);
@@ -170,38 +165,41 @@ export class PartialJsonParser {
           valueLength = nullMatch[0].length;
         }
       }
-      
+
       // Try array value - improved to handle nested structures better
       if (value === undefined) {
         // Look for array start and try to find matching closing bracket
-        if (remaining.startsWith('[')) {
+        if (remaining.startsWith("[")) {
           let depth = 0;
           let inString = false;
           let escapeNext = false;
-          let found = false;
-          
+
           for (let i = 0; i < remaining.length; i++) {
             const char = remaining[i];
-            
+
             if (char === '"' && !escapeNext) {
               inString = !inString;
             }
-            escapeNext = char === '\\' && inString;
-            
+            escapeNext = char === "\\" && inString;
+
             if (!inString) {
-              if (char === '[') {
+              if (char === "[") {
                 depth++;
-              } else if (char === ']') {
+              } else if (char === "]") {
                 depth--;
                 if (depth === 0) {
                   // Found complete array
                   const arrayText = remaining.substring(0, i + 1);
                   // Check if it's followed by comma or closing brace
-                  if (remaining[i + 1] === ',' || remaining[i + 1] === '}' || remaining[i + 1] === undefined || /\s/.test(remaining[i + 1])) {
+                  if (
+                    remaining[i + 1] === "," ||
+                    remaining[i + 1] === "}" ||
+                    remaining[i + 1] === undefined ||
+                    /\s/.test(remaining[i + 1])
+                  ) {
                     try {
                       value = JSON.parse(arrayText);
                       valueLength = arrayText.length;
-                      found = true;
                     } catch {
                       // Invalid array, skip
                     }
@@ -213,32 +211,37 @@ export class PartialJsonParser {
           }
         }
       }
-      
+
       // Try object value (for nested objects)
       if (value === undefined) {
-        if (remaining.startsWith('{')) {
+        if (remaining.startsWith("{")) {
           let depth = 0;
           let inString = false;
           let escapeNext = false;
-          
+
           for (let i = 0; i < remaining.length; i++) {
             const char = remaining[i];
-            
+
             if (char === '"' && !escapeNext) {
               inString = !inString;
             }
-            escapeNext = char === '\\' && inString;
-            
+            escapeNext = char === "\\" && inString;
+
             if (!inString) {
-              if (char === '{') {
+              if (char === "{") {
                 depth++;
-              } else if (char === '}') {
+              } else if (char === "}") {
                 depth--;
                 if (depth === 0) {
                   // Found complete object
                   const objectText = remaining.substring(0, i + 1);
                   // Check if it's followed by comma or closing brace
-                  if (remaining[i + 1] === ',' || remaining[i + 1] === '}' || remaining[i + 1] === undefined || /\s/.test(remaining[i + 1])) {
+                  if (
+                    remaining[i + 1] === "," ||
+                    remaining[i + 1] === "}" ||
+                    remaining[i + 1] === undefined ||
+                    /\s/.test(remaining[i + 1])
+                  ) {
                     try {
                       value = JSON.parse(objectText);
                       valueLength = objectText.length;
@@ -253,14 +256,14 @@ export class PartialJsonParser {
           }
         }
       }
-      
+
       // If we found a valid value, add it
       if (value !== undefined && valueLength > 0) {
         processed.add(key);
         fields.push({ key, value });
       }
     }
-    
+
     return fields;
   }
 
@@ -283,16 +286,16 @@ export class PartialJsonParser {
         inString = !inString;
       }
 
-      escapeNext = char === '\\' && inString;
+      escapeNext = char === "\\" && inString;
 
       // Track object depth (only outside strings)
       if (!inString) {
-        if (char === '{') {
+        if (char === "{") {
           if (depth === 0) {
             startIndex = i;
           }
           depth++;
-        } else if (char === '}') {
+        } else if (char === "}") {
           depth--;
 
           // When we close an object at depth 0, it's complete
@@ -319,7 +322,7 @@ export class PartialJsonParser {
    */
   private isValidCompleteJson(jsonText: string): boolean {
     // Quick check: must start with { and end with }
-    if (!jsonText.trim().startsWith('{') || !jsonText.trim().endsWith('}')) {
+    if (!jsonText.trim().startsWith("{") || !jsonText.trim().endsWith("}")) {
       return false;
     }
 
@@ -341,7 +344,7 @@ export class PartialJsonParser {
     const updates: FieldUpdate[] = [];
     for (const [key, value] of this.extractedFields.entries()) {
       updates.push({
-        type: 'field',
+        type: "field",
         field: key,
         value,
       });
@@ -356,7 +359,7 @@ export class PartialJsonParser {
    */
   finalize(): StreamUpdate[] {
     const updates: StreamUpdate[] = [];
-    
+
     // Try to parse any remaining buffer and extract fields
     if (this.buffer.trim()) {
       // First try to extract complete objects
@@ -367,13 +370,12 @@ export class PartialJsonParser {
           for (const [key, value] of Object.entries(parsed)) {
             const currentValue = this.extractedFields.get(key);
             const valueChanged =
-              currentValue === undefined ||
-              JSON.stringify(currentValue) !== JSON.stringify(value);
+              currentValue === undefined || JSON.stringify(currentValue) !== JSON.stringify(value);
 
             if (valueChanged) {
               this.extractedFields.set(key, value);
               updates.push({
-                type: 'field',
+                type: "field",
                 field: key,
                 value,
               });
@@ -383,25 +385,24 @@ export class PartialJsonParser {
           // Ignore - might be incomplete
         }
       }
-      
+
       // Also try to extract complete fields from remaining buffer
       const completeFields = this.extractCompleteFields(this.buffer);
       for (const { key, value } of completeFields) {
         const currentValue = this.extractedFields.get(key);
         const valueChanged =
-          currentValue === undefined ||
-          JSON.stringify(currentValue) !== JSON.stringify(value);
+          currentValue === undefined || JSON.stringify(currentValue) !== JSON.stringify(value);
 
         if (valueChanged) {
           this.extractedFields.set(key, value);
           updates.push({
-            type: 'field',
+            type: "field",
             field: key,
             value,
           });
         }
       }
-      
+
       // Last resort: try to parse the entire buffer as complete JSON
       if (updates.length === 0) {
         try {
@@ -409,13 +410,12 @@ export class PartialJsonParser {
           for (const [key, value] of Object.entries(parsed)) {
             const currentValue = this.extractedFields.get(key);
             const valueChanged =
-              currentValue === undefined ||
-              JSON.stringify(currentValue) !== JSON.stringify(value);
+              currentValue === undefined || JSON.stringify(currentValue) !== JSON.stringify(value);
 
             if (valueChanged) {
               this.extractedFields.set(key, value);
               updates.push({
-                type: 'field',
+                type: "field",
                 field: key,
                 value,
               });
@@ -427,8 +427,8 @@ export class PartialJsonParser {
       }
     }
 
-    this.buffer = '';
-    updates.push({ type: 'complete' });
+    this.buffer = "";
+    updates.push({ type: "complete" });
     return updates;
   }
 
@@ -436,8 +436,7 @@ export class PartialJsonParser {
    * Resets the parser state (useful for testing or reusing the parser).
    */
   reset(): void {
-    this.buffer = '';
+    this.buffer = "";
     this.extractedFields.clear();
   }
 }
-

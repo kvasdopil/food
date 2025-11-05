@@ -50,13 +50,13 @@ export const recipeSchema = {
 
 export function buildRecipeGenerationPrompt(options: GenerateRequest, feedback?: string): string {
   // Check if feedback mentions description/summary issues
-  const hasDescriptionIssues = feedback && (
-    feedback.toLowerCase().includes("summary") ||
-    feedback.toLowerCase().includes("description") ||
-    feedback.toLowerCase().includes("consists of") ||
-    feedback.toLowerCase().includes("contains") ||
-    feedback.toLowerCase().includes("features")
-  );
+  const hasDescriptionIssues =
+    feedback &&
+    (feedback.toLowerCase().includes("summary") ||
+      feedback.toLowerCase().includes("description") ||
+      feedback.toLowerCase().includes("consists of") ||
+      feedback.toLowerCase().includes("contains") ||
+      feedback.toLowerCase().includes("features"));
 
   const prompts: string[] = [
     `Develop a detailed recipe for "${options.title}".`,

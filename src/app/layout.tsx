@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     "Curated weeknight-friendly dinner recipes that use accessible pantry staples and cook in under an hour.",
   icons: {
     icon: "/icon.png",
-  }
+  },
 };
 
 export default function RootLayout({

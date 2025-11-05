@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Query script to list recipes by user and user activity statistics
- * 
+ *
  * Usage:
  *   npx tsx scripts/query-user-recipes.ts
  *   npx tsx scripts/query-user-recipes.ts --user-email user@example.com
@@ -50,7 +50,7 @@ async function getSupabaseAdmin() {
 
   if (!supabaseUrl || !serviceRoleKey) {
     throw new Error(
-      "Supabase admin client not configured. Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY in .env.local"
+      "Supabase admin client not configured. Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY in .env.local",
     );
   }
 
@@ -77,7 +77,9 @@ type UserRecipeStats = {
   recipes: RecipeSummary[];
 };
 
-async function getAllUserRecipes(supabaseAdmin: Awaited<ReturnType<typeof getSupabaseAdmin>>): Promise<UserRecipeStats[]> {
+async function getAllUserRecipes(
+  supabaseAdmin: Awaited<ReturnType<typeof getSupabaseAdmin>>,
+): Promise<UserRecipeStats[]> {
   // Get all recipes with authors
   const { data: recipes, error } = await supabaseAdmin
     .from("recipes")
@@ -121,25 +123,6 @@ async function getAllUserRecipes(supabaseAdmin: Awaited<ReturnType<typeof getSup
   }
 
   return Array.from(recipesByUser.values()).sort((a, b) => b.recipeCount - a.recipeCount);
-}
-
-async function getUserLikesStats(supabaseAdmin: Awaited<ReturnType<typeof getSupabaseAdmin>>): Promise<Map<string, number>> {
-  const { data: likes, error } = await supabaseAdmin
-    .from("recipe_likes")
-    .select("user_id");
-
-  if (error) {
-    console.warn(`Warning: Could not fetch likes: ${error.message}`);
-    return new Map();
-  }
-
-  const likesByUser = new Map<string, number>();
-  for (const like of likes || []) {
-    const userId = like.user_id as string;
-    likesByUser.set(userId, (likesByUser.get(userId) || 0) + 1);
-  }
-
-  return likesByUser;
 }
 
 function printUserRecipes(userStats: UserRecipeStats[], showDetails: boolean = true): void {
@@ -189,7 +172,10 @@ function printStatistics(userStats: UserRecipeStats[]): void {
   console.log();
 }
 
-async function filterByEmail(userStats: UserRecipeStats[], email: string): Promise<UserRecipeStats | null> {
+async function filterByEmail(
+  userStats: UserRecipeStats[],
+  email: string,
+): Promise<UserRecipeStats | null> {
   const normalizedEmail = email.toLowerCase();
   return userStats.find((u) => u.email === normalizedEmail) || null;
 }
@@ -223,4 +209,3 @@ async function main() {
 }
 
 main();
-

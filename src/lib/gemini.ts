@@ -91,7 +91,7 @@ export async function* streamGemini(
 ): AsyncGenerator<string, void, unknown> {
   const apiKey = getGeminiApiKey();
   const url = `${API_BASE_URL}/models/${model}:streamGenerateContent?key=${apiKey}`;
-  
+
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -133,26 +133,29 @@ export async function* streamGemini(
       if (char === '"' && !escapeNext) {
         inString = !inString;
       }
-      escapeNext = char === '\\' && inString;
+      escapeNext = char === "\\" && inString;
 
       if (!inString) {
-        if (char === '{') {
+        if (char === "{") {
           if (depth === 0) {
             startPos = currentPos;
           }
           depth++;
-        } else if (char === '}') {
+        } else if (char === "}") {
           depth--;
           if (depth === 0 && startPos !== -1) {
             // Found a complete object
             const objEnd = currentPos + 1;
             // Check if followed by newline (NDJSON separator) or end of buffer
-            if (objEnd >= buffer.length || buffer[objEnd] === '\n' || buffer[objEnd] === '\r') {
+            if (objEnd >= buffer.length || buffer[objEnd] === "\n" || buffer[objEnd] === "\r") {
               const objText = buffer.substring(startPos, objEnd);
               objects.push(objText);
               // Skip the newline(s) after the object
               let nextPos = objEnd;
-              while (nextPos < buffer.length && (buffer[nextPos] === '\n' || buffer[nextPos] === '\r')) {
+              while (
+                nextPos < buffer.length &&
+                (buffer[nextPos] === "\n" || buffer[nextPos] === "\r")
+              ) {
                 nextPos++;
               }
               currentPos = nextPos - 1; // -1 because we'll increment in the loop
@@ -166,9 +169,7 @@ export async function* streamGemini(
     }
 
     // Return remaining buffer (everything after the last complete object)
-    const lastCompleteEnd = objects.length > 0 
-      ? buffer.lastIndexOf('}') + 1
-      : 0;
+    const lastCompleteEnd = objects.length > 0 ? buffer.lastIndexOf("}") + 1 : 0;
     const remaining = buffer.substring(lastCompleteEnd);
 
     return { objects, remaining };
@@ -177,9 +178,11 @@ export async function* streamGemini(
   try {
     while (true) {
       const { done, value } = await reader.read();
-      
+
       if (done) {
-        console.log(`[Gemini Stream] Stream finished. Raw chunks: ${rawChunkCount}, Text chunks yielded: ${textChunkCount}, Final buffer length: ${buffer.length}`);
+        console.log(
+          `[Gemini Stream] Stream finished. Raw chunks: ${rawChunkCount}, Text chunks yielded: ${textChunkCount}, Final buffer length: ${buffer.length}`,
+        );
         break;
       }
 
@@ -194,7 +197,9 @@ export async function* streamGemini(
       const { objects, remaining } = extractCompleteObjects(buffer);
       buffer = remaining;
 
-      console.log(`[Gemini Stream] Extracted ${objects.length} complete objects, buffer remaining: ${buffer.length}`);
+      console.log(
+        `[Gemini Stream] Extracted ${objects.length} complete objects, buffer remaining: ${buffer.length}`,
+      );
 
       for (const objText of objects) {
         try {
@@ -216,14 +221,20 @@ export async function* streamGemini(
             .join("");
 
           if (text) {
-            console.log(`[Gemini Stream] Yielding text chunk ${++textChunkCount}, length: ${text.length}`, {
-              textPreview: text.substring(0, 100),
-            });
+            console.log(
+              `[Gemini Stream] Yielding text chunk ${++textChunkCount}, length: ${text.length}`,
+              {
+                textPreview: text.substring(0, 100),
+              },
+            );
             yield text;
           }
         } catch (parseError) {
           // Skip malformed JSON (shouldn't happen with complete objects, but be safe)
-          console.log(`[Gemini Stream] Failed to parse complete object:`, parseError instanceof Error ? parseError.message : String(parseError));
+          console.log(
+            `[Gemini Stream] Failed to parse complete object:`,
+            parseError instanceof Error ? parseError.message : String(parseError),
+          );
           continue;
         }
       }
@@ -254,7 +265,10 @@ export async function* streamGemini(
           yield text;
         }
       } catch (parseError) {
-        console.log(`[Gemini Stream] Failed to parse final buffer:`, parseError instanceof Error ? parseError.message : String(parseError));
+        console.log(
+          `[Gemini Stream] Failed to parse final buffer:`,
+          parseError instanceof Error ? parseError.message : String(parseError),
+        );
         // Ignore incomplete final chunk
       }
     }

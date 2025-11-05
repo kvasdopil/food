@@ -48,7 +48,7 @@ export function RecipePreviewCard({ recipe, isStreaming = false }: RecipePreview
           </div>
         )}
         {isStreaming && !isEmpty && (
-          <div className="absolute top-2 right-2 flex items-center gap-2 rounded-lg bg-blue-50 px-3 py-1.5 shadow-sm border border-blue-200">
+          <div className="absolute top-2 right-2 flex items-center gap-2 rounded-lg border border-blue-200 bg-blue-50 px-3 py-1.5 shadow-sm">
             <span className="h-3 w-3 animate-spin rounded-full border-2 border-blue-600 border-t-transparent" />
             <span className="text-xs font-medium text-blue-700">Streaming...</span>
           </div>

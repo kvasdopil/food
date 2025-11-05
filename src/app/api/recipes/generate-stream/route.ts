@@ -5,7 +5,7 @@ import {
   recipeSchema,
   type GenerateRequest,
 } from "@/lib/prompts/recipe-generation";
-import { PartialJsonParser, type StreamUpdate } from "@/lib/partial-json-parser";
+import { PartialJsonParser } from "@/lib/partial-json-parser";
 import { authenticateRequest } from "@/lib/api-auth";
 
 export async function POST(request: NextRequest) {
@@ -51,7 +51,8 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const userComment = typeof payload.userComment === "string" ? payload.userComment.trim() : undefined;
+  const userComment =
+    typeof payload.userComment === "string" ? payload.userComment.trim() : undefined;
   const servings =
     typeof payload.servings === "number" && Number.isFinite(payload.servings)
       ? payload.servings
@@ -119,9 +120,12 @@ export async function POST(request: NextRequest) {
           for await (const chunk of geminiStream) {
             chunkCount++;
             totalChunkLength += chunk.length;
-            console.log(`[Stream] Received chunk ${chunkCount}, length: ${chunk.length}, total: ${totalChunkLength}`, {
-              chunkPreview: chunk.substring(0, 100),
-            });
+            console.log(
+              `[Stream] Received chunk ${chunkCount}, length: ${chunk.length}, total: ${totalChunkLength}`,
+              {
+                chunkPreview: chunk.substring(0, 100),
+              },
+            );
 
             // Parse the chunk and extract complete fields
             const updates = parser.processChunk(chunk);
@@ -136,14 +140,16 @@ export async function POST(request: NextRequest) {
             }
           }
 
-          console.log(`[Stream] Finished processing ${chunkCount} chunks, total length: ${totalChunkLength}`);
+          console.log(
+            `[Stream] Finished processing ${chunkCount} chunks, total length: ${totalChunkLength}`,
+          );
 
           // Finalize parser and send any remaining field updates, followed by completion signal
           const finalUpdates = parser.finalize();
           console.log(`[Stream] Finalize produced ${finalUpdates.length} updates`, {
             updates: finalUpdates.map((u) => (u.type === "field" ? `${u.field}` : u.type)),
           });
-          
+
           for (const update of finalUpdates) {
             const line = JSON.stringify(update) + "\n";
             controller.enqueue(encoder.encode(line));
@@ -182,7 +188,9 @@ export async function POST(request: NextRequest) {
           console.error("Failed to stream recipe generation:", error);
           try {
             const errorMessage = `Failed to stream recipe generation: ${(error as Error).message}`;
-            controller.enqueue(encoder.encode(JSON.stringify({ type: "error", error: errorMessage }) + "\n"));
+            controller.enqueue(
+              encoder.encode(JSON.stringify({ type: "error", error: errorMessage }) + "\n"),
+            );
           } catch (enqueueError) {
             // Ignore errors during error handling
             console.error("Failed to enqueue error message:", enqueueError);
@@ -207,4 +215,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-

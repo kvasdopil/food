@@ -702,16 +702,18 @@ The application uses **Vercel Analytics** to track API endpoint usage and user a
 
 3. **Query Recipes by User**:
    - Use the query script to see which users created which recipes:
+
      ```bash
      # Show all users and their recipes
      npx tsx scripts/query-user-recipes.ts
-     
+
      # Show stats only
      npx tsx scripts/query-user-recipes.ts --stats-only
-     
+
      # Show recipes for specific user
      npx tsx scripts/query-user-recipes.ts --user-email user@example.com
      ```
+
    - Requires `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` in `.env.local`
    - See `docs/USER_ANALYTICS_GUIDE.md` for detailed instructions on viewing user analytics and recipe attribution
 
