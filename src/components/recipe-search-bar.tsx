@@ -26,7 +26,7 @@ export function RecipeSearchBar({
 }: RecipeSearchBarProps) {
   const hasTags = activeTags.length > 0;
   const [isMobile, setIsMobile] = useState(true);
-  const [inputWidth, setInputWidth] = useState<number>(200);
+  const [inputWidth, setInputWidth] = useState<number>(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const measureRef = useRef<HTMLSpanElement>(null);
 
@@ -53,8 +53,8 @@ export function RecipeSearchBar({
         const computedStyle = window.getComputedStyle(inputRef.current);
         const paddingLeft = parseFloat(computedStyle.paddingLeft) || 0;
         const paddingRight = parseFloat(computedStyle.paddingRight) || 0;
-        // Set minimum width for placeholder visibility, or measured width + padding
-        const minWidth = showPlaceholder && !value ? 250 : 20;
+        // Set minimum width for placeholder visibility on desktop, or minimal width on mobile
+        const minWidth = showPlaceholder && !value ? 250 : isMobile && !value ? 0 : 20;
         const newWidth = Math.max(minWidth, measureWidth + paddingLeft + paddingRight);
         setInputWidth(newWidth);
       }
@@ -69,6 +69,8 @@ export function RecipeSearchBar({
   };
 
   const displayValue = value || (showPlaceholder ? "" : placeholder);
+  // On mobile, measure actual value (not placeholder) to avoid unnecessary width
+  const measureValue = isMobile ? value : displayValue;
   const showClearButton = value.length > 0;
 
   return (
@@ -108,7 +110,7 @@ export function RecipeSearchBar({
               className="invisible absolute text-base whitespace-pre sm:text-sm"
               aria-hidden="true"
             >
-              {displayValue || "\u00A0"}
+              {measureValue || "\u00A0"}
             </span>
 
             <Input
@@ -119,7 +121,7 @@ export function RecipeSearchBar({
               onChange={(e) => onChange(e.target.value)}
               style={{
                 width: inputWidth > 0 ? `${inputWidth}px` : "auto",
-                minWidth: showPlaceholder && !value ? "250px" : "20px",
+                minWidth: showPlaceholder && !value ? "250px" : isMobile && !value ? "0" : "20px",
               }}
               className="border-0 bg-transparent pr-0 pl-1 text-base shadow-none ring-0 outline-none placeholder:text-gray-500 focus-visible:border-0 focus-visible:ring-0 focus-visible:ring-offset-0 sm:text-sm sm:placeholder:text-gray-500"
             />

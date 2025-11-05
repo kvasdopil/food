@@ -47,6 +47,12 @@ describe('useRecipeGeneration - Streaming', () => {
       },
     };
 
+    // Mock image generation endpoint (called when description is received)
+    const imageMockResponse = {
+      ok: true,
+      json: jest.fn().mockResolvedValue({ url: 'https://example.com/image.jpg' }),
+    };
+
     // Mock generate endpoint response
     const generateMockReader = {
       read: jest
@@ -69,9 +75,10 @@ describe('useRecipeGeneration - Streaming', () => {
       },
     };
 
-    // Mock fetch to return parse response first, then generate response
+    // Mock fetch to return parse response first, then image generation, then generate response
     (global.fetch as jest.Mock)
       .mockResolvedValueOnce(parseMockResponse)
+      .mockResolvedValueOnce(imageMockResponse)
       .mockResolvedValueOnce(generateMockResponse);
 
     const { result } = renderHook(() => useRecipeGeneration());
@@ -123,6 +130,12 @@ describe('useRecipeGeneration - Streaming', () => {
       },
     };
 
+    // Mock image generation endpoint (called when description is received)
+    const imageMockResponse = {
+      ok: true,
+      json: jest.fn().mockResolvedValue({ url: 'https://example.com/image.jpg' }),
+    };
+
     // Mock generate endpoint
     const generateMockReader = {
       read: jest
@@ -143,6 +156,7 @@ describe('useRecipeGeneration - Streaming', () => {
 
     (global.fetch as jest.Mock)
       .mockResolvedValueOnce(parseMockResponse)
+      .mockResolvedValueOnce(imageMockResponse)
       .mockResolvedValueOnce(generateMockResponse);
 
     const { result } = renderHook(() => useRecipeGeneration());
@@ -187,6 +201,12 @@ describe('useRecipeGeneration - Streaming', () => {
       },
     };
 
+    // Mock image generation endpoint (called when description is received)
+    const imageMockResponse = {
+      ok: true,
+      json: jest.fn().mockResolvedValue({ url: 'https://example.com/image.jpg' }),
+    };
+
     // Mock generate endpoint
     const generateMockReader = {
       read: jest
@@ -211,6 +231,7 @@ describe('useRecipeGeneration - Streaming', () => {
 
     (global.fetch as jest.Mock)
       .mockResolvedValueOnce(parseMockResponse)
+      .mockResolvedValueOnce(imageMockResponse)
       .mockResolvedValueOnce(generateMockResponse);
 
     const { result } = renderHook(() => useRecipeGeneration());
@@ -256,6 +277,12 @@ describe('useRecipeGeneration - Streaming', () => {
       },
     };
 
+    // Mock image generation endpoint (called when description is received)
+    const imageMockResponse = {
+      ok: true,
+      json: jest.fn().mockResolvedValue({ url: 'https://example.com/image.jpg' }),
+    };
+
     // Mock generate endpoint
     const generateMockReader = {
       read: jest
@@ -276,6 +303,7 @@ describe('useRecipeGeneration - Streaming', () => {
 
     (global.fetch as jest.Mock)
       .mockResolvedValueOnce(parseMockResponse)
+      .mockResolvedValueOnce(imageMockResponse)
       .mockResolvedValueOnce(generateMockResponse);
 
     const { result } = renderHook(() => useRecipeGeneration());
@@ -369,6 +397,12 @@ describe('useRecipeGeneration - Streaming', () => {
       },
     };
 
+    // Mock image generation endpoint (called when description is received)
+    const imageMockResponse = {
+      ok: true,
+      json: jest.fn().mockResolvedValue({ url: 'https://example.com/image.jpg' }),
+    };
+
     // Mock generate endpoint
     const generateMockReader = {
       read: jest
@@ -389,6 +423,7 @@ describe('useRecipeGeneration - Streaming', () => {
 
     (global.fetch as jest.Mock)
       .mockResolvedValueOnce(parseMockResponse)
+      .mockResolvedValueOnce(imageMockResponse)
       .mockResolvedValueOnce(generateMockResponse);
 
     const { result } = renderHook(() => useRecipeGeneration());
@@ -436,6 +471,12 @@ describe('useRecipeGeneration - Streaming', () => {
       },
     };
 
+    // Mock image generation endpoint (called when description is received)
+    const imageMockResponse = {
+      ok: true,
+      json: jest.fn().mockResolvedValue({ url: 'https://example.com/image.jpg' }),
+    };
+
     // Mock generate endpoint
     const generateMockReader = {
       read: jest
@@ -456,6 +497,7 @@ describe('useRecipeGeneration - Streaming', () => {
 
     (global.fetch as jest.Mock)
       .mockResolvedValueOnce(parseMockResponse)
+      .mockResolvedValueOnce(imageMockResponse)
       .mockResolvedValueOnce(generateMockResponse);
 
     const { result } = renderHook(() => useRecipeGeneration());
@@ -560,6 +602,12 @@ describe('useRecipeGeneration - Streaming', () => {
       },
     };
 
+    // Mock image generation endpoint (called when description is received)
+    const imageMockResponse = {
+      ok: true,
+      json: jest.fn().mockResolvedValue({ url: 'https://example.com/image.jpg' }),
+    };
+
     // Mock generate endpoint
     const generateMockReader = {
       read: jest
@@ -584,6 +632,7 @@ describe('useRecipeGeneration - Streaming', () => {
 
     (global.fetch as jest.Mock)
       .mockResolvedValueOnce(parseMockResponse)
+      .mockResolvedValueOnce(imageMockResponse)
       .mockResolvedValueOnce(generateMockResponse);
 
     const { result } = renderHook(() => useRecipeGeneration());
@@ -593,8 +642,8 @@ describe('useRecipeGeneration - Streaming', () => {
     });
 
     await waitFor(() => {
-      // Verify both endpoints were called
-      expect(global.fetch).toHaveBeenCalledTimes(2);
+      // Verify all three endpoints were called: parse, image generation, and generate
+      expect(global.fetch).toHaveBeenCalledTimes(3);
       expect(global.fetch).toHaveBeenNthCalledWith(
         1,
         '/api/recipes/parse-user-input-stream',
@@ -605,6 +654,14 @@ describe('useRecipeGeneration - Streaming', () => {
       );
       expect(global.fetch).toHaveBeenNthCalledWith(
         2,
+        '/api/images/generate-preview',
+        expect.objectContaining({
+          method: 'POST',
+          body: JSON.stringify({ description: 'A test' }),
+        }),
+      );
+      expect(global.fetch).toHaveBeenNthCalledWith(
+        3,
         '/api/recipes/generate-stream',
         expect.objectContaining({
           method: 'POST',
