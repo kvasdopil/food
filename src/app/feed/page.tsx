@@ -32,7 +32,11 @@ function FeedPageContent() {
   // Get cached recipes and determine what to display
   // Don't use cached recipes when "mine" tag is active (filter should show empty if no results)
   const shouldUseCache = !hasMineTag;
-  const { cachedRecipesForLoading, displayRecipes } = useCachedRecipes(isLoading, recipes, shouldUseCache);
+  const { cachedRecipesForLoading, displayRecipes } = useCachedRecipes(
+    isLoading,
+    recipes,
+    shouldUseCache,
+  );
 
   // Scroll to top only when tags change (user action)
   // Don't scroll on search query changes to avoid interrupting user scrolling

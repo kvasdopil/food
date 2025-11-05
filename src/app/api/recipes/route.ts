@@ -196,13 +196,15 @@ export async function GET(request: NextRequest) {
         isProtected: true,
       });
       return NextResponse.json(
-        { error: auth.authorized === false ? auth.error : "Authentication required for this filter" },
+        {
+          error: auth.authorized === false ? auth.error : "Authentication required for this filter",
+        },
         { status: 401 },
       );
     }
     userId = auth.userId;
     userEmail = auth.userEmail?.toLowerCase();
-    
+
     // For "mine" tag, userEmail is required
     if (hasMineTag && !userEmail) {
       console.error("Mine tag requested but userEmail is not available after authentication");
@@ -254,7 +256,9 @@ export async function GET(request: NextRequest) {
 
     let allRecipesQuery = supabase
       .from("recipes")
-      .select("slug, name, description, tags, image_url, prep_time_minutes, cook_time_minutes, author_email")
+      .select(
+        "slug, name, description, tags, image_url, prep_time_minutes, cook_time_minutes, author_email",
+      )
       .order("created_at", { ascending: false })
       .order("slug", { ascending: true })
       .limit(MAX_RECIPES_TO_FETCH);
@@ -283,11 +287,15 @@ export async function GET(request: NextRequest) {
       } else {
         const beforeCount = allRecipes.length;
         allRecipes = allRecipes.filter((recipe) => {
-          const recipeAuthorEmail = (recipe as { author_email?: string | null }).author_email?.toLowerCase();
+          const recipeAuthorEmail = (
+            recipe as { author_email?: string | null }
+          ).author_email?.toLowerCase();
           return recipeAuthorEmail === userEmail;
         });
         const afterCount = allRecipes.length;
-        console.log(`[Mine filter] Filtered from ${beforeCount} to ${afterCount} recipes for user ${userEmail}`);
+        console.log(
+          `[Mine filter] Filtered from ${beforeCount} to ${afterCount} recipes for user ${userEmail}`,
+        );
       }
     }
 
@@ -317,10 +325,7 @@ export async function GET(request: NextRequest) {
           statusCode: 500,
           isProtected: true,
         });
-        return NextResponse.json(
-          { error: "Failed to apply favorites filter" },
-          { status: 500 },
-        );
+        return NextResponse.json({ error: "Failed to apply favorites filter" }, { status: 500 });
       }
     }
 
@@ -473,7 +478,8 @@ export async function POST(request: NextRequest) {
     if (auth.userId && auth.userEmail) {
       // Authenticated via Supabase session - get user info for display name
       try {
-        const authHeader = request.headers.get("authorization") ?? request.headers.get("Authorization");
+        const authHeader =
+          request.headers.get("authorization") ?? request.headers.get("Authorization");
         const tokenMatch = authHeader?.match(/^Bearer\s+(.+)$/i);
         const providedToken = tokenMatch ? tokenMatch[1].trim() : null;
 

@@ -44,7 +44,7 @@ export function FavoriteButton({ slug }: FavoriteButtonProps) {
       aria-pressed={isFavorite}
       onClick={handleClick}
       disabled={isButtonLoading}
-      className="h-auto w-auto p-0 pb-0.5 transition hover:opacity-80 [&_svg]:!size-6 disabled:opacity-50"
+      className="h-auto w-auto p-0 pb-0.5 transition hover:opacity-80 disabled:opacity-50 [&_svg]:!size-6"
       aria-label={
         isFavorite
           ? "Remove from favourites"

@@ -72,7 +72,7 @@ function FeedLayoutContent({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-white">
       <main className="mx-auto max-w-7xl sm:px-6 sm:py-6 lg:px-8">
-        <div className="pl-2 pr-4 pt-0 sm:px-0 sm:pt-0">
+        <div className="pt-0 pr-4 pl-2 sm:px-0 sm:pt-0">
           <div className="flex items-center gap-3">
             <div className="flex flex-1 items-center">
               <FavoritesToggle isActive={isFavoritesActive} onToggle={toggleFavorites} />

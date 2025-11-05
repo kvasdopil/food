@@ -14,7 +14,7 @@
 - propose meal ideas in generate window
 - make generate window a generate page
 - stream llm generation output and populate generate result
-- save creator's username 
+- save creator's username
 - add 'my recipes' page
 - scenario:
   - generate 3 variations of the same meal

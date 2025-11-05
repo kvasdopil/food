@@ -47,4 +47,3 @@ export function FavoritesToggle({ isActive, onToggle }: FavoritesToggleProps) {
     </Button>
   );
 }
-

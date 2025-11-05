@@ -8,10 +8,7 @@ import { logApiEndpoint } from "@/lib/analytics";
  * GET /api/recipes/[slug]/like
  * Get like status for a recipe (requires authentication)
  */
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ slug: string }> },
-) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
 
   // Authenticate the request - requires user session (not EDIT_TOKEN)
@@ -270,4 +267,3 @@ export async function POST(
     return NextResponse.json({ error: "Failed to toggle like" }, { status: 500 });
   }
 }
-

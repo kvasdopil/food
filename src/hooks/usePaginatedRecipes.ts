@@ -244,7 +244,16 @@ export function usePaginatedRecipes(
         }
       }
     }
-  }, [pagination, isLoadingMore, fetchRecipes, recipes, tags, searchQuery, favorites, hasActiveFilters]);
+  }, [
+    pagination,
+    isLoadingMore,
+    fetchRecipes,
+    recipes,
+    tags,
+    searchQuery,
+    favorites,
+    hasActiveFilters,
+  ]);
 
   const retry = useCallback(async () => {
     await loadInitialRecipes();

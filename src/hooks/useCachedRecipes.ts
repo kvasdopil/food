@@ -45,7 +45,7 @@ export function useCachedRecipes(
   const [allCachedRecipes] = useState<RecipeListItem[] | null>(() => {
     // Lazy initialization: only runs on client, avoids hydration mismatch
     if (typeof window === "undefined") return null;
-    
+
     const cached = recipeStore.getAllPartials();
     if (cached.length === 0) return null;
 

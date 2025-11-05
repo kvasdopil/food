@@ -1,15 +1,18 @@
 # Recipe Authors Feature Plan
 
 ## Overview
+
 Add author attribution to recipes by storing the creator's name and email, and displaying "by {username}" on recipe pages after the description. Also add a "My Recipes" filter in the user menu to show only recipes created by the current user.
 
 ## Current State Analysis
 
 ### Database Schema
+
 - Recipes table exists with: `id`, `slug`, `name`, `description`, `ingredients`, `instructions`, `image_url`, `tags`, `created_at`, `updated_at`, `prep_time_minutes`, `cook_time_minutes`
 - No author/user fields currently exist
 
 ### Authentication
+
 - Supabase auth is configured with Google OAuth
 - User info available:
   - `user.id` - unique user ID
@@ -18,11 +21,13 @@ Add author attribution to recipes by storing the creator's name and email, and d
 - Display name logic: `user.user_metadata?.full_name || user.email?.split("@")[0] || "User"`
 
 ### Recipe Creation Flow
+
 - POST `/api/recipes` endpoint handles recipe creation
 - Uses `authenticateRequest()` which returns `userId` and `userEmail`
 - Currently saves recipe data but doesn't store author information
 
 ### Recipe Display
+
 - Recipe page displays: Image → Description → Ingredients → Instructions
 - Description component (`src/components/recipe/description.tsx`) shows description and tags
 - Need to add author attribution after description
@@ -34,11 +39,13 @@ The implementation is split into 4 testable phases. Each phase can be completed 
 ---
 
 ## Phase 1: Database Schema & Types Foundation
+
 **Goal**: Add author fields to database and TypeScript types  
 **Testability**: Verify schema changes and type definitions  
 **Can proceed to Phase 2**: ✅ After database migration and types are updated
 
 ### Step 1: Database Migration
+
 **File**: `supabase/migrations/[timestamp]_add_recipe_authors.sql`
 
 - Add nullable columns to `recipes` table:
@@ -56,16 +63,20 @@ CREATE INDEX IF NOT EXISTS recipes_author_email_idx ON public.recipes (author_em
 ```
 
 ### Step 2: Update TypeScript Types
-**Files**: 
+
+**Files**:
+
 - `src/types/supabase.ts` - update Recipes table Row, Insert, Update types
 - `src/types/recipes.ts` - update GeneratedRecipe and RecipeListItem types if needed
 
 Add `author_name` and `author_email` fields to:
+
 - `Tables["recipes"]["Row"]`
 - `Tables["recipes"]["Insert"]`
 - `Tables["recipes"]["Update"]`
 
 **Phase 1 Testing Checklist**:
+
 - [ ] Database migration runs successfully
 - [ ] Verify columns exist: `SELECT author_name, author_email FROM recipes LIMIT 1;`
 - [ ] TypeScript types compile without errors
@@ -74,14 +85,17 @@ Add `author_name` and `author_email` fields to:
 ---
 
 ## Phase 2: Backend - Save Author Info
+
 **Goal**: Save author information when recipes are created or updated  
 **Testability**: Create/update recipes and verify author fields in database  
 **Can proceed to Phase 3**: ✅ After new recipes save author info correctly
 
 ### Step 3: Update Recipe Creation API
+
 **File**: `src/app/api/recipes/route.ts`
 
 In the `POST` handler:
+
 - Check if recipe exists (already done: `existingRecipe` query around line 423)
 - Extract user info from `authenticateRequest()` result (already available)
 - **Critical**: When updating an existing recipe:
@@ -102,6 +116,7 @@ In the `POST` handler:
 **Note**: Scripted recipes (EDIT_TOKEN) must explicitly have null author fields and will not display "by {username}".
 
 ### Step 4: Update Recipe Refinement API
+
 **File**: `src/app/api/recipes/[slug]/refine/route.ts`
 
 - **Critical**: When refining/updating a recipe, ALWAYS preserve existing `author_name` and `author_email`
@@ -114,6 +129,7 @@ In the `POST` handler:
 - Author attribution should reflect who created the recipe, not who last edited it
 
 **Phase 2 Testing Checklist**:
+
 - [ ] Create new recipe while logged in → verify `author_name` and `author_email` are saved in database
 - [ ] Create new recipe via EDIT_TOKEN → verify `author_name` and `author_email` are `null` in database
 - [ ] Update existing recipe (upsert) → verify existing author fields are preserved
@@ -122,6 +138,7 @@ In the `POST` handler:
 - [ ] Query database directly to verify author fields are set correctly
 
 **Phase 2 Database Verification Queries**:
+
 ```sql
 -- Check recipes with authors
 SELECT slug, name, author_name, author_email FROM recipes WHERE author_name IS NOT NULL LIMIT 5;
@@ -133,11 +150,13 @@ SELECT slug, name, author_name, author_email FROM recipes WHERE author_name IS N
 ---
 
 ## Phase 3: Frontend - Display Author Info
+
 **Goal**: Display "by {username}" on recipe pages  
 **Testability**: View recipes and verify author attribution displays correctly  
 **Can proceed to Phase 4**: ✅ After author attribution displays on recipe pages
 
 ### Step 5: Update Recipe Display Component
+
 **File**: `src/components/recipe/description.tsx`
 
 - Add `authorName` prop (string | null)
@@ -146,15 +165,20 @@ SELECT slug, name, author_name, author_email FROM recipes WHERE author_name IS N
 - Place after description paragraph, before tags section
 
 Example structure:
+
 ```tsx
-{description ? <p className="text-base text-slate-600">{description}</p> : null}
-{authorName ? (
-  <p className="text-sm text-slate-500 italic">by {authorName}</p>
-) : null}
+{
+  description ? <p className="text-base text-slate-600">{description}</p> : null;
+}
+{
+  authorName ? <p className="text-sm text-slate-500 italic">by {authorName}</p> : null;
+}
 ```
 
 ### Step 6: Update Recipe Data Fetching
+
 **Files**:
+
 - `src/app/recipes/[slug]/page.tsx` - ensure author fields are selected
 - `src/hooks/useRecipe.ts` - check if needs updates to handle author fields
 - `src/lib/fetch-recipe-data.ts` - ensure author fields are included in queries
@@ -162,17 +186,20 @@ Example structure:
 Verify that all recipe queries include `author_name` and `author_email` in SELECT statements.
 
 ### Step 7: Handle Existing Recipes
+
 - Existing recipes will have `null` values for `author_name` and `author_email`
 - Display component should gracefully handle null values (don't show "by" line)
 - This is acceptable behavior - existing recipes simply won't show author attribution
 
 ### Step 8: Update Recipe Generation Hook (if needed)
+
 **File**: `src/hooks/useRecipeGeneration.ts`
 
 - When calling `/api/recipes` POST, ensure the authentication token is passed
 - No changes needed to payload structure (author info comes from auth context)
 
 **Phase 3 Testing Checklist**:
+
 - [ ] View recipe created by logged-in user → should show "by {username}" after description
 - [ ] View existing recipe (no author) → should NOT show "by" line
 - [ ] View scripted recipe (null author) → should NOT show "by" line
@@ -182,6 +209,7 @@ Verify that all recipe queries include `author_name` and `author_email` in SELEC
 - [ ] Verify no console errors when viewing recipes
 
 **Phase 3 Manual Testing Steps**:
+
 1. Create a recipe while logged in
 2. Navigate to recipe page
 3. Verify "by {username}" appears after description
@@ -191,11 +219,13 @@ Verify that all recipe queries include `author_name` and `author_email` in SELEC
 ---
 
 ## Phase 4: "My Recipes" Filter
+
 **Goal**: Add "My Recipes" menu item and filter functionality  
 **Testability**: Use menu item and verify filtered recipes  
 **Complete**: ✅ After "My Recipes" filter works correctly
 
 ### Step 9: Add "My Recipes" Menu Item
+
 **File**: `src/components/user-avatar.tsx`
 
 - Add "My Recipes" menu item between user info section and "Sign out" button
@@ -204,6 +234,7 @@ Verify that all recipe queries include `author_name` and `author_email` in SELEC
 - When clicked, close the menu
 
 Example:
+
 ```tsx
 <button
   onClick={() => {
@@ -219,6 +250,7 @@ Example:
 **Note**: Need to import `useRouter`, `usePathname` from `next/navigation`
 
 ### Step 10: Update Feed Layout for "My Recipes" Filter
+
 **File**: `src/app/feed/layout.tsx`
 
 - Read `mine` parameter from URL: `const isMineActive = searchParams.get("mine") === "true"`
@@ -227,6 +259,7 @@ Example:
 - Pass `mine` parameter to `usePaginatedRecipes` hook (via options)
 
 ### Step 10a: Update usePaginatedRecipes Hook
+
 **File**: `src/hooks/usePaginatedRecipes.ts`
 
 - Add `mine?: boolean` to `UsePaginatedRecipesOptions` type
@@ -237,15 +270,18 @@ Example:
 - Add `mine` to the useEffect dependency array for auto-loading
 
 ### Step 10b: Update Feed Page
+
 **File**: `src/app/feed/page.tsx`
 
 - Read `mine` parameter from searchParams: `const mine = searchParams.get("mine") === "true"`
 - Pass `mine` option to `usePaginatedRecipes` hook: `usePaginatedRecipes({ tags: activeTags, searchQuery, favorites, mine })`
 
 ### Step 11: Update Recipes API for "My Recipes" Filter
+
 **File**: `src/app/api/recipes/route.ts`
 
 In the `GET` handler:
+
 - Read `mine` parameter: `const mineParam = searchParams.get("mine"); const showMine = mineParam === "true"`
 - When `showMine` is true:
   - Authenticate the request (require user session, not EDIT_TOKEN)
@@ -255,11 +291,12 @@ In the `GET` handler:
 - `mine` filter works independently from `favorites` filter (can be combined)
 
 Example filtering logic:
+
 ```typescript
 // Apply "mine" filter if requested
 if (showMine && auth.userEmail) {
-  allRecipes = allRecipes.filter((recipe) => 
-    recipe.author_email?.toLowerCase() === auth.userEmail?.toLowerCase()
+  allRecipes = allRecipes.filter(
+    (recipe) => recipe.author_email?.toLowerCase() === auth.userEmail?.toLowerCase(),
   );
 }
 ```
@@ -267,6 +304,7 @@ if (showMine && auth.userEmail) {
 **Note**: Must authenticate request to get user email for filtering.
 
 **Phase 4 Testing Checklist**:
+
 - [ ] "My Recipes" menu item appears in user dropdown
 - [ ] Clicking "My Recipes" navigates to feed with `mine=true` parameter
 - [ ] Feed shows only recipes where `author_email` matches current user
@@ -278,6 +316,7 @@ if (showMine && auth.userEmail) {
 - [ ] Authentication required - returns 401 if not logged in
 
 **Phase 4 Manual Testing Steps**:
+
 1. Log in as User A
 2. Create a recipe (should have User A as author)
 3. Click "My Recipes" in user menu
@@ -337,11 +376,13 @@ After all phases are complete, run these integration tests:
 ## Additional Requirements
 
 ### Scripted Recipes Behavior
+
 - Recipes created via EDIT_TOKEN must have `author_name` and `author_email` set to `null`
 - These recipes should never display "by {username}" attribution
 - This is intentional - scripted/automated recipes are treated as system-generated content
 
 ### Author Field Immutability
+
 - **CRITICAL**: Author fields (`author_name` and `author_email`) are **immutable** after initial creation
 - Once a recipe is created with author info (or null), these fields should NEVER be changed
 - This applies to ALL update scenarios:
@@ -355,6 +396,7 @@ After all phases are complete, run these integration tests:
 - Rationale: Author attribution should always reflect the original creator, not who last edited the recipe
 
 ### My Recipes Feature
+
 - Add "My Recipes" menu item in user dropdown menu
 - Filter uses `mine=true` URL parameter (similar to `favorites=true`)
 - Filters recipes where `author_email` matches authenticated user's email
@@ -370,4 +412,3 @@ After all phases are complete, run these integration tests:
 - Multiple authors per recipe
 - Author avatars next to name
 - Recipe edit/delete functionality for recipe authors
-

@@ -73,7 +73,7 @@ export function RecipeSearchBar({
 
   return (
     <div className="inline-flex">
-      <div className="flex items-center gap-2 rounded-full bg-white my-3 px-3 py-0 hover:bg-gray-100">
+      <div className="my-3 flex items-center gap-2 rounded-full bg-white px-3 py-0 hover:bg-gray-100">
         <div className="flex items-center gap-1">
           <button
             type="button"
@@ -105,7 +105,7 @@ export function RecipeSearchBar({
             {/* Hidden span to measure text width - matches input font styling */}
             <span
               ref={measureRef}
-              className="invisible absolute whitespace-pre text-base sm:text-sm"
+              className="invisible absolute text-base whitespace-pre sm:text-sm"
               aria-hidden="true"
             >
               {displayValue || "\u00A0"}
@@ -121,7 +121,7 @@ export function RecipeSearchBar({
                 width: inputWidth > 0 ? `${inputWidth}px` : "auto",
                 minWidth: showPlaceholder && !value ? "250px" : "20px",
               }}
-              className="border-0 bg-transparent text-base shadow-none outline-none ring-0 placeholder:text-gray-500 focus-visible:border-0 focus-visible:ring-0 focus-visible:ring-offset-0 sm:text-sm sm:placeholder:text-gray-500 pl-1 pr-0"
+              className="border-0 bg-transparent pr-0 pl-1 text-base shadow-none ring-0 outline-none placeholder:text-gray-500 focus-visible:border-0 focus-visible:ring-0 focus-visible:ring-offset-0 sm:text-sm sm:placeholder:text-gray-500"
             />
           </div>
         </div>
