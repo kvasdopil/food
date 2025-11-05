@@ -1,15 +1,17 @@
 "use client";
 
+import Link from "next/link";
 import { TAG_CHIP_PALETTE, TAG_CHIP_PALETTE_INTERACTIVE } from "@/lib/ui-constants";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 type TagChipProps = {
   tag: string;
-  variant?: "static" | "clickable" | "removable";
+  variant?: "static" | "clickable" | "removable" | "link";
   index?: number;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>, tag: string) => void;
   onRemove?: (e: React.MouseEvent<HTMLButtonElement>, tag: string) => void;
+  href?: string;
   className?: string;
   "aria-label"?: string;
 };
@@ -19,6 +21,7 @@ type TagChipProps = {
  * - static: Non-interactive span (for recipe detail pages)
  * - clickable: Interactive button (for recipe cards, filter toggling)
  * - removable: Button with remove icon (for search bar active tags)
+ * - link: Interactive link (for navigation, e.g., recipe page tags)
  */
 export function TagChip({
   tag,
@@ -26,6 +29,7 @@ export function TagChip({
   index = 0,
   onClick,
   onRemove,
+  href,
   className = "",
   "aria-label": ariaLabel,
 }: TagChipProps) {
@@ -43,13 +47,35 @@ export function TagChip({
     );
   }
 
+  if (variant === "link") {
+    if (!href) {
+      console.warn(`TagChip with variant="link" requires an href prop`);
+      return null;
+    }
+    return (
+      <Badge
+        asChild
+        variant="outline"
+        className={cn(
+          "relative z-10 cursor-pointer rounded-full border-0 px-2 py-0.5 text-xs font-medium transition-all sm:px-3 sm:py-1 sm:text-sm",
+          colorClass,
+          className,
+        )}
+      >
+        <Link href={href} aria-label={ariaLabel || `Filter by ${tag}`}>
+          {tag}
+        </Link>
+      </Badge>
+    );
+  }
+
   if (variant === "removable") {
     return (
       <Badge
         asChild
         variant="outline"
         className={cn(
-          "inline-flex items-center gap-1.5 rounded-full border-0 px-2 py-0.5 text-xs font-medium transition hover:opacity-80",
+          "inline-flex items-center gap-1.5 rounded-full border-0 px-2 py-0.5 text-xs font-medium cursor-pointer transition hover:opacity-80",
           colorClass,
           className,
         )}

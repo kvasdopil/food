@@ -6,6 +6,7 @@
 - [Supabase](https://supabase.com) (Postgres + Auth + Storage)
 - [idb](https://github.com/jakearchibald/idb) for IndexedDB persistence
 - [Vercel Analytics](https://vercel.com/analytics) for endpoint tracking and observability
+- [Jest](https://jestjs.io) for testing with React Testing Library
 - Ready for [Vercel](https://vercel.com) deployment
 
 ## Local Setup
@@ -109,6 +110,7 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
 - **US-17**: As a user, I want to remove individual tag filters or clear all filters so I can adjust my search criteria. ✅ **Implemented**: Individual tags can be removed via X button on each tag; the clear button in the search bar removes both search query and all active tags.
 - **US-18**: As a user, I want tag filters to persist in the URL so I can bookmark filtered views and share them with others. ✅ **Implemented**: Tag filters are stored in URL query parameters.
 - **US-19**: As a user, I want tags to be clickable buttons so I can easily filter recipes. ✅ **Implemented**: Tags are clickable buttons that toggle filters.
+- **US-40**: As a user, I want to click on tags on recipe pages to navigate to the feed filtered by that tag so I can discover similar recipes. ✅ **Implemented**: Tags on recipe detail pages are clickable links (using Next.js Link) that navigate to `/feed` with the selected tag as a filter. Tags use the "link" variant of TagChip for proper semantic HTML and browser link behavior (shows URL on hover, supports right-click to open in new tab).
 
 #### Favorites
 
@@ -162,7 +164,7 @@ The following user stories are planned but not yet implemented:
 - **My Recipes Filter**: Logged-in users can access "My Recipes" from the user menu to filter recipes to show only those they created. Uses a special "mine" tag (`/feed?tags=mine`) that is processed specially by the API (filtered by `author_email` matching the current user, but not stored as a regular tag in the database). The filter requires authentication and shows an empty state message if no recipes are found. URL parameters are preserved during page refresh.
 - **Shuffled feed order**: Recipes in the feed are shuffled deterministically based on the current date. The same date produces the same shuffle order, ensuring a stable sequence throughout the day. The shuffle order changes daily, providing variety while maintaining consistency during browsing sessions.
 - **Search functionality**: Search bar in feed layout allows searching recipes by name or tags. Search query is debounced (300ms) and persists in URL as `q=` parameter. Can be combined with tag filters (e.g., `/feed?tags=vegetarian&q=pasta`). Search state is managed in the persistent feed layout to prevent remounting during navigation.
-- Tag filtering: Users can click tags on recipe cards to toggle filters. Active tags are displayed inline within the search bar, positioned between the magnifier icon and input field, with individual remove buttons on each tag. The clear button (X) removes both the search query and all active tags. Filters persist in the URL using `+` separator (e.g., `/feed?tags=vegetarian+italian`). Tag filtering works on both desktop and mobile views. On mobile, the search input shows no placeholder text for a cleaner interface.
+- Tag filtering: Users can click tags on recipe cards to toggle filters. Tags on recipe detail pages are clickable links that navigate to the feed page with that tag filtered. Active tags are displayed inline within the search bar, positioned between the magnifier icon and input field, with individual remove buttons on each tag (tags have `cursor:pointer` styling). The clear button (X) removes both the search query and all active tags. Filters persist in the URL using `+` separator (e.g., `/feed?tags=vegetarian+italian`). Tag filtering works on both desktop and mobile views. On mobile, the search input shows no placeholder text for a cleaner interface.
 - Feed layout `src/app/feed/layout.tsx` contains the search bar (with integrated tag display) in a persistent layout that doesn't remount during navigation, ensuring search state is preserved. Includes Favorites toggle (heart icon) to the left of the search bar for filtering to show only liked recipes. Includes Add Recipe button (visible for logged-in users) that opens a responsive modal for adding recipes. Wrapped with `LikesProvider` context to efficiently manage likes state across all recipe cards.
 - Dynamic route `src/app/recipes/[slug]/page.tsx` handles metadata generation only; rendering is handled by the layout.
 - Layout `src/app/recipes/layout.tsx` manages recipe rendering and includes a back-to-feed link in the top-left corner (links to `/feed` with `cursor: pointer`). Recipes render normally on all screen sizes (no mobile carousel).
@@ -413,13 +415,13 @@ This architecture provides stateful navigation that tracks forward and backward 
 - `src/app/page.tsx`: server component redirecting to `/feed`.
 - `src/app/feed/layout.tsx`: client component providing persistent feed layout with search bar (tags displayed inline between magnifier and input). Manages search query state and URL synchronization. Wrapped with `LikesProvider` for efficient likes management. Includes Favorites toggle, Add Recipe button (visible for logged-in users), and Add Recipe modal.
 - `src/app/feed/page.tsx`: client component displaying paginated recipe feed with infinite scroll. Reads search query and tags from URL. Responsive grid layout works on all screen sizes.
-- `src/components/recipe-search-bar.tsx`: search bar component with magnifier icon, inline tag display (positioned between magnifier icon and input field), and clear button that clears both search and tags. Uses shadcn Input and Button components. Tags are displayed as chips with individual remove buttons. On mobile, no placeholder text is shown. Input width dynamically matches text content. Search bar container uses flex-1 to fill available space.
+- `src/components/recipe-search-bar.tsx`: search bar component with magnifier icon, inline tag display (positioned between magnifier icon and input field), and clear button that clears both search and tags. Uses shadcn Input and Button components. Tags are displayed as chips with individual remove buttons and `cursor:pointer` styling. On mobile, no placeholder text is shown. Input width dynamically matches text content. Search bar container uses flex-1 to fill available space.
 - `src/components/add-recipe-button.tsx`: button component using shadcn Button with ghost variant. Transparent background and dark-gray plus icon. Only visible for logged-in users.
 - `src/components/add-recipe-modal.tsx`: responsive modal component using shadcn Dialog for adding recipes. Fullscreen on mobile, centered window on desktop. Allows users to enter natural language descriptions of meals, generates recipes using AI (with ingredients, instructions, tags), automatically generates preview images, and saves recipes to the database. Uses shadcn Button and Alert components. Closes on Escape key or clicking outside. Uses Supabase authentication for API calls.
 - `src/components/recipe-feed-card.tsx`: recipe card component for feed page using shadcn Card and CardContent. Displays image, title overlay, description, clickable tags (toggle filters), and favorite button.
-- `src/components/recipe/description.tsx`: description component that displays recipe description, author attribution ("by {username}"), tags, and favorite button. Author attribution only shows for recipes with author information (scripted recipes don't show attribution).
+- `src/components/recipe/description.tsx`: description component that displays recipe description, author attribution ("by {username}"), clickable tag links (navigate to feed with tag filtered), and favorite button. Author attribution only shows for recipes with author information (scripted recipes don't show attribution). Tags use the "link" variant of TagChip for proper semantic HTML and navigation.
 - `src/components/user-avatar.tsx`: user avatar component with dropdown menu. Includes "My Recipes" option that navigates to `/feed?tags=mine` to filter recipes by the current user.
-- `src/components/tag-chip.tsx`: tag chip component using shadcn Badge with custom color palettes. Supports static, clickable, and removable variants.
+- `src/components/tag-chip.tsx`: tag chip component using shadcn Badge with custom color palettes. Supports static (non-interactive), clickable (button that triggers onClick), removable (button with remove icon for search bar), and link (Next.js Link for navigation) variants. Tags in the search bar use the removable variant with `cursor:pointer` styling.
 - `src/components/favorite-button.tsx`: favorite button component using shadcn Button. Used on recipe feed cards and recipe detail pages. Uses `useFavorites` hook which reads from `LikesContext` for instant like status access.
 - `src/components/favorites-toggle.tsx`: favorites filter toggle button in feed layout. Heart icon with circular background matching Add Recipe button style. Filters feed to show only liked recipes.
 - `src/contexts/likes-context.tsx`: React Context provider that fetches all user likes once via `/api/recipes/likes` endpoint and stores them locally in a Set for O(1) lookup. Provides `isLiked()`, `toggleLike()`, and `refreshLikes()` functions. Wraps feed and recipes layouts to provide likes state across all components.
@@ -687,10 +689,29 @@ The application uses **Vercel Analytics** to track API endpoint usage and user a
 
 - Extend the schema (servings, nutrition, user auth) in new migrations as requirements grow.
 
+## Testing
+
+The project uses [Jest](https://jestjs.io) with React Testing Library for unit and integration testing. Tests are located in the `src/test/` directory.
+
+### Running Tests
+
+```bash
+yarn test              # Run tests once
+yarn test:watch        # Run tests in watch mode
+```
+
+### Test Configuration
+
+- Jest is configured via `jest.config.js` using Next.js's `next/jest` helper
+- Test setup file: `src/test/setup.ts` (configures `@testing-library/jest-dom`)
+- Test environment: `jest-environment-jsdom` for React component testing
+- Path aliases (`@/*`) are configured to match the project's TypeScript paths
+
 ## Code Quality & Maintenance
 
 The project includes code quality tools configured for maintaining clean, maintainable code:
 
+- **Jest**: Unit and integration testing with React Testing Library
 - **ESLint**: TypeScript and React linting with Next.js configuration
 - **Prettier**: Code formatting with Tailwind CSS plugin
 - **Knip**: Dead code detection for unused dependencies and exports
@@ -699,6 +720,7 @@ The project includes code quality tools configured for maintaining clean, mainta
 ### Running Quality Checks
 
 ```bash
+yarn test              # Run tests
 yarn lint              # TypeScript type checking + ESLint
 yarn lint:prettier     # Check Prettier formatting
 yarn lint:knip         # Check for unused code/dependencies

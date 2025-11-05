@@ -1,5 +1,8 @@
+"use client";
+
 import { FavoriteButton } from "@/components/favorite-button";
 import { TagChip } from "@/components/tag-chip";
+import { buildFeedUrlWithTagsAndSearch } from "@/lib/tag-utils";
 
 type DescriptionProps = {
   slug: string;
@@ -20,9 +23,18 @@ export function Description({ slug, description, tags, authorName }: Description
 
       <div className="flex flex-wrap items-center gap-2">
         <FavoriteButton slug={slug} />
-        {tags.map((tag, index) => (
-          <TagChip key={tag} tag={tag} variant="static" index={index} />
-        ))}
+        {tags.map((tag, index) => {
+          const href = buildFeedUrlWithTagsAndSearch([tag.toLowerCase()]);
+          return (
+            <TagChip
+              key={tag}
+              tag={tag}
+              variant="link"
+              href={href}
+              index={index}
+            />
+          );
+        })}
       </div>
     </section>
   );
