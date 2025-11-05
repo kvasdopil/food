@@ -112,8 +112,8 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
 
 #### Favorites
 
-- **US-20**: As a user, I want to favorite/unfavorite recipes using a heart button so I can save recipes I'm interested in. ✅ **Implemented**: Heart button on recipe cards and recipe pages. Logged-in users can like/unlike recipes, which are stored in the database. Logged-out users are prompted to log in when clicking the heart button.
-- **US-21**: As a user, I want my favorites to persist across page reloads so my saved recipes aren't lost when I refresh. ✅ **Implemented**: Favorites are stored per-user in the database (`recipe_likes` table) and persist across sessions and devices.
+- **US-20**: As a user, I want to favorite/unfavorite recipes using a heart button so I can save recipes I'm interested in. ✅ **Implemented**: Heart button on recipe cards and recipe pages. Logged-in users can like/unlike recipes, which are stored in the database. Logged-out users are prompted to log in when clicking the heart button. Likes are fetched once on feed load and stored locally for efficient access across all recipe cards.
+- **US-21**: As a user, I want my favorites to persist across page reloads so my saved recipes aren't lost when I refresh. ✅ **Implemented**: Favorites are stored per-user in the database (`recipe_likes` table) and persist across sessions and devices. Likes are cached locally using React Context for instant access without individual API calls per recipe.
 
 #### Sharing
 
@@ -151,11 +151,11 @@ The following user stories are planned but not yet implemented:
 
 - Home route `/` server-redirects to `/feed`.
 - Feed route `/feed` displays a scrollable grid/list of recipes with pagination (20 per page), infinite scroll, and favorite functionality. Responsive grid layout: single column on mobile, up to 4 columns on desktop (1 column mobile, 2 columns sm, 3 columns lg, 4 columns xl).
-- **Favorites/Likes**: Users can like/unlike recipes using the heart button on recipe cards and pages. Likes are stored per-user in the database (`recipe_likes` table). A favorites toggle (heart icon) in the feed layout allows filtering to show only liked recipes. The toggle works with tags and search filters. Logged-out users are prompted to log in when attempting to like recipes or use the favorites filter.
+- **Favorites/Likes**: Users can like/unlike recipes using the heart button on recipe cards and pages. Likes are stored per-user in the database (`recipe_likes` table). A favorites toggle (heart icon) in the feed layout allows filtering to show only liked recipes. The toggle works with tags and search filters. Logged-out users are prompted to log in when attempting to like recipes or use the favorites filter. **Performance optimization**: All likes are fetched once when the feed loads via `/api/recipes/likes` endpoint and stored in `LikesContext` for instant access across all recipe cards, eliminating the need for individual API calls per recipe.
 - **Shuffled feed order**: Recipes in the feed are shuffled deterministically based on the current date. The same date produces the same shuffle order, ensuring a stable sequence throughout the day. The shuffle order changes daily, providing variety while maintaining consistency during browsing sessions.
 - **Search functionality**: Search bar in feed layout allows searching recipes by name or tags. Search query is debounced (300ms) and persists in URL as `q=` parameter. Can be combined with tag filters (e.g., `/feed?tags=vegetarian&q=pasta`). Search state is managed in the persistent feed layout to prevent remounting during navigation.
-- Tag filtering: Users can click tags on recipe cards to toggle filters. Active tags are displayed inline within the search bar, between the search icon and input field, with individual remove buttons on each tag. The clear button (X) removes both the search query and all active tags. Filters persist in the URL using `+` separator (e.g., `/feed?tags=vegetarian+italian`). Tag filtering works on both desktop and mobile views.
-- Feed layout `src/app/feed/layout.tsx` contains the search bar (with integrated tag display) in a persistent layout that doesn't remount during navigation, ensuring search state is preserved. Includes Favorites toggle (heart icon) to the left of the search bar for filtering to show only liked recipes. Includes Add Recipe button (visible for logged-in users) that opens a responsive modal for adding recipes.
+- Tag filtering: Users can click tags on recipe cards to toggle filters. Active tags are displayed inline within the search bar, positioned between the magnifier icon and input field, with individual remove buttons on each tag. The clear button (X) removes both the search query and all active tags. Filters persist in the URL using `+` separator (e.g., `/feed?tags=vegetarian+italian`). Tag filtering works on both desktop and mobile views. On mobile, the search input shows no placeholder text for a cleaner interface.
+- Feed layout `src/app/feed/layout.tsx` contains the search bar (with integrated tag display) in a persistent layout that doesn't remount during navigation, ensuring search state is preserved. Includes Favorites toggle (heart icon) to the left of the search bar for filtering to show only liked recipes. Includes Add Recipe button (visible for logged-in users) that opens a responsive modal for adding recipes. Wrapped with `LikesProvider` context to efficiently manage likes state across all recipe cards.
 - Dynamic route `src/app/recipes/[slug]/page.tsx` handles metadata generation only; rendering is handled by the layout.
 - Layout `src/app/recipes/layout.tsx` manages recipe rendering and includes a back-to-feed link in the top-left corner (links to `/feed` with `cursor: pointer`). Recipes render normally on all screen sizes (no mobile carousel).
 - Navigation history checks use `document.referrer` to ensure same-origin navigation (prevents "about:blank" issues). Previous navigation is disabled/hidden when there's no same-origin history.
@@ -188,9 +188,12 @@ The app has three main routes:
 - **Persistent layout** that contains search bar with integrated tag display
 - Prevents remounting during navigation, ensuring search state is preserved
 - Manages search query synchronization with URL (`?q=searchterm`)
+- Wrapped with `LikesProvider` to efficiently fetch and cache all user likes once on feed load
 - Contains:
-  - Search bar (`RecipeSearchBar`) - searches by recipe name and tags, displays active tags inline between search icon and input field
-  - Add Recipe button (`AddRecipeButton`) - appears to the left of the avatar for logged-in users, opens add recipe modal
+  - Search bar (`RecipeSearchBar`) - searches by recipe name and tags, displays active tags inline between magnifier icon and input field. On mobile, no placeholder text is shown. Search bar container uses flex-1 to fill available space, pushing action buttons to the right.
+  - Favorites toggle (`FavoritesToggle`) - heart icon button with circular background matching the Add Recipe button style, positioned to the left of the search bar
+  - Add Recipe button (`AddRecipeButton`) - appears to the right of the search bar for logged-in users, opens add recipe modal
+  - User Avatar (`UserAvatar`) - positioned to the right of Add Recipe button
   - Add Recipe modal (`AddRecipeModal`) - responsive modal (fullscreen on mobile, centered window on desktop) for generating recipes from natural language input
   - Wraps feed page content
 
@@ -290,18 +293,19 @@ Navigation history is managed via **session storage** (`recipe-history.ts`):
 
 ```
 Feed Layout (`/feed`)
+├── LikesProvider - fetches all user likes once and stores locally for efficient access
 ├── FeedLayoutContent (persistent layout)
-│   ├── FavoritesToggle - heart icon to left of search bar, filters to show only liked recipes
-│   ├── RecipeSearchBar - search by name and tags, displays active tags inline
-│   ├── AddRecipeButton - appears to left of avatar for logged-in users
-│   ├── UserAvatar - user profile/authentication button
+│   ├── FavoritesToggle - heart icon with circular background, positioned to left of search bar, filters to show only liked recipes
+│   ├── RecipeSearchBar - search by name and tags, displays active tags inline between magnifier and input, no placeholder on mobile
+│   ├── AddRecipeButton - appears to right of search bar for logged-in users
+│   ├── UserAvatar - user profile/authentication button, positioned to right of Add Recipe button
 │   ├── AddRecipeModal - responsive modal for adding recipes (fullscreen on mobile, window on desktop)
 │   └── Feed Page Content (children)
 │       └── RecipeFeedCard grid (responsive: 1 col mobile, 2 sm, 3 lg, 4 xl)
 │           ├── Image with title overlay
 │           ├── Description
 │           ├── Tags (clickable buttons, toggle filters)
-│           └── Favorite button (database-backed, requires authentication)
+│           └── Favorite button (uses LikesContext for instant like status, database-backed, requires authentication)
 
 Search & Tag Filtering Infrastructure
 ├── useTags hook (src/hooks/useTags.ts)
@@ -399,14 +403,17 @@ This architecture provides stateful navigation that tracks forward and backward 
 ## Page Structure
 
 - `src/app/page.tsx`: server component redirecting to `/feed`.
-- `src/app/feed/layout.tsx`: client component providing persistent feed layout with search bar (tags displayed inline). Manages search query state and URL synchronization. Includes Add Recipe button (visible for logged-in users) and Add Recipe modal.
+- `src/app/feed/layout.tsx`: client component providing persistent feed layout with search bar (tags displayed inline between magnifier and input). Manages search query state and URL synchronization. Wrapped with `LikesProvider` for efficient likes management. Includes Favorites toggle, Add Recipe button (visible for logged-in users), and Add Recipe modal.
 - `src/app/feed/page.tsx`: client component displaying paginated recipe feed with infinite scroll. Reads search query and tags from URL. Responsive grid layout works on all screen sizes.
-- `src/components/recipe-search-bar.tsx`: search bar component with search icon, inline tag display (between icon and input), and clear button that clears both search and tags. Uses shadcn Input and Button components. Tags are displayed as chips with individual remove buttons.
+- `src/components/recipe-search-bar.tsx`: search bar component with magnifier icon, inline tag display (positioned between magnifier icon and input field), and clear button that clears both search and tags. Uses shadcn Input and Button components. Tags are displayed as chips with individual remove buttons. On mobile, no placeholder text is shown. Input width dynamically matches text content. Search bar container uses flex-1 to fill available space.
 - `src/components/add-recipe-button.tsx`: button component using shadcn Button with ghost variant. Transparent background and dark-gray plus icon. Only visible for logged-in users.
 - `src/components/add-recipe-modal.tsx`: responsive modal component using shadcn Dialog for adding recipes. Fullscreen on mobile, centered window on desktop. Allows users to enter natural language descriptions of meals, generates recipes using AI (with ingredients, instructions, tags), automatically generates preview images, and saves recipes to the database. Uses shadcn Button and Alert components. Closes on Escape key or clicking outside. Uses Supabase authentication for API calls.
 - `src/components/recipe-feed-card.tsx`: recipe card component for feed page using shadcn Card and CardContent. Displays image, title overlay, description, clickable tags (toggle filters), and favorite button.
 - `src/components/tag-chip.tsx`: tag chip component using shadcn Badge with custom color palettes. Supports static, clickable, and removable variants.
-- `src/components/favorite-button.tsx`: favorite button component using shadcn Button. Used on recipe feed cards and recipe detail pages.
+- `src/components/favorite-button.tsx`: favorite button component using shadcn Button. Used on recipe feed cards and recipe detail pages. Uses `useFavorites` hook which reads from `LikesContext` for instant like status access.
+- `src/components/favorites-toggle.tsx`: favorites filter toggle button in feed layout. Heart icon with circular background matching Add Recipe button style. Filters feed to show only liked recipes.
+- `src/contexts/likes-context.tsx`: React Context provider that fetches all user likes once via `/api/recipes/likes` endpoint and stores them locally in a Set for O(1) lookup. Provides `isLiked()`, `toggleLike()`, and `refreshLikes()` functions. Wraps feed and recipes layouts to provide likes state across all components.
+- `src/hooks/useFavorites.ts`: hook for managing favorite status of a recipe. Uses `LikesContext` for efficient local state management instead of individual API calls per recipe. Provides `isFavorite`, `toggleFavorite`, `isLoading`, and `error` states.
 - `src/components/share-recipe-button.tsx`: share button component using shadcn Button with icon and button variants.
 - `src/components/error-state.tsx`: error state component using shadcn Button for retry functionality.
 - `src/components/recipe-input-form.tsx`: recipe input form component using shadcn Button and Alert components for form submission and error/auth warnings.
@@ -589,7 +596,7 @@ The script will:
    - Forward navigation reuses history entries (no API call needed)
 8. **Back to Feed**: Link in top-left of recipe pages navigates to `/feed` with `cursor: pointer` styling (preserves feed scroll position via browser history)
 9. **Supabase**: Trigger `generate_recipe_slug` ensures unique slugs with `-2`, `-3`, etc. suffixes
-10. **Favorites**: Stored in browser `localStorage` (key: `recipe-favorites`) as array of slugs, persist across page reloads
+10. **Favorites**: Stored per-user in the database (`recipe_likes` table) and persist across sessions and devices. All likes are fetched once when the feed loads via `/api/recipes/likes` endpoint and cached in `LikesContext` for instant access across all recipe cards. This eliminates the need for individual API calls per recipe, significantly improving performance.
 11. **Recipe Caching & Persistence**:
     - Centralized recipe store (`src/lib/recipe-store.ts`) manages both partial data (from feed) and full data (from detail pages)
     - Partial data (image, name, description, tags) stored automatically when feed loads
@@ -623,6 +630,9 @@ The application uses **Vercel Analytics** to track API endpoint usage and user a
 - `POST /api/images` - Image uploads
 - `POST /api/images/generate-preview` - Preview image generation
 - `DELETE /api/recipes/[slug]` - Recipe deletion
+- `GET /api/recipes/likes` - Get all liked recipe slugs for current user (used by LikesContext)
+- `GET /api/recipes/[slug]/like` - Get like status for a specific recipe
+- `POST /api/recipes/[slug]/like` - Toggle like status for a recipe
 
 **Public Endpoints** (no authentication required):
 

@@ -11,6 +11,7 @@ import { useTags } from "@/hooks/useTags";
 import { useAuth } from "@/hooks/useAuth";
 import { useSearchQuery } from "@/hooks/useSearchQuery";
 import { storeFeedUrl } from "@/lib/tag-utils";
+import { LikesProvider } from "@/contexts/likes-context";
 
 function FeedLayoutContent({ children }: { children: React.ReactNode }) {
   const searchParams = useSearchParams();
@@ -57,19 +58,17 @@ function FeedLayoutContent({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-white">
       <main className="mx-auto max-w-7xl sm:px-6 sm:py-6 lg:px-8">
-        <div className="px-4 pt-0 sm:px-0 sm:pt-0">
+        <div className="pl-2 pr-4 pt-0 sm:px-0 sm:pt-0">
           <div className="flex items-center gap-3">
-            <div className="flex flex-1 items-center gap-2">
+            <div className="flex flex-1 items-center">
               <FavoritesToggle isActive={isFavoritesActive} onToggle={toggleFavorites} />
-              <div className="flex-1">
-                <RecipeSearchBar
-                  value={query}
-                  onChange={setQuery}
-                  activeTags={activeTags}
-                  onRemoveTag={removeTag}
-                  onClearAllTags={clearAllTags}
-                />
-              </div>
+              <RecipeSearchBar
+                value={query}
+                onChange={setQuery}
+                activeTags={activeTags}
+                onRemoveTag={removeTag}
+                onClearAllTags={clearAllTags}
+              />
             </div>
             <div className="flex items-center gap-2">
               {user && <AddRecipeButton onClick={() => setIsModalOpen(true)} />}
@@ -86,8 +85,10 @@ function FeedLayoutContent({ children }: { children: React.ReactNode }) {
 
 export default function FeedLayout({ children }: { children: React.ReactNode }) {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-white" />}>
-      <FeedLayoutContent>{children}</FeedLayoutContent>
-    </Suspense>
+    <LikesProvider>
+      <Suspense fallback={<div className="min-h-screen bg-white" />}>
+        <FeedLayoutContent>{children}</FeedLayoutContent>
+      </Suspense>
+    </LikesProvider>
   );
 }

@@ -27,9 +27,10 @@ export function FavoritesToggle({ isActive, onToggle }: FavoritesToggleProps) {
     <Button
       type="button"
       variant="ghost"
+      size="icon"
       aria-pressed={isActive}
       onClick={handleClick}
-      className="h-auto w-auto p-0 transition hover:opacity-80 [&_svg]:!size-6"
+      className="rounded-full [&_svg]:!size-6"
       aria-label={
         isActive
           ? "Show all recipes"

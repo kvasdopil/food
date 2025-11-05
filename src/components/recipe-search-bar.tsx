@@ -25,9 +25,10 @@ export function RecipeSearchBar({
   onClearAllTags,
 }: RecipeSearchBarProps) {
   const hasTags = activeTags.length > 0;
-  const [isFocused, setIsFocused] = useState(false);
   const [isMobile, setIsMobile] = useState(true);
+  const [inputWidth, setInputWidth] = useState<number>(200);
   const inputRef = useRef<HTMLInputElement>(null);
+  const measureRef = useRef<HTMLSpanElement>(null);
 
   // Detect if we're on mobile (less than sm breakpoint: 640px)
   useEffect(() => {
@@ -40,54 +41,92 @@ export function RecipeSearchBar({
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  // Show placeholder only on desktop (never on mobile)
+  const showPlaceholder = !isMobile;
+
+  // Measure text width to set input width
+  useEffect(() => {
+    const measureWidth = () => {
+      if (measureRef.current && inputRef.current) {
+        const measureWidth = measureRef.current.offsetWidth;
+        // Get computed styles to account for padding
+        const computedStyle = window.getComputedStyle(inputRef.current);
+        const paddingLeft = parseFloat(computedStyle.paddingLeft) || 0;
+        const paddingRight = parseFloat(computedStyle.paddingRight) || 0;
+        // Set minimum width for placeholder visibility, or measured width + padding
+        const minWidth = showPlaceholder && !value ? 250 : 20;
+        const newWidth = Math.max(minWidth, measureWidth + paddingLeft + paddingRight);
+        setInputWidth(newWidth);
+      }
+    };
+
+    // Use requestAnimationFrame to ensure DOM is updated
+    requestAnimationFrame(measureWidth);
+  }, [value, isMobile, showPlaceholder]);
+
   const handleMagnifierClick = () => {
     inputRef.current?.focus();
   };
 
-  // Show placeholder on desktop always, or on mobile when focused
-  const showPlaceholder = !isMobile || isFocused;
+  const displayValue = value || (showPlaceholder ? "" : placeholder);
+  const showClearButton = value.length > 0;
 
   return (
-    <div>
-      <div className="flex items-center gap-2 rounded-lg bg-white px-3 py-3 hover:shadow-md">
-        <button
-          type="button"
-          onClick={handleMagnifierClick}
-          className="flex-shrink-0 cursor-pointer text-gray-600 hover:text-gray-800"
-          aria-label="Focus search"
-        >
-          <HiMagnifyingGlass className="h-5 w-5" />
-        </button>
+    <div className="inline-flex">
+      <div className="flex items-center gap-2 rounded-full bg-white my-3 px-3 py-0 hover:bg-gray-100">
+        <div className="flex items-center gap-1">
+          <button
+            type="button"
+            onClick={handleMagnifierClick}
+            className="flex-shrink-0 cursor-pointer text-gray-600 hover:text-gray-800"
+            aria-label="Focus search"
+          >
+            <HiMagnifyingGlass className="h-5 w-5" />
+          </button>
 
-        {hasTags && (
-          <div className="flex flex-shrink-0 items-center gap-2">
-            {activeTags.map((tag, index) => (
-              <TagChip
-                key={tag}
-                tag={tag}
-                variant="removable"
-                index={index}
-                onRemove={(e, tag) => {
-                  e.stopPropagation();
-                  onRemoveTag?.(tag);
-                }}
-              />
-            ))}
+          {hasTags && (
+            <div className="flex flex-shrink-0 items-center gap-2">
+              {activeTags.map((tag, index) => (
+                <TagChip
+                  key={tag}
+                  tag={tag}
+                  variant="removable"
+                  index={index}
+                  onRemove={(e, tag) => {
+                    e.stopPropagation();
+                    onRemoveTag?.(tag);
+                  }}
+                />
+              ))}
+            </div>
+          )}
+
+          <div className="relative inline-flex items-center">
+            {/* Hidden span to measure text width - matches input font styling */}
+            <span
+              ref={measureRef}
+              className="invisible absolute whitespace-pre text-base sm:text-sm"
+              aria-hidden="true"
+            >
+              {displayValue || "\u00A0"}
+            </span>
+
+            <Input
+              ref={inputRef}
+              type="text"
+              placeholder={showPlaceholder ? placeholder : ""}
+              value={value}
+              onChange={(e) => onChange(e.target.value)}
+              style={{
+                width: inputWidth > 0 ? `${inputWidth}px` : "auto",
+                minWidth: showPlaceholder && !value ? "250px" : "20px",
+              }}
+              className="border-0 bg-transparent text-base shadow-none outline-none ring-0 placeholder:text-gray-500 focus-visible:border-0 focus-visible:ring-0 focus-visible:ring-offset-0 sm:text-sm sm:placeholder:text-gray-500 pl-1 pr-0"
+            />
           </div>
-        )}
+        </div>
 
-        <Input
-          ref={inputRef}
-          type="text"
-          placeholder={showPlaceholder ? placeholder : ""}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-          className="flex-1 border-0 bg-transparent text-base shadow-none outline-none ring-0 placeholder:text-gray-500 focus-visible:border-0 focus-visible:ring-0 focus-visible:ring-offset-0 sm:text-sm sm:placeholder:text-gray-500"
-        />
-
-        {(value || hasTags) && (
+        {showClearButton && (
           <Button
             type="button"
             variant="ghost"

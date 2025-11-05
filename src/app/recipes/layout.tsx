@@ -9,6 +9,7 @@ import { RecipeSideNav } from "@/components/recipe-side-nav";
 import { NavigationProvider } from "./[slug]/client/navigation-provider";
 import { Recipe } from "@/components/recipe/recipe";
 import { getBackToFeedUrl } from "@/lib/tag-utils";
+import { LikesProvider } from "@/contexts/likes-context";
 
 type RecipesLayoutProps = {
   children: React.ReactNode;
@@ -31,8 +32,9 @@ export default function RecipesLayout({ children }: RecipesLayoutProps) {
   }
 
   return (
-    <NavigationProvider currentSlug={slug}>
-      <main className="relative h-screen overflow-hidden bg-slate-50 text-slate-900">
+    <LikesProvider>
+      <NavigationProvider currentSlug={slug}>
+        <main className="relative h-screen overflow-hidden bg-slate-50 text-slate-900">
         <KeyboardNav currentSlug={slug} />
 
         {/* Back to feed button */}
@@ -70,5 +72,6 @@ export default function RecipesLayout({ children }: RecipesLayoutProps) {
         </div>
       </main>
     </NavigationProvider>
+    </LikesProvider>
   );
 }
