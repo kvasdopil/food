@@ -1,4 +1,4 @@
-- list liked meals
+- ✅ list liked meals - **Implemented**: Favorites filter toggle (heart icon) in feed allows filtering to show only liked recipes. Works with tags and search.
 - remove slider and 'next recipe' button, make it a simple 2-level structure on mobile and web
 - add feed to 'recipe' view on desktop?
 - add recipe via agent
@@ -14,6 +14,8 @@
 - propose meal ideas in generate window
 - make generate window a generate page
 - stream llm generation output and populate generate result
+- save creator's username 
+- add 'my recipes' page
 - scenario:
   - generate 3 variations of the same meal
 - scenario:

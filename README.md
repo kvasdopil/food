@@ -112,8 +112,8 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
 
 #### Favorites
 
-- **US-20**: As a user, I want to favorite/unfavorite recipes using a heart button so I can save recipes I'm interested in.
-- **US-21**: As a user, I want my favorites to persist across page reloads (stored in localStorage) so my saved recipes aren't lost when I refresh.
+- **US-20**: As a user, I want to favorite/unfavorite recipes using a heart button so I can save recipes I'm interested in. ✅ **Implemented**: Heart button on recipe cards and recipe pages. Logged-in users can like/unlike recipes, which are stored in the database. Logged-out users are prompted to log in when clicking the heart button.
+- **US-21**: As a user, I want my favorites to persist across page reloads so my saved recipes aren't lost when I refresh. ✅ **Implemented**: Favorites are stored per-user in the database (`recipe_likes` table) and persist across sessions and devices.
 
 #### Sharing
 
@@ -140,7 +140,7 @@ supabase db reset --yes   # optional: reset + seed (only on empty databases)
 
 The following user stories are planned but not yet implemented:
 
-- **US-30**: As a user, I want to see a dedicated page listing all my favorited recipes so I can easily access my saved recipes.
+- **US-30**: As a user, I want to see a dedicated page listing all my favorited recipes so I can easily access my saved recipes. ✅ **Partially Implemented**: Favorites filter toggle (heart icon) in the feed layout allows filtering to show only liked recipes. Works with tags and search filters. A dedicated favorites page could be added in the future.
 - **US-31**: As a user, I want to search for recipes by name or keywords so I can quickly find specific recipes. ✅ **Implemented**: Search bar in feed layout allows searching by recipe name and tags. Search query persists in URL as `q=` parameter and can be combined with tag filters (e.g., `/feed?tags=vegetarian&q=pasta`).
 - **US-32**: As a user, I want the feed to preserve scroll position when navigating back from a recipe page so I don't lose my place while browsing.
 - **US-33**: As a user, I want to see recipe variations (e.g., vegetarian versions) so I can find alternative versions of recipes I like.
@@ -151,10 +151,11 @@ The following user stories are planned but not yet implemented:
 
 - Home route `/` server-redirects to `/feed`.
 - Feed route `/feed` displays a scrollable grid/list of recipes with pagination (20 per page), infinite scroll, and favorite functionality. Responsive grid layout: single column on mobile, up to 4 columns on desktop (1 column mobile, 2 columns sm, 3 columns lg, 4 columns xl).
+- **Favorites/Likes**: Users can like/unlike recipes using the heart button on recipe cards and pages. Likes are stored per-user in the database (`recipe_likes` table). A favorites toggle (heart icon) in the feed layout allows filtering to show only liked recipes. The toggle works with tags and search filters. Logged-out users are prompted to log in when attempting to like recipes or use the favorites filter.
 - **Shuffled feed order**: Recipes in the feed are shuffled deterministically based on the current date. The same date produces the same shuffle order, ensuring a stable sequence throughout the day. The shuffle order changes daily, providing variety while maintaining consistency during browsing sessions.
 - **Search functionality**: Search bar in feed layout allows searching recipes by name or tags. Search query is debounced (300ms) and persists in URL as `q=` parameter. Can be combined with tag filters (e.g., `/feed?tags=vegetarian&q=pasta`). Search state is managed in the persistent feed layout to prevent remounting during navigation.
 - Tag filtering: Users can click tags on recipe cards to toggle filters. Active tags are displayed inline within the search bar, between the search icon and input field, with individual remove buttons on each tag. The clear button (X) removes both the search query and all active tags. Filters persist in the URL using `+` separator (e.g., `/feed?tags=vegetarian+italian`). Tag filtering works on both desktop and mobile views.
-- Feed layout `src/app/feed/layout.tsx` contains the search bar (with integrated tag display) in a persistent layout that doesn't remount during navigation, ensuring search state is preserved. Includes Add Recipe button (visible for logged-in users) that opens a responsive modal for adding recipes.
+- Feed layout `src/app/feed/layout.tsx` contains the search bar (with integrated tag display) in a persistent layout that doesn't remount during navigation, ensuring search state is preserved. Includes Favorites toggle (heart icon) to the left of the search bar for filtering to show only liked recipes. Includes Add Recipe button (visible for logged-in users) that opens a responsive modal for adding recipes.
 - Dynamic route `src/app/recipes/[slug]/page.tsx` handles metadata generation only; rendering is handled by the layout.
 - Layout `src/app/recipes/layout.tsx` manages recipe rendering and includes a back-to-feed link in the top-left corner (links to `/feed` with `cursor: pointer`). Recipes render normally on all screen sizes (no mobile carousel).
 - Navigation history checks use `document.referrer` to ensure same-origin navigation (prevents "about:blank" issues). Previous navigation is disabled/hidden when there's no same-origin history.
@@ -219,7 +220,7 @@ The app supports three navigation modes:
 
 - Users click on `RecipeFeedCard` components in the feed
 - Standard Next.js `Link` navigation to `/recipes/[slug]`
-- Cards display: image, title overlay, description, tags, and favorite button (localStorage)
+- Cards display: image, title overlay, description, tags, and favorite button (database-backed, requires authentication)
 
 #### 2. Recipe → Recipe Navigation (Desktop)
 
@@ -276,6 +277,7 @@ Navigation history is managed via **session storage** (`recipe-history.ts`):
 - Supports two pagination modes:
   - `?page=N` → Traditional page-based pagination (20 items per page)
   - `?from={slug}` → Slug-based pagination matching shuffled feed order
+- Supports favorites filter: `?favorites=true` → Filters to show only recipes liked by the authenticated user (requires authentication)
 - Returns 20 recipes with pagination metadata (`hasMore`, `total`, etc.)
 
 **Infinite Scroll:**
@@ -289,6 +291,7 @@ Navigation history is managed via **session storage** (`recipe-history.ts`):
 ```
 Feed Layout (`/feed`)
 ├── FeedLayoutContent (persistent layout)
+│   ├── FavoritesToggle - heart icon to left of search bar, filters to show only liked recipes
 │   ├── RecipeSearchBar - search by name and tags, displays active tags inline
 │   ├── AddRecipeButton - appears to left of avatar for logged-in users
 │   ├── UserAvatar - user profile/authentication button
@@ -298,7 +301,7 @@ Feed Layout (`/feed`)
 │           ├── Image with title overlay
 │           ├── Description
 │           ├── Tags (clickable buttons, toggle filters)
-│           └── Favorite button (localStorage)
+│           └── Favorite button (database-backed, requires authentication)
 
 Search & Tag Filtering Infrastructure
 ├── useTags hook (src/hooks/useTags.ts)

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useRef, useEffect } from "react";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import { AiOutlineClose } from "react-icons/ai";
 import { TagChip } from "@/components/tag-chip";
@@ -24,11 +25,39 @@ export function RecipeSearchBar({
   onClearAllTags,
 }: RecipeSearchBarProps) {
   const hasTags = activeTags.length > 0;
+  const [isFocused, setIsFocused] = useState(false);
+  const [isMobile, setIsMobile] = useState(true);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // Detect if we're on mobile (less than sm breakpoint: 640px)
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const handleMagnifierClick = () => {
+    inputRef.current?.focus();
+  };
+
+  // Show placeholder on desktop always, or on mobile when focused
+  const showPlaceholder = !isMobile || isFocused;
 
   return (
-    <div className="mb-4 sm:mb-0">
+    <div>
       <div className="flex items-center gap-2 rounded-lg bg-white px-3 py-3 hover:shadow-md">
-        <HiMagnifyingGlass className="h-5 w-5 flex-shrink-0 text-gray-600" />
+        <button
+          type="button"
+          onClick={handleMagnifierClick}
+          className="flex-shrink-0 cursor-pointer text-gray-600 hover:text-gray-800"
+          aria-label="Focus search"
+        >
+          <HiMagnifyingGlass className="h-5 w-5" />
+        </button>
 
         {hasTags && (
           <div className="flex flex-shrink-0 items-center gap-2">
@@ -48,11 +77,14 @@ export function RecipeSearchBar({
         )}
 
         <Input
+          ref={inputRef}
           type="text"
-          placeholder={placeholder}
+          placeholder={showPlaceholder ? placeholder : ""}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="flex-1 border-0 bg-transparent text-base shadow-none outline-none ring-0 placeholder:text-gray-500 focus-visible:border-0 focus-visible:ring-0 focus-visible:ring-offset-0 sm:text-sm"
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          className="flex-1 border-0 bg-transparent text-base shadow-none outline-none ring-0 placeholder:text-gray-500 focus-visible:border-0 focus-visible:ring-0 focus-visible:ring-offset-0 sm:text-sm sm:placeholder:text-gray-500"
         />
 
         {(value || hasTags) && (

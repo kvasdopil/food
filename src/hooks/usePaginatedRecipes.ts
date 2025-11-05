@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { recipeStore } from "@/lib/recipe-store";
 import type { RecipeListItem } from "@/types/recipes";
+import { useSessionToken } from "@/hooks/useSessionToken";
 
 export type PaginationInfo = {
   page: number;
@@ -20,6 +21,7 @@ type RecipesResponse = {
 type UsePaginatedRecipesOptions = {
   tags?: string[];
   searchQuery?: string;
+  favorites?: boolean;
   autoLoadInitial?: boolean;
 };
 
@@ -46,7 +48,9 @@ type UsePaginatedRecipesResult = {
 export function usePaginatedRecipes(
   options: UsePaginatedRecipesOptions = {},
 ): UsePaginatedRecipesResult {
-  const { tags = [], searchQuery = "", autoLoadInitial = true } = options;
+  const { tags = [], searchQuery = "", favorites = false, autoLoadInitial = true } = options;
+
+  const { fetchToken } = useSessionToken();
 
   const [recipes, setRecipes] = useState<RecipeListItem[]>([]);
   const [pagination, setPagination] = useState<PaginationInfo | null>(null);
@@ -62,6 +66,7 @@ export function usePaginatedRecipes(
       fromSlug?: string,
       tagsToFetch?: string[],
       searchToFetch?: string,
+      favoritesToFetch?: boolean,
       signal?: AbortSignal,
     ) => {
       try {
@@ -75,11 +80,34 @@ export function usePaginatedRecipes(
         if (searchToFetch && searchToFetch.trim()) {
           params.append("q", searchToFetch.trim());
         }
+        if (favoritesToFetch) {
+          params.append("favorites", "true");
+        }
+
+        // Get auth token if favorites filter is enabled
+        const headers: HeadersInit = {};
+        if (favoritesToFetch) {
+          const token = await fetchToken();
+          if (!token) {
+            throw new Error("Authentication required for favorites filter");
+          }
+          headers.Authorization = `Bearer ${token}`;
+        }
+
         const queryString = params.toString();
         const url = queryString ? `/api/recipes?${queryString}` : `/api/recipes`;
-        const response = await fetch(url, { signal });
+        const response = await fetch(url, { signal, headers });
         if (!response.ok) {
-          throw new Error("Failed to fetch recipes");
+          if (response.status === 401) {
+            // Token expired or invalid
+            const authError = new Error("Session expired. Please log in again to view favorites.");
+            (authError as Error & { requiresAuth: boolean }).requiresAuth = true;
+            throw authError;
+          } else if (response.status === 403) {
+            throw new Error("Access denied. Please log in again.");
+          } else {
+            throw new Error(`Failed to fetch recipes: ${response.statusText}`);
+          }
         }
         const data: RecipesResponse = await response.json();
         return data;
@@ -87,10 +115,14 @@ export function usePaginatedRecipes(
         if (err instanceof Error && err.name === "AbortError") {
           throw err;
         }
+        // Enhance error messages for network issues
+        if (err instanceof Error && err.message.includes("Failed to fetch")) {
+          throw new Error("Network error. Please check your connection and try again.");
+        }
         throw err;
       }
     },
-    [],
+    [fetchToken],
   );
 
   const loadInitialRecipes = useCallback(async () => {
@@ -107,7 +139,13 @@ export function usePaginatedRecipes(
     setIsLoading(true);
     setError(null);
     try {
-      const data = await fetchRecipes(undefined, tags, searchQuery, abortController.signal);
+      const data = await fetchRecipes(
+        undefined,
+        tags,
+        searchQuery,
+        favorites,
+        abortController.signal,
+      );
 
       // Only update if this request wasn't aborted
       if (!abortController.signal.aborted) {
@@ -130,7 +168,7 @@ export function usePaginatedRecipes(
         }
       }
     }
-  }, [fetchRecipes, tags, searchQuery]);
+  }, [fetchRecipes, tags, searchQuery, favorites]);
 
   const loadMore = useCallback(async () => {
     if (!pagination || !pagination.hasMore || isLoadingMore || recipes.length === 0) return;
@@ -156,7 +194,13 @@ export function usePaginatedRecipes(
 
     setIsLoadingMore(true);
     try {
-      const data = await fetchRecipes(fromSlug, tags, searchQuery, abortController.signal);
+      const data = await fetchRecipes(
+        fromSlug,
+        tags,
+        searchQuery,
+        favorites,
+        abortController.signal,
+      );
 
       // Only update if this request wasn't aborted
       if (!abortController.signal.aborted) {
@@ -182,7 +226,7 @@ export function usePaginatedRecipes(
         }
       }
     }
-  }, [pagination, isLoadingMore, fetchRecipes, recipes, tags, searchQuery]);
+  }, [pagination, isLoadingMore, fetchRecipes, recipes, tags, searchQuery, favorites]);
 
   const retry = useCallback(async () => {
     await loadInitialRecipes();
@@ -194,7 +238,7 @@ export function usePaginatedRecipes(
       loadInitialRecipes();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tags.join(","), searchQuery, autoLoadInitial]); // Only depend on tags content, not the whole array reference
+  }, [tags.join(","), searchQuery, favorites, autoLoadInitial]); // Only depend on tags content, not the whole array reference
 
   // Cleanup abort controller on unmount
   useEffect(() => {

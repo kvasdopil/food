@@ -175,14 +175,35 @@ export async function GET(request: NextRequest) {
   const fromSlug = searchParams.get("from");
   const tagsParam = searchParams.get("tags");
   const searchQuery = searchParams.get("q") || searchParams.get("search") || "";
+  const favoritesParam = searchParams.get("favorites");
+  const showFavorites = favoritesParam === "true";
   const filterTags = parseTagsFromQuery(tagsParam);
+
+  // If favorites filter is requested, authenticate the user
+  let userId: string | undefined;
+  if (showFavorites) {
+    const auth = await authenticateRequest(request);
+    if (!auth.authorized || !auth.userId) {
+      logApiEndpoint({
+        endpoint: "/api/recipes",
+        method: "GET",
+        statusCode: 401,
+        isProtected: true,
+      });
+      return NextResponse.json(
+        { error: auth.authorized === false ? auth.error : "Authentication required for favorites filter" },
+        { status: 401 },
+      );
+    }
+    userId = auth.userId;
+  }
 
   if (!supabase) {
     logApiEndpoint({
       endpoint: "/api/recipes",
       method: "GET",
       statusCode: 500,
-      isProtected: false,
+      isProtected: showFavorites,
     });
     return NextResponse.json({ error: "Database not configured" }, { status: 500 });
   }
@@ -231,6 +252,39 @@ export async function GET(request: NextRequest) {
     }
 
     let allRecipes = allRecipesData || [];
+
+    // Apply favorites filter if requested
+    if (showFavorites && userId && supabaseAdmin) {
+      try {
+        // Get all liked recipe slugs for the user
+        const { data: likes, error: likesError } = await supabaseAdmin
+          .from("recipe_likes")
+          .select("recipe_slug")
+          .eq("user_id", userId);
+
+        if (likesError) {
+          console.error("Failed to fetch user likes:", likesError);
+          throw likesError;
+        }
+
+        const likedSlugs = new Set((likes || []).map((like) => like.recipe_slug as string));
+
+        // Filter recipes to only include liked ones
+        allRecipes = allRecipes.filter((recipe) => likedSlugs.has(recipe.slug));
+      } catch (error) {
+        console.error("Error applying favorites filter:", error);
+        logApiEndpoint({
+          endpoint: "/api/recipes",
+          method: "GET",
+          statusCode: 500,
+          isProtected: true,
+        });
+        return NextResponse.json(
+          { error: "Failed to apply favorites filter" },
+          { status: 500 },
+        );
+      }
+    }
 
     // Apply search filter if search query is provided
     if (searchQuery.trim()) {
@@ -291,7 +345,8 @@ export async function GET(request: NextRequest) {
       endpoint: "/api/recipes",
       method: "GET",
       statusCode: 200,
-      isProtected: false,
+      isProtected: showFavorites,
+      userId: showFavorites ? userId : undefined,
     });
     return NextResponse.json({
       recipes: recipes || [],

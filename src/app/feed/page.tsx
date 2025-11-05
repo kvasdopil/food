@@ -21,9 +21,11 @@ function FeedPageContent() {
 
   // Get search query from URL
   const searchQuery = searchParams.get("q") || "";
+  // Get favorites filter from URL
+  const favorites = searchParams.get("favorites") === "true";
 
   const { recipes, pagination, isLoading, isLoadingMore, error, loadMore, retry } =
-    usePaginatedRecipes({ tags: activeTags, searchQuery });
+    usePaginatedRecipes({ tags: activeTags, searchQuery, favorites });
 
   // Get cached recipes and determine what to display
   const { cachedRecipesForLoading, displayRecipes } = useCachedRecipes(isLoading, recipes);
