@@ -7,7 +7,7 @@ import { useRecipeGeneration } from "@/hooks/useRecipeGeneration";
 import { useRecipeImage } from "@/hooks/useRecipeImage";
 import { RecipeInputForm } from "@/components/recipe-input-form";
 import { RecipePreviewCard } from "@/components/recipe-preview-card";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
@@ -23,6 +23,7 @@ export function AddRecipeModal({ isOpen, onClose }: AddRecipeModalProps) {
 
   const {
     generatedRecipe,
+    isParsing,
     isGenerating,
     isAdding,
     error,
@@ -112,26 +113,37 @@ export function AddRecipeModal({ isOpen, onClose }: AddRecipeModalProps) {
     setUserInput("");
   };
 
+  // Show card as soon as parsing starts (supports streaming updates)
+  const hasRecipeData = isParsing || isGenerating || (generatedRecipe && generatedRecipe.title);
+
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="top-0 right-0 bottom-0 left-0 flex h-full max-h-[100vh] w-full max-w-full translate-x-0 translate-y-0 flex-col justify-center overflow-y-auto rounded-none border-0 p-4 sm:top-[50%] sm:right-auto sm:bottom-auto sm:left-[50%] sm:h-auto sm:max-w-lg sm:translate-x-[-50%] sm:translate-y-[-50%] sm:justify-start sm:rounded-lg sm:border sm:p-6">
+        <DialogTitle className="sr-only">
+          {hasRecipeData ? "Recipe Preview" : "Create Recipe"}
+        </DialogTitle>
+        <DialogDescription className="sr-only">
+          {hasRecipeData ? "Recipe preview and options" : "Create a new recipe by describing it"}
+        </DialogDescription>
         <div className="space-y-4">
-          {generatedRecipe && <RecipePreviewCard recipe={generatedRecipe} />}
+          {hasRecipeData && generatedRecipe && (
+            <RecipePreviewCard recipe={generatedRecipe} isStreaming={isParsing || isGenerating} />
+          )}
 
-          {!generatedRecipe && (
+          {!hasRecipeData && (
             <RecipeInputForm
               value={userInput}
               onChange={setUserInput}
               onSubmit={handleSend}
-              isLoading={isGenerating}
-              isDisabled={!userInput.trim()}
+              isLoading={isParsing || isGenerating}
+              isDisabled={!userInput.trim() || isParsing || isGenerating}
               error={error}
               requiresAuth={!session}
               authLoading={authLoading}
             />
           )}
 
-          {generatedRecipe && (
+          {hasRecipeData && (
             <>
               {error && (
                 <Alert variant="destructive" className="border-red-200 bg-red-50">
@@ -141,7 +153,7 @@ export function AddRecipeModal({ isOpen, onClose }: AddRecipeModalProps) {
               <div className="flex gap-3">
                 <Button
                   onClick={handleAddRecipe}
-                  disabled={isAdding}
+                  disabled={isAdding || isParsing || isGenerating}
                   className="flex flex-1 items-center gap-2 bg-green-600 hover:bg-green-700"
                 >
                   {isAdding ? (
@@ -149,13 +161,23 @@ export function AddRecipeModal({ isOpen, onClose }: AddRecipeModalProps) {
                       <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
                       <span>Adding...</span>
                     </>
+                  ) : isParsing ? (
+                    <>
+                      <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                      <span>Parsing...</span>
+                    </>
+                  ) : isGenerating ? (
+                    <>
+                      <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                      <span>Generating...</span>
+                    </>
                   ) : (
                     "Add recipe"
                   )}
                 </Button>
                 <Button
                   onClick={handleCancel}
-                  disabled={isAdding}
+                  disabled={isAdding || isParsing || isGenerating}
                   variant="outline"
                   className="flex-1"
                 >

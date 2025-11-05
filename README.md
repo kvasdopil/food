@@ -392,8 +392,9 @@ This architecture provides stateful navigation that tracks forward and backward 
   - Add dedicated page to list all liked/favorited meals
 
 - **Recipe Management**:
-  - ✅ Add new recipes via modal interface (with Supabase authentication) - **Implemented**: Add Recipe modal allows logged-in users to generate recipes from natural language descriptions. Uses `/api/recipes/generate` endpoint for recipe generation, `/api/images/generate-preview` for preview images, and `/api/recipes` for saving to database. Supports Google OAuth authentication via Supabase.
-  - ✅ Recipe generation endpoint - **Implemented**: `/api/recipes/generate` endpoint accepts natural language user input and generates complete recipes with ingredients, instructions, tags, and image prompts
+  - ✅ Add new recipes via modal interface (with Supabase authentication) - **Implemented**: Add Recipe modal allows logged-in users to generate recipes from natural language descriptions. Uses `/api/recipes/generate-stream` endpoint for streaming recipe generation with progressive UI updates, `/api/images/generate-preview` for preview images, and `/api/recipes` for saving to database. Supports Google OAuth authentication via Supabase. Recipe preview card appears as soon as title is available during streaming.
+  - ✅ Streaming recipe generation - **Implemented**: `/api/recipes/generate-stream` endpoint streams recipe generation with progressive field updates using NDJSON format. UI updates incrementally as fields arrive (title, description, tags, ingredients, instructions). Uses Gemini API's `streamGenerateContent` for real-time streaming. Fully tested with comprehensive Jest test suites. Recipe preview card appears as soon as title is available, providing immediate user feedback.
+  - ✅ Recipe generation endpoint - **Implemented**: `/api/recipes/generate` endpoint accepts natural language user input and generates complete recipes with ingredients, instructions, tags, and image prompts (non-streaming, returns complete recipe)
   - ✅ Recipe preview image generation - **Implemented**: `/api/images/generate-preview` endpoint generates preview images using Google AI Gemini Image API (`gemini-2.5-flash-image`)
   - ✅ Recipe refinement endpoint - **Implemented**: `/api/recipes/[slug]/refine` endpoint for evaluating and improving existing recipes
   - Support recipe variations (e.g., vegetarian versions of existing meals)
@@ -417,7 +418,8 @@ This architecture provides stateful navigation that tracks forward and backward 
 - `src/app/feed/page.tsx`: client component displaying paginated recipe feed with infinite scroll. Reads search query and tags from URL. Responsive grid layout works on all screen sizes.
 - `src/components/recipe-search-bar.tsx`: search bar component with magnifier icon, inline tag display (positioned between magnifier icon and input field), and clear button that clears both search and tags. Uses shadcn Input and Button components. Tags are displayed as chips with individual remove buttons and `cursor:pointer` styling. On mobile, no placeholder text is shown. Input width dynamically matches text content. Search bar container uses flex-1 to fill available space.
 - `src/components/add-recipe-button.tsx`: button component using shadcn Button with ghost variant. Transparent background and dark-gray plus icon. Only visible for logged-in users.
-- `src/components/add-recipe-modal.tsx`: responsive modal component using shadcn Dialog for adding recipes. Fullscreen on mobile, centered window on desktop. Allows users to enter natural language descriptions of meals, generates recipes using AI (with ingredients, instructions, tags), automatically generates preview images, and saves recipes to the database. Uses shadcn Button and Alert components. Closes on Escape key or clicking outside. Uses Supabase authentication for API calls.
+- `src/components/add-recipe-modal.tsx`: responsive modal component using shadcn Dialog for adding recipes. Fullscreen on mobile, centered window on desktop. Allows users to enter natural language descriptions of meals, generates recipes using streaming AI (with progressive updates for ingredients, instructions, tags), automatically generates preview images, and saves recipes to the database. Shows recipe preview card as soon as title is available during streaming. Uses shadcn Button and Alert components. Closes on Escape key or clicking outside. Uses Supabase authentication for API calls.
+- `src/components/recipe-preview-card.tsx`: preview card component for displaying generated recipes during streaming. Supports partial data and shows loading states for missing fields. Displays streaming overlay when generation is in progress. Uses `RecipeFeedCard` for rendering with fallback values for missing fields.
 - `src/components/recipe-feed-card.tsx`: recipe card component for feed page using shadcn Card and CardContent. Displays image, title overlay, description, clickable tags (toggle filters), and favorite button.
 - `src/components/recipe/description.tsx`: description component that displays recipe description, author attribution ("by {username}"), clickable tag links (navigate to feed with tag filtered), and favorite button. Author attribution only shows for recipes with author information (scripted recipes don't show attribution). Tags use the "link" variant of TagChip for proper semantic HTML and navigation.
 - `src/components/user-avatar.tsx`: user avatar component with dropdown menu. Includes "My Recipes" option that navigates to `/feed?tags=mine` to filter recipes by the current user.
@@ -441,6 +443,10 @@ This architecture provides stateful navigation that tracks forward and backward 
 - `src/app/api/recipes/route.ts`: API endpoint returning paginated recipes (20 per page) with pagination metadata. Recipes are shuffled deterministically based on the current date (same date = same order). Supports `page` parameter for traditional pagination, `from={slug}` for slug-based pagination, `tags` parameter for filtering by tags (format: `tags=tag1+tag2`), and `q` or `search` parameter for searching by recipe name and tags.
 - `src/lib/shuffle-utils.ts`: Utility functions for deterministic shuffling. Provides `seededShuffle()` for shuffling arrays with a seed value and `getDateSeed()` for generating a seed based on the current date.
 - `src/app/api/recipes/generate/route.ts`: API endpoint for generating recipe content (ingredients, instructions, image prompts) using Gemini API. Requires `EDIT_TOKEN` authentication. Does not save to database, returns generated recipe data.
+- `src/app/api/recipes/generate-stream/route.ts`: Streaming API endpoint for progressive recipe generation. Uses `streamGemini()` from `@/lib/gemini.ts` and `PartialJsonParser` from `@/lib/partial-json-parser.ts` to stream NDJSON updates. Parses user input using non-streaming Gemini API, then streams recipe generation with progressive field updates. Returns NDJSON format with `Content-Type: application/x-ndjson`.
+- `src/lib/gemini.ts`: Gemini API client functions including `callGemini()` for non-streaming calls and `streamGemini()` for streaming content using `streamGenerateContent` endpoint. Handles authentication, error handling, and response parsing.
+- `src/lib/partial-json-parser.ts`: `PartialJsonParser` class for incrementally parsing partial JSON streams and extracting complete fields. Uses dual approach to extract complete JSON objects and individual complete field-value pairs. Handles incomplete strings, arrays, nested objects, and escaped quotes.
+- `src/hooks/useRecipeGeneration.ts`: React hook for managing recipe generation with streaming support. `generateRecipe()` function reads streaming response using `response.body.getReader()`, parses NDJSON lines, and updates state incrementally as fields arrive. Handles buffer management for incomplete lines, maps streamed fields to `GeneratedRecipe` structure, and generates slugs automatically.
 - `src/lib/recipe-store.ts`: Centralized recipe storage with IndexedDB persistence. Stores partial recipe data (from feed) and full recipe data (from detail pages). Automatically loads cached recipes on app initialization and persists new data as it's fetched. Provides methods to retrieve cached partial or full recipe data.
 - `src/lib/recipe-utils.ts`: Shared recipe parsing and formatting utilities used across API routes. Provides `parseIngredients()` and `parseInstructions()` for parsing database-stored recipe data, and `buildInstructions()` for formatting instructions as numbered steps. Also includes `normalizeRecipe()`, `slugify()`, and recipe data types.
 - `src/lib/image-storage-utils.ts`: Shared image storage utilities used by image-related API endpoints. Provides `calculateFileHash()` for generating SHA-256 file hashes and `ensureBucket()` for ensuring Supabase storage buckets exist.
@@ -557,6 +563,7 @@ The script will:
 
 - **`POST /api/recipes`**: Creates or updates a recipe in the database. Accepts normalized recipe payloads, upserting by slug. Supports `prepTimeMinutes` and `cookTimeMinutes` fields. For logged-in users (authenticated via Supabase session token), automatically sets `author_name` and `author_email` from the authenticated user. For recipes created via `EDIT_TOKEN`, author fields are set to `null`. Author fields are immutable - existing recipes preserve their original author even when updated. Requires authentication via `Authorization: Bearer <EDIT_TOKEN>` or `Authorization: Bearer <SUPABASE_SESSION_TOKEN>` (for logged-in users). The server rejects unauthorized requests with `401`.
 - **`POST /api/recipes/generate`**: Generates recipe content (ingredients, instructions, image prompts) using Gemini API from natural language user input. Does not save to database. Always returns the first generated variant without refinement. Accepts `userInput` parameter for parsing meal descriptions. Requires authentication via `Authorization: Bearer <EDIT_TOKEN>` or `Authorization: Bearer <SUPABASE_SESSION_TOKEN>`, and `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) configured on the server (automatically loaded by `@/lib/gemini.ts`). Returns recipe data in the same format as `POST /api/recipes`.
+- **`POST /api/recipes/generate-stream`**: Streaming endpoint for progressive recipe generation. Returns NDJSON (Newline Delimited JSON) stream with progressive field updates. Each line contains a JSON object with `type: "field"` (field updates), `type: "complete"` (generation finished), or `type: "error"` (error occurred). Fields are streamed as they become available (title, summary, tags, ingredients, instructions, etc.). The UI updates progressively as fields arrive, showing the recipe card as soon as the title is available. Requires authentication via `Authorization: Bearer <EDIT_TOKEN>` or `Authorization: Bearer <SUPABASE_SESSION_TOKEN>`, and `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) configured on the server. Uses `streamGenerateContent` from Gemini API for real-time streaming.
 
   **Recipe Generation Rules:**
   - **Titles**: Must ONLY contain the actual name of the meal. Do NOT include descriptive adjectives like "savory", "delicious", "tasty", "mouthwatering", "flavorful", "amazing", "perfect", "best", "authentic", "homemade", or any other subjective descriptors. Examples: ✅ "Chicken Tikka Masala", ❌ "Delicious Savory Chicken Tikka Masala".
@@ -691,7 +698,7 @@ The application uses **Vercel Analytics** to track API endpoint usage and user a
 
 ## Testing
 
-The project uses [Jest](https://jestjs.io) with React Testing Library for unit and integration testing. Tests are located in the `src/test/` directory.
+The project uses [Jest](https://jestjs.io) with React Testing Library for unit and integration testing. Tests are located in `__tests__` directories alongside source files.
 
 ### Running Tests
 
@@ -703,9 +710,21 @@ yarn test:watch        # Run tests in watch mode
 ### Test Configuration
 
 - Jest is configured via `jest.config.js` using Next.js's `next/jest` helper
-- Test setup file: `src/test/setup.ts` (configures `@testing-library/jest-dom`)
-- Test environment: `jest-environment-jsdom` for React component testing
+- Test setup file: `src/test/setup.ts` (configures `@testing-library/jest-dom` and polyfills for Node.js environment)
+- Test environments:
+  - `jest-environment-jsdom` for React component tests (default)
+  - `node` environment for API route tests (configured via Jest projects)
 - Path aliases (`@/*`) are configured to match the project's TypeScript paths
+- Polyfills for `TextEncoder`, `TextDecoder`, `Request`, and `Response` are provided for Node.js test environment
+
+### Test Coverage
+
+- **Streaming Gemini Client** (`src/lib/__tests__/gemini.test.ts`): Tests for `streamGemini()` async generator, text chunk yielding, error handling, and buffer management
+- **Partial JSON Parser** (`src/lib/__tests__/partial-json-parser.test.ts`): Tests for parsing complete and partial JSON, handling incomplete strings/arrays, nested objects, and duplicate field prevention
+- **Streaming Endpoint** (`src/app/api/recipes/__tests__/generate-stream.test.ts`): Tests for streaming response format, NDJSON parsing, completion signals, and error handling
+- **Recipe Generation Hook** (`src/hooks/__tests__/useRecipeGeneration.test.ts`): Tests for streaming state updates, NDJSON parsing, buffer management, and error handling
+- **Recipe Preview Card** (`src/components/__tests__/recipe-preview-card.test.tsx`): Tests for partial data rendering, streaming indicators, and fallback values
+- **Add Recipe Modal** (`src/components/__tests__/add-recipe-modal.test.tsx`): Tests for progressive rendering, button states during streaming, and UI updates
 
 ## Code Quality & Maintenance
 
