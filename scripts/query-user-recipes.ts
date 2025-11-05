@@ -8,7 +8,59 @@
  *   npx tsx scripts/query-user-recipes.ts --stats-only
  */
 
-import { supabaseAdmin } from "../src/lib/supabaseAdminClient";
+import { promises as fs } from "node:fs";
+import path from "node:path";
+import { createClient } from "@supabase/supabase-js";
+import type { Database } from "../src/types/supabase";
+
+async function loadEnvValue(key: string): Promise<string | undefined> {
+  if (process.env[key]) {
+    return process.env[key];
+  }
+
+  const envLocalPath = path.resolve(".env.local");
+
+  try {
+    const content = await fs.readFile(envLocalPath, "utf-8");
+    const lines = content.split("\n").map((line) => line.replace(/\r$/, ""));
+
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith("#")) continue;
+
+      const [envKey, ...rest] = trimmed.split("=");
+      const value = rest.join("=").trim();
+      if (!value) continue;
+
+      if (envKey === key) {
+        process.env[key] = value;
+        return value;
+      }
+    }
+  } catch {
+    // silently ignore; we'll throw below if still missing
+  }
+
+  return undefined;
+}
+
+async function getSupabaseAdmin() {
+  const supabaseUrl = await loadEnvValue("NEXT_PUBLIC_SUPABASE_URL");
+  const serviceRoleKey = await loadEnvValue("SUPABASE_SERVICE_ROLE_KEY");
+
+  if (!supabaseUrl || !serviceRoleKey) {
+    throw new Error(
+      "Supabase admin client not configured. Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY in .env.local"
+    );
+  }
+
+  return createClient<Database>(supabaseUrl, serviceRoleKey, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  });
+}
 
 type RecipeSummary = {
   slug: string;
@@ -25,11 +77,7 @@ type UserRecipeStats = {
   recipes: RecipeSummary[];
 };
 
-async function getAllUserRecipes(): Promise<UserRecipeStats[]> {
-  if (!supabaseAdmin) {
-    throw new Error("Supabase admin client not configured. Check SUPABASE_SERVICE_ROLE_KEY env var.");
-  }
-
+async function getAllUserRecipes(supabaseAdmin: Awaited<ReturnType<typeof getSupabaseAdmin>>): Promise<UserRecipeStats[]> {
   // Get all recipes with authors
   const { data: recipes, error } = await supabaseAdmin
     .from("recipes")
@@ -75,11 +123,7 @@ async function getAllUserRecipes(): Promise<UserRecipeStats[]> {
   return Array.from(recipesByUser.values()).sort((a, b) => b.recipeCount - a.recipeCount);
 }
 
-async function getUserLikesStats(): Promise<Map<string, number>> {
-  if (!supabaseAdmin) {
-    throw new Error("Supabase admin client not configured.");
-  }
-
+async function getUserLikesStats(supabaseAdmin: Awaited<ReturnType<typeof getSupabaseAdmin>>): Promise<Map<string, number>> {
   const { data: likes, error } = await supabaseAdmin
     .from("recipe_likes")
     .select("user_id");
@@ -110,7 +154,7 @@ function printUserRecipes(userStats: UserRecipeStats[], showDetails: boolean = t
   for (const user of userStats) {
     console.log(`${user.name} (${user.email})`);
     console.log(`  Recipes created: ${user.recipeCount}`);
-    
+
     if (showDetails && user.recipes.length > 0) {
       console.log("  Recipes:");
       for (const recipe of user.recipes) {
@@ -156,7 +200,8 @@ async function main() {
   const statsOnly = args.includes("--stats-only");
 
   try {
-    const allUserStats = await getAllUserRecipes();
+    const supabaseAdmin = await getSupabaseAdmin();
+    const allUserStats = await getAllUserRecipes(supabaseAdmin);
 
     if (userEmail) {
       const userStats = await filterByEmail(allUserStats, userEmail);

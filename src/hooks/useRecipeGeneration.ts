@@ -25,7 +25,7 @@ export function useRecipeGeneration(options: UseRecipeGenerationOptions = {}) {
   const imageGenerationStartedRef = useRef(false);
   const currentAccessTokenRef = useRef<string | null>(null);
   const updateRecipeImageRef = useRef<((imageUrl: string) => void) | null>(null);
-  
+
   // Use recipe image hook for generating images
   const { generateImage } = useRecipeImage({
     onSuccess: (imageUrl) => {
@@ -136,7 +136,7 @@ export function useRecipeGeneration(options: UseRecipeGenerationOptions = {}) {
       setError(null);
       imageGenerationStartedRef.current = false;
       currentAccessTokenRef.current = accessToken;
-      
+
       // Initialize with empty recipe so card appears immediately
       const emptyRecipe: GeneratedRecipe = {
         slug: "",
@@ -195,7 +195,7 @@ export function useRecipeGeneration(options: UseRecipeGenerationOptions = {}) {
                 recipeRef.current = updated;
                 return updated;
               });
-              
+
               // Generate image as soon as we have description
               if (!imageGenerationStartedRef.current && typeof value === "string" && value.trim() && currentAccessTokenRef.current) {
                 imageGenerationStartedRef.current = true;
@@ -357,7 +357,7 @@ export function useRecipeGeneration(options: UseRecipeGenerationOptions = {}) {
       return updated;
     });
   }, []);
-  
+
   // Keep ref updated so it can be used in the hook callback
   useEffect(() => {
     updateRecipeImageRef.current = updateRecipeImage;

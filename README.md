@@ -562,6 +562,16 @@ The script will:
   - Requires `EDIT_TOKEN` for authentication
   - Supports `NEXT_PUBLIC_API_BASE_URL` environment variable (defaults to `http://localhost:3000`)
   - Usage: `yarn ts-node scripts/delete-recipe.ts <slug>`
+- **`scripts/query-user-recipes.ts`**: Query recipes by user and view user activity statistics
+  - Shows all users who created recipes and lists their recipes
+  - Displays statistics (total users, recipes per user, etc.)
+  - Requires `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` in `.env.local`
+  - Usage:
+    ```bash
+    npx tsx scripts/query-user-recipes.ts                    # Show all users and recipes
+    npx tsx scripts/query-user-recipes.ts --stats-only       # Show statistics only
+    npx tsx scripts/query-user-recipes.ts --user-email user@example.com  # Show specific user
+    ```
 
 ### Recipe Upload CLI & API
 
@@ -690,12 +700,28 @@ The application uses **Vercel Analytics** to track API endpoint usage and user a
    - Search for `"type":"api_endpoint"` to filter API endpoint logs
    - Each log entry includes structured JSON with endpoint details and user information
 
+3. **Query Recipes by User**:
+   - Use the query script to see which users created which recipes:
+     ```bash
+     # Show all users and their recipes
+     npx tsx scripts/query-user-recipes.ts
+     
+     # Show stats only
+     npx tsx scripts/query-user-recipes.ts --stats-only
+     
+     # Show recipes for specific user
+     npx tsx scripts/query-user-recipes.ts --user-email user@example.com
+     ```
+   - Requires `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` in `.env.local`
+   - See `docs/USER_ANALYTICS_GUIDE.md` for detailed instructions on viewing user analytics and recipe attribution
+
 ### Implementation
 
 - Analytics tracking is implemented in `src/lib/analytics.ts`
 - Server-side logging uses `logApiEndpoint()` for structured logs
 - Client-side tracking uses `trackApiEndpoint()` for Vercel Analytics events
 - All protected endpoints automatically capture user information when authentication succeeds
+- See `docs/USER_ANALYTICS_GUIDE.md` for a comprehensive guide on accessing user analytics and recipe authorship data
 
 ## Supabase Configuration
 
