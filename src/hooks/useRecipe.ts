@@ -25,6 +25,7 @@ function convertToRecipeData(full: RecipeFullData): RecipeData {
     tags: full.tags,
     prepTimeMinutes: full.prepTimeMinutes,
     cookTimeMinutes: full.cookTimeMinutes,
+    authorName: full.authorName,
   };
 }
 
@@ -94,6 +95,7 @@ export function useRecipe(slug: string): UseRecipeResult {
           tags: data.tags,
           prepTimeMinutes: data.prepTimeMinutes,
           cookTimeMinutes: data.cookTimeMinutes,
+          authorName: data.authorName,
         };
         recipeStore.setFull(fullData);
 

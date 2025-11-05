@@ -57,6 +57,7 @@ export function Recipe({ slug }: RecipeProps) {
               slug={cachedPartial.slug}
               description={cachedPartial.description || null}
               tags={cachedPartial.tags}
+              authorName={null}
             />
             {/* Show skeletons for ingredients and instructions while loading */}
             <RecipeSkeleton showOnlyIngredientsAndInstructions />
@@ -97,6 +98,7 @@ export function Recipe({ slug }: RecipeProps) {
           slug={recipeData.slug}
           description={recipeData.description || null}
           tags={recipeData.tags}
+          authorName={recipeData.authorName ?? null}
         />
         <Ingredients ingredients={recipeData.ingredients} />
         <Instructions instructions={recipeData.instructions} />

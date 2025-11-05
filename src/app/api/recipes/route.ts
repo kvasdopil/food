@@ -179,9 +179,14 @@ export async function GET(request: NextRequest) {
   const showFavorites = favoritesParam === "true";
   const filterTags = parseTagsFromQuery(tagsParam);
 
-  // If favorites filter is requested, authenticate the user
+  // Check for special "mine" tag (not stored in DB, processed specially)
+  const hasMineTag = filterTags.includes("mine");
+  const dbFilterTags = filterTags.filter((tag) => tag !== "mine");
+
+  // If favorites or mine tag is requested, authenticate the user
   let userId: string | undefined;
-  if (showFavorites) {
+  let userEmail: string | undefined;
+  if (showFavorites || hasMineTag) {
     const auth = await authenticateRequest(request);
     if (!auth.authorized || !auth.userId) {
       logApiEndpoint({
@@ -191,11 +196,27 @@ export async function GET(request: NextRequest) {
         isProtected: true,
       });
       return NextResponse.json(
-        { error: auth.authorized === false ? auth.error : "Authentication required for favorites filter" },
+        { error: auth.authorized === false ? auth.error : "Authentication required for this filter" },
         { status: 401 },
       );
     }
     userId = auth.userId;
+    userEmail = auth.userEmail?.toLowerCase();
+    
+    // For "mine" tag, userEmail is required
+    if (hasMineTag && !userEmail) {
+      console.error("Mine tag requested but userEmail is not available after authentication");
+      logApiEndpoint({
+        endpoint: "/api/recipes",
+        method: "GET",
+        statusCode: 401,
+        isProtected: true,
+      });
+      return NextResponse.json(
+        { error: "User email not available for mine filter" },
+        { status: 401 },
+      );
+    }
   }
 
   if (!supabase) {
@@ -209,14 +230,14 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    // Build base query for counting total (with tag filters if present)
+    // Build base query for counting total (with tag filters if present, excluding "mine")
     let countQuery = supabase.from("recipes").select("*", { count: "exact", head: true });
 
-    // Apply tag filters - recipes must contain ALL specified tags
-    if (filterTags.length > 0) {
+    // Apply tag filters - recipes must contain ALL specified tags (excluding "mine" which is handled specially)
+    if (dbFilterTags.length > 0) {
       // Filter for recipes where tags array contains all requested tags
       // Postgres array contains: use cs (contains) operator for each tag
-      for (const tag of filterTags) {
+      for (const tag of dbFilterTags) {
         countQuery = countQuery.contains("tags", [tag]);
       }
     }
@@ -233,14 +254,14 @@ export async function GET(request: NextRequest) {
 
     let allRecipesQuery = supabase
       .from("recipes")
-      .select("slug, name, description, tags, image_url, prep_time_minutes, cook_time_minutes")
+      .select("slug, name, description, tags, image_url, prep_time_minutes, cook_time_minutes, author_email")
       .order("created_at", { ascending: false })
       .order("slug", { ascending: true })
       .limit(MAX_RECIPES_TO_FETCH);
 
-    // Apply tag filters
-    if (filterTags.length > 0) {
-      for (const tag of filterTags) {
+    // Apply tag filters (excluding "mine" which is handled specially)
+    if (dbFilterTags.length > 0) {
+      for (const tag of dbFilterTags) {
         allRecipesQuery = allRecipesQuery.contains("tags", [tag]);
       }
     }
@@ -252,6 +273,23 @@ export async function GET(request: NextRequest) {
     }
 
     let allRecipes = allRecipesData || [];
+
+    // Apply "mine" tag filter if present (filter by author_email, don't store as tag in DB)
+    if (hasMineTag) {
+      if (!userEmail) {
+        // This should not happen if authentication worked, but handle it gracefully
+        console.error("Mine tag requested but userEmail is not available");
+        allRecipes = []; // Return empty results if userEmail is not available
+      } else {
+        const beforeCount = allRecipes.length;
+        allRecipes = allRecipes.filter((recipe) => {
+          const recipeAuthorEmail = (recipe as { author_email?: string | null }).author_email?.toLowerCase();
+          return recipeAuthorEmail === userEmail;
+        });
+        const afterCount = allRecipes.length;
+        console.log(`[Mine filter] Filtered from ${beforeCount} to ${afterCount} recipes for user ${userEmail}`);
+      }
+    }
 
     // Apply favorites filter if requested
     if (showFavorites && userId && supabaseAdmin) {
@@ -345,8 +383,8 @@ export async function GET(request: NextRequest) {
       endpoint: "/api/recipes",
       method: "GET",
       statusCode: 200,
-      isProtected: showFavorites,
-      userId: showFavorites ? userId : undefined,
+      isProtected: showFavorites || hasMineTag,
+      userId: showFavorites || hasMineTag ? userId : undefined,
     });
     return NextResponse.json({
       recipes: recipes || [],
@@ -364,7 +402,7 @@ export async function GET(request: NextRequest) {
       endpoint: "/api/recipes",
       method: "GET",
       statusCode: 500,
-      isProtected: false,
+      isProtected: showFavorites || hasMineTag,
     });
     return NextResponse.json({ error: "Failed to fetch recipes" }, { status: 500 });
   }
@@ -419,12 +457,48 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Unable to derive slug from title." }, { status: 400 });
   }
 
-  // Check if recipe exists to preserve image_url if not provided
+  // Check if recipe exists to preserve image_url and author fields if not provided
   const { data: existingRecipe } = await supabaseAdmin
     .from("recipes")
-    .select("image_url")
+    .select("image_url, author_name, author_email")
     .eq("slug", slug)
     .maybeSingle();
+
+  // Get author info for new recipes (only if authenticated via Supabase session, not EDIT_TOKEN)
+  let authorName: string | null = null;
+  let authorEmail: string | null = null;
+
+  if (!existingRecipe) {
+    // Only set author info when creating a NEW recipe
+    if (auth.userId && auth.userEmail) {
+      // Authenticated via Supabase session - get user info for display name
+      try {
+        const authHeader = request.headers.get("authorization") ?? request.headers.get("Authorization");
+        const tokenMatch = authHeader?.match(/^Bearer\s+(.+)$/i);
+        const providedToken = tokenMatch ? tokenMatch[1].trim() : null;
+
+        if (providedToken && supabaseAdmin) {
+          const {
+            data: { user },
+          } = await supabaseAdmin.auth.getUser(providedToken);
+
+          if (user) {
+            // Use same display name logic as UserAvatar component
+            authorName = user.user_metadata?.full_name || user.email?.split("@")[0] || "User";
+            authorEmail = user.email?.toLowerCase() || null;
+          }
+        }
+      } catch (error) {
+        console.error("Failed to get user info for author attribution:", error);
+        // Continue without author info if we can't fetch user
+      }
+    }
+    // If auth was via EDIT_TOKEN (no userId/userEmail), author fields remain null
+  } else {
+    // Preserve existing author fields when updating
+    authorName = existingRecipe.author_name ?? null;
+    authorEmail = existingRecipe.author_email ?? null;
+  }
 
   const dbPayload: {
     slug: string;
@@ -436,6 +510,8 @@ export async function POST(request: NextRequest) {
     tags: string[];
     prep_time_minutes?: number | null;
     cook_time_minutes?: number | null;
+    author_name?: string | null;
+    author_email?: string | null;
   } = {
     slug,
     name: payload.title,
@@ -443,6 +519,8 @@ export async function POST(request: NextRequest) {
     ingredients: JSON.stringify(payload.ingredients),
     instructions: buildInstructions(payload.instructions),
     tags: payload.tags,
+    author_name: authorName,
+    author_email: authorEmail,
   };
 
   // Include time fields if provided

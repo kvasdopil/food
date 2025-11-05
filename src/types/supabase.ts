@@ -10,6 +10,8 @@ export type Database = {
     Tables: {
       recipes: {
         Row: {
+          author_email: string | null;
+          author_name: string | null;
           cook_time_minutes: number | null;
           created_at: string;
           description: string | null;
@@ -24,6 +26,8 @@ export type Database = {
           updated_at: string;
         };
         Insert: {
+          author_email?: string | null;
+          author_name?: string | null;
           cook_time_minutes?: number | null;
           created_at?: string;
           description?: string | null;
@@ -38,6 +42,8 @@ export type Database = {
           updated_at?: string;
         };
         Update: {
+          author_email?: string | null;
+          author_name?: string | null;
           cook_time_minutes?: number | null;
           created_at?: string;
           description?: string | null;
@@ -82,6 +88,8 @@ export type Database = {
       get_random_recipe: {
         Args: never;
         Returns: {
+          author_email: string | null;
+          author_name: string | null;
           cook_time_minutes: number | null;
           created_at: string;
           description: string | null;

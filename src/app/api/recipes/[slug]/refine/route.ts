@@ -106,7 +106,7 @@ export async function POST(
   }
 
   try {
-    // Fetch recipe from database
+    // Fetch recipe from database (including author fields for preservation)
     const { data: dbRecipe, error: fetchError } = await supabaseAdmin
       .from("recipes")
       .select("*")
@@ -164,12 +164,16 @@ export async function POST(
     const refinedRecipe = await generateRefinedRecipe(recipe, evaluationResult);
 
     // Update recipe in database
+    // CRITICAL: Preserve existing author fields - they should never change during refinement
     const dbPayload = {
       name: refinedRecipe.title,
       description: refinedRecipe.summary ?? null,
       ingredients: JSON.stringify(refinedRecipe.ingredients),
       instructions: buildInstructions(refinedRecipe.instructions),
       tags: refinedRecipe.tags ?? [],
+      // Preserve original author attribution
+      author_name: dbRecipe.author_name ?? null,
+      author_email: dbRecipe.author_email ?? null,
     };
 
     const { data: updatedRecipe, error: updateError } = await supabaseAdmin

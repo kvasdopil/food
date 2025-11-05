@@ -23,12 +23,16 @@ function FeedPageContent() {
   const searchQuery = searchParams.get("q") || "";
   // Get favorites filter from URL
   const favorites = searchParams.get("favorites") === "true";
+  // Check if "mine" tag is active (special tag for filtering by author)
+  const hasMineTag = activeTags.includes("mine");
 
   const { recipes, pagination, isLoading, isLoadingMore, error, loadMore, retry } =
     usePaginatedRecipes({ tags: activeTags, searchQuery, favorites });
 
   // Get cached recipes and determine what to display
-  const { cachedRecipesForLoading, displayRecipes } = useCachedRecipes(isLoading, recipes);
+  // Don't use cached recipes when "mine" tag is active (filter should show empty if no results)
+  const shouldUseCache = !hasMineTag;
+  const { cachedRecipesForLoading, displayRecipes } = useCachedRecipes(isLoading, recipes, shouldUseCache);
 
   // Scroll to top only when tags change (user action)
   // Don't scroll on search query changes to avoid interrupting user scrolling
@@ -67,9 +71,16 @@ function FeedPageContent() {
     return <FeedErrorState error={error} onRetry={retry} />;
   }
 
+  // Customize empty state message for "My Recipes" filter
+  const emptyMessage = hasMineTag ? "You haven't created any recipes yet" : undefined;
+
   return (
     <>
-      {hasRecipes ? <RecipeGrid recipes={recipesToDisplay} /> : <FeedEmptyState />}
+      {hasRecipes ? (
+        <RecipeGrid recipes={recipesToDisplay} />
+      ) : (
+        <FeedEmptyState message={emptyMessage} />
+      )}
       {isLoadingMore && <FeedLoadingMore />}
       {pagination && !pagination.hasMore && recipes.length > 0 && <FeedEndState />}
     </>

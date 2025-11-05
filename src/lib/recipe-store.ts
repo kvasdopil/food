@@ -30,6 +30,7 @@ export type RecipeFullData = {
   tags: string[];
   prepTimeMinutes?: number | null;
   cookTimeMinutes?: number | null;
+  authorName?: string | null;
 };
 
 type StoredRecipe = {

@@ -68,9 +68,9 @@ export function useSearchQuery(options: UseSearchQueryOptions = {}) {
 
       // Only update URL if search query actually changed
       if (query !== currentUrlQuery) {
-        // Update URL with search query (preserving tags)
+        // Update URL with search query (preserving tags and other params like favorites)
         // Use replace instead of push to avoid creating history entries for every keystroke
-        const newUrl = buildFeedUrlWithTagsAndSearch(tags, query);
+        const newUrl = buildFeedUrlWithTagsAndSearch(tags, query, searchParams);
         router.replace(newUrl);
       }
     }, debounceMs);

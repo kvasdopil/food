@@ -1,11 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
+import { buildFeedUrlWithTagsAndSearch } from "@/lib/tag-utils";
 import { HiUserCircle } from "react-icons/hi2";
 
 export function UserAvatar() {
   const { user, loading, signInWithGoogle, signOut } = useAuth();
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -68,6 +71,17 @@ export function UserAvatar() {
             <p className="truncate text-sm font-medium text-gray-900">{displayName}</p>
             <p className="truncate text-xs text-gray-500">{user.email}</p>
           </div>
+          <button
+            onClick={() => {
+              // Navigate to feed with "mine" tag (special tag that filters by author)
+              const url = buildFeedUrlWithTagsAndSearch(["mine"]);
+              router.push(url);
+              setIsMenuOpen(false);
+            }}
+            className="w-full px-4 py-2 text-left text-sm text-gray-700 transition-colors hover:bg-gray-100"
+          >
+            My Recipes
+          </button>
           <button
             onClick={async () => {
               await signOut();

@@ -8,6 +8,7 @@ export type RecipeData = {
   tags: string[];
   prepTimeMinutes?: number | null;
   cookTimeMinutes?: number | null;
+  authorName?: string | null;
 };
 
 export async function fetchRecipeData(slug: string): Promise<RecipeData | null> {

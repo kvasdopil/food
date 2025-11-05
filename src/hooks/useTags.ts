@@ -18,21 +18,21 @@ export function useTags() {
 
   /**
    * Removes a tag from the active filters
-   * Preserves search query in URL
+   * Preserves search query and other parameters (like favorites) in URL
    */
   const removeTag = (tagToRemove: string) => {
     const newTags = activeTags.filter((tag) => tag !== tagToRemove);
     const searchQuery = searchParams.get("q") || "";
-    router.push(buildFeedUrlWithTagsAndSearch(newTags, searchQuery));
+    router.push(buildFeedUrlWithTagsAndSearch(newTags, searchQuery, searchParams));
   };
 
   /**
    * Removes all active tags (clears all filters)
-   * Preserves search query in URL
+   * Preserves search query and other parameters (like favorites) in URL
    */
   const clearAllTags = () => {
     const searchQuery = searchParams.get("q") || "";
-    router.push(buildFeedUrlWithTagsAndSearch([], searchQuery));
+    router.push(buildFeedUrlWithTagsAndSearch([], searchQuery, searchParams));
   };
 
   /**

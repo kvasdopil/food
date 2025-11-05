@@ -124,20 +124,39 @@ export function buildFeedUrlWithTags(tags: string[]): string {
  * Builds a feed URL with tags and optional search query
  * @param tags Array of tag strings
  * @param searchQuery Optional search query string
+ * @param preserveParams Optional URLSearchParams to preserve additional parameters (like favorites)
  * @returns URL path like "/feed?tags=beef+glutenfree&q=chicken" or "/feed?q=chicken"
  */
-export function buildFeedUrlWithTagsAndSearch(tags: string[], searchQuery?: string): string {
-  const params = new URLSearchParams();
+export function buildFeedUrlWithTagsAndSearch(
+  tags: string[],
+  searchQuery?: string,
+  preserveParams?: URLSearchParams,
+): string {
+  const parts: string[] = [];
 
+  // Build tags parameter manually (don't use URLSearchParams for tags to avoid encoding +)
   if (tags.length > 0) {
-    params.set("tags", buildTagsQuery(tags));
+    const tagsQuery = buildTagsQuery(tags);
+    parts.push(`tags=${tagsQuery}`);
   }
 
+  // Build search query parameter
   if (searchQuery && searchQuery.trim()) {
-    params.set("q", searchQuery.trim());
+    // Use encodeURIComponent to properly encode the search query
+    parts.push(`q=${encodeURIComponent(searchQuery.trim())}`);
   }
 
-  const queryString = params.toString();
+  // Preserve existing parameters if provided (like favorites)
+  if (preserveParams) {
+    for (const [key, value] of preserveParams.entries()) {
+      // Don't override tags and q if they're being set
+      if (key !== "tags" && key !== "q") {
+        parts.push(`${key}=${encodeURIComponent(value)}`);
+      }
+    }
+  }
+
+  const queryString = parts.join("&");
   return queryString ? `/feed?${queryString}` : "/feed";
 }
 
@@ -169,11 +188,11 @@ export function toggleTagInUrl(tag: string): string {
   // Remove duplicates (safety check)
   newTags = Array.from(new Set(newTags));
 
-  // Preserve search query from URL
+  // Preserve search query and other parameters (like favorites) from URL
   const urlObj = new URL(window.location.href);
   const searchQuery = urlObj.searchParams.get("q") || "";
 
-  return buildFeedUrlWithTagsAndSearch(newTags, searchQuery);
+  return buildFeedUrlWithTagsAndSearch(newTags, searchQuery, urlObj.searchParams);
 }
 
 /**

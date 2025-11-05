@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { recipeStore } from "@/lib/recipe-store";
 import type { RecipeListItem } from "@/types/recipes";
 import { useSessionToken } from "@/hooks/useSessionToken";
@@ -49,6 +49,11 @@ export function usePaginatedRecipes(
   options: UsePaginatedRecipesOptions = {},
 ): UsePaginatedRecipesResult {
   const { tags = [], searchQuery = "", favorites = false, autoLoadInitial = true } = options;
+  // Check if there are active filters (tags, search, favorites, or special tags like "mine")
+  const hasActiveFilters = useMemo(
+    () => tags.length > 0 || searchQuery.trim().length > 0 || favorites || tags.includes("mine"),
+    [tags, searchQuery, favorites],
+  );
 
   const { fetchToken } = useSessionToken();
 
@@ -84,12 +89,13 @@ export function usePaginatedRecipes(
           params.append("favorites", "true");
         }
 
-        // Get auth token if favorites filter is enabled
+        // Get auth token if favorites is enabled or if "mine" tag is present
+        const hasMineTag = tagsToFetch?.includes("mine") ?? false;
         const headers: HeadersInit = {};
-        if (favoritesToFetch) {
+        if (favoritesToFetch || hasMineTag) {
           const token = await fetchToken();
           if (!token) {
-            throw new Error("Authentication required for favorites filter");
+            throw new Error("Authentication required for this filter");
           }
           headers.Authorization = `Bearer ${token}`;
         }
@@ -136,6 +142,13 @@ export function usePaginatedRecipes(
     abortControllerRef.current = abortController;
     loadingFromSlugRef.current = null;
 
+    // Clear recipes immediately when filters change (especially important for "mine" tag)
+    // This prevents showing stale cached recipes while loading
+    if (hasActiveFilters) {
+      setRecipes([]);
+      setPagination(null);
+    }
+
     setIsLoading(true);
     setError(null);
     try {
@@ -149,8 +162,11 @@ export function usePaginatedRecipes(
 
       // Only update if this request wasn't aborted
       if (!abortController.signal.aborted) {
-        // Store recipes in centralized cache
-        recipeStore.setPartials(data.recipes);
+        // Store recipes in centralized cache (but only if not filtering)
+        // Don't cache filtered results that might override future empty results
+        if (!hasActiveFilters) {
+          recipeStore.setPartials(data.recipes);
+        }
         setRecipes(data.recipes);
         setPagination(data.pagination);
       }
@@ -168,7 +184,7 @@ export function usePaginatedRecipes(
         }
       }
     }
-  }, [fetchRecipes, tags, searchQuery, favorites]);
+  }, [fetchRecipes, tags, searchQuery, favorites, hasActiveFilters]);
 
   const loadMore = useCallback(async () => {
     if (!pagination || !pagination.hasMore || isLoadingMore || recipes.length === 0) return;
@@ -204,8 +220,10 @@ export function usePaginatedRecipes(
 
       // Only update if this request wasn't aborted
       if (!abortController.signal.aborted) {
-        // Store new recipes in centralized cache
-        recipeStore.setPartials(data.recipes);
+        // Store new recipes in centralized cache (but only if not filtering)
+        if (!hasActiveFilters) {
+          recipeStore.setPartials(data.recipes);
+        }
         setRecipes((prev) => [...prev, ...data.recipes]);
         setPagination(data.pagination);
         loadingFromSlugRef.current = null;
@@ -226,7 +244,7 @@ export function usePaginatedRecipes(
         }
       }
     }
-  }, [pagination, isLoadingMore, fetchRecipes, recipes, tags, searchQuery, favorites]);
+  }, [pagination, isLoadingMore, fetchRecipes, recipes, tags, searchQuery, favorites, hasActiveFilters]);
 
   const retry = useCallback(async () => {
     await loadInitialRecipes();

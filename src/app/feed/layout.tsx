@@ -10,7 +10,7 @@ import { FavoritesToggle } from "@/components/favorites-toggle";
 import { useTags } from "@/hooks/useTags";
 import { useAuth } from "@/hooks/useAuth";
 import { useSearchQuery } from "@/hooks/useSearchQuery";
-import { storeFeedUrl } from "@/lib/tag-utils";
+import { storeFeedUrl, buildFeedUrlWithTagsAndSearch } from "@/lib/tag-utils";
 import { LikesProvider } from "@/contexts/likes-context";
 
 function FeedLayoutContent({ children }: { children: React.ReactNode }) {
@@ -18,21 +18,35 @@ function FeedLayoutContent({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const { activeTags, removeTag, clearAllTags } = useTags();
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { query, setQuery } = useSearchQuery({ tags: activeTags });
 
   // Get favorites filter state from URL
   const isFavoritesActive = searchParams.get("favorites") === "true";
+  // Check if "mine" tag is active (special tag for filtering by author)
+  const hasMineTag = activeTags.includes("mine");
 
   // Clear favorites filter when user logs out (if it was active)
+  // Only clear if auth is not loading (to prevent clearing on page refresh)
   useEffect(() => {
-    if (!user && isFavoritesActive) {
+    if (!authLoading && !user && isFavoritesActive) {
       const params = new URLSearchParams(searchParams.toString());
       params.delete("favorites");
       router.replace(`${pathname}?${params.toString()}`);
     }
-  }, [user, isFavoritesActive, searchParams, pathname, router]);
+  }, [authLoading, user, isFavoritesActive, searchParams, pathname, router]);
+
+  // Clear "mine" tag when user logs out (if it was active)
+  // Only clear if auth is not loading (to prevent clearing on page refresh)
+  useEffect(() => {
+    if (!authLoading && !user && hasMineTag) {
+      const newTags = activeTags.filter((tag) => tag !== "mine");
+      const searchQuery = searchParams.get("q") || "";
+      // Preserve favorites parameter when rebuilding URL
+      router.replace(buildFeedUrlWithTagsAndSearch(newTags, searchQuery, searchParams));
+    }
+  }, [authLoading, user, hasMineTag, activeTags, searchParams, router]);
 
   // Toggle favorites filter
   const toggleFavorites = () => {

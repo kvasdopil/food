@@ -58,6 +58,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       tags: data.tags ?? [],
       prepTimeMinutes: data.prep_time_minutes ?? null,
       cookTimeMinutes: data.cook_time_minutes ?? null,
+      authorName: data.author_name ?? null,
     });
   } catch (error) {
     console.error("Recipes API failure:", error);
