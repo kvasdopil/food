@@ -3,11 +3,10 @@
 import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useSessionToken } from "@/hooks/useSessionToken";
-import { getFavoriteStatus } from "@/lib/favorites-storage";
 
 /**
  * Hook for managing favorite status of a recipe
- * Uses API endpoints for logged-in users, falls back to localStorage for logged-out users (migration support)
+ * Uses API endpoints for logged-in users only
  * @param slug - The recipe slug to manage favorites for
  * @returns Object with isFavorite status, toggleFavorite function, and loading/error states
  */
@@ -18,7 +17,7 @@ export function useFavorites(slug: string) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch like status from API when logged in, or from localStorage when logged out
+  // Fetch like status from API when logged in
   useEffect(() => {
     const fetchLikeStatus = async () => {
       setIsLoading(true);
@@ -30,8 +29,8 @@ export function useFavorites(slug: string) {
       }
 
       if (!user) {
-        // Not logged in - check localStorage for migration support
-        setIsFavorite(getFavoriteStatus(slug));
+        // Not logged in - favorites are not available
+        setIsFavorite(false);
         setIsLoading(false);
         return;
       }

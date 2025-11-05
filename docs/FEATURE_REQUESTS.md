@@ -1,5 +1,5 @@
 - ✅ list liked meals - **Implemented**: Favorites filter toggle (heart icon) in feed allows filtering to show only liked recipes. Works with tags and search.
-- remove slider and 'next recipe' button, make it a simple 2-level structure on mobile and web
+- ✅ remove slider and 'next recipe' button, make it a simple 2-level structure on mobile and web
 - add feed to 'recipe' view on desktop?
 - add recipe via agent
   - secure token via vercel?
