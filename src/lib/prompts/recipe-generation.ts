@@ -49,11 +49,24 @@ export const recipeSchema = {
 } as const;
 
 export function buildRecipeGenerationPrompt(options: GenerateRequest, feedback?: string): string {
+  // Check if feedback mentions description/summary issues
+  const hasDescriptionIssues = feedback && (
+    feedback.toLowerCase().includes("summary") ||
+    feedback.toLowerCase().includes("description") ||
+    feedback.toLowerCase().includes("consists of") ||
+    feedback.toLowerCase().includes("contains") ||
+    feedback.toLowerCase().includes("features")
+  );
+
   const prompts: string[] = [
     `Develop a detailed recipe for "${options.title}".`,
-    `Core description provided by the product team: ${options.description}`,
+    hasDescriptionIssues
+      ? `Previous description (DO NOT use this, write a completely new one): ${options.description}`
+      : `Core description provided by the product team: ${options.description}`,
     "The dish must be achievable in 60 minutes or less using widely available, budget-friendly ingredients.",
-    "Include a short summary sentence that objectively describes the dish's key components, cooking method, and distinctive features. Focus on what the dish is and how it's prepared, not subjective impressions. CRITICAL: Do NOT use subjective words like 'savory', 'delicious', 'tasty', 'mouthwatering', 'appealing', 'flavorful', 'amazing', 'perfect', 'best', 'authentic', 'homemade' in the summary.",
+    hasDescriptionIssues
+      ? "CRITICAL: Write a completely NEW summary sentence that objectively describes the dish's key components, cooking method, and distinctive features. Base it on the recipe ingredients and instructions, NOT on the previous description. Focus on what the dish is and how it's prepared, not subjective impressions. Do NOT use subjective words like 'savory', 'delicious', 'tasty', 'mouthwatering', 'appealing', 'flavorful', 'amazing', 'perfect', 'best', 'authentic', 'homemade' in the summary. Do NOT use explanatory phrases like 'This dish contains', 'This dish consists of', 'This recipe features', 'This meal includes', 'features', 'consists of', 'made with', 'made from' - instead, describe the dish directly using active, concise language. Do NOT include the meal name in the description (e.g., 'Pan-fried grated potato pancakes, served with crispy pork belly and lingonberry jam' not 'Raggmunkar with Pork Belly is a dish of pan-fried potato pancakes')."
+      : "Include a short summary sentence that objectively describes the dish's key components, cooking method, and distinctive features. Focus on what the dish is and how it's prepared, not subjective impressions. CRITICAL: Do NOT use subjective words like 'savory', 'delicious', 'tasty', 'mouthwatering', 'appealing', 'flavorful', 'amazing', 'perfect', 'best', 'authentic', 'homemade' in the summary. Do NOT use explanatory phrases like 'This dish contains', 'This dish consists of', 'This recipe features', 'This meal includes', 'features', 'consists of', 'made with', 'made from' - instead, describe the dish directly using active, concise language. Do NOT include the meal name in the description (e.g., 'Pan-fried grated potato pancakes, served with crispy pork belly and lingonberry jam' not 'Raggmunkar with Pork Belly is a dish of pan-fried potato pancakes').",
     "",
     "IMPORTANT RECIPE GUIDELINES:",
     "",
