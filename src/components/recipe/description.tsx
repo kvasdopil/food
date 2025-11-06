@@ -3,16 +3,26 @@
 import { FavoriteButton } from "@/components/favorite-button";
 import { TagChip } from "@/components/tag-chip";
 import { buildFeedUrlWithTagsAndSearch } from "@/lib/tag-utils";
+import { VariantsDropdown } from "./variants-dropdown";
 
 type DescriptionProps = {
   slug: string;
   description: string | null;
   tags: string[];
   authorName?: string | null;
+  variationOf?: string | null;
+  variants?: Array<{ slug: string; name: string }>;
 };
 
-export function Description({ slug, description, tags, authorName }: DescriptionProps) {
-  if (!description && tags.length === 0 && !authorName) {
+export function Description({
+  slug,
+  description,
+  tags,
+  authorName,
+  variationOf,
+  variants = [],
+}: DescriptionProps) {
+  if (!description && tags.length === 0 && !authorName && (!variationOf || variants.length === 0)) {
     return null;
   }
 
@@ -28,6 +38,12 @@ export function Description({ slug, description, tags, authorName }: Description
           return <TagChip key={tag} tag={tag} variant="link" href={href} index={index} />;
         })}
       </div>
+
+      {variationOf && variants.length > 0 && (
+        <div>
+          <VariantsDropdown variationOf={variationOf} variants={variants} />
+        </div>
+      )}
     </section>
   );
 }

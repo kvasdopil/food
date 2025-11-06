@@ -31,6 +31,8 @@ export type RecipeFullData = {
   prepTimeMinutes?: number | null;
   cookTimeMinutes?: number | null;
   authorName?: string | null;
+  variationOf?: string | null;
+  variants?: Array<{ slug: string; name: string }>;
 };
 
 type StoredRecipe = {

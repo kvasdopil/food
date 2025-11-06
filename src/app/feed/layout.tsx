@@ -18,7 +18,7 @@ function FeedLayoutContent({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const { activeTags, removeTag, clearAllTags } = useTags();
-  const { user, loading: authLoading } = useAuth();
+  const { user, loading: authLoading, signInWithGoogle } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { query, setQuery } = useSearchQuery({ tags: activeTags });
 
@@ -85,7 +85,15 @@ function FeedLayoutContent({ children }: { children: React.ReactNode }) {
               />
             </div>
             <div className="flex items-center gap-2">
-              {user && <AddRecipeButton onClick={() => setIsModalOpen(true)} />}
+              <AddRecipeButton
+                onClick={() => {
+                  if (user) {
+                    setIsModalOpen(true);
+                  } else {
+                    signInWithGoogle();
+                  }
+                }}
+              />
               <UserAvatar />
             </div>
           </div>

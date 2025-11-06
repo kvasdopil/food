@@ -99,6 +99,8 @@ export function Recipe({ slug }: RecipeProps) {
           description={recipeData.description || null}
           tags={recipeData.tags}
           authorName={recipeData.authorName ?? null}
+          variationOf={recipeData.variationOf ?? null}
+          variants={recipeData.variants ?? []}
         />
         <Ingredients ingredients={recipeData.ingredients} />
         <Instructions instructions={recipeData.instructions} />

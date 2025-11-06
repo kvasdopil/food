@@ -175,6 +175,7 @@ export async function POST(request: NextRequest) {
       servings: recipe.servings ?? null,
       prepTimeMinutes: recipe.prepTimeMinutes ?? null,
       cookTimeMinutes: recipe.cookTimeMinutes ?? null,
+      variationOf: recipe.variationOf ?? null,
       imagePrompt: {
         base: baseImagePrompt,
       },

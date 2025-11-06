@@ -151,7 +151,7 @@ The following user stories are planned but not yet implemented:
 - **US-30**: As a user, I want to see a dedicated page listing all my favorited recipes so I can easily access my saved recipes. ✅ **Partially Implemented**: Favorites filter toggle (heart icon) in the feed layout allows filtering to show only liked recipes. Works with tags and search filters. A dedicated favorites page could be added in the future.
 - **US-31**: As a user, I want to search for recipes by name or keywords so I can quickly find specific recipes. ✅ **Implemented**: Search bar in feed layout allows searching by recipe name and tags. Search query persists in URL as `q=` parameter and can be combined with tag filters (e.g., `/feed?tags=vegetarian&q=pasta`).
 - **US-32**: As a user, I want the feed to preserve scroll position when navigating back from a recipe page so I don't lose my place while browsing.
-- **US-33**: As a user, I want to see recipe variations (e.g., vegetarian versions) so I can find alternative versions of recipes I like.
+- **US-33**: As a user, I want to see recipe variations (e.g., vegetarian versions) so I can find alternative versions of recipes I like. ✅ **Implemented**: Meal variations are automatically detected and displayed on recipe pages. Recipes with the same base meal (e.g., "Fried Rice", "Tacos") are grouped together. Recipe pages show "This meal has N more variants" or "This meal has another variant" with a dropdown to navigate between variants. The current recipe is excluded from the variants list. Variations are stored using a normalized `variation_of` field in the database.
 - **US-34**: As a user, I want to see prep time and cooking time for recipes so I can plan my cooking schedule. ✅ **Implemented**: Database schema includes `prep_time_minutes` and `cook_time_minutes` fields, populated from YAML files. Cooking time is displayed on recipe pages and feed cards, showing the total time (rounded up to nearest 15 minutes) in a format like "1h", "45m", or "30m".
 - **US-35**: As a user, I want to see serving sizes and nutrition information for recipes so I can make informed dietary choices.
 
@@ -399,10 +399,10 @@ This architecture provides stateful navigation that tracks forward and backward 
   - **Stage 1 - Parse User Input** (`/api/recipes/parse-user-input-stream`): Streams parsing of natural language input into structured metadata (title, description, tags). UI updates immediately as each field arrives. Image generation starts automatically when description is received.
   - **Stage 2 - Generate Recipe** (`/api/recipes/generate-stream`): After parsing completes, automatically generates the full recipe (ingredients, instructions, prep/cook times, servings). UI updates incrementally as fields arrive.
   - Both endpoints use NDJSON format with progressive field updates. Uses Gemini API's `streamGenerateContent` for real-time streaming. Fully tested with comprehensive Jest test suites. Recipe preview card appears immediately when parsing starts, showing title/description/tags first, then filling in with ingredients/instructions as they arrive. "Add recipe" button is only enabled after both stages complete.
-  - ✅ Recipe generation endpoint - **Implemented**: `/api/recipes/generate` endpoint accepts natural language user input and generates complete recipes with ingredients, instructions, tags, and image prompts (non-streaming, returns complete recipe)
+  - ✅ Recipe generation endpoint - **Implemented**: `/api/recipes/generate` endpoint accepts natural language user input and generates complete recipes with ingredients, instructions, tags, and image prompts (non-streaming, returns complete recipe). The LLM automatically identifies meal variations and includes a `variationOf` field when appropriate (e.g., "Chicken Fried Rice" → `variationOf: "Fried Rice"`).
   - ✅ Recipe preview image generation - **Implemented**: `/api/images/generate-preview` endpoint generates preview images using Google AI Gemini Image API (`gemini-2.5-flash-image`). Uses an optimized prompt for high-resolution professional food photography. Automatically triggered during recipe generation as soon as the meal description is available from the parse-user-input-stream endpoint, allowing images to generate in parallel with recipe content.
-  - ✅ Recipe refinement endpoint - **Implemented**: `/api/recipes/[slug]/refine` endpoint for evaluating and improving existing recipes
-  - Support recipe variations (e.g., vegetarian versions of existing meals)
+  - ✅ Recipe refinement endpoint - **Implemented**: `/api/recipes/[slug]/refine` endpoint for evaluating and improving existing recipes. Preserves `variation_of` field during refinement.
+  - ✅ Meal variations - **Implemented**: Recipes can be grouped by base meal name using the `variation_of` field. Recipe pages display a dropdown showing other variants of the same meal (e.g., "This meal has 2 more variants"). Users can navigate between variants by clicking on variant names in the dropdown. The LLM automatically identifies and sets `variationOf` during recipe generation. A script (`scripts/populate-meal-variations.ts`) can analyze all recipes and populate `variation_of` values for existing recipes.
 
 - **Performance & UX**:
   - ✅ Centralized recipe storage with IndexedDB persistence - **Implemented**: Recipe data cached locally for instant loading, offline access, and improved user experience
@@ -430,7 +430,8 @@ This architecture provides stateful navigation that tracks forward and backward 
   - Shows recipe preview card immediately when parsing starts, updating progressively as fields arrive. Button shows "Parsing..." → "Generating..." → "Add recipe" states. Only enables "Add recipe" button after both stages complete. Saves recipes to database via `/api/recipes`. Uses shadcn Button and Alert components. Closes on Escape key or clicking outside. Uses Supabase authentication for API calls.
 - `src/components/recipe-preview-card.tsx`: preview card component for displaying generated recipes during streaming. Supports partial data and shows loading states for missing fields. Displays full overlay with "Generating recipe..." when empty (during initial parsing), then shows a small "Streaming..." badge in the top-right corner once data appears, allowing users to see fields populate in real time. Uses `RecipeFeedCard` for rendering with fallback values for missing fields.
 - `src/components/recipe-feed-card.tsx`: recipe card component for feed page using shadcn Card and CardContent. Displays image, title overlay, description, clickable tags (toggle filters), and favorite button.
-- `src/components/recipe/description.tsx`: description component that displays recipe description, author attribution ("by {username}"), clickable tag links (navigate to feed with tag filtered), and favorite button. Author attribution only shows for recipes with author information (scripted recipes don't show attribution). Tags use the "link" variant of TagChip for proper semantic HTML and navigation.
+- `src/components/recipe/description.tsx`: description component that displays recipe description, author attribution ("by {username}"), clickable tag links (navigate to feed with tag filtered), favorite button, and meal variants dropdown. Author attribution only shows for recipes with author information (scripted recipes don't show attribution). Tags use the "link" variant of TagChip for proper semantic HTML and navigation. Variants dropdown appears after tags and shows "This meal has N more variants" or "This meal has another variant" with a dropdown to navigate between variants.
+- `src/components/recipe/variants-dropdown.tsx`: dropdown component for displaying and navigating between meal variants. Shows variant count message and dropdown menu with variant names. Clicking a variant navigates to that recipe. Closes when clicking outside. Only displays when recipes have variations.
 - `src/components/user-avatar.tsx`: user avatar component with dropdown menu. Includes "My Recipes" option that navigates to `/feed?tags=mine` to filter recipes by the current user.
 - `src/components/tag-chip.tsx`: tag chip component using shadcn Badge with custom color palettes. Supports static (non-interactive), clickable (button that triggers onClick), removable (button with remove icon for search bar), and link (Next.js Link for navigation) variants. Tags in the search bar use the removable variant with `cursor:pointer` styling.
 - `src/components/favorite-button.tsx`: favorite button component using shadcn Button. Used on recipe feed cards and recipe detail pages. Uses `useFavorites` hook which reads from `LikesContext` for instant like status access.
@@ -444,7 +445,7 @@ This architecture provides stateful navigation that tracks forward and backward 
 - `src/lib/utils.ts`: utility function `cn()` for merging Tailwind CSS classes (used by shadcn components).
 - `src/hooks/useTags.ts`: React hook for managing tags in feed context. Parses tags from URL, provides remove/clear functions. Preserves search query when modifying tags.
 - `src/lib/tag-utils.ts`: Utility functions for parsing tags from URLs and building tag URLs. Used by both client components and API routes.
-- `src/lib/recipe-utils.ts`: Core recipe utility functions including `parseIngredients()`, `parseInstructions()`, `buildInstructions()`, `normalizeRecipe()`, `slugify()`, and recipe data types. Used by API routes and scripts for parsing and formatting recipe data.
+- `src/lib/recipe-utils.ts`: Core recipe utility functions including `parseIngredients()`, `parseInstructions()`, `buildInstructions()`, `normalizeRecipe()`, `slugify()`, `getRecipeVariants()`, and recipe data types. `getRecipeVariants()` queries the database for recipes sharing the same `variation_of` value, excluding the current recipe. Used by API routes and scripts for parsing and formatting recipe data.
 - `src/lib/image-storage-utils.ts`: Utility functions for image storage operations including `calculateFileHash()` for generating SHA-256 hashes and `ensureBucket()` for ensuring Supabase storage buckets exist. Used by image-related API endpoints.
 - `src/app/recipes/layout.tsx`: client layout component that manages recipe rendering and navigation. Includes back-to-feed link (links to `/feed` with `cursor: pointer`). Recipes render normally on all screen sizes (no mobile carousel).
 - `src/app/recipes/[slug]/page.tsx`: server component that only handles metadata generation (OpenGraph, title, etc.). Returns `null` as layout handles all rendering.
@@ -575,6 +576,15 @@ The script will:
     npx tsx scripts/query-user-recipes.ts --stats-only       # Show statistics only
     npx tsx scripts/query-user-recipes.ts --user-email user@example.com  # Show specific user
     ```
+- **`scripts/populate-meal-variations.ts`**: Populates `variation_of` field for existing recipes using LLM analysis
+  - Analyzes all recipes in the database using Gemini LLM to identify meal variations
+  - Updates recipes with normalized base meal names (e.g., "Fried Rice", "Tacos")
+  - Requires `NEXT_PUBLIC_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, and `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) in `.env.local`
+  - Usage:
+    ```bash
+    npx tsx scripts/populate-meal-variations.ts
+    ```
+  - The script fetches all recipes, uses LLM to detect variations, and updates the database with `variation_of` values
 
 ### Recipe Upload CLI & API
 
@@ -588,7 +598,7 @@ The script will:
 
 ### API Endpoints
 
-- **`POST /api/recipes`**: Creates or updates a recipe in the database. Accepts normalized recipe payloads, upserting by slug. Supports `prepTimeMinutes` and `cookTimeMinutes` fields. For logged-in users (authenticated via Supabase session token), automatically sets `author_name` and `author_email` from the authenticated user. For recipes created via `EDIT_TOKEN`, author fields are set to `null`. Author fields are immutable - existing recipes preserve their original author even when updated. Requires authentication via `Authorization: Bearer <EDIT_TOKEN>` or `Authorization: Bearer <SUPABASE_SESSION_TOKEN>` (for logged-in users). The server rejects unauthorized requests with `401`.
+- **`POST /api/recipes`**: Creates or updates a recipe in the database. Accepts normalized recipe payloads, upserting by slug. Supports `prepTimeMinutes`, `cookTimeMinutes`, and `variationOf` fields. The `variationOf` field stores a normalized base meal name for grouping meal variations (e.g., "Fried Rice", "Tacos"). For logged-in users (authenticated via Supabase session token), automatically sets `author_name` and `author_email` from the authenticated user. For recipes created via `EDIT_TOKEN`, author fields are set to `null`. Author fields are immutable - existing recipes preserve their original author even when updated. Requires authentication via `Authorization: Bearer <EDIT_TOKEN>` or `Authorization: Bearer <SUPABASE_SESSION_TOKEN>` (for logged-in users). The server rejects unauthorized requests with `401`.
 - **`POST /api/recipes/generate`**: Generates recipe content (ingredients, instructions, image prompts) using Gemini API from natural language user input. Does not save to database. Always returns the first generated variant without refinement. Accepts `userInput` parameter for parsing meal descriptions. Requires authentication via `Authorization: Bearer <EDIT_TOKEN>` or `Authorization: Bearer <SUPABASE_SESSION_TOKEN>`, and `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) configured on the server (automatically loaded by `@/lib/gemini.ts`). Returns recipe data in the same format as `POST /api/recipes`.
 - **`POST /api/recipes/parse-user-input-stream`**: Streaming endpoint for parsing natural language user input into structured recipe metadata. Returns NDJSON stream with progressive field updates for `title`, `description`, `tags`, `userComment`, `servings`, and `cuisine`. The UI updates progressively as fields arrive, showing the recipe card immediately when parsing starts. Image generation is automatically triggered as soon as the `description` field is received. Requires authentication via `Authorization: Bearer <EDIT_TOKEN>` or `Authorization: Bearer <SUPABASE_SESSION_TOKEN>`, and `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) configured on the server. Uses `streamGenerateContent` from Gemini API for real-time streaming.
 
@@ -687,7 +697,7 @@ The application uses **Vercel Analytics** to track API endpoint usage and user a
 **Public Endpoints** (no authentication required):
 
 - `GET /api/recipes` - Recipe feed listing. Supports `?seed=N` for shuffling recipes (only when no filters are active), `?tags=tag1+tag2` for tag filtering (special "mine" tag filters by author_email), `?q=searchterm` for searching, `?favorites=true` for filtering favorites, and `?page=N` or `?from={slug}` for pagination. When filters are active, shuffling is disabled and recipes are returned in their original order.
-- `GET /api/recipes/[slug]` - Individual recipe details
+- `GET /api/recipes/[slug]` - Individual recipe details. Returns recipe data including `variationOf` (normalized base meal name) and `variants` (array of other recipes with the same `variation_of` value, excluding the current recipe). Variants are fetched dynamically from the database.
 
 ### Viewing Analytics
 
@@ -731,9 +741,11 @@ The application uses **Vercel Analytics** to track API endpoint usage and user a
 ## Supabase Configuration
 
 - Schema is defined in `supabase/migrations/*create_recipes_table.sql` and includes:
-  - `slug`, `name`, `description`, `ingredients`, `instructions`, `image_url`, `tags`, `prep_time_minutes`, `cook_time_minutes`, `author_name`, `author_email`, timestamps
+  - `slug`, `name`, `description`, `ingredients`, `instructions`, `image_url`, `tags`, `prep_time_minutes`, `cook_time_minutes`, `author_name`, `author_email`, `variation_of`, timestamps
   - `author_name` and `author_email` are nullable text fields for recipe attribution
+  - `variation_of` is a nullable text field storing normalized base meal names for grouping meal variations (e.g., "Fried Rice", "Tacos", "Stir-Fry")
   - Index on `author_email` for efficient filtering of user's recipes
+  - Index on `variation_of` for efficient queries of recipe variants
   - Slugs auto-generate from recipe names (duplicates receive `-2`, `-3`, … suffixes)
   - Row Level Security with read-only anonymous policy
 - Recipes can be uploaded via the API endpoint (see Recipe Asset Workflow section above).

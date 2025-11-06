@@ -149,6 +149,9 @@ export async function POST(
       tags: dbRecipe.tags || [],
     };
 
+    // Store variation_of for preservation
+    const variationOf = dbRecipe.variation_of ?? null;
+
     // Evaluate the recipe
     const evaluationResult = await evaluateRecipe(recipe);
 
@@ -165,6 +168,7 @@ export async function POST(
 
     // Update recipe in database
     // CRITICAL: Preserve existing author fields - they should never change during refinement
+    // CRITICAL: Preserve variation_of field - it should never change during refinement
     const dbPayload = {
       name: refinedRecipe.title,
       description: refinedRecipe.summary ?? null,
@@ -174,6 +178,8 @@ export async function POST(
       // Preserve original author attribution
       author_name: dbRecipe.author_name ?? null,
       author_email: dbRecipe.author_email ?? null,
+      // Preserve variation_of
+      variation_of: variationOf,
     };
 
     const { data: updatedRecipe, error: updateError } = await supabaseAdmin

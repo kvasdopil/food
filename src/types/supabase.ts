@@ -24,6 +24,7 @@ export type Database = {
           slug: string;
           tags: string[];
           updated_at: string;
+          variation_of: string | null;
         };
         Insert: {
           author_email?: string | null;
@@ -40,6 +41,7 @@ export type Database = {
           slug: string;
           tags?: string[];
           updated_at?: string;
+          variation_of?: string | null;
         };
         Update: {
           author_email?: string | null;
@@ -56,6 +58,7 @@ export type Database = {
           slug?: string;
           tags?: string[];
           updated_at?: string;
+          variation_of?: string | null;
         };
         Relationships: [];
       };
@@ -102,6 +105,7 @@ export type Database = {
           slug: string;
           tags: string[];
           updated_at: string;
+          variation_of: string | null;
         }[];
         SetofOptions: {
           from: "*";

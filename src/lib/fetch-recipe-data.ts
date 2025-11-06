@@ -9,6 +9,8 @@ export type RecipeData = {
   prepTimeMinutes?: number | null;
   cookTimeMinutes?: number | null;
   authorName?: string | null;
+  variationOf?: string | null;
+  variants?: Array<{ slug: string; name: string }>;
 };
 
 export async function fetchRecipeData(slug: string): Promise<RecipeData | null> {

@@ -20,6 +20,7 @@ export type RecipeData = {
   ingredients: Ingredient[];
   instructions: Instruction[];
   tags?: string[];
+  variationOf?: string;
 };
 
 export function recipeToYamlString(recipe: RecipeData): string {
@@ -152,4 +153,53 @@ export function buildInstructions(instructions: Array<{ step?: number; action: s
       return `${stepNumber}. ${entry.action}`;
     })
     .join("\n");
+}
+
+/**
+ * Recipe variant information for UI display
+ */
+export type RecipeVariant = {
+  slug: string;
+  name: string;
+};
+
+/**
+ * Query recipe variants by variation_of field.
+ * Returns all recipes that share the same variation_of value, excluding the current recipe.
+ */
+export async function getRecipeVariants(
+  variationOf: string | null,
+  currentSlug: string,
+): Promise<RecipeVariant[]> {
+  if (!variationOf) {
+    return [];
+  }
+
+  // Dynamic import to avoid SSR issues
+  const { supabase } = await import("@/lib/supabaseClient");
+  if (!supabase) {
+    return [];
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from("recipes")
+      .select("slug, name")
+      .eq("variation_of", variationOf)
+      .neq("slug", currentSlug)
+      .order("name", { ascending: true });
+
+    if (error) {
+      console.error("Failed to fetch recipe variants:", error);
+      return [];
+    }
+
+    return (data || []).map((recipe) => ({
+      slug: recipe.slug,
+      name: recipe.name,
+    }));
+  } catch (error) {
+    console.error("Error fetching recipe variants:", error);
+    return [];
+  }
 }

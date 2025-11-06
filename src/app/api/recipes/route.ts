@@ -31,6 +31,7 @@ type RecipePayload = {
   imageUrl?: string | null | undefined; // undefined = not provided, null = explicitly cleared
   prepTimeMinutes?: number | null;
   cookTimeMinutes?: number | null;
+  variationOf?: string | null;
 };
 
 type RecipeListItem = {
@@ -156,6 +157,13 @@ function normalizeRecipePayload(payload: unknown): RecipePayload | null {
         ? null
         : undefined;
 
+  const variationOf =
+    typeof payload.variationOf === "string" && payload.variationOf.trim()
+      ? payload.variationOf.trim()
+      : payload.variationOf === null
+        ? null
+        : undefined;
+
   return {
     slug: slugFromPayload,
     title,
@@ -166,6 +174,7 @@ function normalizeRecipePayload(payload: unknown): RecipePayload | null {
     imageUrl,
     prepTimeMinutes,
     cookTimeMinutes,
+    variationOf,
   };
 }
 
@@ -530,6 +539,7 @@ export async function POST(request: NextRequest) {
     cook_time_minutes?: number | null;
     author_name?: string | null;
     author_email?: string | null;
+    variation_of?: string | null;
   } = {
     slug,
     name: payload.title,
@@ -555,6 +565,11 @@ export async function POST(request: NextRequest) {
   } else if (existingRecipe?.image_url) {
     // Preserve existing image_url if not provided in payload
     dbPayload.image_url = existingRecipe.image_url;
+  }
+
+  // Include variation_of if provided
+  if (payload.variationOf !== undefined) {
+    dbPayload.variation_of = payload.variationOf ?? null;
   }
 
   try {

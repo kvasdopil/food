@@ -4,6 +4,7 @@ import { supabase } from "@/lib/supabaseClient";
 import { supabaseAdmin } from "@/lib/supabaseAdminClient";
 import { authenticateRequest } from "@/lib/api-auth";
 import { logApiEndpoint } from "@/lib/analytics";
+import { getRecipeVariants } from "@/lib/recipe-utils";
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -47,6 +48,10 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       statusCode: 200,
       isProtected: false,
     });
+    
+    // Fetch variants if variation_of exists
+    const variants = await getRecipeVariants(data.variation_of, slug);
+    
     // Transform to match RecipeData type
     return NextResponse.json({
       slug: data.slug,
@@ -59,6 +64,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       prepTimeMinutes: data.prep_time_minutes ?? null,
       cookTimeMinutes: data.cook_time_minutes ?? null,
       authorName: data.author_name ?? null,
+      variationOf: data.variation_of ?? null,
+      variants: variants,
     });
   } catch (error) {
     console.error("Recipes API failure:", error);

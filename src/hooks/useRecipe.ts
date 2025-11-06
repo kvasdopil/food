@@ -26,6 +26,8 @@ function convertToRecipeData(full: RecipeFullData): RecipeData {
     prepTimeMinutes: full.prepTimeMinutes,
     cookTimeMinutes: full.cookTimeMinutes,
     authorName: full.authorName,
+    variationOf: full.variationOf,
+    variants: full.variants,
   };
 }
 
@@ -50,19 +52,8 @@ export function useRecipe(slug: string): UseRecipeResult {
     let isActive = true;
 
     async function resolveRecipe() {
-      // Check centralized store first
-      const existingFull = recipeStore.getFull(slug);
-      if (existingFull) {
-        const existing = convertToRecipeData(existingFull);
-        queueMicrotask(() => {
-          if (!isActive || slugRef.current !== slug) return;
-          setRecipeData(existing);
-          setIsLoading(false);
-          setError(null);
-        });
-        return;
-      }
-
+      // Always fetch fresh data to ensure variants are up-to-date
+      // Variants are dynamic and depend on other recipes in the database
       queueMicrotask(() => {
         if (!isActive || slugRef.current !== slug) return;
         setIsLoading(true);
@@ -96,6 +87,8 @@ export function useRecipe(slug: string): UseRecipeResult {
           prepTimeMinutes: data.prepTimeMinutes,
           cookTimeMinutes: data.cookTimeMinutes,
           authorName: data.authorName,
+          variationOf: data.variationOf,
+          variants: data.variants,
         };
         recipeStore.setFull(fullData);
 
