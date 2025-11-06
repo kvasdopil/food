@@ -7,8 +7,26 @@
     "postcss.config.mjs",
     "prettier.config.mjs",
     "jscpd.config.json",
-    "tailwind.config.*"
+    "tailwind.config.*",
+    "src/components/__tests__/**",
+    "src/hooks/__tests__/**",
+    "src/lib/__tests__/**",
+    "src/test/**",
+    "src/lib/analytics.ts",
+    "src/lib/api-auth.ts",
+    "src/lib/tag-utils.ts",
+    "src/types/supabase.ts"
   ],
-  "project": ["src/**/*.tsx"],
-  "ignoreDependencies": ["tailwindcss", "ts-node", "vercel", "@supabase/supabase-js", "idb"]
+  "project": ["src/**/*.{ts,tsx}"],
+  "ignoreDependencies": [
+    "tailwindcss",
+    "ts-node",
+    "vercel",
+    "@testing-library/dom",
+    "@testing-library/jest-dom",
+    "@testing-library/react",
+    "jsdom"
+  ],
+  "ignoreBinaries": ["jest"],
+  "ignoreExportsUsedInFile": true
 }
