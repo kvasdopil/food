@@ -3,6 +3,9 @@ import { randomInt } from "crypto";
 import { FeedPageContent } from "./feed-page-content";
 import { FeedSkeleton } from "@/components/skeletons/feed-skeleton";
 
+// Force dynamic rendering to ensure seed is regenerated on each request
+export const dynamic = "force-dynamic";
+
 // Server component that generates a random seed for SSR
 export default function FeedPage() {
   // Generate a random seed on the server for SSR
