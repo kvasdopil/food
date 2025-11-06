@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { supabaseAdmin } from "@/lib/supabaseAdminClient";
 import { supabase } from "@/lib/supabaseClient";
 import { parseTagsFromQuery } from "@/lib/tag-utils";
-import { seededShuffle, getDateSeed } from "@/lib/shuffle-utils";
+import { seededShuffle } from "@/lib/shuffle-utils";
 import { logApiEndpoint } from "@/lib/analytics";
 import { authenticateRequest } from "@/lib/api-auth";
 import { buildInstructions } from "@/lib/recipe-utils";
@@ -178,6 +178,8 @@ export async function GET(request: NextRequest) {
   const favoritesParam = searchParams.get("favorites");
   const showFavorites = favoritesParam === "true";
   const filterTags = parseTagsFromQuery(tagsParam);
+  const seedParam = searchParams.get("seed");
+  const seed = seedParam ? parseInt(seedParam, 10) : undefined;
 
   // Check for special "mine" tag (not stored in DB, processed specially)
   const hasMineTag = filterTags.includes("mine");
@@ -343,29 +345,39 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    // Shuffle all recipes deterministically based on current date
-    const dateSeed = getDateSeed();
-    const shuffledRecipes = seededShuffle(allRecipes, dateSeed);
+    // Check if any filters are active
+    const hasActiveFilters =
+      dbFilterTags.length > 0 || hasMineTag || showFavorites || searchQuery.trim().length > 0;
 
-    // Now handle pagination from the shuffled array
+    // Only shuffle if seed is provided AND no filters are active
+    let recipesToPaginate: typeof allRecipes;
+    if (seed !== undefined && !hasActiveFilters && !isNaN(seed)) {
+      // Shuffle with provided seed
+      recipesToPaginate = seededShuffle(allRecipes, seed);
+    } else {
+      // Return recipes in original order (no shuffling)
+      recipesToPaginate = allRecipes;
+    }
+
+    // Now handle pagination from the recipes array (shuffled or original order)
     let recipes: RecipeListItem[] = [];
     let hasMore = false;
     let currentPage = 1;
 
     if (fromSlug) {
-      // Find the index of the recipe with the given slug in the shuffled array
-      const fromIndex = shuffledRecipes.findIndex((r) => r.slug === fromSlug);
+      // Find the index of the recipe with the given slug in the array
+      const fromIndex = recipesToPaginate.findIndex((r) => r.slug === fromSlug);
 
       if (fromIndex === -1) {
         // Slug not found, return first page
-        recipes = shuffledRecipes.slice(0, ITEMS_PER_PAGE);
-        hasMore = shuffledRecipes.length > ITEMS_PER_PAGE;
+        recipes = recipesToPaginate.slice(0, ITEMS_PER_PAGE);
+        hasMore = recipesToPaginate.length > ITEMS_PER_PAGE;
         currentPage = 1;
       } else {
         // Get recipes after the found slug
         const startIndex = fromIndex + 1;
-        recipes = shuffledRecipes.slice(startIndex, startIndex + ITEMS_PER_PAGE);
-        hasMore = startIndex + ITEMS_PER_PAGE < shuffledRecipes.length;
+        recipes = recipesToPaginate.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+        hasMore = startIndex + ITEMS_PER_PAGE < recipesToPaginate.length;
         currentPage = Math.floor(fromIndex / ITEMS_PER_PAGE) + 1;
       }
     } else {
@@ -377,12 +389,12 @@ export async function GET(request: NextRequest) {
       }
 
       const offset = (page - 1) * ITEMS_PER_PAGE;
-      recipes = shuffledRecipes.slice(offset, offset + ITEMS_PER_PAGE);
+      recipes = recipesToPaginate.slice(offset, offset + ITEMS_PER_PAGE);
       currentPage = page;
-      hasMore = offset + ITEMS_PER_PAGE < shuffledRecipes.length;
+      hasMore = offset + ITEMS_PER_PAGE < recipesToPaginate.length;
     }
 
-    const totalPages = Math.ceil(shuffledRecipes.length / ITEMS_PER_PAGE);
+    const totalPages = Math.ceil(recipesToPaginate.length / ITEMS_PER_PAGE);
 
     logApiEndpoint({
       endpoint: "/api/recipes",
@@ -396,7 +408,7 @@ export async function GET(request: NextRequest) {
       pagination: {
         page: currentPage,
         limit: ITEMS_PER_PAGE,
-        total: shuffledRecipes.length,
+        total: recipesToPaginate.length,
         totalPages,
         hasMore,
       },

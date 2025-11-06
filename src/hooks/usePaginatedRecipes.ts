@@ -23,6 +23,7 @@ type UsePaginatedRecipesOptions = {
   searchQuery?: string;
   favorites?: boolean;
   autoLoadInitial?: boolean;
+  initialSeed?: number;
 };
 
 type UsePaginatedRecipesResult = {
@@ -48,7 +49,13 @@ type UsePaginatedRecipesResult = {
 export function usePaginatedRecipes(
   options: UsePaginatedRecipesOptions = {},
 ): UsePaginatedRecipesResult {
-  const { tags = [], searchQuery = "", favorites = false, autoLoadInitial = true } = options;
+  const {
+    tags = [],
+    searchQuery = "",
+    favorites = false,
+    autoLoadInitial = true,
+    initialSeed,
+  } = options;
   // Check if there are active filters (tags, search, favorites, or special tags like "mine")
   const hasActiveFilters = useMemo(
     () => tags.length > 0 || searchQuery.trim().length > 0 || favorites || tags.includes("mine"),
@@ -65,6 +72,10 @@ export function usePaginatedRecipes(
 
   const abortControllerRef = useRef<AbortController | null>(null);
   const loadingFromSlugRef = useRef<string | null>(null);
+  // Store seed in ref to persist across re-renders but reset on page reload (new SSR seed)
+  const seedRef = useRef<number | undefined>(
+    initialSeed !== undefined ? initialSeed : Math.floor(Math.random() * 2147483647), // Fallback for backward compatibility
+  );
 
   const fetchRecipes = useCallback(
     async (
@@ -87,6 +98,15 @@ export function usePaginatedRecipes(
         }
         if (favoritesToFetch) {
           params.append("favorites", "true");
+        }
+        // Only include seed when no filters are active
+        const hasFilters =
+          (tagsToFetch && tagsToFetch.length > 0) ||
+          (searchToFetch && searchToFetch.trim().length > 0) ||
+          favoritesToFetch ||
+          (tagsToFetch && tagsToFetch.includes("mine"));
+        if (!hasFilters && seedRef.current !== undefined) {
+          params.append("seed", seedRef.current.toString());
         }
 
         // Get auth token if favorites is enabled or if "mine" tag is present
