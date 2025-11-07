@@ -5,7 +5,7 @@ import { FavoriteButton } from "@/components/favorite-button";
 import { TagChip } from "@/components/tag-chip";
 import { buildFeedUrlWithTagsAndSearch } from "@/lib/tag-utils";
 import { VersionsScroll } from "./versions-scroll";
-import { CreateVariantModal } from "@/components/create-variant-modal";
+import { RecipeModal } from "@/components/recipe-modal";
 import { useAuth } from "@/hooks/useAuth";
 import type { RecipeData } from "@/lib/fetch-recipe-data";
 
@@ -73,11 +73,12 @@ export function Description({
       </section>
 
       {recipeData && (
-        <CreateVariantModal
+        <RecipeModal
           isOpen={isCreateVariantModalOpen}
           onClose={() => setIsCreateVariantModalOpen(false)}
           baseRecipe={recipeData}
           variationOf={baseVariationOf}
+          mode="modify"
         />
       )}
     </>

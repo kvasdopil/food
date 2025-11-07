@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { AddRecipeModal } from "../add-recipe-modal";
+import { RecipeModal } from "../recipe-modal";
 import { useRecipeGeneration } from "@/hooks/useRecipeGeneration";
 import { useAuth } from "@/hooks/useAuth";
 import { useSessionToken } from "@/hooks/useSessionToken";
@@ -25,7 +25,7 @@ jest.mock("@/hooks/useFavorites", () => ({
   })),
 }));
 
-describe("AddRecipeModal - Streaming", () => {
+describe("RecipeModal - Create Mode", () => {
   const mockGenerateRecipe = jest.fn();
   const mockReset = jest.fn();
   const mockSetError = jest.fn();
@@ -85,7 +85,7 @@ describe("AddRecipeModal - Streaming", () => {
       setError: mockSetError,
     });
 
-    render(<AddRecipeModal isOpen={true} onClose={jest.fn()} />);
+    render(<RecipeModal isOpen={true} onClose={jest.fn()} mode="create" />);
 
     expect(screen.getByText("Test Recipe")).toBeInTheDocument();
   });
@@ -115,7 +115,7 @@ describe("AddRecipeModal - Streaming", () => {
       setError: mockSetError,
     });
 
-    render(<AddRecipeModal isOpen={true} onClose={jest.fn()} />);
+    render(<RecipeModal isOpen={true} onClose={jest.fn()} mode="create" />);
 
     const addButton = screen.getByRole("button", { name: /add recipe|generating/i });
     expect(addButton).toBeDisabled();
@@ -147,7 +147,7 @@ describe("AddRecipeModal - Streaming", () => {
       setError: mockSetError,
     });
 
-    render(<AddRecipeModal isOpen={true} onClose={jest.fn()} />);
+    render(<RecipeModal isOpen={true} onClose={jest.fn()} mode="create" />);
 
     const addButton = screen.getByRole("button", { name: /add recipe/i });
     expect(addButton).not.toBeDisabled();
@@ -166,7 +166,7 @@ describe("AddRecipeModal - Streaming", () => {
       setError: mockSetError,
     });
 
-    render(<AddRecipeModal isOpen={true} onClose={jest.fn()} />);
+    render(<RecipeModal isOpen={true} onClose={jest.fn()} mode="create" />);
 
     // Check for loading state in form
     const generateButton = screen.getByRole("button", { name: /generating/i });
@@ -186,7 +186,7 @@ describe("AddRecipeModal - Streaming", () => {
       setError: mockSetError,
     });
 
-    render(<AddRecipeModal isOpen={true} onClose={jest.fn()} />);
+    render(<RecipeModal isOpen={true} onClose={jest.fn()} mode="create" />);
 
     expect(screen.getByLabelText(/describe the recipe/i)).toBeInTheDocument();
     expect(screen.queryByText(/test recipe/i)).not.toBeInTheDocument();
@@ -217,7 +217,7 @@ describe("AddRecipeModal - Streaming", () => {
       setError: mockSetError,
     });
 
-    render(<AddRecipeModal isOpen={true} onClose={jest.fn()} />);
+    render(<RecipeModal isOpen={true} onClose={jest.fn()} mode="create" />);
 
     // When recipe has data, it shows "Streaming..." not "Generating recipe..."
     expect(screen.getByText("Streaming...")).toBeInTheDocument();
@@ -248,7 +248,7 @@ describe("AddRecipeModal - Streaming", () => {
       setError: mockSetError,
     });
 
-    render(<AddRecipeModal isOpen={true} onClose={jest.fn()} />);
+    render(<RecipeModal isOpen={true} onClose={jest.fn()} mode="create" />);
 
     const button = screen.getByRole("button", { name: /generating/i });
     expect(button).toBeInTheDocument();

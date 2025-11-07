@@ -3,17 +3,12 @@
 import { useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { RecipeGrid } from "@/components/recipe-grid";
+import { ErrorState } from "@/components/error-state";
+import { FeedSkeleton } from "@/components/skeletons/feed-skeleton";
 import { useTags } from "@/hooks/useTags";
 import { usePaginatedRecipes } from "@/hooks/usePaginatedRecipes";
 import { useCachedRecipes } from "@/hooks/useCachedRecipes";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
-import { FeedSkeleton } from "@/components/skeletons/feed-skeleton";
-import {
-  FeedErrorState,
-  FeedEmptyState,
-  FeedLoadingMore,
-  FeedEndState,
-} from "@/components/feed-states";
 
 export function FeedPageContent({ initialSeed }: { initialSeed: number }) {
   const searchParams = useSearchParams();
@@ -72,21 +67,31 @@ export function FeedPageContent({ initialSeed }: { initialSeed: number }) {
   }
 
   if (error) {
-    return <FeedErrorState error={error} onRetry={retry} />;
+    return <ErrorState error={error} onRetry={retry} />;
   }
 
   // Customize empty state message for "My Recipes" filter
-  const emptyMessage = hasMineTag ? "You haven't created any recipes yet" : undefined;
+  const emptyMessage = hasMineTag ? "You haven't created any recipes yet" : "No recipes found";
 
   return (
     <>
       {hasRecipes ? (
         <RecipeGrid recipes={recipesToDisplay} />
       ) : (
-        <FeedEmptyState message={emptyMessage} />
+        <div className="flex items-center justify-center py-32">
+          <p className="text-lg text-gray-600">{emptyMessage}</p>
+        </div>
       )}
-      {isLoadingMore && <FeedLoadingMore />}
-      {pagination && !pagination.hasMore && recipes.length > 0 && <FeedEndState />}
+      {isLoadingMore && (
+        <div className="mt-6">
+          <FeedSkeleton count={4} />
+        </div>
+      )}
+      {pagination && !pagination.hasMore && recipes.length > 0 && (
+        <div className="flex items-center justify-center py-8">
+          <p className="text-sm text-gray-600">No more recipes</p>
+        </div>
+      )}
     </>
   );
 }

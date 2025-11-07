@@ -5,10 +5,13 @@ import { useAuth } from "@/hooks/useAuth";
 import { useSessionToken } from "@/hooks/useSessionToken";
 import { useRecipeGeneration } from "@/hooks/useRecipeGeneration";
 import { RecipePreviewCard } from "@/components/recipe-preview-card";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { HiSparkles, HiPencilSquare } from "react-icons/hi2";
+import { formatRecipeForPrompt } from "@/lib/recipe-formatters";
+import { recipeDataToGeneratedRecipe } from "@/lib/recipe-transformers";
 import type { RecipeData } from "@/lib/fetch-recipe-data";
 import type { GeneratedRecipe } from "@/types/recipes";
 
@@ -18,66 +21,6 @@ interface RecipeModalProps {
   baseRecipe?: RecipeData | null;
   variationOf?: string | null;
   mode?: "create" | "modify";
-}
-
-function formatRecipeForPrompt(recipe: RecipeData): string {
-  const parts: string[] = [];
-
-  parts.push(`Title: ${recipe.name}`);
-
-  if (recipe.description) {
-    parts.push(`Description: ${recipe.description}`);
-  }
-
-  // Parse and format ingredients
-  let ingredients: Array<{ name: string; amount: string; notes?: string }> = [];
-  try {
-    ingredients = JSON.parse(recipe.ingredients);
-  } catch {
-    parts.push(`Ingredients: ${recipe.ingredients}`);
-  }
-
-  if (ingredients.length > 0) {
-    parts.push("Ingredients:");
-    ingredients.forEach((ing) => {
-      const line = `- ${ing.amount} ${ing.name}`;
-      if (ing.notes) {
-        parts.push(`${line} (${ing.notes})`);
-      } else {
-        parts.push(line);
-      }
-    });
-  }
-
-  // Parse and format instructions
-  let instructions: Array<{ step?: number; action: string }> = [];
-  try {
-    instructions = JSON.parse(recipe.instructions);
-  } catch {
-    parts.push(`Instructions: ${recipe.instructions}`);
-  }
-
-  if (instructions.length > 0) {
-    parts.push("Instructions:");
-    instructions.forEach((inst, idx) => {
-      const stepNum = inst.step ?? idx + 1;
-      parts.push(`${stepNum}. ${inst.action}`);
-    });
-  }
-
-  if (recipe.tags && recipe.tags.length > 0) {
-    parts.push(`Tags: ${recipe.tags.join(", ")}`);
-  }
-
-  if (recipe.prepTimeMinutes) {
-    parts.push(`Prep time: ${recipe.prepTimeMinutes} minutes`);
-  }
-
-  if (recipe.cookTimeMinutes) {
-    parts.push(`Cook time: ${recipe.cookTimeMinutes} minutes`);
-  }
-
-  return parts.join("\n");
 }
 
 export function RecipeModal({
@@ -245,32 +188,7 @@ export function RecipeModal({
   const showButtons = hasFirstData;
 
   const prefillRecipe: GeneratedRecipe | null = showBaseRecipe
-    ? {
-        slug: currentBaseRecipe.slug,
-        name: currentBaseRecipe.name,
-        title: currentBaseRecipe.name,
-        description: currentBaseRecipe.description || null,
-        summary: currentBaseRecipe.description || null,
-        tags: currentBaseRecipe.tags || [],
-        ingredients: (() => {
-          try {
-            return JSON.parse(currentBaseRecipe.ingredients);
-          } catch {
-            return [];
-          }
-        })(),
-        instructions: (() => {
-          try {
-            return JSON.parse(currentBaseRecipe.instructions);
-          } catch {
-            return [];
-          }
-        })(),
-        image_url: currentBaseRecipe.imageUrl,
-        prepTimeMinutes: currentBaseRecipe.prepTimeMinutes ?? null,
-        cookTimeMinutes: currentBaseRecipe.cookTimeMinutes ?? null,
-        servings: null,
-      }
+    ? recipeDataToGeneratedRecipe(currentBaseRecipe)
     : null;
 
   const modalTitle = isModifyMode ? "Modify recipe" : "Create recipe";
@@ -315,7 +233,7 @@ export function RecipeModal({
                     >
                       {isAdding ? (
                         <>
-                          <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                          <LoadingSpinner size="sm" className="mr-2 border-white" />
                           <span>Adding...</span>
                         </>
                       ) : (
@@ -380,7 +298,7 @@ export function RecipeModal({
                   size="sm"
                 >
                   {isParsing || isGenerating ? (
-                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                    <LoadingSpinner size="sm" className="border-white" />
                   ) : (
                     <>
                       <HiSparkles className="h-4 w-4" />

@@ -3,7 +3,8 @@
  */
 
 import type { RecipePartialData } from "@/lib/recipe-store";
-import type { RecipeListItem } from "@/types/recipes";
+import type { RecipeListItem, GeneratedRecipe } from "@/types/recipes";
+import type { RecipeData } from "@/lib/fetch-recipe-data";
 
 /**
  * Convert a single RecipePartialData to RecipeListItem format
@@ -52,4 +53,63 @@ export function mergeCachedWithRecipes(
       return recipe;
     })
     .filter(Boolean);
+}
+
+/**
+ * Transform GeneratedRecipe to RecipeFeedCard props format
+ */
+export function generatedRecipeToFeedCardProps(recipe: GeneratedRecipe): {
+  slug: string;
+  name: string;
+  description: string | null;
+  tags: string[];
+  imageUrl: string | null;
+  prepTimeMinutes: number | null;
+  cookTimeMinutes: number | null;
+} {
+  return {
+    slug: recipe.slug || "loading",
+    name: recipe.name || recipe.title || "Loading recipe...",
+    description: recipe.description ?? recipe.summary ?? null,
+    tags: recipe.tags || [],
+    imageUrl: recipe.image_url ?? null,
+    prepTimeMinutes: recipe.prepTimeMinutes ?? null,
+    cookTimeMinutes: recipe.cookTimeMinutes ?? null,
+  };
+}
+
+/**
+ * Transform RecipeData to GeneratedRecipe format
+ */
+export function recipeDataToGeneratedRecipe(recipe: RecipeData): GeneratedRecipe {
+  let ingredients: Array<{ name: string; amount: string }> = [];
+  try {
+    ingredients = JSON.parse(recipe.ingredients);
+  } catch {
+    // If parsing fails, return empty array
+    ingredients = [];
+  }
+
+  let instructions: Array<{ step?: number; action: string }> = [];
+  try {
+    instructions = JSON.parse(recipe.instructions);
+  } catch {
+    // If parsing fails, return empty array
+    instructions = [];
+  }
+
+  return {
+    slug: recipe.slug,
+    name: recipe.name,
+    title: recipe.name,
+    description: recipe.description || null,
+    summary: recipe.description || null,
+    tags: recipe.tags || [],
+    ingredients,
+    instructions,
+    image_url: recipe.imageUrl,
+    prepTimeMinutes: recipe.prepTimeMinutes ?? null,
+    cookTimeMinutes: recipe.cookTimeMinutes ?? null,
+    servings: null,
+  };
 }

@@ -1,6 +1,8 @@
 "use client";
 
 import { RecipeFeedCard } from "@/components/recipe-feed-card";
+import { LoadingOverlay } from "@/components/ui/loading-overlay";
+import { generatedRecipeToFeedCardProps } from "@/lib/recipe-transformers";
 import type { GeneratedRecipe } from "@/types/recipes";
 import type { ReactNode } from "react";
 
@@ -21,18 +23,7 @@ export function RecipePreviewCard({
   actionButton,
   showCreatingOverlay = false,
 }: RecipePreviewCardProps) {
-  // Ensure we have minimum required fields for display
-  const displayRecipe = {
-    slug: recipe.slug || "loading",
-    name: recipe.name || recipe.title || "Loading recipe...",
-    description: recipe.description ?? recipe.summary ?? null,
-    tags: recipe.tags || [],
-    imageUrl: recipe.image_url ?? null,
-    prepTimeMinutes: recipe.prepTimeMinutes ?? null,
-    cookTimeMinutes: recipe.cookTimeMinutes ?? null,
-  };
-
-  // Show a subtle indicator when streaming, but don't block the view
+  const displayRecipe = generatedRecipeToFeedCardProps(recipe);
   const isEmpty = !recipe.title && !recipe.name && recipe.tags.length === 0;
 
   return (
@@ -47,27 +38,12 @@ export function RecipePreviewCard({
           prepTimeMinutes={displayRecipe.prepTimeMinutes}
           cookTimeMinutes={displayRecipe.cookTimeMinutes}
         />
-        {showCreatingOverlay && (
-          <div className="absolute inset-0 flex items-center justify-center bg-white/30 backdrop-blur-[2px]">
-            <div className="flex items-center gap-2 rounded-lg bg-white px-4 py-2 shadow-lg">
-              <span className="h-4 w-4 animate-spin rounded-full border-2 border-blue-600 border-t-transparent" />
-              <span className="text-sm font-medium text-gray-700">Creating...</span>
-            </div>
-          </div>
-        )}
+        {showCreatingOverlay && <LoadingOverlay message="Creating..." variant="full" />}
         {isStreaming && isEmpty && !showCreatingOverlay && (
-          <div className="absolute inset-0 flex items-center justify-center bg-white/30 backdrop-blur-[2px]">
-            <div className="flex items-center gap-2 rounded-lg bg-white px-4 py-2 shadow-lg">
-              <span className="h-4 w-4 animate-spin rounded-full border-2 border-blue-600 border-t-transparent" />
-              <span className="text-sm font-medium text-gray-700">Generating recipe...</span>
-            </div>
-          </div>
+          <LoadingOverlay message="Generating recipe..." variant="full" />
         )}
         {isStreaming && !isEmpty && !showCreatingOverlay && (
-          <div className="absolute top-2 right-2 flex items-center gap-2 rounded-lg border border-blue-200 bg-blue-50 px-3 py-1.5 shadow-sm">
-            <span className="h-3 w-3 animate-spin rounded-full border-2 border-blue-600 border-t-transparent" />
-            <span className="text-xs font-medium text-blue-700">Streaming...</span>
-          </div>
+          <LoadingOverlay message="Streaming..." variant="badge" />
         )}
       </div>
       {actionButton && <div className="pointer-events-auto mt-4">{actionButton}</div>}

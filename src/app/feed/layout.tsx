@@ -5,7 +5,7 @@ import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { RecipeSearchBar } from "@/components/recipe-search-bar";
 import { UserAvatar } from "@/components/user-avatar";
 import { AddRecipeButton } from "@/components/add-recipe-button";
-import { AddRecipeModal } from "@/components/add-recipe-modal";
+import { RecipeModal } from "@/components/recipe-modal";
 import { FavoritesToggle } from "@/components/favorites-toggle";
 import { useTags } from "@/hooks/useTags";
 import { useAuth } from "@/hooks/useAuth";
@@ -100,7 +100,7 @@ function FeedLayoutContent({ children }: { children: React.ReactNode }) {
         </div>
         {children}
       </main>
-      <AddRecipeModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <RecipeModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} mode="create" />
     </div>
   );
 }
