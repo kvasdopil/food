@@ -8,7 +8,7 @@ import { RecipePreviewCard } from "@/components/recipe-preview-card";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { HiSparkles } from "react-icons/hi2";
+import { HiSparkles, HiPencilSquare } from "react-icons/hi2";
 import type { RecipeData } from "@/lib/fetch-recipe-data";
 import type { GeneratedRecipe } from "@/types/recipes";
 
@@ -157,7 +157,6 @@ export function RecipeModal({
     }
 
     let input = userInput.trim();
-    setUserInput("");
 
     // If modifying/creating variant, prepend base recipe info
     if (currentBaseRecipe) {
@@ -211,7 +210,7 @@ export function RecipeModal({
     setCurrentMode("modify");
     setUserInput("");
     reset();
-    
+
     // Focus the textarea
     setTimeout(() => {
       textareaRef.current?.focus();
@@ -225,111 +224,138 @@ export function RecipeModal({
     }
   };
 
-  // Show card as soon as parsing starts (supports streaming updates)
-  const hasRecipeData = isParsing || isGenerating || (generatedRecipe && generatedRecipe.title);
+  // Check if we have first data from LLM (title/name)
+  const hasFirstData = generatedRecipe && (generatedRecipe.title || generatedRecipe.name);
 
-  // Pre-fill with base recipe data (only show when modifying and no generated recipe yet)
-  const prefillRecipe: GeneratedRecipe | null =
-    isModifyMode && currentBaseRecipe && !hasRecipeData
-      ? {
-          slug: currentBaseRecipe.slug,
-          name: currentBaseRecipe.name,
-          title: currentBaseRecipe.name,
-          description: currentBaseRecipe.description || null,
-          summary: currentBaseRecipe.description || null,
-          tags: currentBaseRecipe.tags || [],
-          ingredients: (() => {
-            try {
-              return JSON.parse(currentBaseRecipe.ingredients);
-            } catch {
-              return [];
-            }
-          })(),
-          instructions: (() => {
-            try {
-              return JSON.parse(currentBaseRecipe.instructions);
-            } catch {
-              return [];
-            }
-          })(),
-          image_url: currentBaseRecipe.imageUrl,
-          prepTimeMinutes: currentBaseRecipe.prepTimeMinutes ?? null,
-          cookTimeMinutes: currentBaseRecipe.cookTimeMinutes ?? null,
-          servings: null,
-        }
-      : null;
+  // Check if recipe generation is complete
+  const isComplete = !isParsing && !isGenerating && hasFirstData;
+
+  // Determine which recipe card to show
+  // Show base recipe when: we have a base recipe AND no first data yet
+  const showBaseRecipe = currentBaseRecipe && !hasFirstData;
+
+  // Show creating overlay when: we're parsing/generating but don't have first data yet
+  // If we have a base recipe, show overlay on base recipe. Otherwise, show on generated recipe card.
+  const showCreatingOverlay = (isParsing || isGenerating) && !hasFirstData;
+
+  // Show input when: no first data yet
+  const showInput = !hasFirstData;
+
+  // Show buttons when: we have first data
+  const showButtons = hasFirstData;
+
+  const prefillRecipe: GeneratedRecipe | null = showBaseRecipe
+    ? {
+        slug: currentBaseRecipe.slug,
+        name: currentBaseRecipe.name,
+        title: currentBaseRecipe.name,
+        description: currentBaseRecipe.description || null,
+        summary: currentBaseRecipe.description || null,
+        tags: currentBaseRecipe.tags || [],
+        ingredients: (() => {
+          try {
+            return JSON.parse(currentBaseRecipe.ingredients);
+          } catch {
+            return [];
+          }
+        })(),
+        instructions: (() => {
+          try {
+            return JSON.parse(currentBaseRecipe.instructions);
+          } catch {
+            return [];
+          }
+        })(),
+        image_url: currentBaseRecipe.imageUrl,
+        prepTimeMinutes: currentBaseRecipe.prepTimeMinutes ?? null,
+        cookTimeMinutes: currentBaseRecipe.cookTimeMinutes ?? null,
+        servings: null,
+      }
+    : null;
 
   const modalTitle = isModifyMode ? "Modify recipe" : "Create recipe";
   const inputLabel = isModifyMode
     ? "What would you like to change?"
     : "What would you like to create?";
-  const buttonText = isModifyMode ? "Update" : "Generate";
+  const buttonText = "Create";
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="top-0 right-0 bottom-0 left-0 flex h-full max-h-[100vh] w-full max-w-full translate-x-0 translate-y-0 flex-col justify-center overflow-y-auto rounded-none border-0 p-4 sm:top-[50%] sm:right-auto sm:bottom-auto sm:left-[50%] sm:h-auto sm:max-w-lg sm:translate-x-[-50%] sm:translate-y-[-50%] sm:justify-start sm:rounded-lg sm:border sm:p-6">
         <DialogTitle>{modalTitle}</DialogTitle>
         <DialogDescription className="sr-only">
-          {hasRecipeData
+          {hasFirstData
             ? "Recipe preview and options"
             : isModifyMode
               ? "Modify the recipe by describing what you want to change"
               : "Create a new recipe by describing it"}
         </DialogDescription>
         <div className="space-y-4">
-          {/* Show base recipe card when modifying and no generated recipe yet */}
-          {prefillRecipe && (
-            <RecipePreviewCard recipe={prefillRecipe} isStreaming={false} />
+          {/* Show base recipe card (with creating overlay during initial parsing) */}
+          {showBaseRecipe && prefillRecipe && (
+            <RecipePreviewCard
+              recipe={prefillRecipe}
+              isStreaming={false}
+              showCreatingOverlay={showCreatingOverlay}
+            />
           )}
 
-          {/* Show generated recipe card */}
-          {hasRecipeData && generatedRecipe && (
+          {/* Show generated recipe card (when we have first data, or when creating from scratch during parsing) */}
+          {hasFirstData && generatedRecipe && (
             <RecipePreviewCard
               recipe={generatedRecipe}
               isStreaming={isParsing || isGenerating}
               actionButton={
-                <div className="flex gap-3">
-                  <Button
-                    onClick={handleAddRecipe}
-                    disabled={isAdding || isParsing || isGenerating}
-                    className="flex-1 bg-green-600 hover:bg-green-700"
-                  >
-                    {isAdding ? (
-                      <>
-                        <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                        <span>Adding...</span>
-                      </>
-                    ) : isParsing ? (
-                      <>
-                        <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                        <span>Parsing...</span>
-                      </>
-                    ) : isGenerating ? (
-                      <>
-                        <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                        <span>Generating...</span>
-                      </>
-                    ) : (
-                      "Add recipe"
-                    )}
-                  </Button>
-                  <Button
-                    onClick={handleChangeSomething}
-                    disabled={isAdding || isParsing || isGenerating}
-                    variant="outline"
-                    className="flex-1"
-                  >
-                    Change something
-                  </Button>
-                </div>
+                showButtons ? (
+                  <div className="flex gap-3">
+                    <Button
+                      onClick={handleAddRecipe}
+                      disabled={!isComplete || isAdding}
+                      className="flex-1 bg-green-600 hover:bg-green-700"
+                    >
+                      {isAdding ? (
+                        <>
+                          <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                          <span>Adding...</span>
+                        </>
+                      ) : (
+                        "Add recipe"
+                      )}
+                    </Button>
+                    <Button
+                      onClick={handleChangeSomething}
+                      disabled={!isComplete || isAdding}
+                      variant="outline"
+                      className="flex-1"
+                    >
+                      <HiPencilSquare className="h-4 w-4" />
+                      Change something
+                    </Button>
+                  </div>
+                ) : null
               }
             />
           )}
 
-          {/* Show input when no recipe data yet */}
-          {!hasRecipeData && (
+          {/* Show placeholder card when creating from scratch (no base recipe) and parsing but no first data yet */}
+          {!currentBaseRecipe &&
+            (isParsing || isGenerating) &&
+            !hasFirstData &&
+            generatedRecipe && (
+              <RecipePreviewCard
+                recipe={generatedRecipe}
+                isStreaming={false}
+                showCreatingOverlay={true}
+              />
+            )}
+
+          {/* Input field - shown when no first data yet */}
+          {showInput && (
             <div>
-              <label htmlFor="recipe-input" className="mb-2 block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="recipe-input"
+                className="mb-2 block text-sm font-medium text-gray-700"
+              >
                 {inputLabel}
               </label>
               <div className="relative">
@@ -344,20 +370,20 @@ export function RecipeModal({
                       ? "e.g., Use chicken instead of beef, add more vegetables, make it spicier..."
                       : "e.g., A spicy Thai curry with chicken and vegetables, serves 4, ready in 45 minutes..."
                   }
-                  className="min-h-[120px] w-full resize-none rounded-lg border border-gray-300 pr-28 px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  className="min-h-[120px] w-full resize-none rounded-lg border border-gray-300 px-3 py-2.5 pr-28 text-sm text-gray-900 placeholder:text-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-600"
                   disabled={isParsing || isGenerating}
                 />
                 <Button
                   onClick={handleGenerate}
                   disabled={!userInput.trim() || isParsing || isGenerating || !session}
-                  className="absolute bottom-2.5 right-2.5 bg-blue-600 hover:bg-blue-700"
+                  className="absolute right-1.5 bottom-3 bg-blue-600 hover:bg-blue-700"
                   size="sm"
                 >
                   {isParsing || isGenerating ? (
                     <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
                   ) : (
                     <>
-                      <HiSparkles className="mr-1 h-4 w-4" />
+                      <HiSparkles className="h-4 w-4" />
                       {buttonText}
                     </>
                   )}
@@ -370,8 +396,8 @@ export function RecipeModal({
           {!session && !authLoading && (
             <Alert className="border-yellow-200 bg-yellow-50">
               <AlertDescription className="text-yellow-800">
-                You need to be logged in to {isModifyMode ? "modify" : "create"} recipes. Please sign
-                in first.
+                You need to be logged in to {isModifyMode ? "modify" : "create"} recipes. Please
+                sign in first.
               </AlertDescription>
             </Alert>
           )}
@@ -387,4 +413,3 @@ export function RecipeModal({
     </Dialog>
   );
 }
-

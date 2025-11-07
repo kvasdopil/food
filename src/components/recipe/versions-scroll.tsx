@@ -76,7 +76,7 @@ export function VersionsScroll({ variants, onCreateVariant }: VersionsScrollProp
                   d="M12 4v16m8-8H4"
                 />
               </svg>
-              <span className="text-xs font-medium text-slate-600">Create variant</span>
+              <span className="text-xs font-medium text-slate-600">Create your version</span>
             </div>
           </button>
         )}
@@ -84,4 +84,3 @@ export function VersionsScroll({ variants, onCreateVariant }: VersionsScrollProp
     </div>
   );
 }
-

@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { callGemini, ensureText, TEXT_MODEL } from "@/lib/gemini";
 import {
   buildRecipeGenerationPrompt,
-  recipeSchema,
+  getRecipeSchema,
   type GenerateRequest,
 } from "@/lib/prompts/recipe-generation";
 import { evaluateRecipe } from "@/lib/recipe-refinement";
@@ -43,7 +43,7 @@ async function generateRefinedRecipe(
     ],
     generationConfig: {
       responseMimeType: "application/json",
-      responseSchema: recipeSchema,
+      responseSchema: getRecipeSchema(false),
       temperature: 0.6,
     },
   };

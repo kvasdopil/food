@@ -1,4 +1,5 @@
 import { promises as fs } from "node:fs";
+import { loadEnvValue } from "./script-utils";
 
 type GenerateImageResponse = {
   slug: string;
@@ -7,37 +8,6 @@ type GenerateImageResponse = {
   hash: string;
   message: string;
 };
-
-async function loadEnvValue(key: string): Promise<string | undefined> {
-  if (process.env[key]) {
-    return process.env[key];
-  }
-
-  const envLocalPath = ".env.local";
-
-  try {
-    const content = await fs.readFile(envLocalPath, "utf-8");
-    const lines = content.split(/\r?\n/);
-
-    for (const line of lines) {
-      const trimmed = line.trim();
-      if (!trimmed || trimmed.startsWith("#")) continue;
-
-      const [lineKey, ...rest] = trimmed.split("=");
-      const value = rest.join("=").trim();
-      if (!value) continue;
-
-      if (lineKey === key) {
-        process.env[key] = value;
-        return value;
-      }
-    }
-  } catch {
-    // ignore missing file
-  }
-
-  return undefined;
-}
 
 async function generateImageViaApi(
   slug: string,

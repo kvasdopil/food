@@ -10,13 +10,8 @@
  *   npx tsx scripts/populate-meal-variations.ts
  */
 
-import {
-  getSupabaseAdmin,
-  getAllRecipes,
-  findVariationsWithLLM,
-  loadEnvValue,
-  type LLMResponse,
-} from "./meal-variation-utils";
+import { getAllRecipes, findVariationsWithLLM, type LLMResponse } from "./meal-variation-utils";
+import { getSupabaseAdmin, loadEnvValue } from "./script-utils";
 
 async function updateRecipeVariations(
   supabaseAdmin: Awaited<ReturnType<typeof getSupabaseAdmin>>,

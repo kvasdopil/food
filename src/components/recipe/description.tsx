@@ -43,17 +43,11 @@ export function Description({
   // If recipe already has variationOf, use that; otherwise use recipe name
   const baseVariationOf = variationOf || recipeData?.name || null;
 
-  // Show variations section if we have recipeData (to show create variant button)
+  // Show variations section if we have recipeData (to show create version button)
   // or if there are existing variants
   const shouldShowVariations = recipeData || (variationOf && variants.length > 0);
 
-  if (
-    !description &&
-    tags.length === 0 &&
-    !authorName &&
-    !shouldShowVariations &&
-    !recipeData
-  ) {
+  if (!description && tags.length === 0 && !authorName && !shouldShowVariations && !recipeData) {
     return null;
   }
 
@@ -73,10 +67,7 @@ export function Description({
 
         {shouldShowVariations && recipeData && (
           <div>
-            <VersionsScroll
-              variants={variants}
-              onCreateVariant={handleCreateVariantClick}
-            />
+            <VersionsScroll variants={variants} onCreateVariant={handleCreateVariantClick} />
           </div>
         )}
       </section>

@@ -11,6 +11,7 @@ This document contains an analysis of meal variations in the recipe database, id
 ## Meal Variation Groups
 
 ### Stir-Fry
+
 Various stir-fry recipes with different proteins and flavor profiles.  
 **5 variations:**
 
@@ -31,6 +32,7 @@ Various stir-fry recipes with different proteins and flavor profiles.
   - Slug: `thai-basil-tofu-stir-fry`
 
 ### Tacos
+
 Various taco recipes with different fillings and styles.  
 **4 variations:**
 
@@ -48,6 +50,7 @@ Various taco recipes with different fillings and styles.
   - Slug: `sweet-potato-black-bean-tacos`
 
 ### Fried Rice
+
 Variations of fried rice based on the primary protein.  
 **3 variations:**
 
@@ -62,6 +65,7 @@ Variations of fried rice based on the primary protein.
   - Slug: `shrimp-fried-rice`
 
 ### Fajitas
+
 Fajita recipes with various protein choices.  
 **3 variations:**
 
@@ -76,6 +80,7 @@ Fajita recipes with various protein choices.
   - Slug: `skillet-chicken-fajitas`
 
 ### Salmon
+
 Salmon dishes prepared with various flavor profiles.  
 **3 variations:**
 
@@ -90,6 +95,7 @@ Salmon dishes prepared with various flavor profiles.
   - Slug: `miso-glazed-salmon`
 
 ### Burrito Bowls
+
 Burrito bowls featuring different protein options.  
 **2 variations:**
 
@@ -101,6 +107,7 @@ Burrito bowls featuring different protein options.
   - Slug: `chicken-burrito-bowls`
 
 ### Tikka Masala
+
 Tikka Masala dishes with different main ingredients.  
 **2 variations:**
 
@@ -112,6 +119,7 @@ Tikka Masala dishes with different main ingredients.
   - Slug: `chickpea-tikka-masala`
 
 ### Curry
+
 Curry dishes featuring different proteins.  
 **2 variations:**
 
@@ -123,6 +131,7 @@ Curry dishes featuring different proteins.
   - Slug: `coconut-lime-shrimp-curry`
 
 ### Stroganoff
+
 Stroganoff recipes with different main components.  
 **2 variations:**
 
@@ -134,6 +143,7 @@ Stroganoff recipes with different main components.
   - Slug: `mushroom-stroganoff`
 
 ### Piccata
+
 Piccata-style dishes prepared with different proteins.  
 **2 variations:**
 
@@ -145,6 +155,7 @@ Piccata-style dishes prepared with different proteins.
   - Slug: `piccata-style-snapper`
 
 ### Creamy Tuscan
+
 Creamy Tuscan dishes featuring different proteins.  
 **2 variations:**
 
@@ -156,6 +167,7 @@ Creamy Tuscan dishes featuring different proteins.
   - Slug: `creamy-tuscan-salmon`
 
 ### Flatbread
+
 Flatbreads with different toppings.  
 **2 variations:**
 
@@ -167,6 +179,7 @@ Flatbreads with different toppings.
   - Slug: `roasted-vegetable-flatbread`
 
 ### Ramen
+
 Ramen dishes with distinct flavor profiles or proteins.  
 **2 variations:**
 
@@ -178,6 +191,7 @@ Ramen dishes with distinct flavor profiles or proteins.
   - Slug: `quick-pork-ramen`
 
 ### Pad Thai
+
 Pad Thai variations with different main ingredients.  
 **2 variations:**
 
@@ -189,6 +203,7 @@ Pad Thai variations with different main ingredients.
   - Slug: `veggie-pad-thai`
 
 ### Poke Bowl
+
 Poke bowls featuring different fish proteins.  
 **2 variations:**
 
@@ -200,6 +215,7 @@ Poke bowls featuring different fish proteins.
   - Slug: `spicy-tuna-poke-bowl`
 
 ### Teriyaki Bowls
+
 Teriyaki-flavored bowls with different protein options.  
 **2 variations:**
 
@@ -211,6 +227,7 @@ Teriyaki-flavored bowls with different protein options.
   - Slug: `teriyaki-salmon-rice-bowl`
 
 ### Tilapia
+
 Tilapia dishes prepared with different seasonings or styles.  
 **2 variations:**
 

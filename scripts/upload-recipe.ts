@@ -3,6 +3,7 @@
 import { access, readFile } from "node:fs/promises";
 import path from "node:path";
 import yaml from "js-yaml";
+import { loadEnvValue } from "./script-utils";
 
 type Ingredient = {
   name: string;
@@ -75,39 +76,6 @@ function slugify(value: string): string {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "")
     .slice(0, 80);
-}
-
-async function loadEnvValue(key: string): Promise<string | undefined> {
-  const envValue = process.env[key];
-  if (envValue) {
-    return envValue;
-  }
-
-  const envPath = path.resolve(process.cwd(), ".env.local");
-
-  try {
-    const content = await readFile(envPath, "utf-8");
-    const lines = content.split(/\r?\n/);
-    for (const rawLine of lines) {
-      const line = rawLine.trim();
-      if (!line || line.startsWith("#")) continue;
-      const [lhs, ...rhs] = line.split("=");
-      if (!lhs || rhs.length === 0) continue;
-      const currentKey = lhs.trim();
-      if (currentKey !== key) continue;
-      const value = rhs.join("=").trim();
-      if (value) {
-        return value;
-      }
-    }
-  } catch (error) {
-    const err = error as NodeJS.ErrnoException;
-    if (err.code !== "ENOENT") {
-      console.warn(`Failed to read .env.local: ${err.message}`);
-    }
-  }
-
-  return undefined;
 }
 
 function normalizeIngredients(entries: unknown): Ingredient[] {

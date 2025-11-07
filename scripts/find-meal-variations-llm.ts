@@ -9,13 +9,12 @@
  */
 
 import {
-  getSupabaseAdmin,
   getAllRecipes,
   findVariationsWithLLM,
-  loadEnvValue,
   type LLMResponse,
   type Recipe,
 } from "./meal-variation-utils";
+import { getSupabaseAdmin, loadEnvValue } from "./script-utils";
 
 function printResults(results: LLMResponse, allRecipes: Recipe[]): void {
   console.log("\n" + "=".repeat(80));

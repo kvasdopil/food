@@ -61,6 +61,7 @@ const baseRecipeSchema = {
 export function getRecipeSchema(hasVariationOf: boolean) {
   if (hasVariationOf) {
     // Exclude variationOf from schema if we already have it
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { variationOf, ...schemaWithoutVariationOf } = baseRecipeSchema.properties;
     return {
       ...baseRecipeSchema,

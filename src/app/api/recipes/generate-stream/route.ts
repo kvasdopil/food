@@ -64,8 +64,7 @@ export async function POST(request: NextRequest) {
       : payload.variationOf === null
         ? null
         : undefined;
-  const isVariant =
-    typeof payload.isVariant === "boolean" ? payload.isVariant : undefined;
+  const isVariant = typeof payload.isVariant === "boolean" ? payload.isVariant : undefined;
 
   try {
     const recipeGenerationStartTime = Date.now();

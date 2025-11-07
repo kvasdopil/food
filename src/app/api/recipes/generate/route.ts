@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { callGemini, ensureText, TEXT_MODEL } from "@/lib/gemini";
 import {
   buildRecipeGenerationPrompt,
-  recipeSchema,
+  getRecipeSchema,
   type GenerateRequest,
 } from "@/lib/prompts/recipe-generation";
 import {
@@ -282,7 +282,7 @@ async function generateRecipe(options: GenerateRequest): Promise<RecipeData> {
     ],
     generationConfig: {
       responseMimeType: "application/json",
-      responseSchema: recipeSchema,
+      responseSchema: getRecipeSchema(false),
       temperature: 0.6,
     },
   };

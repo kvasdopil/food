@@ -305,7 +305,7 @@ export function useRecipeGeneration(options: UseRecipeGenerationOptions = {}) {
         );
 
         setIsGenerating(false);
-        
+
         // Override variationOf if we already have it (don't trust LLM when we know the value)
         if (variationOf !== undefined && variationOf !== null && recipeRef.current) {
           (recipeRef.current as unknown as { variationOf?: string | null }).variationOf =
@@ -318,7 +318,7 @@ export function useRecipeGeneration(options: UseRecipeGenerationOptions = {}) {
             return updated;
           });
         }
-        
+
         // Get the final recipe from ref (which tracks the latest state)
         if (recipeRef.current?.title) {
           options.onSuccess?.(recipeRef.current);

@@ -1,5 +1,5 @@
-import { promises as fs } from "node:fs";
 import path from "node:path";
+import { loadEnvValue } from "./script-utils";
 
 type RefineResponse = {
   message: string;
@@ -15,37 +15,6 @@ type RefineResponse = {
     updated_at: string;
   };
 };
-
-async function loadEnvValue(key: string): Promise<string | undefined> {
-  if (process.env[key]) {
-    return process.env[key];
-  }
-
-  const envLocalPath = path.resolve(".env.local");
-
-  try {
-    const content = await fs.readFile(envLocalPath, "utf-8");
-    const lines = content.split(/\r?\n/);
-
-    for (const line of lines) {
-      const trimmed = line.trim();
-      if (!trimmed || trimmed.startsWith("#")) continue;
-
-      const [envKey, ...rest] = trimmed.split("=");
-      const value = rest.join("=").trim();
-      if (!value) continue;
-
-      if (envKey === key) {
-        process.env[key] = value;
-        return value;
-      }
-    }
-  } catch {
-    // silently ignore; we'll throw below if still missing
-  }
-
-  return undefined;
-}
 
 function extractSlugFromPath(inputPath: string): string | null {
   // Handle both absolute and relative paths

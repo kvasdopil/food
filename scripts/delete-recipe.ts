@@ -1,7 +1,6 @@
 #!/usr/bin/env ts-node
 
-import { readFile } from "node:fs/promises";
-import path from "node:path";
+import { loadEnvValue } from "./script-utils";
 
 function usage(): never {
   console.log("Usage: yarn ts-node scripts/delete-recipe.ts <slug>");
@@ -9,36 +8,6 @@ function usage(): never {
   console.log("Example:");
   console.log("  yarn ts-node scripts/delete-recipe.ts savoury-minced-meat-pancakes");
   process.exit(1);
-}
-
-async function loadEnvValue(key: string): Promise<string | undefined> {
-  const envValue = process.env[key];
-  if (envValue) {
-    return envValue;
-  }
-
-  const envPath = path.resolve(process.cwd(), ".env.local");
-
-  try {
-    const content = await readFile(envPath, "utf-8");
-    const lines = content.split(/\r?\n/);
-    for (const rawLine of lines) {
-      const line = rawLine.trim();
-      if (!line || line.startsWith("#")) continue;
-      const [lhs, ...rhs] = line.split("=");
-      if (!lhs || rhs.length === 0) continue;
-      const currentKey = lhs.trim();
-      if (currentKey !== key) continue;
-      const value = rhs.join("=").trim();
-      if (value) {
-        return value;
-      }
-    }
-  } catch {
-    // .env.local doesn't exist or can't be read - that's okay
-  }
-
-  return undefined;
 }
 
 async function deleteRecipe() {
