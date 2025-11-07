@@ -6,10 +6,11 @@ import { resolveRecipeImageUrl } from "@/lib/resolve-recipe-image-url";
 
 type VersionsScrollProps = {
   variants: Array<{ slug: string; name: string; imageUrl: string | null }>;
+  onCreateVariant?: () => void;
 };
 
-export function VersionsScroll({ variants }: VersionsScrollProps) {
-  if (variants.length === 0) {
+export function VersionsScroll({ variants, onCreateVariant }: VersionsScrollProps) {
+  if (variants.length === 0 && !onCreateVariant) {
     return null;
   }
 
@@ -20,7 +21,7 @@ export function VersionsScroll({ variants }: VersionsScrollProps) {
 
   return (
     <div className="space-y-3">
-      <h3 className="text-sm font-semibold text-slate-700">{message}</h3>
+      {variants.length > 0 && <h3 className="text-sm font-semibold text-slate-700">{message}</h3>}
       <div className="flex gap-3 overflow-x-auto pb-2">
         {variants.map((variant) => {
           const resolvedImageUrl = resolveRecipeImageUrl(variant.imageUrl);
@@ -56,6 +57,29 @@ export function VersionsScroll({ variants }: VersionsScrollProps) {
             </Link>
           );
         })}
+        {onCreateVariant && (
+          <button
+            onClick={onCreateVariant}
+            className="group relative flex min-w-[140px] flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-lg border-2 border-dashed border-slate-300 bg-slate-50 transition-colors hover:border-slate-400 hover:bg-slate-100"
+          >
+            <div className="flex flex-col items-center gap-2 px-4 py-6 text-center">
+              <svg
+                className="h-8 w-8 text-slate-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
+              <span className="text-xs font-medium text-slate-600">Create variant</span>
+            </div>
+          </button>
+        )}
       </div>
     </div>
   );

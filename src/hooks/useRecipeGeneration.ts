@@ -130,7 +130,12 @@ export function useRecipeGeneration(options: UseRecipeGenerationOptions = {}) {
   };
 
   const generateRecipe = useCallback(
-    async (userInput: string, accessToken: string) => {
+    async (
+      userInput: string,
+      accessToken: string,
+      variationOf?: string | null,
+      isVariant?: boolean,
+    ) => {
       if (!userInput.trim() || isParsing || isGenerating) {
         return;
       }
@@ -258,6 +263,8 @@ export function useRecipeGeneration(options: UseRecipeGenerationOptions = {}) {
             userComment: parsedData.userComment,
             servings: parsedData.servings,
             cuisine: parsedData.cuisine,
+            variationOf: variationOf ?? undefined,
+            isVariant: isVariant ?? undefined,
           },
           accessToken,
           (field, value) => {
@@ -284,6 +291,11 @@ export function useRecipeGeneration(options: UseRecipeGenerationOptions = {}) {
                 updated.prepTimeMinutes = value as number | null;
               } else if (field === "cookTimeMinutes") {
                 updated.cookTimeMinutes = value as number | null;
+              } else if (field === "variationOf") {
+                // Store variationOf if LLM generates it
+                // We'll use this when saving if it's available
+                (updated as unknown as { variationOf?: string | null }).variationOf =
+                  (value as string) || null;
               }
 
               recipeRef.current = updated;
@@ -293,6 +305,20 @@ export function useRecipeGeneration(options: UseRecipeGenerationOptions = {}) {
         );
 
         setIsGenerating(false);
+        
+        // Override variationOf if we already have it (don't trust LLM when we know the value)
+        if (variationOf !== undefined && variationOf !== null && recipeRef.current) {
+          (recipeRef.current as unknown as { variationOf?: string | null }).variationOf =
+            variationOf;
+          // Also update the state
+          setGeneratedRecipe((prev) => {
+            if (!prev) return prev;
+            const updated = { ...prev };
+            (updated as unknown as { variationOf?: string | null }).variationOf = variationOf;
+            return updated;
+          });
+        }
+        
         // Get the final recipe from ref (which tracks the latest state)
         if (recipeRef.current?.title) {
           options.onSuccess?.(recipeRef.current);
@@ -309,7 +335,13 @@ export function useRecipeGeneration(options: UseRecipeGenerationOptions = {}) {
   );
 
   const addRecipe = useCallback(
-    async (recipe: GeneratedRecipe, accessToken: string, onClose: () => void) => {
+    async (
+      recipe: GeneratedRecipe,
+      accessToken: string,
+      onClose: () => void,
+      variationOf?: string | null,
+      originalRecipeSlug?: string | null,
+    ) => {
       if (!recipe || isAdding) {
         return;
       }
@@ -318,7 +350,18 @@ export function useRecipeGeneration(options: UseRecipeGenerationOptions = {}) {
       setError(null);
 
       try {
-        const recipePayload = {
+        const recipePayload: {
+          slug: string;
+          title: string;
+          summary: string | null;
+          ingredients: Array<{ name: string; amount: string }>;
+          instructions: Array<{ step?: number; action: string }>;
+          tags: string[];
+          imageUrl: string | null;
+          prepTimeMinutes: number | null;
+          cookTimeMinutes: number | null;
+          variationOf?: string | null;
+        } = {
           slug: recipe.slug,
           title: recipe.title,
           summary: recipe.summary,
@@ -330,13 +373,25 @@ export function useRecipeGeneration(options: UseRecipeGenerationOptions = {}) {
           cookTimeMinutes: recipe.cookTimeMinutes,
         };
 
+        // Include variationOf - prefer LLM-generated value, fall back to passed value
+        const generatedVariationOf = (recipe as unknown as { variationOf?: string | null })
+          .variationOf;
+        if (generatedVariationOf !== undefined) {
+          recipePayload.variationOf = generatedVariationOf;
+        } else if (variationOf !== undefined) {
+          recipePayload.variationOf = variationOf;
+        }
+
         const response = await fetch("/api/recipes", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${accessToken}`,
           },
-          body: JSON.stringify(recipePayload),
+          body: JSON.stringify({
+            ...recipePayload,
+            originalRecipeSlug: originalRecipeSlug || undefined,
+          }),
         });
 
         if (!response.ok) {

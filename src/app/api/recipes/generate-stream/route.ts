@@ -2,7 +2,7 @@ import { type NextRequest } from "next/server";
 import { streamGemini, TEXT_MODEL } from "@/lib/gemini";
 import {
   buildRecipeGenerationPrompt,
-  recipeSchema,
+  getRecipeSchema,
   type GenerateRequest,
 } from "@/lib/prompts/recipe-generation";
 import { PartialJsonParser } from "@/lib/partial-json-parser";
@@ -58,6 +58,14 @@ export async function POST(request: NextRequest) {
       ? payload.servings
       : undefined;
   const cuisine = typeof payload.cuisine === "string" ? payload.cuisine.trim() : undefined;
+  const variationOf =
+    typeof payload.variationOf === "string" && payload.variationOf.trim()
+      ? payload.variationOf.trim()
+      : payload.variationOf === null
+        ? null
+        : undefined;
+  const isVariant =
+    typeof payload.isVariant === "boolean" ? payload.isVariant : undefined;
 
   try {
     const recipeGenerationStartTime = Date.now();
@@ -68,15 +76,20 @@ export async function POST(request: NextRequest) {
       userComment,
       servings,
       cuisine,
+      variationOf,
+      isVariant,
     };
 
     // Build the prompt for recipe generation
     const prompt = buildRecipeGenerationPrompt(generateOptions);
 
+    // Get schema - exclude variationOf if we already have it (we'll override it)
+    const schema = getRecipeSchema(!!generateOptions.variationOf);
+
     // Build prompt that explicitly requests JSON format for streaming
     // We don't use responseMimeType/responseSchema here because structured output
     // doesn't stream incrementally - it waits until JSON is complete
-    const streamingPrompt = `${prompt}\n\nIMPORTANT: Respond with ONLY valid JSON matching this schema:\n${JSON.stringify(recipeSchema, null, 2)}\n\nDo not include any markdown formatting, code blocks, or explanatory text. Output ONLY the raw JSON object.`;
+    const streamingPrompt = `${prompt}\n\nIMPORTANT: Respond with ONLY valid JSON matching this schema:\n${JSON.stringify(schema, null, 2)}\n\nDo not include any markdown formatting, code blocks, or explanatory text. Output ONLY the raw JSON object.`;
 
     const requestBody = {
       contents: [

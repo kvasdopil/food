@@ -478,6 +478,16 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  // Extract originalRecipeSlug from the raw JSON (not in normalized payload)
+  const originalRecipeSlug =
+    typeof json === "object" &&
+    json !== null &&
+    "originalRecipeSlug" in json &&
+    typeof json.originalRecipeSlug === "string" &&
+    json.originalRecipeSlug.trim()
+      ? json.originalRecipeSlug.trim()
+      : null;
+
   const slug = payload.slug ?? slugify(payload.title);
   if (!slug) {
     return NextResponse.json({ error: "Unable to derive slug from title." }, { status: 400 });
@@ -581,6 +591,40 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       throw error;
+    }
+
+    // If this is a variant and we have an original recipe slug, update the original recipe's variation_of
+    if (
+      originalRecipeSlug &&
+      dbPayload.variation_of &&
+      originalRecipeSlug !== slug // Don't update if it's the same recipe
+    ) {
+      // Check if original recipe exists and doesn't have variation_of set
+      const { data: originalRecipe, error: fetchError } = await supabaseAdmin
+        .from("recipes")
+        .select("variation_of")
+        .eq("slug", originalRecipeSlug)
+        .maybeSingle();
+
+      if (!fetchError && originalRecipe && !originalRecipe.variation_of) {
+        // Update the original recipe's variation_of to match the new recipe
+        const { error: updateError } = await supabaseAdmin
+          .from("recipes")
+          .update({ variation_of: dbPayload.variation_of })
+          .eq("slug", originalRecipeSlug);
+
+        if (updateError) {
+          console.error(
+            `Failed to update original recipe ${originalRecipeSlug} variation_of:`,
+            updateError,
+          );
+          // Don't fail the request if this update fails
+        } else {
+          console.log(
+            `Updated original recipe ${originalRecipeSlug} with variation_of: ${dbPayload.variation_of}`,
+          );
+        }
+      }
     }
 
     logApiEndpoint({

@@ -2,17 +2,23 @@
 
 import { RecipeFeedCard } from "@/components/recipe-feed-card";
 import type { GeneratedRecipe } from "@/types/recipes";
+import type { ReactNode } from "react";
 
 type RecipePreviewCardProps = {
   recipe: GeneratedRecipe;
   isStreaming?: boolean;
+  actionButton?: ReactNode;
 };
 
 /**
  * RecipePreviewCard component for displaying generated recipe preview.
  * Supports partial data during streaming and shows loading states for missing fields.
  */
-export function RecipePreviewCard({ recipe, isStreaming = false }: RecipePreviewCardProps) {
+export function RecipePreviewCard({
+  recipe,
+  isStreaming = false,
+  actionButton,
+}: RecipePreviewCardProps) {
   // Ensure we have minimum required fields for display
   const displayRecipe = {
     slug: recipe.slug || "loading",
@@ -28,7 +34,7 @@ export function RecipePreviewCard({ recipe, isStreaming = false }: RecipePreview
   const isEmpty = !recipe.title && !recipe.name && recipe.tags.length === 0;
 
   return (
-    <div id="generated-recipe-card" className="pointer-events-none relative">
+    <div id="generated-recipe-card" className="relative">
       <div className="pointer-events-none">
         <RecipeFeedCard
           slug={displayRecipe.slug}
@@ -54,6 +60,7 @@ export function RecipePreviewCard({ recipe, isStreaming = false }: RecipePreview
           </div>
         )}
       </div>
+      {actionButton && <div className="pointer-events-auto mt-4">{actionButton}</div>}
     </div>
   );
 }

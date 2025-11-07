@@ -5,9 +5,11 @@ export type GenerateRequest = {
   userComment?: string;
   servings?: number;
   cuisine?: string;
+  variationOf?: string | null;
+  isVariant?: boolean;
 };
 
-export const recipeSchema = {
+const baseRecipeSchema = {
   type: "object",
   properties: {
     title: { type: "string" },
@@ -52,6 +54,21 @@ export const recipeSchema = {
   },
   required: ["title", "ingredients", "instructions"],
 } as const;
+
+/**
+ * Get recipe schema, excluding variationOf if we already have it (we'll override it)
+ */
+export function getRecipeSchema(hasVariationOf: boolean) {
+  if (hasVariationOf) {
+    // Exclude variationOf from schema if we already have it
+    const { variationOf, ...schemaWithoutVariationOf } = baseRecipeSchema.properties;
+    return {
+      ...baseRecipeSchema,
+      properties: schemaWithoutVariationOf,
+    };
+  }
+  return baseRecipeSchema;
+}
 
 export function buildRecipeGenerationPrompt(options: GenerateRequest, feedback?: string): string {
   // Check if feedback mentions description/summary issues
@@ -120,15 +137,32 @@ export function buildRecipeGenerationPrompt(options: GenerateRequest, feedback?:
     "   - Only include tags that were provided in the tag list or are directly relevant to the recipe category (dietary, cuisine, characteristics)",
     "",
     "8. MEAL VARIATIONS:",
-    "   - If this recipe is clearly a variation of a common base meal (e.g., 'Chicken Fried Rice' is a variation of 'Fried Rice', 'Beef Tacos' is a variation of 'Tacos'), include the 'variationOf' field with the normalized base meal name",
-    "   - Use a normalized, generic name for the base meal (e.g., 'Fried Rice', 'Tacos', 'Stir-Fry', 'Burrito Bowls', 'Fajitas')",
-    "   - Only include 'variationOf' if the recipe is clearly part of a known meal variation group",
-    "   - Examples:",
-    "     * 'Chicken Fried Rice' → variationOf: 'Fried Rice'",
-    "     * 'Beef Tacos' → variationOf: 'Tacos'",
-    "     * 'Honey Garlic Chicken Stir-Fry' → variationOf: 'Stir-Fry'",
-    "     * 'Miso Glazed Salmon' → variationOf: 'Salmon'",
-    "   - If the recipe is unique or not clearly a variation, omit the 'variationOf' field",
+    ...(options.variationOf
+      ? [
+          // When we already have variationOf, we'll override it - no need to mention it to LLM
+        ]
+      : options.isVariant
+        ? [
+            "   - CRITICAL: This recipe is being created as a variation of another recipe. You MUST determine the normalized base meal name and include the 'variationOf' field.",
+            "   - Extract ONLY the generic base meal type from the recipe names. Remove all descriptive adjectives, proteins, and specific ingredients. Keep only the core meal category.",
+            "   - Examples of correct extraction:",
+            "     * 'Chicken Caesar Wraps' and 'Grilled Fish and Feta Wrap' → variationOf: 'Wraps' (NOT 'Chicken Caesar Wraps')",
+            "     * 'Grilled Halloumi Burger' and 'Classic Beef Burger' → variationOf: 'Burger' (NOT 'Grilled Halloumi Burger' or 'Classic Beef Burger')",
+            "     * 'Beef Tacos' and 'Chicken Tacos' → variationOf: 'Tacos' (NOT 'Beef Tacos')",
+            "     * 'Honey Garlic Chicken Stir-Fry' and 'Thai Basil Shrimp Stir-Fry' → variationOf: 'Stir-Fry' (NOT the full recipe name)",
+            "     * 'Miso Glazed Salmon' and 'Pan-Seared Salmon' → variationOf: 'Salmon' (NOT 'Miso Glazed Salmon')",
+          ]
+        : [
+            "   - If this recipe is clearly a variation of a common base meal (e.g., 'Chicken Fried Rice' is a variation of 'Fried Rice', 'Beef Tacos' is a variation of 'Tacos'), include the 'variationOf' field with the normalized base meal name",
+            "   - Use a normalized, generic name for the base meal (e.g., 'Fried Rice', 'Tacos', 'Stir-Fry', 'Burrito Bowls', 'Fajitas')",
+            "   - Only include 'variationOf' if the recipe is clearly part of a known meal variation group",
+            "   - Examples:",
+            "     * 'Chicken Fried Rice' → variationOf: 'Fried Rice'",
+            "     * 'Beef Tacos' → variationOf: 'Tacos'",
+            "     * 'Honey Garlic Chicken Stir-Fry' → variationOf: 'Stir-Fry'",
+            "     * 'Miso Glazed Salmon' → variationOf: 'Salmon'",
+            "   - If the recipe is unique or not clearly a variation, omit the 'variationOf' field",
+          ]),
     "",
     "Return the recipe structured JSON matching the provided schema.",
     "If you mention a side or garnish, keep it quick to prepare.",

@@ -53,12 +53,12 @@ export function Recipe({ slug }: RecipeProps) {
               prepTimeMinutes={cachedPartial.prep_time_minutes ?? null}
               cookTimeMinutes={cachedPartial.cook_time_minutes ?? null}
             />
-            <Description
-              slug={cachedPartial.slug}
-              description={cachedPartial.description || null}
-              tags={cachedPartial.tags}
-              authorName={null}
-            />
+        <Description
+          slug={cachedPartial.slug}
+          description={cachedPartial.description || null}
+          tags={cachedPartial.tags}
+          authorName={null}
+        />
             {/* Show skeletons for ingredients and instructions while loading */}
             <RecipeSkeleton showOnlyIngredientsAndInstructions />
           </article>
@@ -101,6 +101,7 @@ export function Recipe({ slug }: RecipeProps) {
           authorName={recipeData.authorName ?? null}
           variationOf={recipeData.variationOf ?? null}
           variants={recipeData.variants ?? []}
+          recipeData={recipeData}
         />
         <Ingredients ingredients={recipeData.ingredients} />
         <Instructions instructions={recipeData.instructions} />
