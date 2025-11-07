@@ -161,6 +161,7 @@ export function buildInstructions(instructions: Array<{ step?: number; action: s
 export type RecipeVariant = {
   slug: string;
   name: string;
+  imageUrl: string | null;
 };
 
 /**
@@ -184,7 +185,7 @@ export async function getRecipeVariants(
   try {
     const { data, error } = await supabase
       .from("recipes")
-      .select("slug, name")
+      .select("slug, name, image_url")
       .eq("variation_of", variationOf)
       .neq("slug", currentSlug)
       .order("name", { ascending: true });
@@ -197,6 +198,7 @@ export async function getRecipeVariants(
     return (data || []).map((recipe) => ({
       slug: recipe.slug,
       name: recipe.name,
+      imageUrl: recipe.image_url ?? null,
     }));
   } catch (error) {
     console.error("Error fetching recipe variants:", error);

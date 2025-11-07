@@ -10,7 +10,7 @@ export type RecipeData = {
   cookTimeMinutes?: number | null;
   authorName?: string | null;
   variationOf?: string | null;
-  variants?: Array<{ slug: string; name: string }>;
+  variants?: Array<{ slug: string; name: string; imageUrl: string | null }>;
 };
 
 export async function fetchRecipeData(slug: string): Promise<RecipeData | null> {

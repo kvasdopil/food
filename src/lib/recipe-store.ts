@@ -32,7 +32,7 @@ export type RecipeFullData = {
   cookTimeMinutes?: number | null;
   authorName?: string | null;
   variationOf?: string | null;
-  variants?: Array<{ slug: string; name: string }>;
+  variants?: Array<{ slug: string; name: string; imageUrl: string | null }>;
 };
 
 type StoredRecipe = {

@@ -3,7 +3,7 @@
 import { FavoriteButton } from "@/components/favorite-button";
 import { TagChip } from "@/components/tag-chip";
 import { buildFeedUrlWithTagsAndSearch } from "@/lib/tag-utils";
-import { VariantsDropdown } from "./variants-dropdown";
+import { VersionsScroll } from "./versions-scroll";
 
 type DescriptionProps = {
   slug: string;
@@ -11,7 +11,7 @@ type DescriptionProps = {
   tags: string[];
   authorName?: string | null;
   variationOf?: string | null;
-  variants?: Array<{ slug: string; name: string }>;
+  variants?: Array<{ slug: string; name: string; imageUrl: string | null }>;
 };
 
 export function Description({
@@ -41,7 +41,7 @@ export function Description({
 
       {variationOf && variants.length > 0 && (
         <div>
-          <VariantsDropdown variationOf={variationOf} variants={variants} />
+          <VersionsScroll variants={variants} />
         </div>
       )}
     </section>
