@@ -27,22 +27,3 @@ export function seededShuffle<T>(array: T[], seed: number): T[] {
 
   return shuffled;
 }
-
-/**
- * Gets a seed value based on the current date
- * Returns a numeric seed that will be the same for the entire day
- */
-export function getDateSeed(): number {
-  const today = new Date();
-  const dateString = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
-
-  // Convert date string to a numeric seed
-  // Simple hash of the date string
-  let hash = 0;
-  for (let i = 0; i < dateString.length; i++) {
-    const char = dateString.charCodeAt(i);
-    hash = (hash << 5) - hash + char;
-    hash = hash & hash; // Convert to 32-bit integer
-  }
-  return hash;
-}

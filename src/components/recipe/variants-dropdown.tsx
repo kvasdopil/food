@@ -13,23 +13,10 @@ type VariantsDropdownProps = {
 export function VariantsDropdown({ variationOf, variants }: VariantsDropdownProps) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-  // Ensure component is mounted before rendering interactive elements
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  // Don't show if no variationOf or less than 2 variants (including current)
-  if (!variationOf || variants.length === 0) {
-    return null;
-  }
 
   // Close dropdown when clicking outside
   useEffect(() => {
-    if (!isMounted) return;
-
     function handleClickOutside(event: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
@@ -49,7 +36,12 @@ export function VariantsDropdown({ variationOf, variants }: VariantsDropdownProp
         document.removeEventListener("click", handleClickOutside);
       };
     }
-  }, [isOpen, isMounted]);
+  }, [isOpen]);
+
+  // Don't show if no variationOf or less than 2 variants (including current)
+  if (!variationOf || variants.length === 0) {
+    return null;
+  }
 
   const handleVariantClick = (slug: string) => {
     setIsOpen(false);
@@ -61,27 +53,28 @@ export function VariantsDropdown({ variationOf, variants }: VariantsDropdownProp
     setIsOpen(!isOpen);
   };
 
-  const message = variants.length === 1
-    ? "This meal has another variant"
-    : `This meal has ${variants.length} more variants`;
+  const message =
+    variants.length === 1
+      ? "This meal has another variant"
+      : `This meal has ${variants.length} more variants`;
 
   return (
     <div ref={dropdownRef} className="relative">
       <button
         type="button"
         onClick={handleToggle}
-        className="inline-flex items-center gap-1 text-sm text-slate-600 hover:text-slate-900 transition-colors"
-        aria-expanded={isMounted ? isOpen : false}
+        className="inline-flex items-center gap-1 text-sm text-slate-600 transition-colors hover:text-slate-900"
+        aria-expanded={isOpen}
         aria-haspopup="listbox"
       >
         <span>{message}</span>
         <ChevronDown
-          className={cn("h-4 w-4 transition-transform", isMounted && isOpen && "rotate-180")}
+          className={cn("h-4 w-4 transition-transform", isOpen && "rotate-180")}
           aria-hidden="true"
         />
       </button>
 
-      {isMounted && isOpen && (
+      {isOpen && (
         <div className="absolute top-full left-0 z-50 mt-2 w-64 rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
           {variants.map((variant) => (
             <button
@@ -98,4 +91,3 @@ export function VariantsDropdown({ variationOf, variants }: VariantsDropdownProp
     </div>
   );
 }
-

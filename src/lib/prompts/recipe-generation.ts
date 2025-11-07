@@ -46,7 +46,8 @@ export const recipeSchema = {
     },
     variationOf: {
       type: "string",
-      description: "Normalized base meal name if this recipe is a variation of an existing meal (e.g., 'Fried Rice', 'Tacos', 'Stir-Fry'). Only include if this is clearly a variation of a common base meal.",
+      description:
+        "Normalized base meal name if this recipe is a variation of an existing meal (e.g., 'Fried Rice', 'Tacos', 'Stir-Fry'). Only include if this is clearly a variation of a common base meal.",
     },
   },
   required: ["title", "ingredients", "instructions"],

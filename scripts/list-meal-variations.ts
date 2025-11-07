@@ -129,7 +129,10 @@ function normalizeMealName(name: string): string {
 
   // Remove protein types
   normalized = normalized
-    .replace(/\b(beef|chicken|pork|turkey|lamb|fish|salmon|tuna|shrimp|crab|tofu|tempeh|seitan)\b/gi, "")
+    .replace(
+      /\b(beef|chicken|pork|turkey|lamb|fish|salmon|tuna|shrimp|crab|tofu|tempeh|seitan)\b/gi,
+      "",
+    )
     .trim();
 
   // Remove common descriptors
@@ -141,7 +144,10 @@ function normalizeMealName(name: string): string {
   normalized = normalized.replace(/\s+/g, " ").trim();
 
   // Remove leading/trailing "with" or "and"
-  normalized = normalized.replace(/^(with|and)\s+/i, "").replace(/\s+(with|and)$/i, "").trim();
+  normalized = normalized
+    .replace(/^(with|and)\s+/i, "")
+    .replace(/\s+(with|and)$/i, "")
+    .trim();
 
   return normalized || name.toLowerCase(); // Fallback to original if empty
 }
@@ -298,5 +304,4 @@ async function main() {
 }
 
 main();
-
 

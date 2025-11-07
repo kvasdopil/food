@@ -64,11 +64,10 @@ async function main() {
 
   try {
     // Load Gemini API key from .env.local
-    const geminiKey = await loadEnvValue("GEMINI_API_KEY") || await loadEnvValue("GOOGLE_API_KEY");
+    const geminiKey =
+      (await loadEnvValue("GEMINI_API_KEY")) || (await loadEnvValue("GOOGLE_API_KEY"));
     if (!geminiKey) {
-      throw new Error(
-        "GEMINI_API_KEY or GOOGLE_API_KEY not found in environment or .env.local",
-      );
+      throw new Error("GEMINI_API_KEY or GOOGLE_API_KEY not found in environment or .env.local");
     }
     // Set it in process.env so gemini.ts can access it
     process.env.GEMINI_API_KEY = geminiKey;
@@ -98,4 +97,3 @@ async function main() {
 }
 
 main();
-

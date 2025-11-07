@@ -98,9 +98,7 @@ export async function getAllRecipes(
 }
 
 export function buildVariationAnalysisPrompt(recipes: Recipe[]): string {
-  const mealList = recipes
-    .map((r, i) => `${i + 1}. ${r.name} (slug: ${r.slug})`)
-    .join("\n");
+  const mealList = recipes.map((r, i) => `${i + 1}. ${r.name} (slug: ${r.slug})`).join("\n");
 
   return `You are analyzing a recipe database to identify meal variations. A meal variation is when the same base meal exists with different ingredients, proteins, or preparation styles.
 
@@ -159,7 +157,8 @@ export const variationAnalysisSchema = {
                 },
                 variationDetail: {
                   type: "string",
-                  description: "What makes this variation different (e.g., 'beef', 'chicken', 'vegetarian', 'spicy')",
+                  description:
+                    "What makes this variation different (e.g., 'beef', 'chicken', 'vegetarian', 'spicy')",
                 },
               },
               required: ["name", "slug", "variationType", "variationDetail"],
@@ -243,4 +242,3 @@ export async function findVariationsWithLLM(recipes: Recipe[]): Promise<LLMRespo
 
   return parsed;
 }
-

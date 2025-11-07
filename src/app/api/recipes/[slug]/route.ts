@@ -48,10 +48,10 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       statusCode: 200,
       isProtected: false,
     });
-    
+
     // Fetch variants if variation_of exists
     const variants = await getRecipeVariants(data.variation_of, slug);
-    
+
     // Transform to match RecipeData type
     return NextResponse.json({
       slug: data.slug,
