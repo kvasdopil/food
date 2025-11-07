@@ -78,7 +78,7 @@ export function RecipeFeedCard({
           </div>
         </figure>
 
-        <CardContent className="space-y-4 px-4 pt-4 sm:px-5 sm:pt-6">
+        <CardContent className="space-y-4 p-0 px-4 pt-4 sm:px-5 sm:pt-6">
           {description && <p className="line-clamp-2 text-sm text-slate-600">{description}</p>}
 
           <div
